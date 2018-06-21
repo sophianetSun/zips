@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<decorators defaultdir="/decorator">
+  <decorator name="main" page="decorator.jsp">
+     <pattern>*.shop</pattern>
+  </decorator>
+  <!-- layout 설정을 제외 함. -->
+  <excludes>
+    <pattern>/admin/graph*</pattern>
+    <pattern>/user/mygraph*</pattern>
+  </excludes>
+</decorators>
