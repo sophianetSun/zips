@@ -1,3 +1,3 @@
 # zips
-goodie team project
+goodee team project
 test1 heo joo han
