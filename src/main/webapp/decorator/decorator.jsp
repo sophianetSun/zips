@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +25,8 @@ h1 {letter-spacing: 6px}
 <body>
 
 <div class="jumbotron text-center">
-  <img src="zips/img/team.png" class="rounded" alt="Cinque Terre" width="304" height="236"> 
-  <h2><p><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h2>
+  <img src="../img/team.png" class="rounded" alt="teamlogo" width="200" height="150"> 
+  <h4><p><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
  <div class="w3-content" style="max-width:820px">
  <div class="w3-padding-32"></div>
     <div class="w3-bar w3-border">
@@ -34,6 +35,18 @@ h1 {letter-spacing: 6px}
       <a href="#" class="w3-bar-item w3-button">자유게시판</a>
       <a href="#" class="w3-bar-item w3-button">Before & After</a>
       <a href="#" class="w3-bar-item w3-button">중고장터</a>
+      
+      
+<%--       <c:if test="${empty sessionScope.login }">
+		    <a href="${path}/model2/member/loginForm.me" 
+		    class="w3-bar-item w3-button w3-hide-small w3-hover-white">로그인</a>
+		</c:if>
+		<c:if test="${!empty sessionScope.login }">
+			<a href="${path}/model2/member/logout.me" 
+		    class="w3-bar-item w3-button w3-hide-small w3-hover-white">${sessionScope.login }님! 로그아웃</a>
+		</c:if> --%>
+      
+      
       <a href="#" class="w3-bar-item w3-button">Join & Login</a>
       <a href="#" class="w3-bar-item w3-button"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
     </div>
