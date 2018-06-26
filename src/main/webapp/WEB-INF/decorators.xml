@@ -2,7 +2,7 @@
 
 <decorators defaultdir="/decorator">
   <decorator name="main" page="decorator.jsp">
-     <pattern>*.shop</pattern>
+     <pattern>*.zips</pattern>
   </decorator>
   <!-- layout 설정을 제외 함. -->
   <excludes>

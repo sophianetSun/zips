@@ -3,11 +3,9 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
  	<typeAliases>
-		<typeAlias type="logic.Shop" alias="Shop"/>
 		<typeAlias type="logic.User" alias="User"/>
 	</typeAliases>
 	<mappers>
-		<mapper resource="dao/mapper/Item.xml"/>
 		<mapper resource="dao/mapper/User.xml"/>
 	</mappers>
 </configuration>

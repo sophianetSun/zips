@@ -23,7 +23,7 @@
   </servlet>
    <servlet-mapping>
   	<servlet-name>zips</servlet-name>
-  	<url-pattern>*.shop</url-pattern>
+  	<url-pattern>*.zips</url-pattern>
   </servlet-mapping>
   
   <filter>
@@ -31,7 +31,7 @@
   	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
   	<init-param>
   		<param-name>encoding</param-name>
-  		<param-value>euc-kr</param-value>
+  		<param-value>UTF-8</param-value>
   	</init-param>
   </filter>
   <filter-mapping>
