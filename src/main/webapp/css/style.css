@@ -1,9 +1,16 @@
-<!-- Main ÆäÀÌÁö¿¡ ¾¸ -->
 .fakeimg {
 	height: 200px;
 	background: #aaa;
 }
 
-body,h1 {font-family: "Raleway", Arial, sans-serif}
-h1 {letter-spacing: 6px}
-.w3-row-padding img {margin-bottom: 12px}
+.main_title {
+	border-bottom: 1px solid;
+}
+
+.main_logo {
+	display: block;
+	margin-left: auto;
+	margin-right: 36%;
+	width: 100px;
+	height: 75px;
+}
