@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
   <style>
 body,h1 {font-family: "Raleway", Arial, sans-serif}
@@ -24,40 +24,51 @@ h1 {letter-spacing: 6px}
 .w3-row-padding img {margin-bottom: 12px}
 </style>
 <body>
-<div class="jumbotron text-center">
-<<<<<<< HEAD
+<!-- Header -->
+<div class="jumbotron text-center" style="margin-bottom:0">
   <img src="../img/team.png" class="rounded" alt="teamlogo" width="200" height="150"> 
   <h4><p><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
-  <img src="../img/team.png" class="rounded" alt="Cinque Terre" width="304" height="236"> 
-  <h2><p><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h2>
- <div class="w3-content" style="max-width:820px">
- <div class="w3-padding-32"></div>
-    <div class="w3-bar w3-border">
-      <a href="#" class="w3-bar-item w3-button">홈트게시판</a>
-      <a href="#" class="w3-bar-item w3-button">Question & Answer</a>
-      <a href="#" class="w3-bar-item w3-button">자유게시판</a>
-      <a href="#" class="w3-bar-item w3-button">Before & After</a>
-      <a href="#" class="w3-bar-item w3-button">중고장터</a>
-      
-      
-<%--       <c:if test="${empty sessionScope.login }">
-		    <a href="${path}/model2/member/loginForm.me" 
-		    class="w3-bar-item w3-button w3-hide-small w3-hover-white">로그인</a>
-		</c:if>
-		<c:if test="${!empty sessionScope.login }">
-			<a href="${path}/model2/member/logout.me" 
-		    class="w3-bar-item w3-button w3-hide-small w3-hover-white">${sessionScope.login }님! 로그아웃</a>
-		</c:if> --%>
-      
-      
-      <a href="#" class="w3-bar-item w3-button">Join & Login</a>
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
-    </div>
-  </div>
 </div>
-<decorator:body/>
+	 
+<!-- Navi -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+ <a class="navbar-brand" href="#"></a>
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+ <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="collapsibleNavbar">
+ <ul class="navbar-nav">
+  <li class="nav-item">
+   <a class="nav-link" href="#">홈트게시판</a>
+  </li>
+  <li class="nav-item">
+   <a class="nav-link" href="#">Question&amp;Answer</a>
+  </li>
+  <li class="nav-item">
+   <a class="nav-link" href="#">자유게시판</a>
+  </li>    
+  <li class="nav-item">
+   <a class="nav-link" href="#">Before&amp;After</a>
+  </li>    
+  <li class="nav-item">
+   <a class="nav-link" href="#">중고장터</a>
+  </li>    
+  <li class="nav-item">
+   <a class="nav-link" href="#">Join&amp;Login</a>
+  </li>    
+  <li class="nav-item">
+   <a class="nav-link" href="#"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
+  </li>    
+ </ul>
+</div>  
+</nav>
+
+<!-- Main  -->
+<div class="container" style="margin-top:30px">
+	<decorator:body/>
+</div>
 <!-- Footer -->
-<footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-large"> 
+<footer class="jumbotron text-center" style="margin-bottom:0"> 
   <p>Powered by <a href="http://cafe.naver.com/itisgoodee" target="_blank" class="w3-hover-text-grey"><strong>GOODEE ACADEMY</strong></a></p>
 </footer>
 
