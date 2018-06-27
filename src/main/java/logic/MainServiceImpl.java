@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,12 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public Map<String, List<Board>> getMainBoards() {
-
-		return null;
+		Map<String, List<Board>> map = new HashMap<String, List<Board>>();
+		map.put("homeTraining", getHomeTrainingList());
+		map.put("beforeAndAfter", getBeforeAndAfterList());
+		map.put("qna", getQnAList());
+		map.put("freeboard", getFreeBoard());
+		return map;
 	}
 
 	@Override
