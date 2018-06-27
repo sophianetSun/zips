@@ -25,11 +25,8 @@ h1 {letter-spacing: 6px}
 </style>
 <body>
 <div class="jumbotron text-center">
-<<<<<<< HEAD
   <img src="../img/team.png" class="rounded" alt="teamlogo" width="200" height="150"> 
   <h4><p><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
-  <img src="../img/team.png" class="rounded" alt="Cinque Terre" width="304" height="236"> 
-  <h2><p><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h2>
  <div class="w3-content" style="max-width:820px">
  <div class="w3-padding-32"></div>
     <div class="w3-bar w3-border">
