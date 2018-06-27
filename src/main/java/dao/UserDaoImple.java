@@ -1,7 +1,5 @@
 package dao;
 
-import java.util.List;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +12,7 @@ public class UserDaoImple implements UserDao{
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	private final String NS = "dao.mapper.UserMapper.";
 	
 	@Override
 	public void insert(User user) {
@@ -21,33 +20,7 @@ public class UserDaoImple implements UserDao{
 	}
 
 	@Override
-	public User select(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectId(String userid) {
+		return sqlSession.getMapper(UserMapper.class).select(userid);
 	}
-
-	@Override
-	public void update(User user) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(String userId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<User> list() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<User> list(String[] idchks) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

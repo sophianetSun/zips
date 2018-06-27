@@ -26,7 +26,8 @@ public class User implements Serializable{
 	private int coin;
 	private Date regdate;
 	private Date logdate;
-	private String pic;
+	private String picture;
+	private String muscle;
 	public String getId() {
 		return id;
 	}
@@ -123,17 +124,23 @@ public class User implements Serializable{
 	public void setLogdate(Date logdate) {
 		this.logdate = logdate;
 	}
-	public String getPic() {
-		return pic;
+	public String getPicture() {
+		return picture;
 	}
-	public void setPic(String pic) {
-		this.pic = pic;
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	public String getMuscle() {
+		return muscle;
+	}
+	public void setMuscle(String muscle) {
+		this.muscle = muscle;
 	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email + ", nickname=" + nickname
 				+ ", tel=" + tel + ", address=" + address + ", gender=" + gender + ", height=" + height + ", weight="
 				+ weight + ", bodyfat=" + bodyfat + ", blacklist=" + blacklist + ", point=" + point + ", coin=" + coin
-				+ ", regdate=" + regdate + ", logdate=" + logdate + ", pic=" + pic + "]";
+				+ ", regdate=" + regdate + ", logdate=" + logdate + ", picture=" + picture + ", muscle=" + muscle + "]";
 	}
 }

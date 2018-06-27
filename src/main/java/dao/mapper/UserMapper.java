@@ -9,4 +9,6 @@ public interface UserMapper {
 			+"(id, pw, name, email, nickname, tel, address, gender, height, weight, bodyfat, muscle, blacklist, point, coin, regdate, logdate, picture)"
 			+"values(#{id}, #{pw}, #{name}, #{email}, #{nickname}, #{tel}, #{address}, #{gender}, #{height}, #{weight}, #{bodyfat}, #{muscle}, #{blacklist}, #{point}, #{coin}, #{regdate}, #{logdate}, #{picture})")
 	void insert(User user);
+
+	int select(String userid);
 }

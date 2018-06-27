@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="dao.mapper.UserMapper">
- 	<select id="user" resultType="User" parameterType="map">
+ 	<select id="idcheck" resultType="User" parameterType="map">
  		select * from userAccount
  		<if test="userId != null">
- 			where userId=#{userId}
+ 			where id=#{id}
  		</if>
  		<if test="idlist != null">
  		where userId in
