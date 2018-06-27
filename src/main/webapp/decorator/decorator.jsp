@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
-<html lang="en">
+<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,43 +14,39 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
-  <decorator:title>Áı¿¡¼­ Çï½ºÇÏÀÚ - zips</decorator:title>
-  <decorator:head/>
+  <title><decorator:title default="ì§‘ì—ì„œ í—¬ìŠ¤í•˜ì - zips" /></title>
+  <decorator:head />
 </head>
-  <style>
-body,h1 {font-family: "Raleway", Arial, sans-serif}
-h1 {letter-spacing: 6px}
-.w3-row-padding img {margin-bottom: 12px}
-</style>
+
 <body>
 <!-- Header -->
 <div class="jumbotron text-center" style="margin-bottom:0">
   <img src="../img/team.png" class="rounded" alt="teamlogo" width="200" height="150"> 
-  <h4><p><p class="text-info"><strong>Áı</strong>¿¡¼­ Çï<strong>½º</strong>ÇÏÀÚ!</p></h4>
+  <h4><p class="text-info"><strong>ì§‘</strong>ì—ì„œ í—¬<strong>ìŠ¤</strong>í•˜ì!</p></h4>
 </div>
 	 
 <!-- Navi -->
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
  <a class="navbar-brand" href="#"></a>
  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
  <span class="navbar-toggler-icon"></span>
  </button>
- <div class="collapse navbar-collapse" id="collapsibleNavbar">
+ <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
  <ul class="navbar-nav">
   <li class="nav-item">
-   <a class="nav-link" href="#">È¨Æ®°Ô½ÃÆÇ</a>
+   <a class="nav-link" href="#">í™ˆíŠ¸ê²Œì‹œíŒ</a>
   </li>
   <li class="nav-item">
    <a class="nav-link" href="#">Question&amp;Answer</a>
   </li>
   <li class="nav-item">
-   <a class="nav-link" href="#">ÀÚÀ¯°Ô½ÃÆÇ</a>
+   <a class="nav-link" href="#">ììœ ê²Œì‹œíŒ</a>
   </li>    
   <li class="nav-item">
    <a class="nav-link" href="#">Before&amp;After</a>
   </li>    
   <li class="nav-item">
-   <a class="nav-link" href="#">Áß°íÀåÅÍ</a>
+   <a class="nav-link" href="#">ì¤‘ê³ ì¥í„°</a>
   </li>    
   <li class="nav-item">
    <a class="nav-link" href="#">Join&amp;Login</a>
