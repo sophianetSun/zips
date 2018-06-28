@@ -1,25 +1,17 @@
 package dao.mapper;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import logic.User;
 
-// resources/dao/mapper/ItemMapper.java
 public interface UserMapper {
-	@Insert("insert into userAccount "
-			+ "(userid}, username}, password}, birthday}, phoneno}, postcode}, address}, email) "
-			+ "values (#{userId}, #{userName}, #{password}, #{birthDay}, #{phoneNo}, #{postcode}, #{address}, #{email})")
+	@Insert("insert into zipsuser"
+			+"(id, pw, name, email, nickname, tel, address, gender, height, weight, bodyfat, muscle, blacklist, point, coin, regdate, logdate, picture)"
+			+"values(#{id}, #{pw}, #{name}, #{email}, #{nickname}, #{tel}, #{address}, #{gender}, #{height}, #{weight}, #{bodyfat}, #{muscle}, #{blacklist}, #{point}, #{coin}, #{regdate}, #{logdate}, #{picture})")
 	void insert(User user);
-	
-	@Update("update userAccount set username=#{userName}, birthday=#{birthDay}, phoneno=#{phoneNo}, "
-			+ "postcode=#{postcode}, address=#{address}, email=#{email}  where userid=#{userId}")
-	void update(User user);
-	
-	@Delete("delete from userAccount where userid=#{value}")
-	void delete(String userId);
-	
-	
+
+	@Select("select * from zipsuser where id=#{id}")
+	User select(String id);
+
 }

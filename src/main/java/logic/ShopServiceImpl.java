@@ -11,5 +11,10 @@ import dao.ShopDao;
 public class ShopServiceImpl implements ShopService {
 	@Autowired
 	private ShopDao shopDao;
+
+	@Override
+	public void shopWrite(Shop shop, HttpServletRequest request) {
+		shopDao.shopWrite(shop);
+	}
 	
 }

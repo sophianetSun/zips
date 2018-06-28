@@ -11,8 +11,7 @@ public class SearchInfo implements Serializable {
 	
 	// Constructor
 	public SearchInfo(Integer num, String id, String content, Date regdate) {
-		super();
-		this.num = num;
+		this.num = num; 
 		this.id = id;
 		this.content = content;
 		this.regdate = regdate;
