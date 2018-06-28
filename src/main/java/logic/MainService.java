@@ -3,6 +3,10 @@ package logic;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.http.HttpRequest;
+
 public interface MainService {
 	
 	public Map<String, List<Board>> getMainBoards();
@@ -13,5 +17,7 @@ public interface MainService {
 	public List<Board> searchBoard(String query);
 	public List<Shop> searchShop(String query);
 	
-	
+	public void inputSearch(String query, HttpSession session);
+	public List<Map<String, Integer>> getSearchMap();
+	public Map<String, Long> analyzeSearchResult();
 }

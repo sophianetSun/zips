@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="dao.mapper.SearchInfoMapper">
+ 	<select id="list" resultType="SearchInfo" parameterType="map">
+ 		select * from search_info
+ 		<if test="id != null">
+ 		where id = #{id} order by num desc limit 10
+ 		</if>
+ 		<if test="from != null and to != null">
+ 		where regdate between #{from} and #{to}
+ 		</if>
+ 	</select>
+</mapper>

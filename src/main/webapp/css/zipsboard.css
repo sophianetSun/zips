@@ -1,0 +1,88 @@
+ .my-hr1 {
+    border: 0;
+    height: 3px;
+    width : 850px;
+    background: linear-gradient(to right, #1ddb16, #ffbb00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(to right, #1ddb16, #ffbb00);
+  }
+.test {
+  display: inline-block;
+  margin: 30px auto 0;
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.test span {
+  background: linear-gradient(to right, #1ddb16, #ffbb00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.testred {
+  display: inline-block;
+  margin: 30px auto 0;
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.testred span {
+  background: linear-gradient(to right, #FF0000, #FFE08C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+	.circle {
+		background: #fff;
+		border-radius: 100%;
+		width: 80px;
+		height: 80px;
+		line-height: 80px;
+		text-align: center;
+		margin:0 auto;
+		overflow: hidden;
+		transform: translateZ(0);
+	}
+	.circle:before, .circle:after {
+		box-sizing: border-box;
+		border-radius: 100%;
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: inherit;
+		height: inherit;
+		box-shadow: 
+			inset 150px 0 0 rgba(30, 140, 209, 0.2), 
+			inset 0 150px 0 rgba(30, 140, 209, 0.2), 
+			inset -150px 0 0 rgba(30, 140, 209, 0.2), 
+			inset 0 -150px 0 rgba(30, 140, 209, 0.2);
+		transition: box-shadow 0.5s, color 0.8s;
+	}
+	.circle:after {
+		transform: rotate(45deg);
+		
+	}
+	.circle:hover:after, .circle:hover:before {
+		box-shadow: 
+			inset 15px 0 0 rgba(255, 0, 0, 0.5), 
+			inset 0 15px 0 rgba(252, 150, 0, 0.5), 
+			inset -15px 0 0 rgba(0, 255, 0, 0.5), 
+			inset 0 -15px 0 rgba(0, 150, 255, 0.5);
+	}        				
+.page {
+  width: 10vw;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+}
+	
