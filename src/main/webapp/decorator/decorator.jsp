@@ -21,12 +21,6 @@
 
 <body>
 <!-- Header -->
-<<<<<<< HEAD
-<div class="jumbotron text-center" style="margin-bottom:0">
-  <img src="../img/team.png" class="rounded" alt="teamlogo" width="200" height="150"> 
-  <h4><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
-</div>
-=======
 <div class="row" style="margin-bottom:0">
   <div class="col-sm-10">
   <a href="${pageContext.request.contextPath }">
@@ -42,7 +36,6 @@
   <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
 </div>
 </div>
->>>>>>> branch 'master' of https://github.com/sophianetSun/zips.git
 	 
 <!-- Navi -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
