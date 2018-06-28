@@ -13,17 +13,36 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/zipsboard.css">
   <title><decorator:title default="집에서 헬스하자 - zips" /></title>
   <decorator:head />
 </head>
 
 <body>
 <!-- Header -->
+<<<<<<< HEAD
 <div class="jumbotron text-center" style="margin-bottom:0">
   <img src="../img/team.png" class="rounded" alt="teamlogo" width="200" height="150"> 
   <h4><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
 </div>
+=======
+<div class="row" style="margin-bottom:0">
+  <div class="col-sm-10">
+  <a href="${pageContext.request.contextPath }">
+  	<img src="${pageContext.request.contextPath }/img/team.png" 
+  		class="rounded main_logo" alt="teamlogo">
+  </a> 
+  </div>
+<div class="col-sm-2 align-self-center">
+  <a href="#">Join&amp;Login</a>
+  <a href="#"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
+</div>
+<div class="col-sm-12">
+  <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
+</div>
+</div>
+>>>>>>> branch 'master' of https://github.com/sophianetSun/zips.git
 	 
 <!-- Navi -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -31,7 +50,7 @@
  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
  <span class="navbar-toggler-icon"></span>
  </button>
- <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
+ <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
  <ul class="navbar-nav">
   <li class="nav-item">
    <a class="nav-link" href="#">홈트게시판</a>
@@ -47,12 +66,6 @@
   </li>    
   <li class="nav-item">
    <a class="nav-link" href="#">중고장터</a>
-  </li>    
-  <li class="nav-item">
-   <a class="nav-link" href="#">Join&amp;Login</a>
-  </li>    
-  <li class="nav-item">
-   <a class="nav-link" href="#"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
   </li>    
  </ul>
 </div>  

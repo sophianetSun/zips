@@ -27,7 +27,7 @@ public class User implements Serializable{
 	private Date regdate;
 	private Date logdate;
 	private String picture;
-	private String muscle;
+	private double muscle;
 	public String getId() {
 		return id;
 	}
@@ -130,10 +130,10 @@ public class User implements Serializable{
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	public String getMuscle() {
+	public double getMuscle() {
 		return muscle;
 	}
-	public void setMuscle(String muscle) {
+	public void setMuscle(double muscle) {
 		this.muscle = muscle;
 	}
 	@Override

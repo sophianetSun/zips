@@ -1,6 +1,7 @@
 package dao.mapper;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
 
 import logic.User;
 
@@ -10,5 +11,7 @@ public interface UserMapper {
 			+"values(#{id}, #{pw}, #{name}, #{email}, #{nickname}, #{tel}, #{address}, #{gender}, #{height}, #{weight}, #{bodyfat}, #{muscle}, #{blacklist}, #{point}, #{coin}, #{regdate}, #{logdate}, #{picture})")
 	void insert(User user);
 
-	int select(String userid);
+	@Select("select * from zipsuser where id=#{id}")
+	User select(String id);
+
 }
