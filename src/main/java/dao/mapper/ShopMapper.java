@@ -12,12 +12,12 @@ public interface ShopMapper {
 	int maxNo();
 	
 	// 게시물의 개수
-	
+
 	
 	// DB에 넣어주는 게시물 작성 메소드
 	@Insert("insert into zips_shop "
-			+ "(, name, pass, subject, content, file1, regdate, readcnt, ref, reflevel, refstep) " 
-			+ "values (#{num}, #{name}, #{pass}, #{subject}, #{content}, #{fileurl}, now(), 0, #{ref}, #{reflevel}, #{refstep})" )
+			+ "(shop_no,shop_seller_id,shop_subject,shop_content,shop_price,shop_regdate) " 
+			+ "values (#{shop_no},'chic0004',#{shop_subject},#{shop_content},#{shop_price},now())" )
 	void insert(Shop shop);
 	
 }
