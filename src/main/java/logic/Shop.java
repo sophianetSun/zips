@@ -13,9 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class Shop implements Serializable {
 	private Integer shop_no;
 	
+	@NotEmpty(message="작성자를 입력하세요") 
 	private String shop_seller_id;
 	
-	private String shop_buyer_id;
+	private String shop_buyer_id;   
 	
 	// null + 빈 문자열 : 파라미터 자체에 name 속성이 없으면 null, 파라미터에 값이 없으면 빈 문자열 => @NotEmpty
 	@NotEmpty(message="상품명을 등록하세요") 
