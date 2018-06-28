@@ -18,6 +18,10 @@ public class BoardDaoImpl implements BoardDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private final String NS = "dao.mapper.BoardMapper.";
+	@Override
+	public int insert(Board board) {
+		return sqlSession.getMapper(BoardMapper.class).insert(board);
+	}
 	
 	@Override
 	public int count(String searchType, String searchContent) {
@@ -37,6 +41,7 @@ public class BoardDaoImpl implements BoardDao {
 		map.put("limit", limit); 
 		return sqlSession.selectList(NS+"list",map);
 	}
+
 	@Override
 	public Board getBoard(Integer num) {
 		Map<String,Integer> map = new HashMap<String,Integer>();
@@ -44,44 +49,11 @@ public class BoardDaoImpl implements BoardDao {
 		map.put("startrow", 0);
 		map.put("limit", 1);
 		return sqlSession.selectOne(NS+"list",map);
-		
-	}
-	@Override
-	public int insert(Board board) {
-	/*	int num = maxNum();
-		board.setNum(++num);
-		board.setRef(board.getNum());*/
-		return sqlSession.getMapper(BoardMapper.class).insert(board);
-	}
-	@Override
-	public void readcnt(Integer num) {
-		 sqlSession.getMapper(BoardMapper.class).readcnt(num);
-	}
-	@Override
-	public int maxNum() {
-		int a = sqlSession.getMapper(BoardMapper.class).maxNum();
-		return a;
-	}
-	@Override
-	public void refstepadd(Board board) {
-		sqlSession.getMapper(BoardMapper.class).refstepadd(board);
-	}
-	@Override
-	public int update(Board board, HttpServletRequest request) {
-     return	sqlSession.getMapper(BoardMapper.class).update(board);
-	}
-	@Override
-	public int delete(Board board, HttpServletRequest request) {
-		return sqlSession.getMapper(BoardMapper.class).delete(board);
-	}
-	@Override
-	public int mapdelete(Integer integer) {
-		return sqlSession.getMapper(BoardMapper.class).mapdelete(integer);
 	}
 
 	@Override
-	public List<Map<String, Object>> graph() {
-		
-		return sqlSession.getMapper(BoardMapper.class).graph();
+	public void readcnt(Integer num) {
+		sqlSession.getMapper(BoardMapper.class).readcnt(num);
 	}
+	
 }

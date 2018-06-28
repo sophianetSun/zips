@@ -17,7 +17,7 @@
 <input type="hidden" name="name" value="test">
 
 <div class="container">
-  <h1><strong>ZIPS Login</strong></h1><br><br>
+  <h1><strong>로그인</strong></h1><br><br>
   <div class="img" align="center">
   	<img src="../img/rock.png" width="200" height="200" name="rock"><br><br>
   </div>

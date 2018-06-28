@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-  <h1><strong>Join Page</strong></h1><br>
+  <h1><strong>회원 가입</strong></h1><br>
   <form:form modelAttribute="user" method="post" action="userEntry.zips" enctype="multipart/form-data">
 	<spring:hasBindErrors name="user">
 		<font color = "red">

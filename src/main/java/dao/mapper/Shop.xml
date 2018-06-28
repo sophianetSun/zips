@@ -4,17 +4,25 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.mapper.ShopMapper">
-<!-- 	<select id="list" resultType="User" parameterType="map">
-		select * from UserAccount
-		<if test="userId != null">
-		where userid=#{userId}
+	<select id="shopCount" resultType="int" parameterType="map">
+	select count(*) from zips_shop
+	<if test="searchType != null and searchContent != null">
+	where ${searchType} like '%${searchContent}%'
+	</if>
+	</select>
+	
+	<select id="shopList" resultType="Shop" parameterType="map">
+		select * from zips_shop
+		<if test="shop_no != null">
+		where shop_no = #{shop_no}
 		</if>
-		<if test="idlist != null">
-		where userid in 
-		<foreach collection="idlist" item="n" separator="," index="i" open="(" close=")">
-		#{n}
-		</foreach>
-		and not userid = 'admin'
+		<if test="searchType != null and searchContent != null">
+		where ${searchType} like '%${searchContent}%'
 		</if>
-	</select> -->
+		order by shop_regdate
+		<if test="startrow != null and limit != null">
+		limit #{startrow}, #{limit}
+		</if>
+	</select>	
+	
 </mapper>

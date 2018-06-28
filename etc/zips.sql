@@ -80,7 +80,7 @@ CREATE TABLE message
 
 CREATE TABLE search_info
 (
-	num int NOT NULL,
+	num int NOT NULL AUTO_INCREMENT,
 	id varchar(16) NOT NULL,
 	content varchar(128) NOT NULL,
 	regdate datetime NOT NULL,

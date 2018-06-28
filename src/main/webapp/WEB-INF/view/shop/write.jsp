@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -69,7 +68,7 @@ $(document).ready(
       </div>
       <div class="form-group">
         <label for="file">상품 사진 첨부</label>
-        <input type="file" class="form-control" id="file" name="file" multiple value="">
+        <input type="file" class="form-control" id="file" name="file" multiple>
       </div>
  	<div id="preview"></div>
       <button type="submit" class="btn btn-primary">작성</button>

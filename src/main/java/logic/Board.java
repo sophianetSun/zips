@@ -8,11 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Board implements Serializable{
 	private int num;
-	@NotEmpty(message="�۾��̸� �Է��ϼ���")
 	private String board_userid;
-	@NotEmpty(message="���� �Է��ϼ���")
+	@NotEmpty(message="제목을 입력해주세요")
 	private String subject;
-	@NotEmpty(message="")
+	@NotEmpty(message="내용을 입력해주세요")
 	private String content;
 	private int board_count;
 	private String fileurl;
