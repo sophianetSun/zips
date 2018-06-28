@@ -52,6 +52,16 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectList(NS+"shopList", map);
 	}
 
+	// 글 읽어오기
+	@Override
+	public Shop getShop(Integer shop_no) {
+		Map<String, Integer> map = new HashMap<String, Integer>();	
+		map.put("shop_no", shop_no);
+		map.put("startrow", 0);
+		map.put("limit", 1);
+		return sqlSession.selectOne(NS+"shopList", map);
+	}
+
 	
 	
 }

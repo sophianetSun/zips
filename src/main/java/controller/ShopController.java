@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
-import logic.Board;
 import logic.Shop;
 import logic.ShopService;
 
@@ -79,5 +78,19 @@ public class ShopController {
 		
 		return mav;
 	}
+	
+	@RequestMapping("shop/detail")
+	public ModelAndView detail(Integer shop_no, Integer pageNum, HttpServletRequest request) {
+		System.out.println("상세 보기 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = new Shop();
+		if (shop_no != null) {
+			shop = shopservice.getShop(shop_no);
+		} 
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("shop", shop);
+		return mav;
+	}
+	
 }
  

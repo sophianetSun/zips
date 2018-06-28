@@ -30,5 +30,10 @@ public class ShopServiceImpl implements ShopService {
 	public List<Shop> shopList(String searchType, String searchContent, Integer pageNum, int limit) {
 		return shopDao.shopList(searchType, searchContent, pageNum, limit);
 	}
+
+	@Override
+	public Shop getShop(Integer shop_no) {
+		return shopDao.getShop(shop_no);
+	}
 	
 }
