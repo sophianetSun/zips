@@ -1,5 +1,7 @@
 package dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,8 +45,19 @@ public class SearchInfoDaoImpl implements SearchInfoDao {
 	
 	@Override
 	public List<SearchInfo> getSearchListByDate(String from, String to) {
-		// TODO Auto-generated method stub
-		return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date fromDate = sdf.parse(from);
+			Date toDate = sdf.parse(to);
+			Map<String, Date> map = new HashMap<String, Date>();
+			map.put("from", fromDate);
+			map.put("to", toDate);
+			return sqlSession.selectList(NS + "list", map);			
+		} catch (ParseException pe) {
+			
+		} finally {
+			return null;
+		}
 	}
 
 	@Override

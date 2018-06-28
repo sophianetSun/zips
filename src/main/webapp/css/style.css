@@ -14,13 +14,3 @@
 	width: 100px;
 	height: 75px;
 }
-
-.wordcloud {
-		border : 1px solid #036;
-		width : 6in;
-		height : 6in;
-		margin : 0.5in auto;
-		padding : 0;
-		page-break-after : always;
-		page-break-inside : avoid;
-	}
