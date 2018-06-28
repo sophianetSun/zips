@@ -13,7 +13,6 @@ public class User implements Serializable{
 	@NotEmpty(message="이름을 입력해 주세요")
 	private String name;
 	private String email;
-	@NotEmpty(message="닉네임을 입력해 주세요")
 	private String nickname;
 	private String tel;
 	private String address;

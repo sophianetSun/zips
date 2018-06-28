@@ -10,43 +10,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-//아이디 체크여부 확인 (아이디 중복일 경우 = 0 , 중복이 아닐경우 = 1)
-var idck = 0;
-$(function() {
-    //idck 버튼을 클릭했을 때 
-    $("#idck").click(function() {
-    	console.log(idck)
-        //id 를 param.
-        var id =  $("#id").val(); 
-        $.ajax({
-            async: true,
-            type : 'POST',
-            data : id,
-            url : "idcheck.zips",
-            dataType : "json",
-            contentType: "application/json; charset=UTF-8",
-            success : function(data) {
-                if (data.cnt > 0) {
-                    alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
-                    $("#id").focus();
-                } else {
-                    alert("사용가능한 아이디입니다.");
-                    $("#pw").focus();
-                    idck = 1;
-                }
-            },
-            error : function(error) {
-                alert("아이디를 넣어야죠?^^");
-            }
-        });
-    });
-});
-</script>
 </head>
 <body>
 <div class="container">
-  <h2>Join Page</h2><br>
+  <h1><strong>Join Page</strong></h1><br>
   <form:form modelAttribute="user" method="post" action="userEntry.zips" enctype="multipart/form-data">
 	<spring:hasBindErrors name="user">
 		<font color = "red">
@@ -55,19 +22,20 @@ $(function() {
 			</c:forEach>
 		</font>
 	</spring:hasBindErrors>
-  <div class="img" align="center">
+	
+  <div id="preview" class="img" align="center">
 				<img src="../img/join_pic.png" width="400" height="400" name="picture"><br>
-				<font size="2"><a href="javascript:win_open()">사진</a></font></div>
-    
+				<font size="2"><br>
+				<input type="file" onclick="location.href=''">
+				</font></div><br>
+				
     <div class="mb-3">
               <label for="id" id="id">아이디</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="id" /></font>
               <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해 주세요">
-              <button id="idck">id 중복체크</button>
             </div>
     <div class="mb-3">
               <label for="pw">비밀번호</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="pw" /></font>
               <input type="password" class="form-control" name="pw" placeholder="비밀번호를 입력해 주세요">
-              <input type="button" value="비밀번호확인" id="password">
             </div>
     <div class="mb-3">
               <label for="name">이름</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="name" /></font>
@@ -115,7 +83,7 @@ $(function() {
       <input type="radio" name="gender" value="여">여자
     </label>
  	<br><br>
-    <input type="submit" class="btn btn-default btn-lg btn-block" value="join">
+    <input type="submit" class="btn btn-default btn-lg btn-block" value="회원가입">
     <br><br>
   </form:form>
 </div>

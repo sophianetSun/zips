@@ -38,7 +38,6 @@ public class Usercontroller {
 		ModelAndView mav = new ModelAndView("user/join");
 		if(bindingResult.hasErrors()) {
 			mav.getModel().putAll(bindingResult.getModel());
-			System.out.println(user);
 			return mav;
 		}
 		try {
@@ -55,20 +54,12 @@ public class Usercontroller {
 	@RequestMapping("user/idcheck")
     @ResponseBody
     public Map<String, Integer> idcheck(@RequestBody String id) {
-		System.out.println(id);
         int count = 0;
         Map<String, Integer> map = new HashMap<String, Integer>();
         count = service.idcheck(id);
         map.put("cnt", count);
         return map;
     }
-	
-	/*@RequestMapping("user/login")//view를 띄워주는 메소드
-	public ModelAndView loginForm() {
-	ModelAndView mav = new ModelAndView();
-	mav.addObject(new User());
-	return mav;
-	}*/
 	
 	@RequestMapping(value="user/login", method=RequestMethod.GET)//value : ��û�� ��
 	public String loginForm() {
@@ -99,10 +90,16 @@ public class Usercontroller {
 		}
 		return mav;
 	}
-	
 	@RequestMapping("user/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "/main";
+	}
+	
+	@RequestMapping("user/create")
+	public ModelAndView create() {
+		ModelAndView mav = new ModelAndView("user/add");
+		mav.addObject(new User());
+		return mav;
 	}
 }

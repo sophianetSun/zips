@@ -18,32 +18,28 @@
   <title><decorator:title default="집에서 헬스하자 - zips" /></title>
   <decorator:head />
 </head>
-
 <body>
 <!-- Header -->
-<<<<<<< HEAD
-<div class="jumbotron text-center" style="margin-bottom:0">
-  <img src="../img/team.png" class="rounded" alt="teamlogo" width="200" height="150"> 
-  <h4><p class="text-info"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
-</div>
-=======
 <div class="row" style="margin-bottom:0">
   <div class="col-sm-10">
   <a href="${pageContext.request.contextPath }">
-  	<img src="${pageContext.request.contextPath }/img/team.png" 
-  		class="rounded main_logo" alt="teamlogo">
+  	<img src="${pageContext.request.contextPath }/img/team.png" class="rounded main_logo" alt="teamlogo">
   </a> 
   </div>
 <div class="col-sm-2 align-self-center">
-  <a href="#">Join&amp;Login</a>
+<c:if test="${empty sessionScope.loginUser}">
+  <a href="${path}/zips/user/login.zips">로그인</a>
+</c:if>
+<c:if test="${!empty sessionScope.loginUser}">
+  <a href="${path}/zips/user/logout.zips">로그아웃</a>
+</c:if>
+  <a href="${path}/zips/user/join.zips">회원가입</a>
   <a href="#"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
 </div>
 <div class="col-sm-12">
   <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
 </div>
 </div>
->>>>>>> branch 'master' of https://github.com/sophianetSun/zips.git
-	 
 <!-- Navi -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
  <a class="navbar-brand" href="#"></a>
@@ -53,7 +49,7 @@
  <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
  <ul class="navbar-nav">
   <li class="nav-item">
-   <a class="nav-link" href="#">홈트게시판</a>
+   <a class="nav-link" href="${path}/zips/board/list.zips">홈트게시판</a>
   </li>
   <li class="nav-item">
    <a class="nav-link" href="#">Question&amp;Answer</a>
@@ -65,12 +61,11 @@
    <a class="nav-link" href="#">Before&amp;After</a>
   </li>    
   <li class="nav-item">
-   <a class="nav-link" href="#">중고장터</a>
+   <a class="nav-link" href="${path}/zips/shop/write.zips">중고장터</a>
   </li>    
  </ul>
 </div>  
 </nav>
-
 <!-- Main  -->
 <div class="container" style="margin-top:30px">
 	<decorator:body/>
@@ -79,6 +74,5 @@
 <footer class="jumbotron text-center" style="margin-bottom:0"> 
   <p>Powered by <a href="http://cafe.naver.com/itisgoodee" target="_blank" class="w3-hover-text-grey"><strong>GOODEE ACADEMY</strong></a></p>
 </footer>
-
 </body>
 </html>
