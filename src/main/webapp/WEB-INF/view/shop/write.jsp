@@ -55,7 +55,7 @@ $(document).ready(
       </div>
       <div class="form-group">
         <label for="writer">작성자 <font color="red"><form:errors path="shop_seller_id" /></font> </label>
-        <input type="text" class="form-control" id="writer" name="shop_seller_id" placeholder="내용을 입력하세요.">
+        <input type="text" class="form-control" id="writer" name="shop_seller_id" value="${loginUser.nickname}" readonly="readonly">
         
       </div>
       <div class="form-group">
