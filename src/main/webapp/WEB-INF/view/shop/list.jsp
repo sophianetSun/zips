@@ -9,7 +9,7 @@
  	text-align: center;
  }
 </style>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>중고 장터 게시판 목록</title>
 <script type="text/javascript">
 	// 스크립트 list function
@@ -50,7 +50,7 @@
 			<tr>
 				<td>${shopcnt}</td>
 					<c:set var="shopcnt" value="${shopcnt-1}"/>
-				<td><a href="detail.zips">${shop.shop_subject}</a></td>	
+				<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a></td>	
 				<td>${shop.shop_seller_id}</td>
 				<td>${shop.shop_regdate}</td>	
 			</tr>

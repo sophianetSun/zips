@@ -17,13 +17,17 @@
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/zipsboard.css">
   <title><decorator:title default="집에서 헬스하자 - zips" /></title>
   <decorator:head />
+  <script>
+  $(document).ready(function() {
+  	$("#search_button").click(function() {
+  		$("#search").submit();
+  	})
+	  
+  });
+  </script>
 </head>
 <body>
-
 <!-- Header -->
-
-<!-- Header -->
-
 <div class="row" style="margin-bottom:0">
   <div class="col-sm-10">
   <a href="${pageContext.request.contextPath }">
@@ -32,22 +36,24 @@
   </div>
 <div class="col-sm-2 align-self-center">
 <c:if test="${empty sessionScope.loginUser}">
-  <a href="${path}/zips/user/login.zips">로그인</a>
+  <a href="${pageContext.request.contextPath }/user/login.zips">로그인</a>
 </c:if>
 <c:if test="${!empty sessionScope.loginUser}">
-  <a href="${path}/zips/user/logout.zips">로그아웃</a>
+  <a href="${pageContext.request.contextPath }/user/logout.zips">로그아웃</a>
 </c:if>
-  <a href="${path}/zips/user/join.zips">회원가입</a>
-  <a href="#"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
+  <a href="${pageContext.request.contextPath }/user/join.zips">회원가입</a>
+  <a href="${pageContext.request.contextPath }/message">쪽지</a>
+  <br>
+  <form action="${pageContext.request.contextPath }/search.zips" method="POST" id="search">
+  	<input type="text" name="query">
+  	<a href="#" id="search_button"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
+  </form>
 </div>
 <div class="col-sm-12">
   <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
 </div>
-
 </div>
-
-
-
+	 
 <!-- Navi -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
  <a class="navbar-brand" href="#"></a>
@@ -57,7 +63,7 @@
  <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
  <ul class="navbar-nav">
   <li class="nav-item">
-   <a class="nav-link" href="${path}/zips/board/boardwrite.zips">홈트게시판</a>
+   <a class="nav-link" href="${pageContext.request.contextPath }/board/list.zips">홈트게시판</a>
   </li>
   <li class="nav-item">
    <a class="nav-link" href="#">Question&amp;Answer</a>
@@ -69,7 +75,7 @@
    <a class="nav-link" href="#">Before&amp;After</a>
   </li>    
   <li class="nav-item">
-   <a class="nav-link" href="${path}/zips/shop/write.zips">중고장터</a>
+   <a class="nav-link" href="${pageContext.request.contextPath }/shop/list.zips">중고장터</a>
   </li>    
  </ul>
 </div>  

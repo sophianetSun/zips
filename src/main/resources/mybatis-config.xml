@@ -7,11 +7,13 @@
 		<typeAlias type="logic.Shop" alias="Shop"/>
 		<typeAlias type="logic.Board" alias="Board"/>
 		<typeAlias type="logic.SearchInfo" alias="SearchInfo"/>
+		<typeAlias type="logic.Message" alias="Message"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/User.xml"/>
 		<mapper resource="dao/mapper/Shop.xml"/>
 		<mapper resource="dao/mapper/Board.xml"/>	
 		<mapper resource="dao/mapper/SearchInfo.xml"/>
+		<mapper resource="dao/mapper/Message.xml"/>
 	</mappers>
 </configuration>

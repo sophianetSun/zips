@@ -13,4 +13,7 @@ public interface ShopService {
 
 	// 작성된 글 리스트 읽어오기
 	List<Shop> shopList(String searchType, String searchContent, Integer pageNum, int limit);
+
+	// 글 읽어오기
+	Shop getShop(Integer shop_no);
 }

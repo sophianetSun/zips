@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 
+import dao.MessageDao;
 import dao.SearchInfoDao;
 
 @Service
@@ -19,6 +20,8 @@ public class MainServiceImpl implements MainService {
 
 	@Autowired
 	private SearchInfoDao searchInfoDao;
+	@Autowired
+	private MessageDao msgDao;
 	
 	@Override
 	public Map<String, List<Board>> getMainBoards() {
@@ -32,7 +35,6 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public List<Shop> getShopList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -98,5 +100,34 @@ public class MainServiceImpl implements MainService {
 						SearchInfo::getContent,
 						Collectors.counting()));
 		return map;
+	}
+
+	@Override
+	public void sendMsg(Message msg) {
+		msgDao.insert(msg);
+	}
+
+	@Override
+	public List<Message> getMsgList(String userId) {
+		if (userId != null || !userId.equals("")) {
+			return null;
+		}		
+		
+		return msgDao.getMsgList(userId);	
+	}
+
+	@Override
+	public Message getMsgById(String num) {
+		return msgDao.getMsgById(num);
+	}
+
+	@Override
+	public void hideMsg(Message msg) {
+		msgDao.hideMsg(msg);
+	}
+
+	@Override
+	public void deleteMsg(String num) {
+		
 	}
 }

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
-import logic.Board;
 import logic.Shop;
 import logic.ShopService;
+import logic.User;
 
 @Controller
 public class ShopController {
@@ -25,8 +25,12 @@ public class ShopController {
 	
 	@RequestMapping(value="shop/write", method=RequestMethod.GET)
 	public ModelAndView write(HttpServletRequest request) {
-		System.out.println("게시물 작성 GET 방식 호출입니다.");
 		ModelAndView mav = new ModelAndView();
+		System.out.println("게시물 작성 GET 방식 호출입니다.");
+		System.out.println("로그인 유저 검사");
+		System.out.println(request.getSession().getAttribute("loginUser"));
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		mav.addObject(loginUser);
 		mav.addObject(new Shop());
 		return mav;
 	}
@@ -34,6 +38,8 @@ public class ShopController {
 	@RequestMapping(value="shop/write", method=RequestMethod.POST)
 	public ModelAndView write(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request) {
 		System.out.println("게시물 작성 POST 방식 호출입니다.");
+		System.out.println(request.getSession().getAttribute("loginUser"));
+		
 		ModelAndView mav = new ModelAndView();
 		
 		if(bindingResult.hasErrors()) {
@@ -78,6 +84,60 @@ public class ShopController {
 		mav.addObject("shopcnt", shopcnt);
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="shop/*", method=RequestMethod.GET)
+	public ModelAndView detail(Integer shop_no, Integer pageNum, HttpServletRequest request) {
+		System.out.println("상세 보기 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = new Shop();
+		if (shop_no != null) {
+			shop = shopservice.getShop(shop_no);
+			String url = request.getServletPath();
+		}
+		System.out.println(pageNum);
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("shop", shop);
+		mav.addObject(loginUser);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="shop/update", method=RequestMethod.POST)
+	public ModelAndView update(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String pageNum = request.getParameter("pageNum");
+		System.out.println(pageNum);
+		
+		mav.addObject("shop_no", shop.getShop_no());
+		mav.addObject("pageNum", pageNum);
+		
+		if(bindingResult.hasErrors()) {
+			mav.getModel().putAll(bindingResult.getModel());
+			mav.addObject("shop", shop);
+			return mav;
+		}
+		
+		Shop dbShop = shopservice.getShop(shop.getShop_no());
+		/*
+		if(!board.getPass().equals(dbBoard.getPass())) {
+			throw new ShopException("비밀번호 틀렸습니다.", "update.shop?num="+board.getNum()+"&pageNum="+request.getParameter("pageNum"));
+		} 
+		if(board.getFile1() == null || board.getFile1().isEmpty()) {
+			board.setFileurl(request.getParameter("file2"));
+		}
+		*/
+		try {  
+			//shopservice.shopUpdate(shop, request);
+			mav.setViewName("redirect:list.zips");
+		} catch (Exception e) {
+			e.printStackTrace();
+			new ShopException("게시물 수정 실패", "update.zips?num="+shop.getShop_no()+"&pageNum="+pageNum);
+		}
+		return mav; 
 	}
 }
  

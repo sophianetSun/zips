@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>중고 장터 물품 등록</title>
 <style type="text/css">
 	#preview img {
@@ -55,7 +55,7 @@ $(document).ready(
       </div>
       <div class="form-group">
         <label for="writer">작성자 <font color="red"><form:errors path="shop_seller_id" /></font> </label>
-        <input type="text" class="form-control" id="writer" name="shop_seller_id" placeholder="내용을 입력하세요.">
+        <input type="text" class="form-control" id="writer" name="shop_seller_id" value="${loginUser.nickname}" readonly="readonly">
         
       </div>
       <div class="form-group">
