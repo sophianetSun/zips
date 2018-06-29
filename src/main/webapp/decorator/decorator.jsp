@@ -19,11 +19,11 @@
   <decorator:head />
 </head>
 <body>
-<<<<<<< HEAD
+
 <!-- Header -->
-=======
+
 <!-- Header -->
->>>>>>> branch 'master' of https://github.com/sophianetSun/zips.git
+
 <div class="row" style="margin-bottom:0">
   <div class="col-sm-10">
   <a href="${pageContext.request.contextPath }">
@@ -43,12 +43,11 @@
 <div class="col-sm-12">
   <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
 </div>
-<<<<<<< HEAD
+
 </div>
-=======
-</div>
-	 
->>>>>>> branch 'master' of https://github.com/sophianetSun/zips.git
+
+
+
 <!-- Navi -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
  <a class="navbar-brand" href="#"></a>
@@ -58,7 +57,7 @@
  <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
  <ul class="navbar-nav">
   <li class="nav-item">
-   <a class="nav-link" href="${path}/zips/board/list.zips">홈트게시판</a>
+   <a class="nav-link" href="${path}/zips/board/boardwrite.zips">홈트게시판</a>
   </li>
   <li class="nav-item">
    <a class="nav-link" href="#">Question&amp;Answer</a>

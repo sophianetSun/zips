@@ -3,6 +3,7 @@ package controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -34,17 +35,16 @@ public class Usercontroller {
 	}
 	
 	@RequestMapping("user/userEntry")
-	public ModelAndView userEntry(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView userEntry(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("user/join");
 		if(bindingResult.hasErrors()) {
 			mav.getModel().putAll(bindingResult.getModel());
 			return mav;
 		}
 		try {
-			service.userCreate(user);
-			mav.setViewName("user/login");
+			service.userCreate(user, request);
+			mav.setViewName("redirect:/user/login.zips");
 			mav.addObject("user",user);
-			System.out.println("try"+user);
 		} catch (DataIntegrityViolationException e) {
 			bindingResult.reject("error.duplicate.user");
 		}
@@ -61,12 +61,7 @@ public class Usercontroller {
         return map;
     }
 	
-	@RequestMapping(value="user/login", method=RequestMethod.GET)//value : ��û�� ��
-	public String loginForm() {
-		return "user/login";
-	}
-	
-	@RequestMapping(value="user/login", method=RequestMethod.POST)
+	@RequestMapping("user/login")
 	public ModelAndView login(@Valid User user, BindingResult bindingResult, HttpSession session) {
 		ModelAndView mav = new ModelAndView("user/login");
 		if(bindingResult.hasErrors()) {
