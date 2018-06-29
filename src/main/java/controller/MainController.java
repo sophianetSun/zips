@@ -28,8 +28,8 @@ public class MainController {
 	@RequestMapping("/search")
 	public ModelAndView search(String query, HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/searchResult");
-		mainService.inputSearch(query, session);
-		//List<Map<String, Integer>> map = mainService.getSearchMap();
+		if (query != null && !query.equals(""))
+			mainService.inputSearch(query, session);
 		Map<String, Long> map = mainService.analyzeSearchResult();
 		mav.addObject("map", map);
 		return mav;
