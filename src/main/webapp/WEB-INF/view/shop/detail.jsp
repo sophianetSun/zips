@@ -21,12 +21,10 @@
 		</td>
 	</tr>
 	<tr>
-	<button type="submit" class="btn btn-primary">작성</button>
-	
 	<td colspan="2" align="center">
-		<a href="update.shop?num=${board.num}&pageNum=${param.pageNum}">[수정]</a>
-		<a href="delete.shop?num=${board.num}&pageNum=${param.pageNum}">[삭제]</a>
-		<a href="list.shop?pageNum=${param.pageNum}">[목록]</a>
+	<input type="button" class="btn btn-primary" value="상품 목록" onclick="location.href='list.zips?pageNum=${pageNum}'">
+	<input type="button" class="btn btn-primary" value="상품 수정" onclick="location.href='update.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+	<input type="button" class="btn btn-primary" value="상품 삭제" onclick="location.href='delete.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
 	</td></tr>
 </table>
 </div>

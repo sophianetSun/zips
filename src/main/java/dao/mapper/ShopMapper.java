@@ -17,7 +17,7 @@ public interface ShopMapper {
 	// DB에 넣어주는 게시물 작성 메소드
 	@Insert("insert into zips_shop "
 			+ "(shop_no,shop_seller_id,shop_subject,shop_content,shop_price,shop_regdate) " 
-			+ "values (#{shop_no},'chic0004',#{shop_subject},#{shop_content},#{shop_price},now())" )
+			+ "values (#{shop_no},#{shop_seller_id},#{shop_subject},#{shop_content},#{shop_price},now())" )
 	void insert(Shop shop);
 	
 }
