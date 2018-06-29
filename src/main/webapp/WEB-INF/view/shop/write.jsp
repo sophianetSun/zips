@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>중고 장터 물품 등록</title>
 <style type="text/css">
 	#preview img {
