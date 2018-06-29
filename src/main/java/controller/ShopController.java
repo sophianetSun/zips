@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
-import logic.Board;
 import logic.Shop;
 import logic.ShopService;
 import logic.User;

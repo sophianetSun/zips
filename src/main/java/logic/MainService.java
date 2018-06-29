@@ -20,4 +20,10 @@ public interface MainService {
 	public void inputSearch(String query, HttpSession session);
 	public List<Map<String, Integer>> getSearchMap();
 	public Map<String, Long> analyzeSearchResult();
+	
+	public void sendMsg(Message msg);
+	public List<Message> getMsgList(String userId);
+	public Message getMsgById(String num);
+	public void hideMsg(Message msg);
+	public void deleteMsg(String num);
 }

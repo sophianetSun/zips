@@ -12,16 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import logic.MainService;
+import logic.Shop;
+import logic.ShopService;
 
 @Controller
 public class MainController {
 
 	@Autowired
 	private MainService mainService;
+	@Autowired
+	private ShopService shopService;
 	
 	@RequestMapping("/main")
 	public ModelAndView main() {
 		ModelAndView mav = new ModelAndView("main");
+		List<Shop> shopList = shopService.shopList("shop_subject", "", 1, 5);
+		mav.addObject("shopList", shopList);
 		return mav;
 	}
 	
