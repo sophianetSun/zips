@@ -49,6 +49,7 @@
 </c:if>
   <a href="${pageContext.request.contextPath }/user/join.zips">회원가입</a>
   <a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
+<c:if test="${!empty sessionScope.loginUser }">
 	<a href="${pageContext.request.contextPath}/user/mypage.zips">마이페이지</a></c:if>
 	
   
