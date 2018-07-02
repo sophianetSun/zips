@@ -6,10 +6,12 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import dao.mapper.MessageMapper;
 import logic.Message;
 
+@Repository
 public class MessageDaoImpl implements MessageDao {
 	
 	@Autowired
@@ -20,14 +22,14 @@ public class MessageDaoImpl implements MessageDao {
 	public List<Message> getMsgList(String userId) {
 		Map<String, String> map = new HashMap<>();
 		map.put("receiver", userId);
-		return sqlSession.selectList(NS + "list", map);
+		return sqlSession.selectList(NS + "msgList", map);
 	}
 
 	@Override
 	public Message getMsgById(String num) {
 		Map<String, String> map = new HashMap<>();
 		map.put("num", num);
-		return sqlSession.selectOne(NS + "list", map);
+		return sqlSession.selectOne(NS + "msgList", map);
 	}
 
 	@Override
