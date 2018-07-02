@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 public class User implements Serializable{
 	@Size(min=3, max=10, message="아이디를 입력해 주세요")
@@ -26,6 +27,7 @@ public class User implements Serializable{
 	private Date regdate;
 	private Date logdate;
 	private String picture;
+	private MultipartFile pic;
 	private double muscle;
 	public String getId() {
 		return id;
@@ -129,6 +131,12 @@ public class User implements Serializable{
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
+	public MultipartFile getPic() {
+		return pic;
+	}
+	public void setPic(MultipartFile pic) {
+		this.pic = pic;
+	}
 	public double getMuscle() {
 		return muscle;
 	}
@@ -140,6 +148,8 @@ public class User implements Serializable{
 		return "User [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email + ", nickname=" + nickname
 				+ ", tel=" + tel + ", address=" + address + ", gender=" + gender + ", height=" + height + ", weight="
 				+ weight + ", bodyfat=" + bodyfat + ", blacklist=" + blacklist + ", point=" + point + ", coin=" + coin
-				+ ", regdate=" + regdate + ", logdate=" + logdate + ", picture=" + picture + ", muscle=" + muscle + "]";
+				+ ", regdate=" + regdate + ", logdate=" + logdate + ", picture=" + picture + ", pic=" + pic
+				+ ", muscle=" + muscle + "]";
 	}
+	
 }

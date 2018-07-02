@@ -8,7 +8,7 @@ import logic.User;
 public interface UserMapper {
 	@Insert("insert into zipsuser"
 			+"(id, pw, name, email, nickname, tel, address, gender, height, weight, bodyfat, muscle, blacklist, point, coin, regdate, logdate, picture)"
-			+"values(#{id}, #{pw}, #{name}, #{email}, #{nickname}, #{tel}, #{address}, #{gender}, #{height}, #{weight}, #{bodyfat}, #{muscle}, #{blacklist}, #{point}, #{coin}, #{regdate}, #{logdate}, #{picture})")
+			+"values(#{id}, #{pw}, #{name}, #{email}, #{nickname}, #{tel}, #{address}, #{gender}, #{height}, #{weight}, #{bodyfat}, #{muscle}, #{blacklist}, #{point}, #{coin}, now(), #{logdate}, #{picture})")
 	void insert(User user);
 
 	@Select("select * from zipsuser where id=#{id}")

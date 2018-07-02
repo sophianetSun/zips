@@ -1,7 +1,12 @@
 package logic;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import dao.UserDao;
 
@@ -12,8 +17,22 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public void userCreate(User user) {
+	public void userCreate(User user, HttpServletRequest request) {
+		if(user.getPic() != null && user.getPic().isEmpty()) {
+			uploadFileCreate(user.getPic(), request);
+			user.setPicture(user.getPic().getOriginalFilename());
+		}
 		userDao.insert(user);
+	}
+
+	private void uploadFileCreate(MultipartFile pic, HttpServletRequest request) {
+		String uploadPath = request.getServletContext().getRealPath("/") + "/img/";
+		String orgFile = pic.getOriginalFilename();
+		try {
+			pic.transferTo(new File(uploadPath + orgFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

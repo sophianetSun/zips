@@ -22,12 +22,40 @@
 			</c:forEach>
 		</font>
 	</spring:hasBindErrors>
+	<style type="text/css">
+		#preview img {
+			width:304px;
+			height:236px;
+		}
+	</style>
 	
-  <div id="preview" class="img" align="center">
-				<img src="../img/join_pic.png" width="400" height="400" name="picture"><br>
-				<font size="2"><br>
-				<input type="file" onclick="location.href=''">
-				</font></div><br>
+	<script type="text/javascript">
+	$(document).ready(
+		function() {
+			$('#file').change(function() {
+				addPreview($(this));
+			});
+		});
+		function imageURL(input) {
+			if(input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function(img) {
+					$('#preview').append(
+						"<img src=\"" + img.target.result + "\"\/>"
+						);
+				};
+				reader.readAsDataURL(input.files[0]);
+			}else alert('invalid file input');
+		}
+	</script>
+	
+	
+  <div align="center">
+  <img src="../img/join_pic.png" class="img-thumbnail" alt="Cinque Terre" width="304" height="236"> 
+            <div id="preview" class="img-thumbnail"></div>
+        <input type="file" id="file" name="pic" onchange="imageURL(this)" multiple/>
+      </div><br><br>
 				
     <div class="mb-3">
               <label for="id" id="id">아이디</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="id" /></font>
