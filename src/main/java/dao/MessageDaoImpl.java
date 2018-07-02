@@ -19,9 +19,12 @@ public class MessageDaoImpl implements MessageDao {
 	private final String NS = "dao.mapper.MessageMapper.";
 	
 	@Override
-	public List<Message> getMsgList(String userId) {
+	public List<Message> getMsgList(String receiverId, String senderId) {
 		Map<String, String> map = new HashMap<>();
-		map.put("receiver", userId);
+		if (!(receiverId == null || receiverId.equals("")))
+			map.put("receiver", receiverId);
+		if (!(senderId == null || senderId.equals("")))
+			map.put("sender", senderId);
 		return sqlSession.selectList(NS + "msgList", map);
 	}
 

@@ -22,7 +22,7 @@ public interface MainService {
 	public Map<String, Long> analyzeSearchResult();
 	
 	public void sendMsg(Message msg);
-	public List<Message> getMsgList(String userId);
+	public List<Message> getMsgList(String receiverId, String senderId);
 	public Message getMsgById(String num);
 	public void hideMsg(Message msg);
 	public void deleteMsg(String num);

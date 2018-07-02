@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -108,12 +109,8 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Message> getMsgList(String userId) {
-		if (userId != null || !userId.equals("")) {
-			return null;
-		}		
-		
-		return msgDao.getMsgList(userId);	
+	public List<Message> getMsgList(String receiverId, String senderId) {
+		return msgDao.getMsgList(receiverId, senderId);	
 	}
 
 	@Override

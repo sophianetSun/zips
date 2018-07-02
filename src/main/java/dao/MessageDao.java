@@ -6,7 +6,7 @@ import logic.Message;
 
 public interface MessageDao {
 
-	public List<Message> getMsgList(String userId);
+	public List<Message> getMsgList(String receiverId, String senderId);
 
 	public Message getMsgById(String num);
 

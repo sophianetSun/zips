@@ -5,10 +5,10 @@
  	<select id="msgList" resultType="Message" parameterType="map">
  		select * from message
  		<if test="receiver != null">
- 		where receiver = #{receiver}
+ 		where receiver = #{receiver} and receiver_status = 1
  		</if>
  		<if test="sender != null">
- 		where receiver = #{receiver}
+ 		where sender = #{sender} and sender_status = 1
  		</if>
  		<if test="num != null">
  		where num = #{num}

@@ -84,9 +84,16 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Message [num=" + num + ", sender=" + sender + ", senderStatus=" + senderStatus + ", receiver="
-				+ receiver + ", receiverStatus=" + receiverStatus + ", content=" + content + ", regdate=" + regdate
-				+ "]";
+		return "{\"Message\" : "
+				+ "{\"num\":\"" + num + "\", "
+				+ "\"sender\":\"" + sender + "\", "
+				+ "\"senderStatus\":\"" + senderStatus + "\", "
+				+ "\"receiver\":\"" + receiver + "\", "
+				+ "\"receiverStatus\":\"" + receiverStatus + "\", "
+				+ "\"content\":\"" + content + "\", "
+				+ "\"regdate\":\"" + regdate
+				+ "\"}"
+				+ "}";
 	}
 	
 }

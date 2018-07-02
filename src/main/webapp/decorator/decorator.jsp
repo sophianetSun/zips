@@ -42,7 +42,7 @@
   <a href="${pageContext.request.contextPath }/user/logout.zips">로그아웃</a>
 </c:if>
   <a href="${pageContext.request.contextPath }/user/join.zips">회원가입</a>
-  <a href="${pageContext.request.contextPath }/message">쪽지</a>
+  <a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
   <br>
   <form action="${pageContext.request.contextPath }/search.zips" method="POST" id="search">
   	<input type="text" name="query">
