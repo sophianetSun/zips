@@ -9,4 +9,6 @@ public interface UserDao {
 	int selectOne(String id);
 
 	User select(String id);
+
+	void update(User user);
 }

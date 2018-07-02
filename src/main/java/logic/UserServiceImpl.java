@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void userCreate(User user, HttpServletRequest request) {
-		if(user.getPic() != null && user.getPic().isEmpty()) {
+		if(user.getPic() != null && !user.getPic().isEmpty()) {
 			uploadFileCreate(user.getPic(), request);
 			user.setPicture(user.getPic().getOriginalFilename());
 		}
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService{
 
 	private void uploadFileCreate(MultipartFile pic, HttpServletRequest request) {
 		String uploadPath = request.getServletContext().getRealPath("/") + "/img/";
-		String orgFile = pic.getOriginalFilename();
+		String orgFile = pic.getOriginalFilename();//orgFile에는 오리지날파일네임이 있음.
 		try {
 			pic.transferTo(new File(uploadPath + orgFile));
 		} catch (Exception e) {
@@ -43,5 +43,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User getUser(String id) {
 		return userDao.select(id);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		userDao.update(user);
 	}
 }
