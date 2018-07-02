@@ -30,12 +30,12 @@ public class SearchInfoDaoImpl implements SearchInfoDao {
 	public List<SearchInfo> getSearchListById(String id) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("id", id);
-		return sqlSession.selectList(NS + "list", map);
+		return sqlSession.selectList(NS + "searchList", map);
 	}
 
 	@Override
 	public List<SearchInfo> getSearchListAll() {
-		return sqlSession.selectList(NS + "list");
+		return sqlSession.selectList(NS + "searchList");
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SearchInfoDaoImpl implements SearchInfoDao {
 			Map<String, Date> map = new HashMap<String, Date>();
 			map.put("from", fromDate);
 			map.put("to", toDate);
-			return sqlSession.selectList(NS + "list", map);			
+			return sqlSession.selectList(NS + "searchList", map);			
 		} catch (ParseException pe) {
 			
 		} finally {

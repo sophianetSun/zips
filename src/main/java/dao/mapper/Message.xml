@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="dao.mapper.MessageMapper">
+ 	<select id="msgList" resultType="Message" parameterType="map">
+ 		select * from message
+ 		<if test="receiver != null">
+ 		where receiver = #{receiver}
+ 		</if>
+ 		<if test="sender != null">
+ 		where receiver = #{receiver}
+ 		</if>
+ 		<if test="num != null">
+ 		where num = #{num}
+ 		</if>
+ 	</select>
+</mapper>

@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,8 +12,17 @@
 </head>
 <body>
 
-<form method="post" action="login.zips">
-<input type="hidden" name="name" value="test">
+<form:form modelAttribute="user" method="post" action="login.zips">
+	<form:hidden path="name" value="의미없음" />
+	<input type="hidden" name="name" value="test">
+	<spring:hasBindErrors name="user">
+	<font color="red">
+		<c:forEach items = "${errors.globalErrors}" var="error">
+		<spring:message code="${error.code}" />
+		</c:forEach>
+	</font>
+	</spring:hasBindErrors>
+
 
 <div class="container">
   <h1><strong>로그인</strong></h1><br><br>
@@ -22,13 +30,13 @@
   	<img src="../img/rock.png" width="200" height="200" name="rock"><br><br>
   </div>
   <div>
-    <div class="form-group">
-      <label for="id" id="id">아이디 :</label>
-      <input type="text" class="form-control" name="id" id="id" placeholder="ID">
+  		<br>
+    <div class="form-group" align="center">
+      <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해 주세요" style="width:400px">
     </div>
-    <div class="form-group">
-      <label for="pw">비밀번호 :</label>
-      <input type="password" class="form-control" id="pw" placeholder="Password" name="pw">
+    	<br>
+    <div class="form-group"  align="center">
+      <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해 주세요" name="pw" style="width:400px">
     </div><br>
     <div align="center">
     <button type="submit" class="btn btn-default">로그인</button>
@@ -36,6 +44,6 @@
     </div><br><br>
   </div>
 </div>
-</form>
+</form:form>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ include file="./jspHeader.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -55,8 +56,16 @@
 <div id="shop" class="row">
 	<div class="col-sm-8">
 		<h4 class="main_title">중고장터</h4>
-		<p>안 쓰는 요가매트 팝니다.</p>
-		<p>재미어트 철봉 그냥 드려요.</p>	
+		<table>
+		<tr><th>제목</th><th>글쓴이</th><th>날짜</th></tr>
+		<c:forEach items="${shopList}" var="shop">
+		<tr>
+			<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a></td>	
+			<td>${shop.shop_seller_id}</td>
+			<td>${shop.shop_regdate}</td>
+		</tr>
+		</c:forEach>
+		</table>
 	</div>
 	<div class="col-sm-4">
 		<ul class="list-group">
