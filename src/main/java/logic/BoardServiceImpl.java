@@ -22,12 +22,13 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Board> boardList(String searchType, String searchContent, Integer pageNum, int limit) {
-		
 		return boardDao.list(searchType,searchContent,pageNum,limit);
 	}
 
 	@Override
 	public int boardinsert(Board board, HttpServletRequest request) {
+		int num = boardDao.maxNum();
+		board.setNum(++num);
 		return boardDao.insert(board);
 	}
 
@@ -38,7 +39,18 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void updatereadcnt(Integer num) {
+		System.out.println("보드서비스임플 num:"+num);
 		boardDao.readcnt(num);
+	}
+
+	@Override
+	public int boardDelete(Board board, HttpServletRequest request) {
+		return boardDao.delete(board,request);
+	}
+
+	@Override
+	public int boardupdate(Board board, HttpServletRequest request) {
+		return boardDao.update(board,request);
 	}
 	
 		

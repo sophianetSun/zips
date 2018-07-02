@@ -3,7 +3,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="dao.mapper.BoardMapper">
  <select id="list" resultType="Board" parameterType="map">
-select board_userid,subject,content,filename fileurl,regdate,board_count,board_type from totalboard
+select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type from totalboard
  <if test="num != null">
  where num=#{num} 
  </if>

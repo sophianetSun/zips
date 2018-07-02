@@ -62,6 +62,14 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectOne(NS+"shopList", map);
 	}
 
-	
+	@Override
+	public void shopUpdate(Shop shop) {
+		sqlSession.getMapper(ShopMapper.class).update(shop);
+	}
+
+	@Override
+	public void shopDelete(int shop_no) {
+		sqlSession.getMapper(ShopMapper.class).delete(shop_no);
+	}
 	
 }

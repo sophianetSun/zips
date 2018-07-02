@@ -55,7 +55,7 @@ $(document).ready(
       </div>
       <div class="form-group">
         <label for="writer">작성자 <font color="red"><form:errors path="shop_seller_id" /></font> </label>
-        <input type="text" class="form-control" id="writer" name="shop_seller_id" value="${loginUser.nickname}" readonly="readonly">
+        <input type="text" class="form-control" style="width: 20%" id="writer" name="shop_seller_id" value="${loginUser.nickname}" readonly="readonly">
         
       </div>
       <div class="form-group">
@@ -64,7 +64,7 @@ $(document).ready(
       </div>
       <div class="form-group">
         <label for="price">상품 가격 <font color="red"><form:errors path="shop_price" /></font></label>
-        <input type="text" class="form-control" id="writer" name="shop_price" placeholder="가격을 입력하세요.">
+        <input type="text" class="form-control" style="width: 20%" id="writer" name="shop_price" placeholder="가격을 입력하세요.">
       </div>
       <div class="form-group">
         <label for="file">상품 사진 첨부</label>

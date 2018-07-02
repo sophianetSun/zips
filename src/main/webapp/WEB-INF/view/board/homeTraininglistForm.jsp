@@ -10,41 +10,45 @@
 <body>
 	   <div class="blog-post">
             <h2 class="blog-post-title">홈 트레이닝</h2>
-            <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+            <p class="blog-post-meta"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></p>
 
-            <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+            <h2>제목  : ${board.subject}</h2>
             <hr>
-            <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
+            <div align="right">
+            	<small>닉네임 :${board.board_userid}</small>
+            	<br>
+            	<small>조회수:${board.board_count}</small>
+            	<br>
+            	<br>
+            </div>
             <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <h2>${board.subject}</h2>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
             <div align="center">
              <video width="700" height="450" controls >
  	 		<source src="mov_bbb.mp4" type="video/mp4">
  			 <source src="mov_bbb.ogg" type="video/ogg">
 				</video>
 				</div>
-            <h3>Sub-heading</h3>
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-            <pre><code>Example code block</code></pre>
-            <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-            <h3>Sub-heading</h3>
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <ul>
-              <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-              <li>Donec id elit non mi porta gravida at eget metus.</li>
-              <li>Nulla vitae elit libero, a pharetra augue.</li>
-            </ul>
-            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-            <ol>
-              <li>Vestibulum id ligula porta felis euismod semper.</li>
-              <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-              <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-            </ol>
-            <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+            </blockquote>
+            <br>
+            <br>
+            <h3>운동 설명 & 운동 후기 </h3>
+            <br>
+            <p>${board.content }</p>
+            <hr>
+            <div align="center">
+              <button type="button" class="btn btn-sm btn-outline-primary" style="width: 100px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand }</button>
+              <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px;height: 50px">▶ 구독하기 <font color="red"></font></button>
+            <br>
+            <br>
+            </div>	
+          </div>
+     	     덧글창 덧글구현
+          
+          <div>
+          <%-- <c:if test="${sessionScope.loginUser.nickname == board.board_userid}"> </c:if> --%>
+				<a href="update.zips?num=${board.num }&pageNum=${param.pageNum}"><button type="button" class="btn btn-primary">수정</button></a>
+				<a href="delete.zips?num=${board.num }&pageNum=${param.pageNum}"><button type="button" class="btn btn-warning">삭제</button></a>
+				<a href="homeTraininglist.zips"><button type="button" class="btn btn-light">목록</button></a>
           </div>
 </body>
 </html>

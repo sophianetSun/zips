@@ -33,4 +33,9 @@ public class UserDaoImple implements UserDao{
 	public User select(String id) {
 		return sqlSession.getMapper(UserMapper.class).select(id);
 	}
+
+	@Override
+	public void update(User user) {
+		sqlSession.getMapper(UserMapper.class).update(user);
+	}
 }

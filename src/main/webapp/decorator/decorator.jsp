@@ -36,13 +36,24 @@
   </div>
 <div class="col-sm-2 align-self-center">
 <c:if test="${empty sessionScope.loginUser}">
-  <a href="${pageContext.request.contextPath }/user/login.zips">로그인</a>
-</c:if>
+  <a href="${pageContext.request.contextPath}/user/join.zips">회원가입</a></c:if>
+
+<c:if test="${empty sessionScope.loginUser}">
+  <a href="${pageContext.request.contextPath}/user/login.zips">로그인</a></c:if>
+  
+<c:if test="${!empty sessionScope.loginUser}">
+  <a href="${pageContext.request.contextPath}/user/logout.zips">로그아웃</a></c:if>
+
 <c:if test="${!empty sessionScope.loginUser}">
   <a href="${pageContext.request.contextPath }/user/logout.zips">로그아웃</a>
 </c:if>
   <a href="${pageContext.request.contextPath }/user/join.zips">회원가입</a>
   <a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
+	<a href="${pageContext.request.contextPath}/user/mypage.zips">마이페이지</a></c:if>
+	
+  
+	
+  <a href="${pageContext.request.contextPath}/message">쪽지</a>
   <br>
   <form action="${pageContext.request.contextPath }/search.zips" method="POST" id="search">
   	<input type="text" name="query">
