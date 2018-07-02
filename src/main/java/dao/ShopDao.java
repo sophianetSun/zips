@@ -17,5 +17,9 @@ public interface ShopDao {
 	List<Shop> shopList(String searchType, String searchContent, Integer pageNum, int limit);
 
 	Shop getShop(Integer shop_no);
+
+	void shopUpdate(Shop shop);
+
+	void shopDelete(int shop_no);
 	
 }

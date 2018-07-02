@@ -35,5 +35,15 @@ public class ShopServiceImpl implements ShopService {
 	public Shop getShop(Integer shop_no) {
 		return shopDao.getShop(shop_no);
 	}
+
+	@Override
+	public void shopUpdate(Shop shop, HttpServletRequest request) {
+		shopDao.shopUpdate(shop);
+	}
+
+	@Override
+	public void shopDelete(int shop_no) {
+		shopDao.shopDelete(shop_no);
+	}
 	
 }

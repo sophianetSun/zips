@@ -1,8 +1,11 @@
 package controller;
 
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
@@ -17,7 +21,7 @@ import logic.Board;
 import logic.Shop;
 import logic.ShopService;
 import logic.User;
-
+ 
 @Controller
 public class ShopController {
 	
@@ -87,36 +91,18 @@ public class ShopController {
 		return mav;
 	}
 	
-	@RequestMapping(value="shop/*", method=RequestMethod.GET)
-	public ModelAndView detail(Integer shop_no, Integer pageNum, HttpServletRequest request) {
-		System.out.println("상세 보기 호출");
-		ModelAndView mav = new ModelAndView();
-		Shop shop = new Shop();
-		if (shop_no != null) {
-			shop = shopservice.getShop(shop_no);
-			String url = request.getServletPath();
-		}
-		System.out.println(pageNum);
-		User loginUser = (User) request.getSession().getAttribute("loginUser");
-		System.out.println(loginUser);
-		
-		mav.addObject("pageNum", pageNum);
-		mav.addObject("shop", shop);
-		mav.addObject(loginUser);
-		
-		return mav;
-	}
-	
 	@RequestMapping(value="shop/update", method=RequestMethod.POST)
-	public ModelAndView update(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request) {
+	public ModelAndView update(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("수정 POST 방식");
 		ModelAndView mav = new ModelAndView();
 		String pageNum = request.getParameter("pageNum");
 		System.out.println(pageNum);
-		
+		System.out.println(request.getParameter("shop_no"));
 		mav.addObject("shop_no", shop.getShop_no());
 		mav.addObject("pageNum", pageNum);
 		
 		if(bindingResult.hasErrors()) {
+			System.out.println("수정 오류 진입");
 			mav.getModel().putAll(bindingResult.getModel());
 			mav.addObject("shop", shop);
 			return mav;
@@ -132,13 +118,61 @@ public class ShopController {
 		}
 		*/
 		try {  
-			//shopservice.shopUpdate(shop, request);
+			shopservice.shopUpdate(shop, request);
 			mav.setViewName("redirect:list.zips");
 		} catch (Exception e) {
 			e.printStackTrace();
-			new ShopException("게시물 수정 실패", "update.zips?num="+shop.getShop_no()+"&pageNum="+pageNum);
+			new ShopException("게시물 수정 실패", "update.zips?shop_no="+shop.getShop_no()+"&pageNum="+pageNum);
 		}
 		return mav; 
 	}
+	
+	@RequestMapping(value="shop/delete", method=RequestMethod.POST)
+	public ModelAndView delete(@RequestParam HashMap<String, String> map) {
+		ModelAndView mav = new ModelAndView();
+		
+		int shop_no = Integer.parseInt(map.get("shop_no"));
+		String pageNum = map.get("pageNum");
+		Shop dbshop = shopservice.getShop(shop_no);
+		//String pass = map.get("pass");
+/*		if(!pass.equals(dbBoard.getPass())) {
+			throw new ShopException("비밀번호가 틀렸습니다", "delete.shop?num="+num+"&pageNum="+pageNum);
+		}
+*/			
+		try {
+			shopservice.shopDelete(shop_no);
+			mav.setViewName("redirect:list.zips");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ShopException("삭제 중 오류 발생", "delete.zips?shop_no="+shop_no+"&pageNum="+pageNum);
+		}
+		
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="shop/*", method=RequestMethod.GET)
+	public ModelAndView detail(Integer shop_no, Integer pageNum, HttpServletRequest request) {
+		System.out.println("상세 보기 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = new Shop();
+		if (shop_no != null) {
+			shop = shopservice.getShop(shop_no);
+			String url = request.getServletPath();
+		}
+		System.out.println(pageNum);
+		System.out.println(shop_no);
+		
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("shop_no",shop_no);
+		mav.addObject("shop", shop);
+		mav.addObject(loginUser);
+		
+		return mav;
+	}
+	  
 }
  

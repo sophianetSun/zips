@@ -12,12 +12,15 @@
 <div class="container">
     <form:form modelAttribute="shop" action="update.zips?shop_no=${param.shop_no}&pageNum=${param.pageNum}" method="post">
       <div class="form-group">
+      	<input type="hidden" name="shop_no" value="${param.shop_no}" />
+      </div>
+      <div class="form-group">
         <label for="subject">제목 <font color="red"><form:errors path="shop_subject" /></font> </label>
         <input type="text" class="form-control" id="subject" name="shop_subject" value="${shop.shop_subject}">
       </div>
       <div class="form-group">
         <label for="writer">작성자 <font color="red"><form:errors path="shop_seller_id" /></font> </label>
-        <input type="text" class="form-control" id="writer" name="shop_seller_id" value="${loginUser.nickname}" readonly="readonly">
+        <input type="text" class="form-control" id="writer" name="shop_seller_id" value="${shop.shop_seller_id}" readonly="readonly">
       </div>
       <div class="form-group">
         <label for="content">내용 <font color="red"><form:errors path="shop_content" /></font></label>
@@ -32,9 +35,9 @@
         <input type="file" class="form-control" id="file" name="file" multiple>
       </div>
  	<div id="preview"></div>
-    </form:form>
-	<input type="button" class="btn btn-primary" value="상품 수정" onclick="location.href='update.zips?pageNum=${pageNum}'">
+	<button type="submit" class="btn btn-primary">상품 수정</button>
 	<input type="button" class="btn btn-primary" value="취소 하기" onclick="javascript:history.go(-1)">
+    </form:form>
 </div>
 </body>
 </html>
