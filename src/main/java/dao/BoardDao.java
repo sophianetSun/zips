@@ -19,6 +19,12 @@ public interface BoardDao {
 
 	void readcnt(Integer num);
 
+	int maxNum();
+
+	int delete(Board board, HttpServletRequest request);
+
+	int update(Board board, HttpServletRequest request);
+
 	
 
 }

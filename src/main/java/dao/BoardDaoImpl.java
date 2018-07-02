@@ -18,6 +18,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private final String NS = "dao.mapper.BoardMapper.";
+	
 	@Override
 	public int insert(Board board) {
 		return sqlSession.getMapper(BoardMapper.class).insert(board);
@@ -53,7 +54,25 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public void readcnt(Integer num) {
+		System.out.println("보드다오임플 num:"+num);
+		
 		sqlSession.getMapper(BoardMapper.class).readcnt(num);
+	}
+
+	@Override
+	public int maxNum() {
+		int a = sqlSession.getMapper(BoardMapper.class).maxNum();
+		return a;
+	}
+
+	@Override
+	public int delete(Board board, HttpServletRequest request) {
+		return sqlSession.getMapper(BoardMapper.class).delete(board);
+	}
+
+	@Override
+	public int update(Board board, HttpServletRequest request) {
+		  return sqlSession.getMapper(BoardMapper.class).update(board);
 	}
 	
 }

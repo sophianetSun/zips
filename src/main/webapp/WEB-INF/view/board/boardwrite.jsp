@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/view/jspHeader.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="form-validation.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 </head>
@@ -19,36 +18,48 @@
 			</p>
 		</div>
 	</div>
-	<div class="jumbotron background:linear-gradient(to right, #1ddb16, #ffbb00); bg-success text-white"   
-		 style="margin: auto;" >
+	<div class="jumbotron style="margin: auto;" >
 		 
-		<form:form modelAttribute="board" action="boardwrite.zips"
-			method="post" enctype="multipart/form-data" name="f">
+		<form:form modelAttribute="board" action="boardwrite.zips" method="post" enctype="multipart/form-data" name="f">
 			<div align="left">
 			<br>
-				작성자
+			<div class="col-md-6">
+          <div class="card flex-md-row mb-4 box-shadow h-md-200" style="width: 840px;height:250px; ">
+            <div class="card-body d-flex flex-column align-items-start">
+              <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
+              <h6 class="mb-100">
+				<strong>작성자</strong>
 				<form:input path="board_userid" class="form-control"
 					style="width:400px; height:40px;" readonly="true" value="회원에서 받아온 닉네임" />
-				<font color="red"><form:errors path="board_userid" /></font>
-			</div>
-			<hr class="mb-4">
-			<br>
-			<div align="left">
-				제목
-				<form:input path="subject" placeholder="제목을 입력 해주세요."
+				<font color="red"><form:errors path="board_userid" /></font></h6><hr style="background-color: red">
+              <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
+              <div class="mb-1 text-muted"><strong>제목</strong></div>
+              <p class="card-text mb-auto"><form:input path="subject" placeholder="제목을 입력 해주세요."
 					class="form-control" style=" width:400px; height:40px;" />
-				<font color="red"><form:errors path="subject" /></font>
+				<font color="red"><form:errors path="subject" /></font></p>
+            </div>
+          </div>
+        </div>
 			</div>
 			<hr class="mb-4">
-			<div align="left">
-				글내용 <span class="input-group-text"
+			<div class="col-md-6">
+          <div class="card flex-md-row mb-4 box-shadow h-md-200" style="width: 840px;height:600px; ">
+            <div class="card-body d-flex flex-column align-items-start">
+              <strong class="d-inline-block mb-10 text-success">본문</strong>
+                <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
+              <h3 class="mb-100">
+                <a class="text-dark">글 내용</a>
+              </h3>
+              <div class="mb-1 text-muted"><span class="input-group-text"
 					style="text-align: center; width: 230px; height: 40px;"><input
 					type="file" name="filename"></span> <br>
 				<form:textarea rows="15" cols="80" path="content"
 					placeholder="여기는 홈 트레이닝 게시판입니다. 게시판 취지에 맞는 글만 올려주시고 너무 과한 노출,홍보성 글은 관리자의 의해 즉시 삭제 됩니다." />
-				<font color="red"><form:errors path="content" /></font>
-			</div>
-			<hr class="mb-4">
+				<font color="red"><form:errors path="content" /></font></div>
+            </div>
+          </div>
+        </div>
+			<hr>
 			<center>
 				<button class="btn btn-primary btn-block" type="submit"
 					style="text-align: center; width: 270px; height: 45px;" onclick="javascript:alert('동영상 등록 완료');return true;">동영상
@@ -76,6 +87,9 @@
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
 	<script>
+	
+	
+	
 		window.jQuery
 				|| document
 						.write(

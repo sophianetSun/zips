@@ -1,7 +1,7 @@
  .my-hr1 {
     border: 0;
-    height: 3px;
-    width : 850px;
+    height: 4px;
+    width : 1160px;
     background: linear-gradient(to right, #1ddb16, #ffbb00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -10,7 +10,7 @@
 .test {
   display: inline-block;
   margin: 30px auto 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Nanum Pen Script';
   background: #fff;
   font-size: 35px;
   font-weight: 600;
@@ -44,8 +44,8 @@
 	.circle {
 		background: #fff;
 		border-radius: 100%;
-		width: 80px;
-		height: 80px;
+		width: 140px;
+		height: 140px;
 		line-height: 80px;
 		text-align: center;
 		margin:0 auto;
@@ -79,10 +79,51 @@
 			inset -15px 0 0 rgba(0, 255, 0, 0.5), 
 			inset 0 -15px 0 rgba(0, 150, 255, 0.5);
 	}        				
-.page {
-  width: 10vw;
-  height: 10vh;
-  display: flex;
-  justify-content: center;
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css); 
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+
+
+/* Base styling */
+
+.search__input {
+    width: 50%;
+    padding: 6px 12px;
+    background-color: transparent;
+    transition: transform 200ms ease-in-out;
+    font-size: 16px;
+    line-height: 30px;
+    color: #575756;
+    background-color: transparent;
+    background-image: url(http://mihaeltomic.com/codepen/input-search/ic_search_black_24px.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 9px;
+    background-position: 95% center;
+    border-radius: 40px;
+    border: 1px solid #575756;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
 }
-	
+
+.search__input::placeholder {
+    color: rgba(87, 87, 86, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.search__input:hover,
+        .search__input:focus {
+    padding: 12px 0;
+    outline: 0;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #575756;
+    border-radius: 0;
+    background-position: 100% center;
+}
+
+
+ ul{
+    padding-left:0px;
+    list-style:none;
+    }

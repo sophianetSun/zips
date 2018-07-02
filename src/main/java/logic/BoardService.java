@@ -16,5 +16,9 @@ public interface BoardService {
 
 	void updatereadcnt(Integer num);
 
+	int boardDelete(Board board, HttpServletRequest request);
+
+	int boardupdate(Board board, HttpServletRequest request);
+
 	
 }
