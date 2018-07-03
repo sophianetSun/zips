@@ -18,6 +18,7 @@ import logic.MainService;
 import logic.Message;
 import logic.Shop;
 import logic.ShopService;
+import logic.User;
 
 @Controller
 public class MainController {
@@ -48,7 +49,8 @@ public class MainController {
 	@RequestMapping("message")
 	public ModelAndView message(HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/message");
-		String id = (String)session.getAttribute("loginUser");
+		User user = (User)session.getAttribute("loginUser");
+		String id = user.getId();
 		List<Message> msgList = mainService.getMsgList(id, "");
 		mav.addObject("msgList", msgList);
 		mav.addObject("id", id);
@@ -66,7 +68,8 @@ public class MainController {
 	public ModelAndView sendMsg(Message msg, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/message.zips");
-		String senderId = (String)session.getAttribute("loginUser");
+		User user = (User)session.getAttribute("loginUser");
+		String senderId = user.getId();
 		msg.setSender(senderId);
 		try {
 			mainService.sendMsg(msg);
@@ -81,7 +84,8 @@ public class MainController {
 	@RequestMapping(value="message/hide", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String hideMsg(Message msg, HttpSession session) {
-		String userId = (String)session.getAttribute("loginUser");
+		User user = (User)session.getAttribute("loginUser");
+		String userId = user.getId();
 		msg = mainService.getMsgById(Integer.toString(msg.getNum()));
 		if (msg.getReceiver().equals(userId)) {
 			msg.setReceiverStatus(0);
