@@ -36,7 +36,7 @@ function makeTable(msgs, m_type) {
 	$('#re_msg').click(function() {
 		$.post("message/list.zips",
 				{
-					receiverId : "test1234",
+					receiverId : '${id}',
 					senderId : ""
 				},
 				function(data, status) {
@@ -48,7 +48,7 @@ function makeTable(msgs, m_type) {
 		$.post("message/list.zips",
 				{
 					receiverId : "",
-					senderId : "admin"
+					senderId : '${id}'
 				},
 				function(data, status) {
 					showTable(data, "se");
@@ -60,7 +60,8 @@ function makeTable(msgs, m_type) {
 		var msgForm = "<form action='message/send.zips'><div class='form-group'>";
 		msgForm += "<label for='receiver'>받는 사람ID</label>" +
 			"<input type='text' class='form-control' id='receiver'></div>";
-		msgForm += "<div class='form-group'><textarea class='form-control' id='content'></textarea></div>";
+		msgForm += "<div class='form-group'>";
+		msgForm += "<textarea rows='10' class='form-control' id='content'></textarea></div>";
 		msgForm += "<button type='submit' class='btn btn-primary'>쪽지 보내기</button></form>"
 		
 		document.getElementById('msg_table').innerHTML = msgForm;
@@ -78,7 +79,7 @@ function makeTable(msgs, m_type) {
 	<button type="button" id="se_msg" class="btn btn-info">보낸 쪽지</button>
 	<button type="button" id="send" class="btn btn-success">쪽지 보내기</button>
 	
-	<div id="msg_table">
+	<div id="msg_table" class="mt-4">
 	<table class="table table-bordered">
 	  <thead>
 	    <tr>

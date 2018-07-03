@@ -79,11 +79,12 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void inputSearch(String query, HttpSession session) {
 		SearchInfo info = new SearchInfo();
-		String login = (String)session.getAttribute("login");
-		if (login != null && login.equals("")) {
-			info.setId(login);
+		String id = (String)session.getAttribute("loginUser");
+		if (id != null && !id.equals("")) {
+			info.setId(id);
+		} else {
+			info.setId("guest");			
 		}
-		info.setId("guest");
 		info.setContent(query);
 		info.setRegdate(new Date());
 		searchInfoDao.setSearchContent(info);

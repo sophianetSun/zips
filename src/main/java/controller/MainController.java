@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -47,9 +48,11 @@ public class MainController {
 	@RequestMapping("message")
 	public ModelAndView message(HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/message");
-		String id = (String)session.getAttribute("login");
-		List<Message> msgList = mainService.getMsgList("test1234", "");
+		String id = (String)session.getAttribute("loginUser");
+		List<Message> msgList = mainService.getMsgList(id, "");
 		mav.addObject("msgList", msgList);
+		mav.addObject("id", id);
+		System.out.println("id : " + id + ", msgList" + msgList);
 		return mav;
 	}
 	
@@ -60,24 +63,30 @@ public class MainController {
 		return mainService.getMsgList(receiverId, senderId).toString();
 	}
 	
-	@RequestMapping(value="message/send", produces="application/json; charset=utf8")
-	@ResponseBody
-	public String sendMsg(Message msg, HttpSession session) {
-		String senderId = (String)session.getAttribute("login");
-		msg.setSender(senderId);
+	@RequestMapping(value="message/send")
+	public ModelAndView sendMsg(Message msg, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/message.zips");
+		String senderId = (String)session.getAttribute("loginUser");
+		msg.setSender("testMsgSe");
+		msg.setSenderStatus(1);
+		msg.setReceiver("testMsgRe");
+		msg.setReceiverStatus(1);
+		msg.setRegdate(new Date());
 		try {
+			System.out.println(msg);
 			mainService.sendMsg(msg);
 		} catch (Exception e) {
-			return "fail";
+			return mav;
 		} finally {			
-			return "success";
+			return mav;
 		}
 	}
 	
 	@RequestMapping("message/hide")
 	@ResponseBody
 	public String hideMsg(Message msg, HttpSession session) {
-		String senderId = (String)session.getAttribute("login");
+		String senderId = (String)session.getAttribute("loginUser");
 		try {
 			mainService.hideMsg(msg);			
 		} catch (Exception e) {
