@@ -17,7 +17,11 @@ public interface ShopService {
 	// 글 읽어오기
 	Shop getShop(Integer shop_no);
 
+	
+	// 글 수정하기
 	void shopUpdate(Shop shop, HttpServletRequest request);
 
+	
+	// 글 삭제하기
 	void shopDelete(int shop_no);
 }

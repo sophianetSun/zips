@@ -20,12 +20,16 @@ import exception.ShopException;
 import logic.Shop;
 import logic.ShopService;
 import logic.User;
+import logic.UserService;
  
 @Controller
 public class ShopController {
 	
 	@Autowired
 	private ShopService shopservice;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="shop/write", method=RequestMethod.GET)
 	public ModelAndView write(HttpServletRequest request) {
@@ -34,6 +38,8 @@ public class ShopController {
 		System.out.println("로그인 유저 검사");
 		System.out.println(request.getSession().getAttribute("loginUser"));
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		
+		
 		mav.addObject(loginUser);
 		mav.addObject(new Shop());
 		return mav;
@@ -158,7 +164,7 @@ public class ShopController {
 		if (shop_no != null) {
 			shop = shopservice.getShop(shop_no);
 			String url = request.getServletPath();
-		}
+		} 
 		System.out.println(pageNum);
 		System.out.println(shop_no);
 		
@@ -172,6 +178,45 @@ public class ShopController {
 		
 		return mav;
 	}
-	  
+	
+	@RequestMapping(value="shop/deal", method=RequestMethod.GET)
+	public ModelAndView deal(Integer shop_no, Integer pageNum, HttpServletRequest request) {
+		System.out.println("구매 신청 페이지 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = shopservice.getShop(shop_no);
+		
+		System.out.println(pageNum);
+		System.out.println(shop_no);
+		
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("shop_no",shop_no);
+		mav.addObject("shop", shop);
+		mav.addObject(loginUser);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="shop/dealpage", method=RequestMethod.POST)
+	public ModelAndView dealpage(Integer shop_no, Integer pageNum, HttpServletRequest request) {
+		System.out.println("구매/판매 진행중 페이지 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = shopservice.getShop(shop_no);
+		
+		System.out.println(pageNum);
+		System.out.println(shop_no);
+		
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("shop_no",shop_no);
+		mav.addObject("shop", shop);
+		mav.addObject(loginUser);
+		
+		return mav;
+	}
 }
  

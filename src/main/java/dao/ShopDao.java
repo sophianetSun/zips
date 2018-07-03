@@ -12,6 +12,7 @@ public interface ShopDao {
 	// 게시물 작성
 	void shopWrite(Shop shop);
 
+	
 	int shopCount(String searchType, String searchContent);
 
 	List<Shop> shopList(String searchType, String searchContent, Integer pageNum, int limit);
