@@ -7,22 +7,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>쪽지</title>
 <script>
+function deleteMsg(button) {
+	var flag = confirm("쪽지를 삭제 하시겠습니까?");
+	if (flag == true) {
+		button.parentNode.parentNode.style.display = "none";
+		$.post("message/hide.zips", { num : button.id }, function(data, status) {
+			console.log(data);
+		});
+	} else { }
+}
+
 function makeTable(msgs, m_type) {
 	var msgs = JSON.parse(msgs);  
 	var table = "<table class='table table-bordered'><thead><tr>";
 	if (m_type == "re") {
-		table += "<th>보낸사람</th><th>내용</th><th>날짜</th><th></th></thead>";	
+		table += "<th>보낸사람</th>";	
 	} else {
-		table += "<th>받은사람</th><th>내용</th><th>날짜</th><th></th></thead>";
+		table += "<th>받은사람</th>";
 	}
-	table += "<tbody>";
+	table += "<th>내용</th><th>날짜</th><th></th></tr></thead><tbody>";
 	for(i in msgs) {
 		var msg = msgs[i].Message;
-		console.log(msg);
-		table += "<td>" + msg.sender + "</td>";
+		if (m_type =="re") table += "<tr><td>" + msg.sender + "</td>";
+		else table += "<tr><td>" + msg.receiver + "</td>";
 		table += "<td>" + msg.content + "</td>";
 		table += "<td>" + msg.regdate + "</td>";
-		table += "<td><button type='button' class='btn btn-danger'>삭제</button></td>";
+		table += "<td><button type='button' id='" + msg.num 
+			+ "' class='btn btn-danger' onclick='deleteMsg(this)'>삭제</button></td></tr>";
 	}
 	table += "</tbody></table>";
 	return table;
@@ -66,14 +77,11 @@ function makeTable(msgs, m_type) {
 		
 		document.getElementById('msg_table').innerHTML = msgForm;
 	});
-	$('table button').click(function() {
-		console.log("delelte");
-	})
+	
   });
 </script>
 </head>
 <body>
-쪽지 화면 입니다.
 <div class="container">
 	<button type="button" id="re_msg" class="btn btn-primary">받은 쪽지</button>
 	<button type="button" id="se_msg" class="btn btn-info">보낸 쪽지</button>
@@ -92,12 +100,11 @@ function makeTable(msgs, m_type) {
 	  <tbody>
 	    <c:forEach items="${msgList}" var="msg">
 		  <tr>
-		    <!-- <c:if test="${msg.receiverStatus == 1 }"> 
-		    </c:if> -->
 		      <td>${msg.sender }</td>
 		      <td>${msg.content }</td>
 		      <td><fmt:formatDate value="${msg.regdate }" pattern="YY/MM/dd ahh:mm"/></td>
-		      <td><button type="button" class="btn btn-danger">삭제</button></td>
+		      <td><button type="button" id='${msg.num }' 
+		      	onclick='deleteMsg(this)' class="btn btn-danger">삭제</button></td>
 		  </tr>  	    
 	    </c:forEach>
 	  </tbody>

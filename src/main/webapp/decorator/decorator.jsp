@@ -35,6 +35,7 @@
   </a> 
   </div>
 <div class="col-sm-2 align-self-center">
+<c:if test="${!empty loginUser }">${loginUser.id }(${loginUser.nickname }) 님 환영합니다!!</c:if><br>
 <c:if test="${empty sessionScope.loginUser}">
   <a href="${pageContext.request.contextPath}/user/join.zips">회원가입</a></c:if>
 

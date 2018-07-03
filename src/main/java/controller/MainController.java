@@ -52,7 +52,6 @@ public class MainController {
 		List<Message> msgList = mainService.getMsgList(id, "");
 		mav.addObject("msgList", msgList);
 		mav.addObject("id", id);
-		System.out.println("id : " + id + ", msgList" + msgList);
 		return mav;
 	}
 	
@@ -68,31 +67,35 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/message.zips");
 		String senderId = (String)session.getAttribute("loginUser");
-		msg.setSender("testMsgSe");
-		msg.setSenderStatus(1);
-		msg.setReceiver("testMsgRe");
-		msg.setReceiverStatus(1);
-		msg.setRegdate(new Date());
+		msg.setSender(senderId);
 		try {
-			System.out.println(msg);
 			mainService.sendMsg(msg);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return mav;
 		} finally {			
 			return mav;
 		}
 	}
 	
-	@RequestMapping("message/hide")
+	@RequestMapping(value="message/hide", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String hideMsg(Message msg, HttpSession session) {
-		String senderId = (String)session.getAttribute("loginUser");
+		String userId = (String)session.getAttribute("loginUser");
+		msg = mainService.getMsgById(Integer.toString(msg.getNum()));
+		if (msg.getReceiver().equals(userId)) {
+			msg.setReceiverStatus(0);
+			msg.setSenderStatus(1);
+		} else {
+			msg.setSenderStatus(0);
+			msg.setReceiverStatus(1);
+		}
 		try {
 			mainService.hideMsg(msg);			
 		} catch (Exception e) {
-			return "fail";
-		} finally {
-			return "success";
-		}
+			e.printStackTrace();
+			return "faile";
+		} 
+		return "success";
 	}
 }

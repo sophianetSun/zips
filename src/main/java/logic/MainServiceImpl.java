@@ -106,6 +106,9 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void sendMsg(Message msg) {
+		msg.setSenderStatus(1);
+		msg.setReceiverStatus(1);
+		msg.setRegdate(new Date());
 		msgDao.insert(msg);
 	}
 

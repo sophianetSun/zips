@@ -56,13 +56,13 @@
 <div id="shop" class="row">
 	<div class="col-sm-8">
 		<h4 class="main_title">중고장터</h4>
-		<table>
-		<tr><th>제목</th><th>글쓴이</th><th>날짜</th></tr>
+		<table class="table table-striped">
+		<tr><th>글쓴이</th><th>제목</th><th>날짜</th></tr>
 		<c:forEach items="${shopList}" var="shop">
 		<tr>
-			<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a></td>	
 			<td>${shop.shop_seller_id}</td>
-			<td>${shop.shop_regdate}</td>
+			<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a></td>	
+			<td><fmt:formatDate value="${shop.shop_regdate}" pattern="YY/MM/dd"/></td>
 		</tr>
 		</c:forEach>
 		</table>
