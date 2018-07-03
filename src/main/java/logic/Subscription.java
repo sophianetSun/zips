@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Subscription implements Serializable {
 	private Integer num;
 	private String userId;
-	private String SubscribeId;
+	private String subscribeId;
 	
 	// Constructor
 	public Subscription(Integer num, String userId, String subscribeId) {
 		this.num = num;
 		this.userId = userId;
-		SubscribeId = subscribeId;
+		this.subscribeId = subscribeId;
 	}
 	
 	public Subscription() { }
@@ -34,11 +34,11 @@ public class Subscription implements Serializable {
 	}
 
 	public String getSubscribeId() {
-		return SubscribeId;
+		return subscribeId;
 	}
 
 	public void setSubscribeId(String subscribeId) {
-		SubscribeId = subscribeId;
+		this.subscribeId = subscribeId;
 	}
 	
 }

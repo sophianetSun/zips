@@ -57,6 +57,11 @@ public class MainController {
 		return mav;
 	}
 	
+	@RequestMapping("calendar")
+	public String calendar() {
+		return "main/calendar";
+	}
+	
 	// RESTAPI
 	@RequestMapping(value="message/list", produces = "application/text; charset=utf8")
 	@ResponseBody
