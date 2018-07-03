@@ -66,7 +66,7 @@
  <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
  <ul class="navbar-nav">
   <li class="nav-item">
-   <a class="nav-link" href="${pageContext.request.contextPath }/board/list.zips">홈트게시판</a>
+   <a class="nav-link" href="${pageContext.request.contextPath }/board/homeTraininglist.zips">홈트게시판</a>
   </li>
   <li class="nav-item">
    <a class="nav-link" href="#">Question&amp;Answer</a>
