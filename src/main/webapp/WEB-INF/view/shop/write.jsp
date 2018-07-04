@@ -55,7 +55,7 @@ $(document).ready(
       </div>
       <div class="form-group">
         <label for="writer">작성자 <font color="red"><form:errors path="shop_seller_id" /></font> </label>
-        <input type="text" class="form-control" style="width: 20%" id="writer" name="shop_seller_id" value="${loginUser.nickname}" readonly="readonly">
+        <input type="text" class="form-control" style="width: 20%" id="writer" name="shop_seller_id" value="${loginUser.id}" readonly="readonly">
         
       </div>
       <div class="form-group">

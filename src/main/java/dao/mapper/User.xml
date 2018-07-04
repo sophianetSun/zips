@@ -17,6 +17,10 @@
 		and not userid = 'admin'
 		</if>
 	</select>
+	
+	<update id="updateBuyerCoin" parameterType="map">
+		update zipsuser set coin=coin-${dealcoin} where id = #{shop_buyer_id} 
+	</update>
 </mapper>
 	<!-- <select id="idcheck" resultType="User" parameterType="map">
 		select * from userAccount

@@ -20,12 +20,16 @@ import exception.ShopException;
 import logic.Shop;
 import logic.ShopService;
 import logic.User;
+import logic.UserService;
  
 @Controller
 public class ShopController {
 	
 	@Autowired
-	private ShopService shopservice;
+	private ShopService shopService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="shop/write", method=RequestMethod.GET)
 	public ModelAndView write(HttpServletRequest request) {
@@ -34,6 +38,8 @@ public class ShopController {
 		System.out.println("로그인 유저 검사");
 		System.out.println(request.getSession().getAttribute("loginUser"));
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		
+		
 		mav.addObject(loginUser);
 		mav.addObject(new Shop());
 		return mav;
@@ -52,7 +58,7 @@ public class ShopController {
 			return mav;
 		}
 		try { 
-			shopservice.shopWrite(shop, request);
+			shopService.shopWrite(shop, request);
 			mav.setViewName("redirect:list.zips");
 			
 		} catch (Exception e) {
@@ -71,8 +77,8 @@ public class ShopController {
 		} 
 		ModelAndView mav = new ModelAndView();
 		int limit = 10;
-		int shoplistcount = shopservice.shopCount(searchType, searchContent);
-		List<Shop> shoplist = shopservice.shopList(searchType, searchContent, pageNum, limit);
+		int shoplistcount = shopService.shopCount(searchType, searchContent);
+		List<Shop> shoplist = shopService.shopList(searchType, searchContent, pageNum, limit);
 		int maxpage = (int)((double)shoplistcount/limit + 0.95);
 		int startpage = ((int)((pageNum/10.0 + 0.9)-1))*10+1;
 		int endpage = startpage + 9;
@@ -107,7 +113,7 @@ public class ShopController {
 			return mav;
 		}
 		
-		Shop dbShop = shopservice.getShop(shop.getShop_no());
+		Shop dbShop = shopService.getShop(shop.getShop_no());
 		/*
 		if(!board.getPass().equals(dbBoard.getPass())) {
 			throw new ShopException("비밀번호 틀렸습니다.", "update.shop?num="+board.getNum()+"&pageNum="+request.getParameter("pageNum"));
@@ -117,7 +123,7 @@ public class ShopController {
 		}
 		*/
 		try {  
-			shopservice.shopUpdate(shop, request);
+			shopService.shopUpdate(shop, request);
 			mav.setViewName("redirect:list.zips");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,16 +136,16 @@ public class ShopController {
 	public ModelAndView delete(@RequestParam HashMap<String, String> map) {
 		ModelAndView mav = new ModelAndView();
 		
-		int shop_no = Integer.parseInt(map.get("shop_no"));
+		Integer shop_no = Integer.parseInt(map.get("shop_no"));
 		String pageNum = map.get("pageNum");
-		Shop dbshop = shopservice.getShop(shop_no);
+		Shop dbshop = shopService.getShop(shop_no);
 		//String pass = map.get("pass");
 /*		if(!pass.equals(dbBoard.getPass())) {
 			throw new ShopException("비밀번호가 틀렸습니다", "delete.shop?num="+num+"&pageNum="+pageNum);
 		}
 */			
 		try {
-			shopservice.shopDelete(shop_no);
+			shopService.shopDelete(shop_no);
 			mav.setViewName("redirect:list.zips");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,16 +155,15 @@ public class ShopController {
 		return mav;
 	}
 	
-	
 	@RequestMapping(value="shop/*", method=RequestMethod.GET)
 	public ModelAndView detail(Integer shop_no, Integer pageNum, HttpServletRequest request) {
 		System.out.println("상세 보기 호출");
 		ModelAndView mav = new ModelAndView();
 		Shop shop = new Shop();
 		if (shop_no != null) {
-			shop = shopservice.getShop(shop_no);
+			shop = shopService.getShop(shop_no);
 			String url = request.getServletPath();
-		}
+		} 
 		System.out.println(pageNum);
 		System.out.println(shop_no);
 		
@@ -172,6 +177,60 @@ public class ShopController {
 		
 		return mav;
 	}
-	  
+	
+	@RequestMapping(value="shop/deal", method=RequestMethod.GET)
+	public ModelAndView deal(Integer shop_no, Integer pageNum, HttpServletRequest request) {
+		System.out.println("구매 신청 페이지 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = shopService.getShop(shop_no);
+		
+		System.out.println();
+		System.out.println(pageNum);
+		System.out.println(shop_no);
+		
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("shop_no",shop_no);
+		mav.addObject("shop", shop);
+		mav.addObject(loginUser);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="shop/dealpage", method=RequestMethod.POST)
+	public ModelAndView dealpage(Integer shop_no, Integer pageNum, Integer dealcoin, HttpServletRequest request) {
+		System.out.println("구매/판매 진행중 페이지 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = shopService.getShop(shop_no);
+		
+		System.out.println(dealcoin);
+		System.out.println(pageNum);
+		System.out.println(shop_no);
+		System.out.println(shop.getShop_buyer_id());
+		
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+
+		try {
+			System.out.println("판매자, 구매자 코인 사용");
+			String shop_buyer_id = loginUser.getId();
+			shopService.shopBuyerUpdate(shop.getShop_no(), shop_buyer_id);
+			userService.updateBuyerCoin(dealcoin, shop.getShop_buyer_id());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("shop_no",shop_no);
+		mav.addObject("shop", shop);
+		mav.addObject("dealcoin");
+		mav.addObject(loginUser);
+		
+		return mav;
+	}
 }
  

@@ -22,7 +22,7 @@ import logic.UserService;
 public class Usercontroller {
 
 	@Autowired
-	private UserService service;
+	private UserService userService;
 	
 	@RequestMapping("user/join")//view를 띄워주는 메소드
 	public ModelAndView join() {
@@ -39,7 +39,7 @@ public class Usercontroller {
 			return mav;
 		}
 		try {
-			service.userCreate(user, request);
+			userService.userCreate(user, request);
 			mav.setViewName("redirect:/user/login.zips");
 			mav.addObject("user",user);
 		} catch (DataIntegrityViolationException e) {
@@ -53,7 +53,7 @@ public class Usercontroller {
     public Map<String, Integer> idcheck(@RequestBody String id) {
         int count = 0;
         Map<String, Integer> map = new HashMap<String, Integer>();
-        count = service.idcheck(id);
+        count = userService.idcheck(id);
         map.put("cnt", count);
         return map;
     }
@@ -73,7 +73,7 @@ public class Usercontroller {
 			return mav;
 		}
 		try {
-			User dbUser = service.getUser(user.getId());
+			User dbUser = userService.getUser(user.getId());
 			if(dbUser.getPw().equals(user.getPw())) {
 				mav.addObject("dbUser", dbUser);
 				mav.setViewName("main");
@@ -110,15 +110,15 @@ public class Usercontroller {
 	return mav;
 	}
 	
-	@RequestMapping("user/update")
-	public ModelAndView update(@Valid User user, BindingResult bindingResult, HttpSession session) {
+	/*@RequestMapping(value="user/update", method=RequestMethod.POST)
+	public ModelAndView update(@Valid User user, BindingResult bindingResult, HttpSession session, HttpServletRequest request) {
 	ModelAndView mav = new ModelAndView("user/mypage");
 	if(bindingResult.hasErrors()) {
 		mav.getModel().putAll(bindingResult.getModel());
 		return mav;
 	}
-	User loginUser = (User)session.getAttribute("loginUser");
-	User dbUser = service.getUser(user.getId());
+	User loginUser = (User) session.getAttribute("loginUser");
+	User dbUser = userService.getUser(user.getId());
 	if(loginUser.getPw().equals("admin")) {
 		if(!loginUser.getPw().equals(user.getPw())) {
 			throw new LoginException("관리자 비밀번호가 올바르지 않습니다.", "mypage.zips?id="+user.getId()); 
@@ -129,11 +129,58 @@ public class Usercontroller {
 		}
 	}
 	try {
-		service.updateUser(user);
-		mav.setViewName("redirect:/user/mypage.shop?id="+user.getId());
+		userService.updateUser(user);
+		mav.setViewName("redirect:/user/mypage.zips");
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
+		return mav;
+	}*/
+	
+	@RequestMapping("user/update")
+	public ModelAndView update(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("user/mypage");
+		if(bindingResult.hasErrors()) {
+			mav.getModel().putAll(bindingResult.getModel());
+		return mav;
+		}
+		userService.updateUser(user, request);
+		mav.setViewName("redirect:/user/mypage.zips");
+		return mav;
+	}
+	
+	@RequestMapping(value="user/delete", method=RequestMethod.GET)
+	public ModelAndView delete(String id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		User user = userService.getUser(id);
+		mav.addObject("user", user);
+		return mav;
+	}
+	
+	@RequestMapping(value="user/delete", method=RequestMethod.POST)
+	public ModelAndView delete(@Valid User user, BindingResult bindingResult, HttpSession session) {
+		ModelAndView mav = new ModelAndView("user/delete.zips?id="+user.getId());
+		if(bindingResult.hasErrors()) {
+			mav.getModel().putAll(bindingResult.getModel());
+			mav.setViewName("user/delete.zips?id=" + user.getId());
+			return mav;
+		}
+		User dbUser = userService.getUser(user.getId());
+		User loginUser = (User)session.getAttribute("loginUser");
+		if (!user.getPw().equals(dbUser.getPw())) {
+			throw new LoginException("비밀번호가 틀립니다.", "delete.zips?id="+user.getId());
+		}
+		try {
+			userService.delete(user.getId());
+			if(!loginUser.getId().equals("admin")) {
+				session.invalidate();
+				mav.setViewName("redirect:login.zips");
+			} else {
+				mav.setViewName("redirect:mypage.zips?id=" + loginUser.getId());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mav;
 	}
 }

@@ -46,7 +46,25 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updateUser(User user) {
-		userDao.update(user);
+	public void delete(String id) {
+		userDao.delete(id);
 	}
+
+	@Override
+	public void updateUser(User user, HttpServletRequest request) {
+		if(user.getPic() != null && !user.getPic().isEmpty()) {
+			uploadFileCreate(user.getPic(), request);
+			user.setPicture(user.getPic().getOriginalFilename());
+		}
+		userDao.update(user);
+		
+	}
+
+	@Override
+	public void updateBuyerCoin(Integer dealcoin, String shop_buyer_id) {
+		userDao.updateBuyerCoin(dealcoin, shop_buyer_id);
+	}
+
+	// 코인 사용
+
 }

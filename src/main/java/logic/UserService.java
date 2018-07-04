@@ -10,5 +10,11 @@ public interface UserService {
 
 	User getUser(String id);
 
-	void updateUser(User user);
+	void delete(String id);
+
+	void updateUser(User user, HttpServletRequest request);
+
+	// 코인 사용
+	void updateBuyerCoin(Integer dealcoin, String shop_seller_id);
+
 }

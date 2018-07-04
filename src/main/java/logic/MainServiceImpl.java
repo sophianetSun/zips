@@ -1,6 +1,5 @@
 package logic;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +9,11 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 
 import dao.MessageDao;
 import dao.SearchInfoDao;
+import dao.SubscriptionDao;
 
 @Service
 public class MainServiceImpl implements MainService {
@@ -23,6 +22,8 @@ public class MainServiceImpl implements MainService {
 	private SearchInfoDao searchInfoDao;
 	@Autowired
 	private MessageDao msgDao;
+	@Autowired
+	private SubscriptionDao subDao;
 	
 	@Override
 	public Map<String, List<Board>> getMainBoards() {
@@ -131,4 +132,38 @@ public class MainServiceImpl implements MainService {
 	public void deleteMsg(String num) {
 		
 	}
+	// Subscription
+
+	@Override
+	public int subscribe(String userId, String subId) {
+		Subscription sub = new Subscription();
+		sub.setUserId(userId);
+		sub.setSubscribeId(subId);
+		return subDao.insert(sub);
+	}
+
+	@Override
+	public List<Subscription> getSubscriptionList(String id) {
+		return subDao.selectListByUserId(id, "user");
+	}
+
+	@Override
+	public List<Subscription> getFollowerList(String id) {
+		return subDao.selectListByUserId(id, "subscribe");
+	}
+
+	@Override
+	public int update(Subscription sub) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int cancelSubsciription(String userId, String subId) {
+		Subscription sub = new Subscription();
+		sub.setUserId(userId);
+		sub.setSubscribeId(subId);
+		return subDao.delete(sub);
+	}
+	
 }

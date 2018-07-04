@@ -50,7 +50,8 @@
 			<tr>
 				<td>${shopcnt}</td>
 					<c:set var="shopcnt" value="${shopcnt-1}"/>
-				<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a></td>	
+				<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${shop.shop_status}</span></td>	
 				<td>${shop.shop_seller_id}</td>
 				<td>${shop.shop_regdate}</td>	
 			</tr>

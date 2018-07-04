@@ -26,4 +26,10 @@ public interface MainService {
 	public Message getMsgById(String num);
 	public void hideMsg(Message msg);
 	public void deleteMsg(String num);
+	
+	public int subscribe(String userId, String subId);
+	public List<Subscription> getSubscriptionList(String id);
+	public List<Subscription> getFollowerList(String id);
+	public int update(Subscription sub);
+	public int cancelSubsciription(String userId, String subId);
 }

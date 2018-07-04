@@ -36,20 +36,17 @@
 				var reader = new FileReader();
 				
 				reader.onload = function(img) {
-					$('#preview').append(
-						"<img src=\"" + img.target.result + "\"\/>"
-						);
+					$("#img_ex").attr("src",img.target.result)
 				};
 				reader.readAsDataURL(input.files[0]);
 			}else alert('invalid file input');
 		}
-	</script>
-	
+	</script>	
 	
   <div align="center">
-  <img src="../img/join_pic.png" class="img-thumbnail" width="304" height="236"> 
-            <div id="preview" class="img-thumbnail"></div>
-        <input type="file" id="file" name="pic" onchange="imageURL(this)" multiple/>
+  <img src="../img/join.png" id="img_ex" class="img-thumbnail" width="304" height="236"> 
+            <br>
+        <input type="file" id="file" name="pic" onchange="imageURL(this)"/>
       </div><br><br>
 				
     <div class="mb-3">
