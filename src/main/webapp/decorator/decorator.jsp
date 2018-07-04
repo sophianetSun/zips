@@ -35,7 +35,7 @@
   </a> 
   </div>
 <div class="col-sm-2 align-self-center">
-<c:if test="${!empty loginUser }">${loginUser.id }(${loginUser.nickname }) 님 환영합니다!!</c:if><br>
+<c:if test="${!empty loginUser }">${loginUser.nickname }(${loginUser.id }) 님 환영합니다!!</c:if><br>
 <c:if test="${empty sessionScope.loginUser}">
   <a href="${pageContext.request.contextPath}/user/join.zips">회원가입</a></c:if>
 
@@ -67,16 +67,16 @@
  <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
  <ul class="navbar-nav">
   <li class="nav-item">
-   <a class="nav-link" href="${pageContext.request.contextPath }/board/homeTraininglist.zips">홈트게시판</a>
+   <a class="nav-link" href="${pageContext.request.contextPath }/board/homeTraininglist.zips?board_type=1">홈트게시판</a>
   </li>
   <li class="nav-item">
-   <a class="nav-link" href="#">Question&amp;Answer</a>
+   <a class="nav-link" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=2">질문과 답변</a>
   </li>
   <li class="nav-item">
-   <a class="nav-link" href="#">자유게시판</a>
+   <a class="nav-link" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=3">자유게시판</a>
   </li>    
   <li class="nav-item">
-   <a class="nav-link" href="#">Before&amp;After</a>
+   <a class="nav-link" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=4">Before&amp;After</a>
   </li>    
   <li class="nav-item">
    <a class="nav-link" href="${pageContext.request.contextPath }/shop/list.zips">중고장터</a>

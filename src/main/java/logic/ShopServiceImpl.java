@@ -42,8 +42,13 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public void shopDelete(int shop_no) {
+	public void shopDelete(Integer shop_no) {
 		shopDao.shopDelete(shop_no);
+	}
+
+	@Override
+	public void shopBuyerUpdate(Integer shop_no, String shop_buyer_id) {
+		shopDao.shopBuyerUpdate(shop_no, shop_buyer_id);
 	}
 	
 }

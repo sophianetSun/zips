@@ -41,7 +41,7 @@ function list(pageNum) {
  <div class="search__container" align="center">
 <select name="searchType" id="searchType" class="custom-select d-block" style="width:100px;height:40px;">
 <option value="subject">제목</option>
-<option value="name">글쓴이</option>   
+<option value="board_userid">글쓴이</option>   
 </select>
 <br>
     <input class="search__input" type="text" name="searchContent" placeholder="Search" value="${param.searchContent}">
@@ -54,6 +54,20 @@ function list(pageNum) {
  var docHeight = $(card mb-4 box-shadow).height();
  var docWidth = $(card mb-4 box-shadow).width();
  
+ $("#best").click(function(){
+	    $.ajax({
+	        type:"POST",
+	        url:"{% url 'board/homeTraininglist.zips'}",
+	        /* data : {name : "홍길동"}, */
+	        success: function(xml){
+	            console.log(xml);
+	        },
+	        error: function(xhr, status, error) {
+	            alert(error);
+	        }   
+	    });
+	});
+
 </script>
 </form>
 
@@ -65,7 +79,7 @@ function list(pageNum) {
 <ul>
 <li><p class="testred"><I><span>Best Hot 동영상 &nbsp;</span></I></p></li>
 </ul>
-<c:forEach var="best" items="${recommandlist }" begin="0" end="2">
+<%-- <c:forEach var="best" items="${recommandlist }" begin="0" end="2">
 <div class="col-md-4">
               <div class="card mb-4 box-shadow">
                <video width="docWidth" height="174" controls>
@@ -73,7 +87,7 @@ function list(pageNum) {
  			 <source src="mov_bbb.ogg" type="video/ogg">
 				</video>
                 <div class="card-body">
-                  <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${board.num}&=pageNum=${pageNum}&board_type=${board.board_type}"
+                  <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${board.num}&=pageNum=${pageNum}&board_type=${param.board_type}"
                    >${best.subject }</a></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
@@ -90,7 +104,7 @@ function list(pageNum) {
                 </div>
               </div>
             </div>
-</c:forEach>
+</c:forEach> --%>
 <hr>
  <div class="album py-5 bg-light">
         <div class="container">
@@ -104,7 +118,7 @@ function list(pageNum) {
  			 <source src="mov_bbb.ogg" type="video/ogg">
 				</video>
                 <div class="card-body">
-                  <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${board.num}&=pageNum=${pageNum}&board_type=${board.board_type}"
+                  <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"
                    >${board.subject }</a></p>
                    <hr>
                   <div class="d-flex justify-content-between align-items-center">
@@ -117,7 +131,7 @@ function list(pageNum) {
 					조회수 :${board.board_count} 
 					<br>
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥<span class="badge badge-light">&nbsp;${board.recommand }</span></font></small></button>&nbsp;
+                      <button id="best" class="btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥<span class="badge badge-light">&nbsp;${board.recommand }</span></font></small></button>&nbsp;
                       <button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
                    </small>
@@ -153,6 +167,7 @@ function list(pageNum) {
 </c:if>
 </ul>
 <a href="boardwrite.zips"><button type="button" class="btn btn-success" style="width: 120px;height: 50px;">동영상 업로드</button></a>
+<a href="homeTraininglist.zips"><button type="button" class="btn btn-primary" style="width: 120px;height: 50px;">목록</button></a>
 <br>
 <br>
 <script type="text/javascript">

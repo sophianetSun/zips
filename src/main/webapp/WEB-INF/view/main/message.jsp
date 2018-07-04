@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src='${pageContext.request.contextPath}/js/moment-with-locales.min.js'></script>
 <title>쪽지</title>
 <script>
 function deleteMsg(button) {
@@ -18,7 +19,9 @@ function deleteMsg(button) {
 }
 
 function makeTable(msgs, m_type) {
-	var msgs = JSON.parse(msgs);  
+	var msgs = msgs.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
+	console.log(msgs);
+	var jsonMsgs = JSON.parse(msgs);  
 	var table = "<table class='table table-bordered'><thead><tr>";
 	if (m_type == "re") {
 		table += "<th>보낸사람</th>";	
@@ -26,19 +29,29 @@ function makeTable(msgs, m_type) {
 		table += "<th>받은사람</th>";
 	}
 	table += "<th>내용</th><th>날짜</th><th></th></tr></thead><tbody>";
-	for(i in msgs) {
-		var msg = msgs[i].Message;
+	for(i in jsonMsgs) {
+		var msg = jsonMsgs[i].Message;
 		if (m_type =="re") table += "<tr><td>" + msg.sender + "</td>";
 		else table += "<tr><td>" + msg.receiver + "</td>";
 		table += "<td>" + msg.content + "</td>";
-		table += "<td>" + msg.regdate + "</td>";
+		moment.locale("ko");
+		var date = moment(dateFormatter(msg.regdate));
+		table += "<td>" + date.format("YY/MM/DD aHH:mm") + "</td>";
 		table += "<td><button type='button' id='" + msg.num 
 			+ "' class='btn btn-danger' onclick='deleteMsg(this)'>삭제</button></td></tr>";
 	}
 	table += "</tbody></table>";
 	return table;
 }
-
+  function dateFormatter(scriptDate) {
+	  var txt = scriptDate.split(' ');
+	  var time = txt[3].split(':');
+	  var str = txt[1] + " " + txt[2] + " " + txt[5];
+	  var regdate = new Date(str);
+	  regdate.setHours(time[0]);
+	  regdate.setMinutes(time[1]);
+	  return regdate
+  }
   function showTable(msgs, m_type) {
 	  document.getElementById('msg_table').innerHTML = makeTable(msgs, m_type);
   }
@@ -70,9 +83,9 @@ function makeTable(msgs, m_type) {
 		console.log("send");
 		var msgForm = "<form action='message/send.zips'><div class='form-group'>";
 		msgForm += "<label for='receiver'>받는 사람ID</label>" +
-			"<input type='text' class='form-control' id='receiver'></div>";
+			"<input type='text' class='form-control' id='receiver' name='receiver'></div>";
 		msgForm += "<div class='form-group'>";
-		msgForm += "<textarea rows='10' class='form-control' id='content'></textarea></div>";
+		msgForm += "<textarea rows='10' class='form-control' id='content' name='content'></textarea></div>";
 		msgForm += "<button type='submit' class='btn btn-primary'>쪽지 보내기</button></form>"
 		
 		document.getElementById('msg_table').innerHTML = msgForm;

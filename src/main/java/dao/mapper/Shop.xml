@@ -25,4 +25,7 @@
 		</if>
 	</select>	
 	
+	<update id="shopBuyerUpdate" parameterType="map">
+		update zips_shop set shop_buyer_id=#{shop_buyer_id} where shop_no=#{shop_no}
+	</update>
 </mapper>

@@ -20,5 +20,10 @@ public interface BoardService {
 
 	int boardupdate(Board board, HttpServletRequest request);
 
+	int boardrecommand(Board board, Integer board_type);
+
+	int bestcnt(Board board, String userid);
+
+
 	
 }

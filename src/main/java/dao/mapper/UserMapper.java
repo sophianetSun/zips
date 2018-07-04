@@ -27,5 +27,4 @@ public interface UserMapper {
 
 	@Delete("delete from zipsuser where id=#{value}")
 	void delete(String id);
-
 }

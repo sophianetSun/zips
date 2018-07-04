@@ -10,4 +10,20 @@
  			where id=#{id}
  		</if>
  	</select>
+	<select id="idcheck" resultType="Integer" parameterType="String">
+		select * from zipsuser
+		<if test="Id != null">
+		where id=#{Id}
+		</if>
+		<if test="idlist != null">
+		where userid in 
+		<foreach collection="idlist" item="n" separator="," index="i" open="(" close=")">
+		#{n}
+		</foreach>
+		and not userid = 'admin'
+		</if>
+	</select>
+	
+	<update id="updateBuyerCoin" parameterType="map">
+	</update>
 </mapper>

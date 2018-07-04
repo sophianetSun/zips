@@ -42,5 +42,22 @@ public class UserDaoImple implements UserDao{
 		Map<String, String> map = new HashMap<String,String>();
 		map.put("id", id);
 		return sqlSession.selectOne(NS+"dbuser", map);
+	/* 판매자 코인 사용
+	@Override
+	public void updateSellerCoin(Integer coin, String shop_seller_id) {
+		sqlSession.getMapper(UserMapper.class).updateSellerCoin(coin, shop_seller_id);
+	}
+	*/
+	
+	// 구매자 코인 사용
+	@Override
+	public void updateBuyerCoin(Integer dealcoin, String shop_buyer_id) {
+		System.out.println("코인 사용");
+		Map<Object, Object> map = new HashMap<Object,Object>();
+		map.put("dealcoin", dealcoin);
+		map.put("shop_buyer_id", shop_buyer_id);
+		System.out.println(dealcoin);
+		System.out.println(shop_buyer_id);
+		sqlSession.update(NS+"updateBuyerCoin", map);
 	}
 }

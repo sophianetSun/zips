@@ -71,5 +71,13 @@ public class ShopDaoImpl implements ShopDao {
 	public void shopDelete(int shop_no) {
 		sqlSession.getMapper(ShopMapper.class).delete(shop_no);
 	}
+
+	@Override 
+	public void shopBuyerUpdate(Integer shop_no, String shop_buyer_id) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		map.put("shop_no", shop_no);
+		map.put("shop_buyer_id", shop_buyer_id);
+		sqlSession.update(NS+"shopBuyerUpdate", map);
+	}
 	
 }

@@ -27,4 +27,5 @@ public interface ShopMapper {
 
 	@Delete("delete from zips_shop where shop_no=#{shop_no}")
 	void delete(int shop_no);
+
 }
