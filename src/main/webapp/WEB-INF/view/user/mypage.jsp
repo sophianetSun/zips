@@ -10,7 +10,6 @@
 <div>
   <h1><strong>마이 페이지</strong></h1><br>
   <form:form modelAttribute="user" method="post" action="update.zips" enctype="multipart/form-data">
-  <form:hidden path="pic" />
 	<spring:hasBindErrors name="user">
 		<font color = "red">
 			<c:forEach items = "${errors.globalErrors}" var="error">
@@ -45,15 +44,15 @@
 	</script>
 
   <div align="center">
-	<c:if test="${empty loginUser.picture}"><td>사진없음</td></c:if>
-   <c:if test="${!empty loginUser.picture}"><td align="center"><img src="../img/${loginUser.picture}" width="304" height="236" id="img_ex">
+	<c:if test="${empty dbuser.picture}"><td>사진없음</td></c:if>
+   <c:if test="${!empty dbuser.picture}"><td align="center"><img src="../img/${dbuser.picture}" width="304" height="236" id="img_ex">
    </c:if>
    <br>
         <input type="file" id="file" name="pic" onchange="imageURL(this)" multiple/>
       </div><br><br>
     <div class="mb-3">
               <label for="id" id="id">아이디</label>
-              <input type="text" class="form-control" name="id" id="id" readonly value="${loginUser.id}">
+              <input type="text" class="form-control" name="id" id="id" readonly value="${dbuser.id}">
             </div>
     <div class="mb-3">
               <label for="pw">비밀번호</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="pw" /></font>
@@ -61,54 +60,54 @@
             </div>
     <div class="mb-3">
               <label for="name">이름</label>
-              <input type="text" class="form-control" name="name" value="${loginUser.name}">
+              <input type="text" class="form-control" name="name" value="${dbuser.name}">
             </div>
     <div class="mb-3">
               <label for="nickname">닉네임</label>
-              <input type="text" class="form-control" name="nickname" value="${loginUser.nickname}">
+              <input type="text" class="form-control" name="nickname" value="${dbuser.nickname}">
             </div>
     <div class="mb-3">
               <label for="tel">연락처</label>
-              <input type="tel" class="form-control" name="tel" value="${loginUser.tel}">
+              <input type="tel" class="form-control" name="tel" value="${dbuser.tel}">
             </div>
     <div class="mb-3">
               <label for="email">이메일</label>
-              <input type="email" class="form-control" name="email" value="${loginUser.email}">
+              <input type="email" class="form-control" name="email" value="${dbuser.email}">
             </div>
     <div class="mb-3">
               <label for="address">주소</label>
-              <input type="text" class="form-control" name="address" value="${loginUser.address}">
+              <input type="text" class="form-control" name="address" value="${dbuser.address}">
             </div>
     <div class="row">
     <div class="col-md-6 mb-3">
                 <label for="height">키(cm)</label>
-                <input type="text" class="form-control" name="height" value="${loginUser.height}"><!--  value="" required="" -->
+                <input type="text" class="form-control" name="height" value="${dbuser.height}"><!--  value="" required="" -->
               </div>
               <div class="col-md-6 mb-3">
                 <label for="weight">몸무게(kg)</label>
-                <input type="text" class="form-control" name="weight" value="${loginUser.weight}">
+                <input type="text" class="form-control" name="weight" value="${dbuser.weight}">
               </div>
             </div>
     <div class="mb-3">
               <label for="bodyfat">체지방(kg)</label>
-              <input type="text" class="form-control" name="bodyfat" value="${loginUser.bodyfat}">
+              <input type="text" class="form-control" name="bodyfat" value="${dbuser.bodyfat}">
             </div>
     <div class="mb-3">
               <label for="muscle">골격근량(kg)</label>
-              <input type="text" class="form-control" name="muscle" value="${loginUser.muscle}">
+              <input type="text" class="form-control" name="muscle" value="${dbuser.muscle}">
             </div>
  
 	<label for="gender">성별</label><br>
     <%
-    	if(("${loginUser.gender}").equals("남")) {
+    	if(("${dbuser.gender}").equals("남")) {
     %>
-    <input type="radio" name="gender" value='남자' checked="checked">남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="radio" name="gender" value="여자">여자<br />
+    <input type="radio" name="gender" value='남' checked="checked">남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="radio" name="gender" value='여'>여자<br />
     <%
     	} else {
     %>
-    <input type="radio" name="gender" value='남자'>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="radio" name="gender" value="여자" checked="checked">여자<br />
+    <input type="radio" name="gender" value='남'>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="radio" name="gender" value='여' checked="checked">여자<br />
  	<%
     	}
  	%>

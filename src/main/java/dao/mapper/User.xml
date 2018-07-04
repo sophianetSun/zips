@@ -4,31 +4,10 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.mapper.UserMapper">
-	<select id="idcheck" resultType="Integer" parameterType="String">
-		select * from zipsuser
-		<if test="Id != null">
-		where id=#{Id}
-		</if>
-		<if test="idlist != null">
-		where userid in 
-		<foreach collection="idlist" item="n" separator="," index="i" open="(" close=")">
-		#{n}
-		</foreach>
-		and not userid = 'admin'
-		</if>
-	</select>
+	<select id="dbuser" resultType="User" parameterType="map">
+ 		select * from zipsuser
+ 		<if test="id != null">
+ 			where id=#{id}
+ 		</if>
+ 	</select>
 </mapper>
-	<!-- <select id="idcheck" resultType="User" parameterType="map">
-		select * from userAccount
-		<if test="userId != null">
-			where id=#{id}
-		</if>
-		<if test="idlist != null">
-			where userId in
-			<foreach collection="idlist" item="n" separator="," index="i"
-				open="(" close=")">
-				#{n}
-			</foreach>
-			and not userid='admin'
-		</if>
-	</select> -->

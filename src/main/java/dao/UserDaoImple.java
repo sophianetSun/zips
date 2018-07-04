@@ -23,13 +23,6 @@ public class UserDaoImple implements UserDao{
 	}
 
 	@Override
-	public int selectOne(String id) {
-		Map<String, String> map = new HashMap<String,String>();
-		map.put("id", id);
-		return sqlSession.selectOne(NS+"idcheck", map);
-	}
-
-	@Override
 	public User select(String id) {
 		return sqlSession.getMapper(UserMapper.class).select(id);
 	}
@@ -42,5 +35,12 @@ public class UserDaoImple implements UserDao{
 	@Override
 	public void delete(String id) {
 		sqlSession.getMapper(UserMapper.class).delete(id);
+	}
+
+	@Override
+	public User dbuser(String id) {
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("id", id);
+		return sqlSession.selectOne(NS+"dbuser", map);
 	}
 }

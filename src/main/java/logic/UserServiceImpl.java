@@ -36,11 +36,6 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int idcheck(String id) {
-		return userDao.selectOne(id);
-	}
-
-	@Override
 	public User getUser(String id) {
 		return userDao.select(id);
 	}
@@ -58,5 +53,10 @@ public class UserServiceImpl implements UserService{
 		}
 		userDao.update(user);
 		
+	}
+
+	@Override
+	public User dbuser(String id) {
+		return userDao.dbuser(id);
 	}
 }
