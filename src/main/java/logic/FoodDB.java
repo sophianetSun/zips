@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class FoodDB implements Serializable {
 	private Integer no;
-	private String groupType;
-	private String foodName;
+	private String group_type;
+	private String food_name;
 	private Integer amount;
 	private Double calorie;
 	private Double carbohydrate;
@@ -14,8 +14,8 @@ public class FoodDB implements Serializable {
 	private Double sugar;
 	private Double na;
 	private Double chol;
-	private Double satFat;
-	private Double transFat;
+	private Double sat_fat;
+	private Double trans_fat;
 	
 	// Constructor
 	public FoodDB() { }
@@ -23,8 +23,8 @@ public class FoodDB implements Serializable {
 	public FoodDB(Integer no, String groupType, String foodName, Integer amount, Double calorie, Double carbohydrate,
 			Double protein, Double fat, Double sugar, Double na, Double chol, Double satFat, Double transFat) {
 		this.no = no;
-		this.groupType = groupType;
-		this.foodName = foodName;
+		this.group_type = groupType;
+		this.food_name = foodName;
 		this.amount = amount;
 		this.calorie = calorie;
 		this.carbohydrate = carbohydrate;
@@ -33,8 +33,8 @@ public class FoodDB implements Serializable {
 		this.sugar = sugar;
 		this.na = na;
 		this.chol = chol;
-		this.satFat = satFat;
-		this.transFat = transFat;
+		this.sat_fat = satFat;
+		this.trans_fat = transFat;
 	}
 
 	// Getter, Setter, toString
@@ -47,19 +47,19 @@ public class FoodDB implements Serializable {
 	}
 
 	public String getGroupType() {
-		return groupType;
+		return group_type;
 	}
 
 	public void setGroupType(String groupType) {
-		this.groupType = groupType;
+		this.group_type = groupType;
 	}
 
 	public String getFoodName() {
-		return foodName;
+		return food_name;
 	}
 
 	public void setFoodName(String foodName) {
-		this.foodName = foodName;
+		this.food_name = foodName;
 	}
 
 	public Integer getAmount() {
@@ -127,19 +127,19 @@ public class FoodDB implements Serializable {
 	}
 
 	public Double getSatFat() {
-		return satFat;
+		return sat_fat;
 	}
 
 	public void setSatFat(Double satFat) {
-		this.satFat = satFat;
+		this.sat_fat = satFat;
 	}
 
 	public Double getTransFat() {
-		return transFat;
+		return trans_fat;
 	}
 
 	public void setTransFat(Double transFat) {
-		this.transFat = transFat;
+		this.trans_fat = transFat;
 	}
 	
 }

@@ -98,7 +98,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public Map<String, Long> analyzeSearchResult() {
-		Map<String, Long> map = searchInfoDao.getSearchListAll().stream()
+		Map<String, Long> map = searchInfoDao.getSearchListAll().parallelStream()
 				.collect(Collectors.groupingBy(
 						SearchInfo::getContent,
 						Collectors.counting()));

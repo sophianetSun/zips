@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class Subscription implements Serializable {
 	private Integer num;
-	private String userId;
-	private String subscribeId;
+	private String user_id;
+	private String subscribe_id;
 	
 	// Constructor
 	public Subscription(Integer num, String userId, String subscribeId) {
 		this.num = num;
-		this.userId = userId;
-		this.subscribeId = subscribeId;
+		this.user_id = userId;
+		this.subscribe_id = subscribeId;
 	}
 	
 	public Subscription() { }
@@ -26,19 +26,19 @@ public class Subscription implements Serializable {
 	}
 
 	public String getUserId() {
-		return userId;
+		return user_id;
 	}
 
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.user_id = userId;
 	}
 
 	public String getSubscribeId() {
-		return subscribeId;
+		return subscribe_id;
 	}
 
 	public void setSubscribeId(String subscribeId) {
-		this.subscribeId = subscribeId;
+		this.subscribe_id = subscribeId;
 	}
 	
 }

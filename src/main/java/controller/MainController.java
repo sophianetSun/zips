@@ -50,6 +50,10 @@ public class MainController {
 	public ModelAndView message(HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/message");
 		User user = (User)session.getAttribute("loginUser");
+		if (user == null) {
+			mav.setViewName("redirect:/main.zips");
+			return mav;
+		}
 		String id = user.getId();
 		List<Message> msgList = mainService.getMsgList(id, "");
 		mav.addObject("msgList", msgList);
@@ -77,6 +81,7 @@ public class MainController {
 		String senderId = user.getId();
 		msg.setSender(senderId);
 		try {
+			System.out.println(msg);
 			mainService.sendMsg(msg);
 		} catch (Exception e) {
 			e.printStackTrace();

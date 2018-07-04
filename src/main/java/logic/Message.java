@@ -6,9 +6,9 @@ import java.util.Date;
 public class Message implements Serializable {
 	private Integer num;
 	private String sender;
-	private Integer senderStatus;
+	private Integer sender_status;
 	private String receiver;
-	private Integer receiverStatus;
+	private Integer receiver_status;
 	private String content;
 	private Date regdate;
 	
@@ -19,9 +19,9 @@ public class Message implements Serializable {
 			String content, Date regdate) {
 		this.num = num;
 		this.sender = sender;
-		this.senderStatus = senderStatus;
+		this.sender_status = senderStatus;
 		this.receiver = receiver;
-		this.receiverStatus = receiverStatus;
+		this.receiver_status = receiverStatus;
 		this.content = content;
 		this.regdate = regdate;
 	}
@@ -43,11 +43,11 @@ public class Message implements Serializable {
 	}
 
 	public Integer getSenderStatus() {
-		return senderStatus;
+		return sender_status;
 	}
 
 	public void setSenderStatus(Integer senderStatus) {
-		this.senderStatus = senderStatus;
+		this.sender_status = senderStatus;
 	}
 
 	public String getReceiver() {
@@ -59,11 +59,11 @@ public class Message implements Serializable {
 	}
 
 	public Integer getReceiverStatus() {
-		return receiverStatus;
+		return receiver_status;
 	}
 
 	public void setReceiverStatus(Integer receiverStatus) {
-		this.receiverStatus = receiverStatus;
+		this.receiver_status = receiverStatus;
 	}
 
 	public String getContent() {
@@ -87,9 +87,9 @@ public class Message implements Serializable {
 		return "{\"Message\" : "
 				+ "{\"num\":\"" + num + "\", "
 				+ "\"sender\":\"" + sender + "\", "
-				+ "\"senderStatus\":\"" + senderStatus + "\", "
+				+ "\"senderStatus\":\"" + sender_status + "\", "
 				+ "\"receiver\":\"" + receiver + "\", "
-				+ "\"receiverStatus\":\"" + receiverStatus + "\", "
+				+ "\"receiverStatus\":\"" + receiver_status + "\", "
 				+ "\"content\":\"" + content + "\", "
 				+ "\"regdate\":\"" + regdate
 				+ "\"}"

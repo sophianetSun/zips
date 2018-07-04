@@ -61,7 +61,7 @@
 		<c:forEach items="${shopList}" var="shop">
 		<tr>
 			<td>${shop.shop_seller_id}</td>
-			<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a></td>	
+			<td><a href="shop/detail.zips?shop_no=${shop.shop_no}&pageNum=1">${shop.shop_subject}</a></td>	
 			<td><fmt:formatDate value="${shop.shop_regdate}" pattern="YY/MM/dd"/></td>
 		</tr>
 		</c:forEach>
