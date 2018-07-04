@@ -1,5 +1,6 @@
 package dao.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -23,5 +24,8 @@ public interface UserMapper {
 			+ "bodyfat=#{bodyfat}, muscle=#{muscle}, blacklist=#{blacklist}, point=#{point}, coin=#{coin}, "
 			+ "regdate=#{regdate}, logdate=#{logdate}, picture=#{picture}, point=#{point} where id=#{id}")
 	void update(User user);
+
+	@Delete("delete from zipsuser where id=#{value}")
+	void delete(String id);
 
 }

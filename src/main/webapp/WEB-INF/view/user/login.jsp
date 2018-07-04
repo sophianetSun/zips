@@ -40,17 +40,6 @@
 	    <button type="submit" class="btn btn-default">로그인</button>
 		<input type="button" class="btn btn-default" value="회원가입" onclick="location.href='join.zips'">
 	    </div><br><br>
-	    <!-- <div class="form-group" align="center">
-	      <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해 주세요" style="width:400px">
-	    </div>
-	    	<br>
-	    <div class="form-group"  align="center">
-	      <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해 주세요" name="pw" style="width:400px">
-	    </div><br>
-	    <div align="center">
-	    <button type="submit" class="btn btn-default">로그인</button>
-		<input type="button" class="btn btn-default" value="회원가입" onclick="location.href='join.zips'">
-	    </div><br><br> -->
 	  </div>
 	</div>
 </form:form>

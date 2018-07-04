@@ -10,5 +10,8 @@ public interface UserService {
 
 	User getUser(String id);
 
-	void updateUser(User user);
+	void delete(String id);
+
+	void updateUser(User user, HttpServletRequest request);
+
 }

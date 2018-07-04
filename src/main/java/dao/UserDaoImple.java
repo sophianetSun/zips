@@ -38,4 +38,9 @@ public class UserDaoImple implements UserDao{
 	public void update(User user) {
 		sqlSession.getMapper(UserMapper.class).update(user);
 	}
+
+	@Override
+	public void delete(String id) {
+		sqlSession.getMapper(UserMapper.class).delete(id);
+	}
 }

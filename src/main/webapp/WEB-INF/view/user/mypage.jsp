@@ -8,8 +8,9 @@
 </head>
 <body>
 <div>
-  <h1><strong>회원 가입</strong></h1><br>
+  <h1><strong>마이 페이지</strong></h1><br>
   <form:form modelAttribute="user" method="post" action="update.zips" enctype="multipart/form-data">
+  <form:hidden path="pic" />
 	<spring:hasBindErrors name="user">
 		<font color = "red">
 			<c:forEach items = "${errors.globalErrors}" var="error">
@@ -36,23 +37,20 @@
 				var reader = new FileReader();
 				
 				reader.onload = function(img) {
-					$('#preview').append(
-						"<img src=\"" + img.target.result + "\"\/>"
-						);
+					$("#img_ex").attr("src",img.target.result)
 				};
 				reader.readAsDataURL(input.files[0]);
 			}else alert('invalid file input');
 		}
 	</script>
-	
-	
+
   <div align="center">
-  <input type=>
-  <input type="image" value="${loginUser.picture}" class="img-thumbnail" width="304" height="236" > 
-            <div id="preview" class="img-thumbnail"></div>
+	<c:if test="${empty loginUser.picture}"><td>사진없음</td></c:if>
+   <c:if test="${!empty loginUser.picture}"><td align="center"><img src="../img/${loginUser.picture}" width="304" height="236" id="img_ex">
+   </c:if>
+   <br>
         <input type="file" id="file" name="pic" onchange="imageURL(this)" multiple/>
       </div><br><br>
-				
     <div class="mb-3">
               <label for="id" id="id">아이디</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="id" /></font>
               <input type="text" class="form-control" name="id" id="id" readonly value="${loginUser.id}">
@@ -83,21 +81,21 @@
             </div>
     <div class="row">
     <div class="col-md-6 mb-3">
-                <label for="height">키</label>
-                <input type="text" class="form-control" name="height" value="${loginUser.height} cm"><!--  value="" required="" -->
+                <label for="height">키(cm)</label>
+                <input type="text" class="form-control" name="height" value="${loginUser.height}"><!--  value="" required="" -->
               </div>
               <div class="col-md-6 mb-3">
                 <label for="weight">몸무게</label>
-                <input type="text" class="form-control" name="weight" value="${loginUser.weight} kg">
+                <input type="text" class="form-control" name="weight" value="${loginUser.weight}">
               </div>
             </div>
     <div class="mb-3">
               <label for="bodyfat">체지방</label>
-              <input type="text" class="form-control" name="bodyfat" value="${loginUser.bodyfat} kg">
+              <input type="text" class="form-control" name="bodyfat" value="${loginUser.bodyfat}">
             </div>
     <div class="mb-3">
               <label for="muscle">골격근량</label>
-              <input type="text" class="form-control" name="muscle" value="${loginUser.muscle} kg">
+              <input type="text" class="form-control" name="muscle" value="${loginUser.muscle}">
             </div>
     <label for="gender">성별</label><br>
     <label class="radio-inline">
