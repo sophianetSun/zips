@@ -59,4 +59,12 @@ public class UserServiceImpl implements UserService{
 		userDao.update(user);
 		
 	}
+
+	@Override
+	public void updateBuyerCoin(Integer dealcoin, String shop_buyer_id) {
+		userDao.updateBuyerCoin(dealcoin, shop_buyer_id);
+	}
+
+	// 코인 사용
+
 }

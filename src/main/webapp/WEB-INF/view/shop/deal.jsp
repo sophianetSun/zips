@@ -29,8 +29,8 @@
 	${shop.shop_price }
 	<br>
 	<div class="form-group">
-        <label for="coin">입력 가격</label>
-        <input type="text" class="form-control" style="width: 20%" id="coin" name="coin" placeholder="가격을 입력하세요.">
+        <label for="dealcoin">입력 가격</label>
+        <input type="text" class="form-control" style="width: 20%" id="dealcoin" name="dealcoin" placeholder="가격을 입력하세요.">
     </div>
 </div>
 <div>
