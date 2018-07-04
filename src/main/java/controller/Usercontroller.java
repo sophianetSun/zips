@@ -145,8 +145,7 @@ public class Usercontroller {
 		return mav;
 		}
 		userService.updateUser(user, request);
-		mav.addObject("upuser", user);
-		mav.setViewName("redirect:/user/update.zips");
+		mav.setViewName("redirect:/user/mypage.zips");
 		return mav;
 	}
 	
