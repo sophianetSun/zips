@@ -48,7 +48,7 @@ $(document).ready(
 <body>
 <h2 align="center"> 중고 장터 게시물 작성 </h2>
 <div class="container">
-    <form:form modelAttribute="shop" action="write.zips" method="post">
+    <form:form modelAttribute="shop" action="write.zips" enctype="multipart/form-data" method="post">
       <div class="form-group">
         <label for="subject">제목 <font color="red"><form:errors path="shop_subject" /></font> </label>
         <input type="text" class="form-control" id="subject" name="shop_subject" placeholder="제목을 입력하세요.">

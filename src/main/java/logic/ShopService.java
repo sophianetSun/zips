@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 public interface ShopService {
+	
+	// 글 최대 번호
+	Integer maxNo();
 	// 글쓰기
 	void shopWrite(Shop shop, HttpServletRequest request);
 
@@ -27,5 +30,8 @@ public interface ShopService {
 	// 글 삭제하기
 	void shopDelete(Integer shop_no);
 
-	
+	// 파일 업로드
+	void fileUpload(Integer ref_no, String originalfileName, String saveFileName, long fileSize);
+
+
 }

@@ -20,6 +20,7 @@
 	</tr> 
 	<tr>
 		<td colspan="4" align="center" height="200px">
+			<c:if test="${log }"></c:if>
 			<input type="button" class="btn btn-primary" value="구매 신청" onclick="location.href='deal.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
 		</td>
 	</tr>

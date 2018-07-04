@@ -1,19 +1,24 @@
 package controller;
 
-import java.io.PrintWriter;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
@@ -31,6 +36,7 @@ public class ShopController {
 	@Autowired
 	private UserService userService;
 	
+	// 중고 장터 글쓰기 호출
 	@RequestMapping(value="shop/write", method=RequestMethod.GET)
 	public ModelAndView write(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -39,25 +45,61 @@ public class ShopController {
 		System.out.println(request.getSession().getAttribute("loginUser"));
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
 		
-		
 		mav.addObject(loginUser);
 		mav.addObject(new Shop());
 		return mav;
 	}
 	
+	// 중고 장터 글 작성 호출
 	@RequestMapping(value="shop/write", method=RequestMethod.POST)
-	public ModelAndView write(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request) {
+	public ModelAndView write(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request, MultipartHttpServletRequest mhsq) throws IllegalStateException, IOException {
 		System.out.println("게시물 작성 POST 방식 호출입니다.");
 		System.out.println(request.getSession().getAttribute("loginUser"));
-		
+		System.out.println(request.getServletContext().getRealPath("/"));
 		ModelAndView mav = new ModelAndView();
-		
+
 		if(bindingResult.hasErrors()) {
 			System.out.println("게시물 작성 검증 오류입니다.");
 			mav.getModel().putAll(bindingResult.getModel());
 			return mav;
 		}
-		try { 
+ 
+		String realFolder = request.getServletContext().getRealPath("/") + "/shopfile/";
+		File dir = new File(realFolder);
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		
+		List<MultipartFile> mf = mhsq.getFiles("file");
+		System.out.println(mf);
+		
+	   if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
+            
+       } else {
+           for (int i = 0; i < mf.size(); i++) {
+               // 파일 중복명 처리
+        	   String genId = UUID.randomUUID().toString(); 
+
+               // 본래 파일명
+               String originalfileName = mf.get(i).getOriginalFilename();
+                
+               String saveFileName = genId + "." + FilenameUtils.getExtension(originalfileName);
+               // 저장되는 파일 이름
+
+               String savePath = realFolder + saveFileName; // 저장 될 파일 경로
+
+               long fileSize = mf.get(i).getSize(); // 파일 사이즈
+
+               mf.get(i).transferTo(new File(savePath)); // 파일 저장
+
+               Integer ref_no = shopService.maxNo();
+               System.out.println(ref_no);
+               
+               shopService.fileUpload(ref_no, originalfileName, saveFileName, fileSize);
+           }
+       }
+       
+       try { 
 			shopService.shopWrite(shop, request);
 			mav.setViewName("redirect:list.zips");
 			
@@ -139,11 +181,7 @@ public class ShopController {
 		Integer shop_no = Integer.parseInt(map.get("shop_no"));
 		String pageNum = map.get("pageNum");
 		Shop dbshop = shopService.getShop(shop_no);
-		//String pass = map.get("pass");
-/*		if(!pass.equals(dbBoard.getPass())) {
-			throw new ShopException("비밀번호가 틀렸습니다", "delete.shop?num="+num+"&pageNum="+pageNum);
-		}
-*/			
+		
 		try {
 			shopService.shopDelete(shop_no);
 			mav.setViewName("redirect:list.zips");
@@ -217,19 +255,18 @@ public class ShopController {
 			System.out.println("판매자, 구매자 코인 사용");
 			String shop_buyer_id = loginUser.getId();
 			shopService.shopBuyerUpdate(shop.getShop_no(), shop_buyer_id);
-			userService.updateBuyerCoin(dealcoin, shop.getShop_buyer_id());
+			userService.updateBuyerCoin(dealcoin, loginUser.getId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-		}
-		
+		} 
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("shop_no",shop_no);
 		mav.addObject("shop", shop);
 		mav.addObject("dealcoin");
 		mav.addObject(loginUser);
-		
+			
 		return mav;
 	}
 }

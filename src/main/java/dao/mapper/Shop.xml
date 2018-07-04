@@ -28,4 +28,9 @@
 	<update id="shopBuyerUpdate" parameterType="map">
 		update zips_shop set shop_buyer_id=#{shop_buyer_id} where shop_no=#{shop_no}
 	</update>
+	
+	<insert id="fileUpload" parameterType="map">
+		insert into uploadfile (ref_no,originalName,filename,fileSize) values(#{ref_no},#{originalfileName},#{saveFileName},#{fileSize})
+	</insert>
+	
 </mapper>

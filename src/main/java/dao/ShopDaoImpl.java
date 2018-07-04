@@ -79,5 +79,16 @@ public class ShopDaoImpl implements ShopDao {
 		map.put("shop_buyer_id", shop_buyer_id);
 		sqlSession.update(NS+"shopBuyerUpdate", map);
 	}
+
+	@Override
+	public void fileUpload(Integer ref_no, String originalfileName, String saveFileName, long fileSize) {
+	    HashMap<String, Object> map = new HashMap<>();
+	    map.put("ref_no", ref_no);
+	    map.put("originalfileName", originalfileName);
+	    map.put("saveFileName", saveFileName);
+	    map.put("fileSize", fileSize);
+	     
+	    sqlSession.insert(NS+"fileUpload", map);	
+	}
 	
 }
