@@ -22,6 +22,7 @@ public class Board implements Serializable{
 	private int board_type;
 	private MultipartFile filename;
 	
+	
 	public int getNum() {
 		return num;
 	}

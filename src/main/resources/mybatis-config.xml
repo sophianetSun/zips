@@ -8,6 +8,8 @@
 		<typeAlias type="logic.Board" alias="Board"/>
 		<typeAlias type="logic.SearchInfo" alias="SearchInfo"/>
 		<typeAlias type="logic.Message" alias="Message"/>
+		<typeAlias type="logic.Best" alias="Best"/>
+		<typeAlias type="logic.Recomment" alias="Recomment"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/User.xml"/>
@@ -15,5 +17,6 @@
 		<mapper resource="dao/mapper/Board.xml"/>	
 		<mapper resource="dao/mapper/SearchInfo.xml"/>
 		<mapper resource="dao/mapper/Message.xml"/>
+		<mapper resource="dao/mapper/Best.xml"/> 
 	</mappers>
 </configuration>

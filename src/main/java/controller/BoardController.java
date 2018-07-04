@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
@@ -24,6 +22,20 @@ public class BoardController {
 
 	@Autowired 
 	private BoardService service;
+	
+	
+	@RequestMapping(value="board/bestcnt" , method = RequestMethod.POST)
+	public ModelAndView best(@Valid Board board , HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String userid = (String) session.getAttribute("id");
+		System.out.println(userid);
+		int result = service.bestcnt(board,userid);
+		System.out.println(result);
+		if(result > 0) {
+			mav.setViewName("redirect:homeTraininglist.zips");
+		} 
+		return mav;
+	}
 	
 	@RequestMapping("board/homeTraininglist")
 	public ModelAndView list(Integer num,Integer pageNum, String searchType, String searchContent) {
@@ -49,8 +61,17 @@ public class BoardController {
 			
 			return mav;
 	}
-	
 
+	@RequestMapping(value="board/recommand" , method = RequestMethod.POST)
+		public ModelAndView recommandform(@Valid Board board , Integer pageNum) {
+			ModelAndView mav = new ModelAndView();
+			int result = service.boardrecommand(board,pageNum);
+			System.out.println(result);
+			if(result > 0) {
+				mav.setViewName("redirect:homeTraininglistForm.zips?num="+board.getNum()+"&board_type="+board.getBoard_type());
+			} 
+			return mav;
+		}
 	
 	@RequestMapping(value="board/boardwrite" , method = RequestMethod.POST)
 	public ModelAndView detailform(@Valid Board board, BindingResult bindingResult , HttpServletRequest request) {
@@ -67,9 +88,13 @@ public class BoardController {
 	}
 	
 	@RequestMapping("board/homeTraininglistForm")
-	public ModelAndView homeTraininglistForm(@Valid int num,HttpSession session) {
+	public ModelAndView homeTraininglistForm(@Valid int num,HttpSession session,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Board board = service.getBoard(num);
+		String url = request.getServletPath();
+		if(url.contains("/board/homeTraininglistForm.zips")) {
+			service.updatereadcnt(num);
+		}
 		mav.addObject("num",num);
 		mav.addObject("board",board);
 		return mav;
@@ -117,13 +142,12 @@ public class BoardController {
 		Board board = new Board();
 		if(num != null) {
 			board = service.getBoard(num);
-			String url = request.getServletPath();
-			if(url.contains("board/homeTraininglistForm.zips")) {
-				service.updatereadcnt(num);
-			}
+			
 		}
 		mav.addObject("board",board);
 		return mav;
 	}
+	
 }
+
 

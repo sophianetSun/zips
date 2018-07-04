@@ -16,7 +16,7 @@
   </div>
   <br>
   <div align="center">
-		<a href="javascript:document.f.submit()"><button type="button" class="btn btn-outline-success">게시글 삭제하기</button></a>
+		<a href="javascript:document.f.submit()"><button type="button" class="btn btn-outline-success" onclick="javascript:alert('게시물 삭제 완료');return true;">게시글 삭제하기</button></a>
 </div>
 <br>	
 	</form>

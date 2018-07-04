@@ -25,6 +25,9 @@ public interface BoardDao {
 
 	int update(Board board, HttpServletRequest request);
 
+	int recommand(Board board, Integer board_type);
+
+
 	
 
 }

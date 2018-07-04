@@ -54,7 +54,6 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public void readcnt(Integer num) {
-		System.out.println("보드다오임플 num:"+num);
 		
 		sqlSession.getMapper(BoardMapper.class).readcnt(num);
 	}
@@ -74,5 +73,13 @@ public class BoardDaoImpl implements BoardDao {
 	public int update(Board board, HttpServletRequest request) {
 		  return sqlSession.getMapper(BoardMapper.class).update(board);
 	}
+
+	@Override
+	public int recommand(Board board, Integer board_type) {
+		return sqlSession.getMapper(BoardMapper.class).recommand(board,board_type);
+	}
+
+	
+	
 	
 }

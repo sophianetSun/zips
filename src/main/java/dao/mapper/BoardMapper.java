@@ -25,5 +25,11 @@ public interface BoardMapper {
 	@Update("update totalboard set board_userid=#{board_userid},subject=#{subject},content=#{content},moddate=now(),filename=#{fileurl} where num=#{num}")
 	int update(Board board);
 
+	@Insert("insert into zipscomment (co_no,num,co_userid,ref_board_no,co_regdate,co_modate,co_content,co_apply)" +
+	"values(1,#{num},#{id},0,now(),#{co_modate},#{content},#{co_apply}")
+	int recommand(Board board, Integer board_type);
+
+	
+
 
 }
