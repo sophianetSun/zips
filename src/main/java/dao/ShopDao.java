@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import logic.Shop;
+import logic.UploadFile;
 
 public interface ShopDao {
 	
@@ -25,7 +26,13 @@ public interface ShopDao {
 	// 판매자 아이디 추가
 	void shopBuyerUpdate(Integer shop_no, String shop_buyer_id);
 	
+	// 게시물 삭제
 	void shopDelete(int shop_no);
 
+	// 게시물 파일 업로드
+	void fileUpload(Integer ref_no, String originalfileName, String saveFileName, long fileSize);
+
+	// 파일 업로드 리스트 가져오기
+	List<UploadFile> getFileList(Integer shop_no);
 	
 }

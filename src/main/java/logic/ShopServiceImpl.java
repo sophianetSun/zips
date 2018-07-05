@@ -15,6 +15,11 @@ public class ShopServiceImpl implements ShopService {
 	private ShopDao shopDao;
 
 	@Override
+	public Integer maxNo() {
+		return shopDao.maxNo();
+	}
+	
+	@Override
 	public void shopWrite(Shop shop, HttpServletRequest request) {
 		int shop_no = shopDao.maxNo();
 		shop.setShop_no(++shop_no);		
@@ -50,5 +55,16 @@ public class ShopServiceImpl implements ShopService {
 	public void shopBuyerUpdate(Integer shop_no, String shop_buyer_id) {
 		shopDao.shopBuyerUpdate(shop_no, shop_buyer_id);
 	}
+
+	@Override
+	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+		shopDao.fileUpload(shop_no, originalfileName, saveFileName, fileSize);
+	}
+
+	@Override
+	public List<UploadFile> getFileList(Integer shop_no) {
+		return shopDao.getFileList(shop_no);
+	}
+
 	
 }

@@ -8,28 +8,33 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpRequest;
 
 public interface MainService {
-	
+	// Main Board List
 	public Map<String, List<Board>> getMainBoards();
 	public List<Shop> getShopList();
 	public List<User> getTopUsers();
 	public InfoCalendar getMyCalInfo();
 	
+	// Search
 	public List<Board> searchBoard(String query);
 	public List<Shop> searchShop(String query);
-	
 	public void inputSearch(String query, HttpSession session);
 	public List<Map<String, Integer>> getSearchMap();
 	public Map<String, Long> analyzeSearchResult();
 	
+	// Message
 	public void sendMsg(Message msg);
 	public List<Message> getMsgList(String receiverId, String senderId);
 	public Message getMsgById(String num);
 	public void hideMsg(Message msg);
 	public void deleteMsg(String num);
 	
+	// Subscription
 	public int subscribe(String userId, String subId);
 	public List<Subscription> getSubscriptionList(String id);
 	public List<Subscription> getFollowerList(String id);
 	public int update(Subscription sub);
 	public int cancelSubsciription(String userId, String subId);
+	
+	// MyInfoCalendar
+	public List<FoodDB> getFoodDBList(String searchText);
 }
