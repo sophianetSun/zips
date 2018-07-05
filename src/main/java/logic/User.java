@@ -11,6 +11,7 @@ public class User implements Serializable{
 	private String id;
 	@Size(min=3, max=12, message="비밀번호를 입력해 주세요")
 	private String pw;
+	private String pwch;
 	@NotEmpty(message="이름을 입력해 주세요")
 	private String name;
 	private String email;
@@ -40,6 +41,12 @@ public class User implements Serializable{
 	}
 	public void setPw(String pw) {
 		this.pw = pw;
+	}
+	public String getPwch() {
+		return pwch;
+	}
+	public void setPwch(String pwch) {
+		this.pwch = pwch;
 	}
 	public String getName() {
 		return name;
@@ -145,11 +152,10 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email + ", nickname=" + nickname
-				+ ", tel=" + tel + ", address=" + address + ", gender=" + gender + ", height=" + height + ", weight="
-				+ weight + ", bodyfat=" + bodyfat + ", blacklist=" + blacklist + ", point=" + point + ", coin=" + coin
-				+ ", regdate=" + regdate + ", logdate=" + logdate + ", picture=" + picture + ", pic=" + pic
-				+ ", muscle=" + muscle + "]";
+		return "User [id=" + id + ", pw=" + pw + ", pwch=" + pwch + ", name=" + name + ", email=" + email
+				+ ", nickname=" + nickname + ", tel=" + tel + ", address=" + address + ", gender=" + gender
+				+ ", height=" + height + ", weight=" + weight + ", bodyfat=" + bodyfat + ", blacklist=" + blacklist
+				+ ", point=" + point + ", coin=" + coin + ", regdate=" + regdate + ", logdate=" + logdate + ", picture="
+				+ picture + ", pic=" + pic + ", muscle=" + muscle + "]";
 	}
-	
 }

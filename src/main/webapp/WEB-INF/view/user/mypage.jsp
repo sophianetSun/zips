@@ -44,7 +44,7 @@
 	</script>
 
   <div align="center">
-	<c:if test="${empty dbuser.picture}"><td>사진없음</td></c:if>
+	<c:if test="${empty dbuser.picture}"><td align="center"><img src="../img/join.png" width="304" height="236" id="img_ex"></c:if>
    <c:if test="${!empty dbuser.picture}"><td align="center"><img src="../img/${dbuser.picture}" width="304" height="236" id="img_ex">
    </c:if>
    <br>
