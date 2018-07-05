@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dao.BestDao;
 import dao.BoardDao;
+import dao.RecommentDao;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -21,14 +22,17 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
     private BestDao bestDao;
 	
+	@Autowired
+	private RecommentDao recommentDao;
+	
 	@Override
 	public int boardcount(String searchType, String searchContent) {
 		return boardDao.count(searchType,searchContent);
 	}
 
 	@Override
-	public List<Board> boardList(String searchType, String searchContent, Integer pageNum, int limit) {
-		return boardDao.list(searchType,searchContent,pageNum,limit);
+	public List<Board> boardList(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
+		return boardDao.list(board_type,searchType,searchContent,pageNum,limit);
 	}
 
 	@Override
@@ -78,14 +82,22 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int boardrecommand(Board board, Integer board_type) {
-		return boardDao.recommand(board,board_type);
+	public int boardrecommand(Recomment recomment,String co_userid,String content,Integer board_type) {
+		return recommentDao.recommand(recomment,co_userid,content,board_type);
 	}
 
 	@Override
 	public int bestcnt(Board board, String userid) {
 		return bestDao.best(board,userid);
 	}
+
+	@Override
+	public List<Board> totalboardList(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
+		return boardDao.totallist(board_type,searchType,searchContent,pageNum,limit);
+	}
+
+
+	
 
 
 		

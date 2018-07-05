@@ -21,8 +21,7 @@ public class Board implements Serializable{
 	private int admin_alert;
 	private int board_type;
 	private MultipartFile filename;
-	
-	
+			
 	public int getNum() {
 		return num;
 	}
@@ -102,5 +101,8 @@ public class Board implements Serializable{
 				+ moddate + ", recommand=" + recommand + ", admin_alert=" + admin_alert + ", board_type=" + board_type
 				+ ", filename=" + filename + "]";
 	}
+	
+	
+	
 	
 }

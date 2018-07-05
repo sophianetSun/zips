@@ -24,7 +24,7 @@
 	</div>
 
 <div class="jumbotron style="margin: auto;" >
-	<form:form modelAttribute="board" action="update.zips?pageNum=${param.pageNum}" method="post" enctype="multipart/form-data" name="f">
+	<form:form modelAttribute="board" action="update.zips?pageNum=${param.pageNum}&board_type=${param.board_type}" method="post" enctype="multipart/form-data" name="f">
 		<input type="hidden" name="num" value="${board.num }">
 		<input type="hidden" name="file2" value="${board.fileurl}">
 		<input type="hidden" name="pageNum" value="${param.pageNum}">

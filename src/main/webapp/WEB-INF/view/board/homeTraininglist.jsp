@@ -7,10 +7,11 @@
 <script type="text/javascript">
 function list(pageNum) {
 	var searchType = document.searchform.searchType.value;
+	var board_type = 1;
 	if(searchType == null || searchType.length == 0) {
 		document.searchform.searchContent.value = "";
 		document.searchform.pageNum.value = "1";
-		location.href="homeTraininglist.zips?pageNum=" + pageNum;
+		location.href="homeTraininglist.zips?pageNum=" + pageNum+"&board_type="+board_type;
 	} else { document.searchform.pageNum.value = pageNum;
 			 document.searchform.submit();
 			 return true;
@@ -29,14 +30,14 @@ function list(pageNum) {
   <img class="mySlides" src="../img/1-4.gif" style="width:50%">
   <img class="mySlides" src="../img/1-5.gif" style="width:50%">
             <!-- <img class="rounded-circle" src="../img/runicon.png" alt="Generic placeholder image" width="140" height="140"> -->
-            <p class="test"><span><a href="homeTraininglist.zips">홈 트레이닝&nbsp;</a></span></p>
+            <p class="test"><span><a href="homeTraininglist.zips?board_type=${param.board_type}">홈 트레이닝&nbsp;</a></span></p>
             <br>
             <small><br>여러분도 이제 혼자 운동하지 말고 <br>동영상을 올려서 운동정보를 공유해보세요 </small>
             <br>
           </div>
           </div>
 <hr class="my-hr1">
-<form action="homeTraininglist.zips" method="post" name="searchform" onsubmit="return list(1)">
+<form action="homeTraininglist.zips?board_type=${param.board_type}" method="post" name="searchform" onsubmit="return list(1)">
 <input type="hidden" name="pageNum" value="1">
  <div class="search__container" align="center">
 <select name="searchType" id="searchType" class="custom-select d-block" style="width:100px;height:40px;">
@@ -71,11 +72,6 @@ function list(pageNum) {
 </script>
 </form>
 
-<c:if test="${empty board.fileurl }">&nbsp;&nbsp;&nbsp;</c:if>
-<c:if test="${not empty board.fileurl}">
-<a href="../img/${board.fileurl}">@</a>
-</c:if>
-
 <ul>
 <li><p class="testred"><I><span>Best Hot 동영상 &nbsp;</span></I></p></li>
 </ul>
@@ -109,7 +105,6 @@ function list(pageNum) {
  <div class="album py-5 bg-light">
         <div class="container">
           <div class="row">
-
 <c:forEach var="board" items="${boardlist}">
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
@@ -166,8 +161,8 @@ function list(pageNum) {
 등록된 게시물이 없습니다
 </c:if>
 </ul>
-<a href="boardwrite.zips"><button type="button" class="btn btn-success" style="width: 120px;height: 50px;">동영상 업로드</button></a>
-<a href="homeTraininglist.zips"><button type="button" class="btn btn-primary" style="width: 120px;height: 50px;">목록</button></a>
+<a href="boardwrite.zips?board_type=${param.board_type }"><button type="button" class="btn btn-success" style="width: 120px;height: 50px;">동영상 업로드</button></a>
+<a href="homeTraininglist.zips?board_type=${param.board_type}"><button type="button" class="btn btn-primary" style="width: 120px;height: 50px;">목록</button></a>
 <br>
 <br>
 <script type="text/javascript">

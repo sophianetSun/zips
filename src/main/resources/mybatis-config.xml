@@ -20,5 +20,6 @@
 		<mapper resource="dao/mapper/Message.xml"/>
 		<mapper resource="dao/mapper/Best.xml"/> 
 		<mapper resource="dao/mapper/Subscription.xml"/>
+		<mapper resource="dao/mapper/Recomment.xml"/>
 	</mappers>
 </configuration>

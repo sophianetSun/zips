@@ -8,7 +8,7 @@ public interface BoardService {
 
 	int boardcount(String searchType, String searchContent);
 
-	List<Board> boardList(String searchType, String searchContent, Integer pageNum, int limit);
+	List<Board> boardList(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
 
 	int boardinsert(Board board, HttpServletRequest request);
 
@@ -20,9 +20,13 @@ public interface BoardService {
 
 	int boardupdate(Board board, HttpServletRequest request);
 
-	int boardrecommand(Board board, Integer board_type);
+	int boardrecommand(Recomment recomment, String co_userid, String content, Integer board_type);
 
 	int bestcnt(Board board, String userid);
+
+	List<Board> totalboardList(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
+
+
 
 
 	
