@@ -11,6 +11,7 @@
 		<typeAlias type="logic.Best" alias="Best"/>
 		<typeAlias type="logic.Recomment" alias="Recomment"/>
 		<typeAlias type="logic.Subscription" alias="Subscription"/>
+		<typeAlias type="logic.UploadFile" alias="UploadFile"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/User.xml"/>

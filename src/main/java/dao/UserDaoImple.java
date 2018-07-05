@@ -42,6 +42,7 @@ public class UserDaoImple implements UserDao{
 		Map<String, String> map = new HashMap<String,String>();
 		map.put("id", id);
 		return sqlSession.selectOne(NS+"dbuser", map);
+	}
 	/* 판매자 코인 사용
 	@Override
 	public void updateSellerCoin(Integer coin, String shop_seller_id) {

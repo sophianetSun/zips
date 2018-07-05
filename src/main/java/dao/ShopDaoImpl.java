@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import dao.mapper.ShopMapper;
 import logic.Shop;
+import logic.UploadFile;
 
 @Repository
 public class ShopDaoImpl implements ShopDao {
@@ -81,14 +82,24 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public void fileUpload(Integer ref_no, String originalfileName, String saveFileName, long fileSize) {
+	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
 	    HashMap<String, Object> map = new HashMap<>();
-	    map.put("ref_no", ref_no);
+	    map.put("shop_no", shop_no);
 	    map.put("originalfileName", originalfileName);
 	    map.put("saveFileName", saveFileName);
 	    map.put("fileSize", fileSize);
 	     
 	    sqlSession.insert(NS+"fileUpload", map);	
 	}
-	
+
+	@Override
+	public List<UploadFile> getFileList(Integer shop_no) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("shop_no", shop_no);
+		
+		System.out.println("업로드 파일 리스트 DB 호출:"+map);
+		System.out.println(sqlSession.selectList(NS+"getFileList", map));
+		
+		return sqlSession.selectList(NS+"getFileList", map);
+	}
 }

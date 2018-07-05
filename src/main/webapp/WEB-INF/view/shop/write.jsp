@@ -11,14 +11,28 @@
 		width: 200px;
 		height: 200px;
 	}
+	label {
+		font-weight: bold;
+	}
 </style>
 <script type="text/javascript">
-$(document).ready(
-	    function() {
+$(document).ready( function() {
 	        // 태그에 onchange를 부여한다.
 	        $('#file').change(function() {
 	                addPreview($(this)); //preview form 추가하기
 	        });
+	        
+	        $('#shop_price').keyup(function(){
+	        	var coin = $('#shop_price').val();
+	        	$.ajax({
+	        		url : "checkcoin.zips",
+	        		type : "POST",
+	        		data : {price:coin},
+	        		success : function(data) {
+	        			$('#checkcoin').html(data);
+	        		}
+	        	})
+	        })
 	    });
 	 
 	    // image preview 기능 구현
@@ -47,6 +61,8 @@ $(document).ready(
 </head>
 <body>
 <h2 align="center"> 중고 장터 게시물 작성 </h2>
+<div class="jumbotron" style="margin: auto;">
+
 <div class="container">
     <form:form modelAttribute="shop" action="write.zips" enctype="multipart/form-data" method="post">
       <div class="form-group">
@@ -55,7 +71,7 @@ $(document).ready(
       </div>
       <div class="form-group">
         <label for="writer">작성자 <font color="red"><form:errors path="shop_seller_id" /></font> </label>
-        <input type="text" class="form-control" style="width: 20%" id="writer" name="shop_seller_id" value="${loginUser.id}" readonly="readonly">
+        <input type="text" class="form-control" style="width: 20%" id="writer" name="shop_seller_id" value="${sessionScope.loginUser.id}" readonly="readonly">
         
       </div>
       <div class="form-group">
@@ -63,8 +79,9 @@ $(document).ready(
         <textarea class="form-control" id="content" name="shop_content" rows="3"></textarea>
       </div>
       <div class="form-group">
+      	<div id = "checkcoin"></div>
         <label for="price">상품 가격 <font color="red"><form:errors path="shop_price" /></font></label>
-        <input type="text" class="form-control" style="width: 20%" id="writer" name="shop_price" placeholder="가격을 입력하세요.">
+        <input type="text" class="form-control" style="width: 20%" id="shop_price" name="shop_price" placeholder="가격을 입력하세요.">
       </div>
       <div class="form-group">
         <label for="file">상품 사진 첨부</label>
@@ -74,6 +91,8 @@ $(document).ready(
       <button type="submit" class="btn btn-primary">작성</button>
       <input type="button" class="btn btn-primary" value="상품 목록" onclick="location.href='list.zips'">
     </form:form>
+</div>
+
 </div>
 </body>
 </html>
