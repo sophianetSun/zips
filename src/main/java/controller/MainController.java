@@ -66,7 +66,18 @@ public class MainController {
 		return "main/calendar";
 	}
 	
-	// RESTAPI
+	@RequestMapping("myInfoCal")
+	public String myInfoCal() {
+		return "main/myInfoCal";
+	}
+	// RestfulAPI
+	@RequestMapping(value="myinfo/search", produces="application/text; charset=utf8")
+	@ResponseBody
+	public String mySearchInfo(String searchType, String searchText) {
+		// searchType 에 따라 푸드 디비 or 워크아웃 결정
+		return mainService.getFoodDBList(searchText).toString();
+	}
+	
 	@RequestMapping(value="message/list", produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String msgList(String receiverId, String senderId) {
@@ -81,7 +92,6 @@ public class MainController {
 		String senderId = user.getId();
 		msg.setSender(senderId);
 		try {
-			System.out.println(msg);
 			mainService.sendMsg(msg);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,7 +118,7 @@ public class MainController {
 			mainService.hideMsg(msg);			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "faile";
+			return "fail";
 		} 
 		return "success";
 	}

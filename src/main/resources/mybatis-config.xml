@@ -12,6 +12,7 @@
 		<typeAlias type="logic.Recomment" alias="Recomment"/>
 		<typeAlias type="logic.Subscription" alias="Subscription"/>
 		<typeAlias type="logic.UploadFile" alias="UploadFile"/>
+		<typeAlias type="logic.FoodDB" alias="FoodDB"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/User.xml"/>
