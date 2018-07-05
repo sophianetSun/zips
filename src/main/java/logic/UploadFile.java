@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UploadFile implements Serializable {
     private int file_no;
-    private int ref_no;
+    private int shop_no;
     private String originalname;
     private String filename;
     private long filesize;
@@ -14,11 +14,12 @@ public class UploadFile implements Serializable {
 	public void setFile_no(int file_no) {
 		this.file_no = file_no;
 	}
-	public int getRef_no() {
-		return ref_no;
+	
+	public int getShop_no() {
+		return shop_no;
 	}
-	public void setRef_no(int ref_no) {
-		this.ref_no = ref_no;
+	public void setShop_no(int shop_no) {
+		this.shop_no = shop_no;
 	}
 	public String getOriginalname() {
 		return originalname;
@@ -40,7 +41,7 @@ public class UploadFile implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "UploadFile [file_no=" + file_no + ", ref_no=" + ref_no + ", originalname=" + originalname
+		return "UploadFile [file_no=" + file_no + ", shop_no=" + shop_no + ", originalname=" + originalname
 				+ ", filename=" + filename + ", filesize=" + filesize + "]";
 	}
     

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dao.FoodDao;
 import dao.MessageDao;
 import dao.SearchInfoDao;
 import dao.SubscriptionDao;
@@ -24,6 +25,8 @@ public class MainServiceImpl implements MainService {
 	private MessageDao msgDao;
 	@Autowired
 	private SubscriptionDao subDao;
+	@Autowired
+	private FoodDao foodDao;
 	
 	@Override
 	public Map<String, List<Board>> getMainBoards() {
@@ -164,6 +167,11 @@ public class MainServiceImpl implements MainService {
 		sub.setUserId(userId);
 		sub.setSubscribeId(subId);
 		return subDao.delete(sub);
+	}
+
+	@Override
+	public List<FoodDB> getFoodDBList(String searchText) {
+		return foodDao.selectList(searchText);
 	}
 	
 }
