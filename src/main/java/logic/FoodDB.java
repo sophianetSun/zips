@@ -141,5 +141,17 @@ public class FoodDB implements Serializable {
 	public void setTransFat(Double transFat) {
 		this.trans_fat = transFat;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\"FoodDB\" : { \"no\":").append(no).append(", \"group_type\":\"").append(group_type).append("\", \"food_name\":\"")
+				.append(food_name).append("\", \"amount\":").append(amount).append(", \"calorie\":").append(calorie)
+				.append(", \"carbohydrate\":").append(carbohydrate).append(", \"protein\":").append(protein).append(", \"fat\":")
+				.append(fat).append(", \"sugar\":").append(sugar).append(", \"na\":").append(na).append(", \"chol\":").append(chol)
+				.append(", \"sat_fat\":").append(sat_fat).append(", \"trans_fat\":").append(trans_fat).append("}}");
+		return builder.toString();
+	}
+	
 	
 }

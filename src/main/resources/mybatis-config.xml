@@ -11,6 +11,7 @@
 		<typeAlias type="logic.Best" alias="Best"/>
 		<typeAlias type="logic.Recomment" alias="Recomment"/>
 		<typeAlias type="logic.Subscription" alias="Subscription"/>
+		<typeAlias type="logic.FoodDB" alias="FoodDB"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/User.xml"/>
@@ -20,5 +21,6 @@
 		<mapper resource="dao/mapper/Message.xml"/>
 		<mapper resource="dao/mapper/Best.xml"/> 
 		<mapper resource="dao/mapper/Subscription.xml"/>
+		<mapper resource="dao/mapper/FoodDB.xml"/>
 	</mappers>
 </configuration>

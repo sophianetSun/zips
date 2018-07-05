@@ -134,11 +134,36 @@ public class InfoCalendar {
 
 	@Override
 	public String toString() {
-		return "InfoCalendar [num=" + num + ", regdate=" + regdate + ", userId=" + userId + ", inType=" + inType
-				+ ", name=" + name + ", carbohydrate=" + carbohydrate + ", fat=" + fat + ", protein=" + protein
-				+ ", amount=" + amount + ", calorie=" + calorie + ", nutriMemo=" + nutriMemo + ", workMemo=" + workMemo
-				+ "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("\"InfoCalendar\" : {\"num\":");
+		builder.append(num);
+		builder.append(", \"regdate\":\"");
+		builder.append(regdate);
+		builder.append("\", \"userId\":\"");
+		builder.append(userId);
+		builder.append("\", \"inType\":\"");
+		builder.append(inType);
+		builder.append("\", \"name\":\"");
+		builder.append(name);
+		builder.append("\", \"carbohydrate\":");
+		builder.append(carbohydrate);
+		builder.append(", \"fat\":");
+		builder.append(fat);
+		builder.append(", \"protein\":");
+		builder.append(protein);
+		builder.append(", \"amount\":");
+		builder.append(amount);
+		builder.append(", \"calorie\":");
+		builder.append(calorie);
+		builder.append(", \"nutriMemo\":");
+		builder.append(nutriMemo);
+		builder.append(", \"workMemo\":");
+		builder.append(workMemo);
+		builder.append("}");
+		return builder.toString();
 	}
+
+	
 	
 	
 }
