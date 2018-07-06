@@ -5,42 +5,133 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>상품 상세 보기</title>
+<title>구매 신청 페이지</title>
+<style type="text/css">
+	td:first-child {
+	width: 20%;
+}
+	td:nth-child(1) {
+	width: 20%;
+}
+	td:last-child {
+	width: 80%;
+}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var seller_table = "<table class='table table-bordered'>";
+			seller_table += "<tr><td>아이디</td><td>" + "${sellerUser.id}" + "</td></tr>";
+			seller_table += "<tr><td>이름</td><td>" + "${sellerUser.name}" + "</td></tr>";
+			seller_table += "<tr><td>닉네임</td><td>" + "${sellerUser.nickname}" + "</td></tr>";
+			seller_table += "<tr><td>전화번호</td><td>" + "${sellerUser.tel}" + "</td></tr>";
+			seller_table += "<tr><td>주소</td><td>" + "${sellerUser.address}" + "</td></tr></table>";	
+		
+			$('#seller').html(seller_table);
+		
+		var buyer_table = "<table class='table table-bordered'>";
+			buyer_table += "<tr><td>아이디</td><td>" + "${sellerUser.id}" + "</td></tr>";
+			buyer_table += "<tr><td>이름</td><td>" + "${sellerUser.name}" + "</td></tr>";
+			buyer_table += "<tr><td>닉네임</td><td>" + "${sellerUser.nickname}" + "</td></tr>";
+			buyer_table += "<tr><td>전화번호</td><td>" + "${sellerUser.tel}" + "</td></tr>";
+			buyer_table += "<tr><td>주소</td><td>" + "${sellerUser.address}" + "</td></tr></table>";	
+		
+			$('#buyer').html(buyer_table);
+		
+		$('#shop_seller_id').click(function() {
+			if($('#shop_seller_id').text()=='-'){
+				$('#seller').attr("style","display:none");
+				$('#shop_seller_id').text('+');
+			}else{
+				$('#seller').attr("style","display:block");
+				$('#shop_seller_id').text('-');
+			}
+		})
+		
+		$('#shop_buyer_id').click(function() {
+			if($('#shop_buyer_id').text()=='-'){
+				$('#buyer').attr("style","display:none");
+				$('#shop_buyer_id').text('+');
+			}else{
+				$('#buyer').attr("style","display:block");
+				$('#shop_buyer_id').text('-');
+			}
+		})
+		
+	})
+</script>
 </head>
 <body> 
-<h2 align="center">중고 장터 상품 보기</h2>
-<div class="container" align="center">
-<div>
-	<h2>판매자 정보</h2>
-	<hr>
-	${shop.shop_seller_id }
-</div>
-<div>
-	<h2>구매자 정보</h2>
-	<hr>
-	${loginUser.id }
-</div>
 
-
-	<form action="dealpage.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}" method="post">
-<div>
-	<h2>가격</h2>
-	<hr>
-	${shop.shop_price }
-	<br>
-	<div class="form-group">
-        <label for="dealcoin">입력 가격</label>
-        <input type="text" class="form-control" style="width: 20%" id="dealcoin" name="dealcoin" placeholder="가격을 입력하세요.">
-    </div>
-</div>
-<div>
-	<input type="submit" class="btn btn-primary" value="구매 신청">
-	<input type="button" class="btn btn-primary" value="취소 하기" onclick="javascript:history.go(-1)">
-</div>
-	</form>
-<div>
-	<input type="button" class="btn btn-primary" value="상품 목록" onclick="location.href='list.zips?pageNum=${pageNum}'">
-</div>	
-</div>
+	<div class="blog-post">
+		<h2 class="blog-post-title">구매정보 확인</h2>
+		<p class="blog-post-meta">
+			<fmt:formatDate value="${shop.shop_regdate}"
+				pattern="yyyy-MM-dd HH:mm" />
+		</p>
+		<hr>
+		<blockquote>
+			<div align="center">&nbsp;
+				<h2>판매자 회원 정보 <button type="button" id="shop_seller_id" name="shop_seller_id">-</button> </h2>
+				<div id="seller"></div>
+			</div>
+		</blockquote>
+		</div>
+		<blockquote>
+			<div align="center">
+				<h2>구매자 회원 정보 <button type="button" id="shop_buyer_id" name="shop_buyer_id">-</button> </h2>
+				<div id="buyer"></div>
+			</div> 
+		</blockquote>
+		<blockquote>
+			<div align="center">
+				<h2>결제 정보</h2>
+				<table class='table table-bordered'>
+					<tr><td>결제 코인</td>
+						<td>${shop.shop_price}</td></tr>
+				</table>
+			</div>
+		</blockquote>
+		<br>
+		<hr>
+		
+		<div align="center" style="height: 50px;">
+			<!-- 판매자 아이디 != 로그인 유저 아이디 -->
+			<c:if test="${shop.shop_seller_id != loginUser.id }">
+				<c:if test="${empty shop.shop_buyer_id}">
+					<form action="dealpage.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}" method="post" id="f">
+						<input type="hidden" name="dealcoin" id="dealcoin" value="${shop.shop_price}">
+						<input type="submit" value="구매 신청" class="btn btn-sm btn-outline-primary"
+							style="width: 100px; height: 50px; font-weight: bold;">
+						<button type="button" class="btn btn-sm btn-outline-primary" 
+						style="width: 100px; height: 50px; font-weight: bold;"
+						onclick="javascript:history.go(-1)">
+							구매 취소
+						</button>
+					</form>
+				</c:if> 
+			</c:if>
+		</div>
+		
+		<hr>
+		<div align="right">
+			<c:if test="${shop.shop_seller_id == loginUser.id }">
+				<button type="button" class="btn btn-sm btn-outline-danger"
+					style="width: 100px; height: 50px;"
+					onclick="location.href='update.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+					상품 수정
+				</button>
+				<button type="button" class="btn btn-primary" 
+					onclick="location.href='delete.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+					상품 삭제
+				</button>
+			</c:if>
+			<button type="button" class="btn btn-primary"
+				onclick="location.href='list.zips?pageNum=${pageNum}'">
+				상품 목록
+			</button>
+			<br> 
+			<br>
+		</div>
 </body>
 </html>

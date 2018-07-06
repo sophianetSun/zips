@@ -13,21 +13,20 @@ import org.springframework.web.multipart.MultipartFile;
 public class Shop implements Serializable {
 	private Integer shop_no;
 	
-	@NotEmpty(message="작성자를 입력하세요") 
 	private String shop_seller_id;
 	
 	private String shop_buyer_id;   
 	
 	// null + 빈 문자열 : 파라미터 자체에 name 속성이 없으면 null, 파라미터에 값이 없으면 빈 문자열 => @NotEmpty
-	@NotEmpty(message="상품명을 등록하세요") 
+	@NotEmpty(message="제목을 입력하세요") 
 	private String shop_subject;
 	
-	@NotEmpty(message="상품 내용을 등록하세요")
+	@NotEmpty(message="내용을 입력하세요")
 	private String shop_content;
 	
-	@NotNull(message="상품 가격을 등록하세요")
-	@Min(value=10, message="상품 가격은 10원 이상 가능합니다.")
-	@Max(value=500000, message="상품 가격은 50만원 이하만 가능합니다.")
+	@NotNull(message="가격을 입력하세요")
+	@Min(value=10, message="가격은 10원 이상 입력 가능합니다.")
+	@Max(value=500000, message="가격은 50만원 이하만 입력 가능합니다.")
 	private Integer shop_price;
 	
 	private Integer shop_selller_confirm;
@@ -38,8 +37,6 @@ public class Shop implements Serializable {
 	
 	private Date shop_regdate;
 
-	
-	
 	public Integer getShop_no() {
 		return shop_no;
 	}

@@ -154,15 +154,16 @@ CREATE TABLE zips_shop
 	shop_subject varchar(255) NOT NULL,
 
 	shop_content varchar(255),
-	shop_selller_confirm int NOT NULL,
+	shop_selller_confirm varchar NOT NULL DEFAULT '0',
 
-	shop_buyer_confirm int NOT NULL,
+	shop_buyer_confirm varchar NOT NULL DEFAULT '0', 
 
 	shop_status varchar(20) NOT NULL,
 
 	shop_price int NOT NULL,
 
 	shop_regdate datetime NOT NULL,
+	
 	PRIMARY KEY (shop_no)
 );
 

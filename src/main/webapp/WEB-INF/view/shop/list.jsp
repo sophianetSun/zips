@@ -8,6 +8,33 @@
  th {
  	text-align: center;
  }
+ a.btn_worry em.off {
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    color: #777;
+    width: 50px;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: top;
+    letter-spacing: -0.04em;
+    }
+    
+  a.btn_worry em.on {
+    display: inline-block;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border: 1px solid #e2614c;
+    color: #e2614c;
+    width: 50px;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: top;
+    letter-spacing: -0.04em;
+	}	
+
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>중고 장터 게시판 목록</title>
@@ -36,8 +63,8 @@
 	<colgroup>
     		<col style="width: 100px">
     		<col style="width: auto">
-    		<col style="width: 80px">
-    		<col style="width: 80px">
+    		<col style="width: 150px">
+    		<col style="width: 200px">
     </colgroup>
 	<c:if test="${listcount > 0}">
 			<tr>
@@ -53,17 +80,27 @@
 				<td>
 				<c:if test="${shop.shop_status == '판매중'}">
 				<a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${shop.shop_status}</span>
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="off">${shop.shop_status}</em></a>
 				</c:if>
-				<c:if test="${shop.shop_status == '구매진행중'}">
-				<c:if test="${shop.shop_seller_id == loginUser.id || shop.shop_buyer_id == loginUser.id}">
-				<a href="dealpage.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${shop.shop_status}</span>
+				<c:if test="${shop.shop_status == '구매중'}">
+					<c:if test="${(shop.shop_seller_id == loginUser.id) || (shop.shop_buyer_id == loginUser.id)}">
+					<a href="dealpage.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="off">${shop.shop_status}</em></a>			    
 				    </c:if>
+				      
+					<c:if test="${(shop.shop_seller_id != loginUser.id) && (shop.shop_buyer_id != loginUser.id)}">    
+					<a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="off">${shop.shop_status}</em></a>
+					</c:if>
+				</c:if>
+				
+				<c:if test="${shop.shop_status == '판매완료'}">
+					<a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="on">${shop.shop_status}</em></a>
 				</c:if>
 				</td>	
 				<td>${shop.shop_seller_id}</td>
-				<td>${shop.shop_regdate}</td>	
+				<td><fmt:formatDate value="${shop.shop_regdate}" pattern="YY-MM-dd hh시-mm분"/></td>	
 			</tr>
 			</c:forEach>
 			<tr align="center" height="26"><td colspan="5">

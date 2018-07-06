@@ -28,4 +28,7 @@ public interface ShopMapper {
 	@Delete("delete from zips_shop where shop_no=#{shop_no}")
 	void delete(int shop_no);
 
+	@Update("update zips_shop set shop_status='판매완료' where shop_seller_confirm = 1 and shop_buyer_confirm = 1")
+	void sellUpdate();
+
 }
