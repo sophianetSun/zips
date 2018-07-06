@@ -43,10 +43,10 @@
             </div>	
           </div>
      	                <strong>댓글 쓰기</strong><br>
-<form action="recommand.zips" method="post">
-<input type="hidden" name="board_type" value="1">
-<input type="hidden" name="id" value="${sessionScope.loginUser.nickname }">
-<input type="hidden" name="co_num" value="1">
+<form action="recomment.zips" method="post">
+<input type="hidden" name="co_no" value="${co_no}"> 
+<input type="hidden" name="board_type" value="${param.board_type }">
+<input type="hidden" name="id" value="${sessionScope.loginUser.id}">
 <input type="hidden" name="num" value="${board.num }">
 <input type="hidden" name="pageNum" value="${pageNum }">
 <textarea rows="3" cols="82" class="w3-round-large" name="content"></textarea>&nbsp;<input type="submit" align="top" class="w3-button w3-border w3-hover-blue" style="text-align:center;" value="등록">

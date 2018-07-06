@@ -28,6 +28,7 @@
 </script>
 </head>
 <body>
+
 <c:if test="${param.board_type == 2 }">
 <h2 align="center">질문과 답변 </h2>
 </c:if>

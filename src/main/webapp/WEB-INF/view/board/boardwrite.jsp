@@ -30,7 +30,7 @@
               <h6 class="mb-100">
 				<strong>작성자</strong>
 				<form:input path="board_userid" class="form-control"
-					style="width:400px; height:40px;" readonly="true" value="${sessionScope.loginUser.nickname}" />
+					style="width:400px; height:40px;" readonly="true" value="${sessionScope.loginUser.id}" />
 				<font color="red"><form:errors path="board_userid" /></font></h6><hr style="background-color: red">
               <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
               <div class="mb-1 text-muted"><strong>제목</strong></div>

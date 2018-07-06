@@ -20,11 +20,27 @@ public interface BoardService {
 
 	int boardupdate(Board board, HttpServletRequest request);
 
-	int boardrecommand(Recomment recomment, String co_userid, String content, Integer board_type);
+	int boardrecommand(Recomment recomment, Integer board_type);
 
 	int bestcnt(Board board, String userid);
 
 	List<Board> totalboardList(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
+
+	List<Recomment> recommentList(Integer co_no, int num);
+
+	Recomment getRecomment(int co_no);
+
+	// 채택하기 
+	void apply(Integer co_no);
+
+	void noapply(Integer num);
+
+	int recount();
+
+	int Hrecommand(Recomment recomment, Integer board_type);
+
+
+
 
 
 

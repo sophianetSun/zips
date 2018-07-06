@@ -82,8 +82,10 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int boardrecommand(Recomment recomment,String co_userid,String content,Integer board_type) {
-		return recommentDao.recommand(recomment,co_userid,content,board_type);
+	public int boardrecommand(Recomment recomment,Integer board_type) {
+		int co_no = recommentDao.maxco_Num();
+		recomment.setCo_no(++co_no);
+		return recommentDao.recommand(recomment,board_type);
 	}
 
 	@Override
@@ -94,6 +96,38 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> totalboardList(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
 		return boardDao.totallist(board_type,searchType,searchContent,pageNum,limit);
+	}
+
+	@Override
+	public Recomment getRecomment(int co_no) {
+		return recommentDao.getRecomment(co_no);
+	}
+
+	@Override
+	public List<Recomment> recommentList(Integer board_type,int num) {
+		return recommentDao.recommentlist(board_type,num);
+	}
+
+	@Override
+	public void apply(Integer co_no) {
+		recommentDao.apply(co_no);
+	}
+
+	@Override
+	public void noapply(Integer num) {
+		recommentDao.noapply(num);
+	}
+
+	@Override
+	public int recount() {
+		return recommentDao.recount();
+	}
+
+	@Override
+	public int Hrecommand(Recomment recomment, Integer board_type) {
+		int co_no = recommentDao.maxco_Num();
+		recomment.setCo_no(++co_no);
+		return recommentDao.Hrecommand(recomment, board_type);
 	}
 
 

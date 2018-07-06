@@ -7,9 +7,10 @@
 
 </head>
 <body>
-<div>
+
   <h1><strong>회원 가입</strong></h1><br>
   <form:form modelAttribute="user" method="post" action="userEntry.zips" enctype="multipart/form-data">
+  <form:hidden path="coin" value="500" />
 	<spring:hasBindErrors name="user">
 		<font color = "red">
 			<c:forEach items = "${errors.globalErrors}" var="error">
@@ -53,16 +54,22 @@
               <label for="id" id="id">아이디</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="id" /></font>
               <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해 주세요">
             </div>
-    <div class="mb-3">
-              <label for="pw">비밀번호</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="pw" /></font>
-              <input type="password" class="form-control" name="pw" placeholder="비밀번호를 입력해 주세요">
+    <div class="row">
+    <div class="col-md-6 mb-3">
+                <label for="pw">비밀번호</label>
+                <input type="password" class="form-control" name="pw" placeholder="비밀번호를 입력해 주세요"><!--  value="" required="" -->
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="pwch">비밀번호 확인</label>
+                <input type="password" class="form-control" name="pwch" placeholder="비밀번호입력을 위해 다시 한 번 입력해 주세요">
+              </div>
             </div>
     <div class="mb-3">
               <label for="name">이름</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="name" /></font>
               <input type="text" class="form-control" name="name" placeholder="이름을 입력해 주세요">
             </div>
     <div class="mb-3">
-              <label for="nickname">닉네임</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="nickname" /></font>
+              <label for="nickname">닉네임</label>
               <input type="text" class="form-control" name="nickname" placeholder="닉네임을 입력해 주세요">
             </div>
     <div class="mb-3">
@@ -106,6 +113,5 @@
     <input type="submit" class="btn btn-default btn-lg btn-block" value="회원가입">
     <br><br>
   </form:form>
-</div>
 </body>
 </html>

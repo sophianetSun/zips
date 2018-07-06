@@ -9,6 +9,33 @@
 <script>
 	var foodDBs;
 	var myInfoDB;
+	
+	function saveMyInfo() {
+		var carbohydrate = $('tfoot td:nth-of-type(2)').text();
+		var fat = $('tfoot td:nth-of-type(3)').text();
+		var protein = $('tfoot td:nth-of-type(4)').text();
+		var calorie = $('tfoot td:nth-of-type(5)').text();
+		var d = new Date();
+		var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+		var type = $('#type').val() =='food'? 0:1;
+		alert(date);
+		$('#form').append("<input type='hidden' name='carbohydrate' value='" + carbohydrate + "'>");
+		$('#form').append("<input type='hidden' name='fat' value='" + fat + "'>");		
+		$('#form').append("<input type='hidden' name='protein' value='" + protein + "'>");		
+		$('#form').append("<input type='hidden' name='calorie' value='" + calorie + "'>");		
+		$('#form').append("<input type='hidden' name='regdate' value='" + date + "'>");		
+		$('#form').append("<input type='hidden' name='in_type' value='"+ type + "'>");
+		$('#form').submit();
+	}
+	
+	function observeRow() {
+		var trs = $('tbody > tr');
+		console.log(trs);
+		var btn = document.getElementById("save");
+		if (trs.length == 0) btn.setAttribute("disabled", "disabled");  
+		else btn.removeAttribute("disabled");	
+	}
+	
 	function deleteRow(button) {
 		var row = button.parentNode.parentNode;
 		row.parentNode.removeChild(row);
@@ -48,11 +75,12 @@
 		$('tfoot td:nth-of-type(3)').text(sumFat.toFixed(1));
 		$('tfoot td:nth-of-type(4)').text(sumProtein.toFixed(1));
 		$('tfoot td:nth-of-type(5)').text(sumCalorie.toFixed(1));
+		observeRow()
 	} 
 	
 	function makeTbRow(food) {
 		var d = new Date();
-		var dateStr = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+		var dateStr = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
 		$('table #tb_body').append(
 			"<tr><td><button type='button' onclick='deleteRow(this)' " 
 			+ "class='btn btn-danger'>삭제</button></td>"
@@ -62,9 +90,14 @@
 			+ food.calorie + "</td></tr>"		 
 			 );
 		addSumRow();
+		$('#search_text').val('');
 	};
 	
   $(document).ready(function() {
+	  $(':submit').click(function(event) {
+		  event.preventDefault();
+		  saveMyInfo();
+	  });
 	  $('.list-group').hide();
 	  $('#search_btn').click(function() {
 		 var type = $('#type').val();
@@ -100,9 +133,9 @@
 			}		 	
 		 	$('.list-group').html(html);
 			 $('.list-group').show();		 		
+		 	} else {
+		 	 $('.list-group').hide();		
 		 	}
-			
-			
 		 }); 
 	  });
 	  
@@ -129,8 +162,8 @@
   <a href="#" class="list-group-item list-group-item-action">Second item</a>
   <a href="#" class="list-group-item list-group-item-action">Third item</a>
 </div>
-<form action="#" class="mt-3">
-  <div class="container">
+<form id="form" name="form" action="myinfo/save.zips" method="post" class="mt-3">
+<div class="container">
   	<table class="table">
   	  <thead class="thead-dark">
   	    <tr>
@@ -156,7 +189,13 @@
   	  	</tr>
   	  </tfoot>
   	</table>
-  </div>
+  	<div class="form-group mt-8 mb-3">
+  	  <label for="comment">오늘의 한마디</label>
+  	  <input type="text" class="form-control" rows="5" id="comment" name="nutri_memo">
+  	</div>
+  	<button type="submit" id="save" class="btn btn-success btn-block btn-lg" 
+  		disabled="disabled">저장하기</button>
+</div>
 </form>
 </body>
 </html>

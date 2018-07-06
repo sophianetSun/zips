@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
@@ -64,7 +65,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("board/totallist")
-	public ModelAndView totallist(Integer board_type,Integer num,Integer pageNum, String searchType, String searchContent) {
+	public ModelAndView totallist(@Valid Recomment recomment, Integer board_type,Integer num,Integer pageNum, String searchType, String searchContent) {
 			if(pageNum == null || pageNum.toString().equals("")) {
 				pageNum = 1;
 			}
@@ -72,6 +73,7 @@ public class BoardController {
 			int limit = 9;
 			int listcount = service.boardcount(searchType,searchContent);
 			List<Board> boardlist = service.totalboardList(board_type,searchType,searchContent,pageNum,limit);
+			
 			int maxpage = (int)((double)listcount/limit + 0.95);
 			int startpage = ((int)((pageNum/10.0 + 0.9) -1)) * 10 + 1;
 			int endpage = startpage + 9;
@@ -84,45 +86,43 @@ public class BoardController {
 			mav.addObject("listcount2",listcount);
 			mav.addObject("boardlist2",boardlist);
 			mav.addObject("boardcnt2",boardcnt);
-			
 			return mav;
 	}
 
-/*	@RequestMapping(value="board/zipscomment" , method = RequestMethod.POST)
-	public ModelAndView zipscomment(@Valid Board board , Integer pageNum) {
-		ModelAndView mav = new ModelAndView();
-		int result = service.boardzipscomment(board);
-		if(result > 0) {
-			mav.setViewName("redirect:homeTraininglistForm.zips?num="+board.getNum()+"&board_type="+board.getBoard_type());
-		}
-		return mav;
-	}*/
-	
-	
+
 	@RequestMapping(value="board/zipscomment" , method = RequestMethod.POST)
-		public ModelAndView zipscomment(@Valid Recomment recomment ,String content,String num,Integer board_type , Integer pageNum2, HttpSession session) {
-		System.out.println("zipscomment컨트롤러 딴ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+		public ModelAndView zipscomment(@Valid Recomment recomment,Integer board_type , Integer pageNum2) {
 		ModelAndView mav = new ModelAndView();
 			try {
-			User loginUser = (User) session.getAttribute("loginUser");
-			String co_userid = loginUser.getId();
-			System.out.println("보드유저값"+co_userid);
-			System.out.println("보드내용값"+content);
-			System.out.println("보드타입"+board_type);
-			System.out.println("보드num"+num);
-			System.out.println("recomment값"+recomment);
-			
-			/*System.out.println("보드넘값"+board.getNum());
-			System.out.println("보드타입값"+board.getBoard_type());*/
-			int result = service.boardrecommand(recomment,co_userid,content,board_type);
+				
+			recomment.setRef_board_no(board_type);
+			int result = service.boardrecommand(recomment,board_type);
 			if(result > 0) {
-				mav.setViewName("redirect:totallistForm.zips?num=1"+"&board_type="+board_type);
+				mav.addObject("co_no",recomment.getCo_no());
+				mav.setViewName("redirect:totallistForm.zips?num="+recomment.getNum()+"&board_type="+board_type);
 			} 
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 			return mav;
 		}
+	@RequestMapping(value="board/recomment" , method = RequestMethod.POST)
+	public ModelAndView recomment(@Valid Recomment recomment,Integer board_type , Integer pageNum2) {
+	ModelAndView mav = new ModelAndView();
+		try {
+			
+		recomment.setRef_board_no(board_type);
+		int result = service.Hrecommand(recomment,board_type);
+		if(result > 0) {
+			mav.addObject("co_no",recomment.getCo_no());
+			mav.setViewName("redirect:totallistForm.zips?num="+recomment.getNum()+"&board_type="+board_type);
+		} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
 	
 	@RequestMapping(value="board/boardwrite" , method = RequestMethod.POST)
 	public ModelAndView detailform(@Valid Board board, BindingResult bindingResult , HttpServletRequest request) {
@@ -158,19 +158,39 @@ public class BoardController {
 		mav.addObject("board",board);
 		return mav;
 }
-	
+	 
 	@RequestMapping("board/totallistForm")
-	public ModelAndView totallistForm(@Valid int num,HttpSession session,HttpServletRequest request) {
+	public ModelAndView totallistForm(@Valid Recomment recomment,Integer board_type,int num,HttpSession session,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Board board = service.getBoard(num);
+		int recount = service.recount();
+		List<Recomment> recommentlist = service.recommentList(board_type,num);
+		Recomment recommentOne = service.getRecomment(recomment.getCo_no());
 		String url = request.getServletPath();
 		if(url.contains("/board/totallistForm.zips")) {
 			service.updatereadcnt(num);
 		}
 		mav.addObject("num",num);
 		mav.addObject("board",board);
+		mav.addObject("recount",recount);
+		mav.addObject("recommentOne",recommentOne);
+		mav.addObject("recommentlist",recommentlist);
 		return mav;
 }
+	
+	@ResponseBody
+	@RequestMapping(value="board/apply")
+	public String apply(Integer co_no,Integer num, HttpServletRequest request) {
+		service.noapply(num);
+		service.apply(co_no);
+		
+		return "채택";
+		
+	}
+	
+	
+	
+	
 	@RequestMapping(value="board/delete" , method = RequestMethod.POST)
 	public ModelAndView delete(@Valid Board board,Integer board_type, BindingResult bindingResult , HttpServletRequest request,Integer pageNum) {
 		ModelAndView mav = new ModelAndView();

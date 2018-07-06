@@ -7,6 +7,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>게시물 상세 보기</title>
 	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$('.apply').one('click', function(){
+			var co_no = $(this).val();
+			var num = ${board.num};
+			$.post("apply.zips", { co_no : co_no , num : num }, function(data, status) {
+				alert('채택 완료')
+			})
+		})
+	});
+	
+	
 	$(function(){
 		$(crartediv).one('click', function (){
 			addRow();
@@ -15,14 +27,18 @@
 	})
 	function addRow(){
 		
-var html =   "<textarea rows='20' cols='90' name='content'>"
-			+ "</textarea><input type='hidden' name='num' value='${board.num}'><input type='submit' value='등록'></div></div>";
+var html =   "<textarea rows='20' cols='90' name='co_content'>"
+			+ "</textarea><input type='hidden' name='num' value='${board.num}'>"
+			+"<input type='hidden' name='co_userid' value='${sessionScope.loginUser.id}'>"
+			+ "<input type='submit' value='등록'></div></div>";
 	$(list_detail).append(html);
 		
 	}
 	</script>
 </head>
 <body>
+
+<input type="hidden" name="co_no" value="${co_no}"> 
 	   <div class="blog-post">
 	   <c:if test="${param.board_type == 2 }">
             <h2 class="blog-post-title">질문과 답변</h2>
@@ -34,7 +50,7 @@ var html =   "<textarea rows='20' cols='90' name='content'>"
             <h2 class="blog-post-title">Before & After</h2>
             </c:if>
             <p class="blog-post-meta"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></p>
-
+				
             <h2>제목  : ${board.subject}</h2>
             <hr>
             <div align="right">
@@ -69,6 +85,7 @@ var html =   "<textarea rows='20' cols='90' name='content'>"
             <br>
             <c:if test="${param.board_type == 2 }">
             <h1><strong>A</strong></h1><h3>답변</h3>
+            <hr>
             <form method="post" action="zipscomment.zips?pageNum2=${param.pageNum2}&board_type=${param.board_type}">
             	<div id="list_detail" style="display: :table;">
             	<div class="contents_row" style="display:table-row">
@@ -79,13 +96,10 @@ var html =   "<textarea rows='20' cols='90' name='content'>"
       				</div>
       				</div>
             	</form>
-            	
-            	
+            	<br><br><br>
             	
             	</c:if>
           </div>
-
-
           
 <%--      	                <strong>댓글 쓰기</strong><br>
 <form action="recommand.zips" method="post">
@@ -98,19 +112,41 @@ var html =   "<textarea rows='20' cols='90' name='content'>"
 </form> --%>
 
 
+${recount}
+<c:forEach var="re" items="${recommentlist}">
+<div>
+<form action="apply.zips">
+<fmt:formatDate value="${re.co_regdate}" type="date" var="regdatetime" />
 
+<c:if test="${re.co_apply == 1 }">
+<img src="../img/apply.PNG">
+<br>
+<h4><strong>${re.co_userid }님의 답변</strong></h4>
+</c:if>
+<c:if test="${re.co_apply == 0  || re.co_apply == 2}">
+<h4><strong>${re.co_userid }님의 답변</strong></h4>
+</c:if>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<c:if test="${sessionScope.loginUser.id == board.board_userid }">
+<c:if test="${re.co_apply == 0 }">
+<button type="button" id="apply" name="apply" class="apply btn btn-primary" value="${re.co_no}">채택하기</button>
+</c:if>
+</c:if>
+</form>
+</div>
+<div>
 
-<%-- 
-<c:forEach var="c" items="${rrlist}">
-<fmt:formatDate value="${c.regdate}" type="date" var="regdatetime" />
-<fmt:formatDate value="${time}" type="date" var="nowtime" />
-${c.id }${c.content}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${nowtime == regdatetime }">
+답변 내용: ${re.co_content}
+<hr>
+</div>
+<div></div>					<%-- <c:if test="${nowtime == regdatetime }">
 						<td style="text-align: center;"><fmt:formatDate value="${c.regdate}" pattern="HH:mm:ss"/></td>
 					</c:if>
 					<c:if test="${nowtime != regdatetime }">
 						<td style="text-align: center;"><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd-E" />	</td>
-					</c:if>
-</c:forEach> --%>
+					</c:if> --%>
+
+</c:forEach>
           <div>
           <%-- <c:if test="${sessionScope.loginUser.nickname == board.board_userid}"> </c:if> --%>
 				<a href="update.zips?num=${board.num }&pageNum=${param.pageNum}"><button type="button" class="btn btn-primary">수정</button></a>

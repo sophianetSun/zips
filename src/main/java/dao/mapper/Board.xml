@@ -8,6 +8,10 @@ select num,board_userid,subject,content,filename fileurl,regdate,board_count,boa
  where board_type=#{board_type} 
  </if>
  
+ <if test="num != null">
+ where num =#{num}
+ </if>
+ 
  <if test="startrow != null and limit != null">
 order by regdate desc limit #{startrow},#{limit}
 </if>
@@ -20,7 +24,9 @@ select num,board_userid,subject,content,filename fileurl,regdate,board_count,boa
  where board_type=${board_type} 
  </if>
 
- 
+ <if test="num != null">
+ where num=${num}
+ </if>
  <if test="searchType != null and searchContent != null">
  and ${searchType} like '%${searchContent}%'
  </if>
@@ -36,7 +42,6 @@ order by regdate desc limit #{startrow},#{limit}
 </if>
 
  </select>
- 
  
 <select id="count" resultType="Integer" parameterType="map">
  select count(*) from totalboard 

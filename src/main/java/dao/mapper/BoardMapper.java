@@ -28,6 +28,8 @@ public interface BoardMapper {
 	@Insert("insert into zipscomment (co_no,num,co_userid,ref_board_no,co_regdate,co_modate,co_content,co_apply)" +
 			" values(10,#{num},#{userid},2,now(),now(),#{content},0)")
 	int recommandinsert(Board board, String userid, String content, Integer board_type);
+	
+	
 
 	
 
