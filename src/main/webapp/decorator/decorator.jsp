@@ -52,6 +52,7 @@
   	<input type="text" name="query">
   	<a href="#" id="search_button"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</a>
   </form>
+  <a href="${pageContext.request.contextPath}/myInfoCal.zips">영양정보입력</a>
 </div>
 <div class="col-sm-12">
   <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
