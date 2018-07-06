@@ -11,6 +11,7 @@
 		<typeAlias type="logic.Best" alias="Best"/>
 		<typeAlias type="logic.Recomment" alias="Recomment"/>
 		<typeAlias type="logic.Subscription" alias="Subscription"/>
+		<typeAlias type="logic.UploadFile" alias="UploadFile"/>
 		<typeAlias type="logic.FoodDB" alias="FoodDB"/>
 		<typeAlias type="logic.InfoCalendar" alias="InfoCalendar"/>
 	</typeAliases>

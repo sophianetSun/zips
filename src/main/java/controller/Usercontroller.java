@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import ciper.CiperUtil;
 import exception.LoginException;
 import logic.User;
 import logic.UserService;
@@ -28,15 +30,27 @@ public class Usercontroller {
 	}
 	
 	@RequestMapping("user/userEntry")
-	public ModelAndView userEntry(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
+	public ModelAndView userEntry(@Valid User user, BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView("user/join");
 		if(bindingResult.hasErrors()) {
 			mav.getModel().putAll(bindingResult.getModel());
 			return mav;
 		}
+		/*String pass = user.getPw();//user의 비밀번호를 가져옴(이 때는 String타입)
+		String dbpass = CiperUtil.encrypt(pass, "secretpw");//암호화할 user의 비밀번호를 secretpw라는 키값에 저장->현재 암호화가 된 상태
+		
+		session.setAttribute("user", dbpass);//session에 user라는 키값에 암호화된 dbpass가 등록이 됨.
+		User pw = (User) session.getAttribute("user");*/
+		
 		try {
+			if(!user.getPw().equals(user.getPwch())) {
+				throw new LoginException("동일한 비밀번호를 입력하세요", "join.zips?id="+user.getId());
+			}
+			if(user.getEmail().isEmpty()) {
+				throw new LoginException("이메일은 반드시 입력해 주세요. ID/PW분실시 반드시 필요합니다.", "join.zips?id="+user.getId());
+			}
 			userService.userCreate(user, request);
-			mav.setViewName("redirect:/user/login.zips");
+			mav.setViewName("user/login");
 			mav.addObject("user",user);
 		} catch (DataIntegrityViolationException e) {
 			bindingResult.reject("error.duplicate.user");
@@ -65,7 +79,6 @@ public class Usercontroller {
 				mav.addObject("dbUser", dbUser);
 				mav.setViewName("main");
 				session.setAttribute("loginUser", dbUser);
-				
 			} else {
 				bindingResult.reject("error.login.password");
 				mav.getModel().putAll(bindingResult.getModel());
@@ -151,3 +164,12 @@ public class Usercontroller {
 		return mav;
 	}
 }
+
+
+
+
+
+
+
+
+

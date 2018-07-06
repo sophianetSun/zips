@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,10 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 import exception.ShopException;
 import logic.Shop;
 import logic.ShopService;
+import logic.UploadFile;
 import logic.User;
 import logic.UserService;
  
-@Controller
+@Controller 
 public class ShopController {
 	
 	@Autowired
@@ -50,6 +52,23 @@ public class ShopController {
 		return mav;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="shop/checkcoin", produces = "application/text; charset=utf8")
+	public String checkcoin(Integer price, HttpServletRequest request) {
+		System.out.println("AJAX 코인 체크");
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		String result;
+		if(price > loginUser.getCoin()) {
+			result = "구매 포인트가 모자랍니다.";
+		} else if(price.equals(loginUser.getCoin())) {
+			result = "";
+		} else {
+			result ="구매 포인트보다 더 많이 입력하셨습니다.";
+		}
+		
+		return result;
+	}
+	
 	// 중고 장터 글 작성 호출
 	@RequestMapping(value="shop/write", method=RequestMethod.POST)
 	public ModelAndView write(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request, MultipartHttpServletRequest mhsq) throws IllegalStateException, IOException {
@@ -63,7 +82,6 @@ public class ShopController {
 			mav.getModel().putAll(bindingResult.getModel());
 			return mav;
 		}
- 
 		String realFolder = request.getServletContext().getRealPath("/") + "/shopfile/";
 		File dir = new File(realFolder);
 		if (!dir.isDirectory()) {
@@ -92,10 +110,11 @@ public class ShopController {
 
                mf.get(i).transferTo(new File(savePath)); // 파일 저장
 
-               Integer ref_no = shopService.maxNo();
-               System.out.println(ref_no);
+               Integer shop_no = shopService.maxNo();
                
-               shopService.fileUpload(ref_no, originalfileName, saveFileName, fileSize);
+               System.out.println(shop_no);
+               
+               shopService.fileUpload(shop_no, originalfileName, saveFileName, fileSize);
            }
        }
        
@@ -110,6 +129,37 @@ public class ShopController {
 		return mav;
 	}
 	
+	// 중고 장터 게시물 통합 메소드
+		@RequestMapping(value="shop/*", method=RequestMethod.GET)
+		public ModelAndView detail(Integer shop_no, Integer pageNum, HttpServletRequest request) {
+			System.out.println("상세 보기 호출");
+			ModelAndView mav = new ModelAndView();
+			Shop shop = new Shop();
+			
+			shop = shopService.getShop(shop_no);
+			List<UploadFile> uploadFileList = shopService.getFileList(shop_no);
+			
+			System.out.println("업로드 파일 리스트");
+			System.out.println(uploadFileList); 
+			
+			String url = request.getServletPath(); 
+			
+			System.out.println(pageNum);
+			System.out.println(shop_no);
+			
+			User loginUser = (User) request.getSession().getAttribute("loginUser");
+			System.out.println(loginUser);
+			
+			mav.addObject("uploadFileList", uploadFileList);
+			mav.addObject("pageNum", pageNum);
+			mav.addObject("shop_no",shop_no);
+			mav.addObject("shop", shop);
+			mav.addObject(loginUser);
+			
+			return mav;
+		}
+	
+	// 중고 장터 게시물 리스트 호출
 	@RequestMapping("shop/list")
 	public ModelAndView list(Integer pageNum, String searchType, String searchContent) {
 		System.out.println("게시물 리스트 호출입니다.");
@@ -138,6 +188,7 @@ public class ShopController {
 		return mav;
 	}
 	
+	// 중고 장터 게시물 수정
 	@RequestMapping(value="shop/update", method=RequestMethod.POST)
 	public ModelAndView update(@Valid Shop shop, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("수정 POST 방식");
@@ -174,6 +225,7 @@ public class ShopController {
 		return mav; 
 	}
 	
+	// 중고 장터 게시물 삭제
 	@RequestMapping(value="shop/delete", method=RequestMethod.POST)
 	public ModelAndView delete(@RequestParam HashMap<String, String> map) {
 		ModelAndView mav = new ModelAndView();
@@ -193,29 +245,7 @@ public class ShopController {
 		return mav;
 	}
 	
-	@RequestMapping(value="shop/*", method=RequestMethod.GET)
-	public ModelAndView detail(Integer shop_no, Integer pageNum, HttpServletRequest request) {
-		System.out.println("상세 보기 호출");
-		ModelAndView mav = new ModelAndView();
-		Shop shop = new Shop();
-		if (shop_no != null) {
-			shop = shopService.getShop(shop_no);
-			String url = request.getServletPath();
-		} 
-		System.out.println(pageNum);
-		System.out.println(shop_no);
-		
-		User loginUser = (User) request.getSession().getAttribute("loginUser");
-		System.out.println(loginUser);
-		
-		mav.addObject("pageNum", pageNum);
-		mav.addObject("shop_no",shop_no);
-		mav.addObject("shop", shop);
-		mav.addObject(loginUser);
-		
-		return mav;
-	}
-	
+	// 중고 장터 게시물 구매 신청
 	@RequestMapping(value="shop/deal", method=RequestMethod.GET)
 	public ModelAndView deal(Integer shop_no, Integer pageNum, HttpServletRequest request) {
 		System.out.println("구매 신청 페이지 호출");
@@ -237,6 +267,7 @@ public class ShopController {
 		return mav;
 	}
 	
+	// 중고 장터 게시물 구매 진행 페이지
 	@RequestMapping(value="shop/dealpage", method=RequestMethod.POST)
 	public ModelAndView dealpage(Integer shop_no, Integer pageNum, Integer dealcoin, HttpServletRequest request) {
 		System.out.println("구매/판매 진행중 페이지 호출");
@@ -251,22 +282,25 @@ public class ShopController {
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
 		System.out.println(loginUser);
 
-		try {
-			System.out.println("판매자, 구매자 코인 사용");
-			String shop_buyer_id = loginUser.getId();
-			shopService.shopBuyerUpdate(shop.getShop_no(), shop_buyer_id);
-			userService.updateBuyerCoin(dealcoin, loginUser.getId());
+		if(shop.getShop_status().equals("판매중")) {
+			try {
+				System.out.println("판매자, 구매자 코인 사용");
+				String shop_buyer_id = loginUser.getId();
+				shopService.shopBuyerUpdate(shop.getShop_no(), shop_buyer_id);
+				userService.updateBuyerCoin(dealcoin, loginUser.getId());
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
 			
+			}
 		} 
+		
+		shop = shopService.getShop(shop_no);
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("shop_no",shop_no);
 		mav.addObject("shop", shop);
 		mav.addObject("dealcoin");
 		mav.addObject(loginUser);
-			
 		return mav;
 	}
 }

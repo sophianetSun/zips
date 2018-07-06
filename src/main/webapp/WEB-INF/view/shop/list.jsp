@@ -50,8 +50,18 @@
 			<tr>
 				<td>${shopcnt}</td>
 					<c:set var="shopcnt" value="${shopcnt-1}"/>
-				<td><a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${shop.shop_status}</span></td>	
+				<td>
+				<c:if test="${shop.shop_status == '판매중'}">
+				<a href="detail.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${shop.shop_status}</span>
+				</c:if>
+				<c:if test="${shop.shop_status == '구매진행중'}">
+				<c:if test="${shop.shop_seller_id == loginUser.id || shop.shop_buyer_id == loginUser.id}">
+				<a href="dealpage.zips?shop_no=${shop.shop_no}&pageNum=${pageNum}">${shop.shop_subject}</a>
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${shop.shop_status}</span>
+				    </c:if>
+				</c:if>
+				</td>	
 				<td>${shop.shop_seller_id}</td>
 				<td>${shop.shop_regdate}</td>	
 			</tr>

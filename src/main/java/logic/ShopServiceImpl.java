@@ -57,8 +57,13 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public void fileUpload(Integer ref_no, String originalfileName, String saveFileName, long fileSize) {
-		shopDao.fileUpload(ref_no, originalfileName, saveFileName, fileSize);
+	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+		shopDao.fileUpload(shop_no, originalfileName, saveFileName, fileSize);
+	}
+
+	@Override
+	public List<UploadFile> getFileList(Integer shop_no) {
+		return shopDao.getFileList(shop_no);
 	}
 
 	

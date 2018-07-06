@@ -32,6 +32,9 @@ public interface ShopService {
 
 	// 파일 업로드
 	void fileUpload(Integer ref_no, String originalfileName, String saveFileName, long fileSize);
+	
+	// 파일 업로드 가져오기
+	List<UploadFile> getFileList(Integer shop_no);
 
 
 }
