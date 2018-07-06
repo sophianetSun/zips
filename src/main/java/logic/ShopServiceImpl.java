@@ -66,5 +66,20 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.getFileList(shop_no);
 	}
 
+	@Override
+	public String checkConfirm(Integer shop_no, String confirmType) {
+		return shopDao.checkConfirm(shop_no, confirmType);
+	}
+
+	@Override
+	public void confirmShop(Integer shop_no, String confirmType) {
+		shopDao.confirmShop(shop_no, confirmType);
+	}
+
+	@Override
+	public void sellUpdate() {
+		shopDao.sellUpdate();
+	}
+
 	
 }

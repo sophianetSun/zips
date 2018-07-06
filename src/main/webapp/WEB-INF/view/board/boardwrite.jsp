@@ -5,25 +5,9 @@
 <html>
 <link href="form-validation.css" rel="stylesheet">
 <!-- Custom styles for this template -->
-<script type="text/javascript">
-
-    function board_submit() {
-    	if(f.filename.value==null || f.filename.value==''){
-			alert('동영상 파일만 업로드 해주세요')
-		     f.type.focus();
-			return;
-		
-    	var trans_text = document.getElementById("textarea");
-        trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>");
-
-			f.submit();
-	}
-</script>
-
 </head>
 
 <body class="bg-center">
-
 	<div class="container">
 		<div class="py-5 text-center">
 			<img class="d-block mx-auto mb-4" src="../img/runicon.png" alt=""
@@ -35,8 +19,8 @@
 	</div>
 	<div class="jumbotron style="margin: auto;" >
 		 
-		<form:form modelAttribute="board" action="boardwrite.zips" method="post" enctype="multipart/form-data" name="f">
-			<input type="hidden" name="board_type" value="1">
+		<form:form modelAttribute="board" action="boardwrite.zips?board_type=${param.board_type}" method="post" enctype="multipart/form-data" name="f">
+			<input type="hidden" name="board_type" value="${param.board_type }">
 			<div align="left">
 			<br>
 			<div class="col-md-6">
@@ -46,7 +30,7 @@
               <h6 class="mb-100">
 				<strong>작성자</strong>
 				<form:input path="board_userid" class="form-control"
-					style="width:400px; height:40px;" readonly="true" value="${sessionScope.loginUser.nickname}" />
+					style="width:400px; height:40px;" readonly="true" value="${sessionScope.loginUser.id}" />
 				<font color="red"><form:errors path="board_userid" /></font></h6><hr style="background-color: red">
               <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
               <div class="mb-1 text-muted"><strong>제목</strong></div>
@@ -63,26 +47,52 @@
             <div class="card-body d-flex flex-column align-items-start">
               <strong class="d-inline-block mb-10 text-success">본문</strong>
                 <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
+				<c:if test="${param.board_type == 2 || param.board_type == 3 }">
+				              
               <h3 class="mb-100">
                 <a class="text-dark">글 내용</a>
               </h3>
               <div class="mb-1 text-muted"><span class="input-group-text"
 					style="text-align: center; width: 230px; height: 40px;">
 					<form:input path="filename" type="file"/>
-					<font color="red"><form:errors path="content" /></font></span>
+					<font color="red"><form:errors path="filename" /></font></span>
 					
 					 <br>
-				<form:textarea rows="15" cols="80" path="content"
-					placeholder="여기는 홈 트레이닝 게시판입니다. 게시판 취지에 맞는 글만 올려주시고 너무 과한 노출,홍보성 글은 관리자의 의해 즉시 삭제 됩니다." />
+				<form:textarea rows="15" cols="80" path="content" id="textarea"/>
 				<font color="red"><form:errors path="content" /></font></div>
+            </c:if>
+            <c:if test="${param.board_type == 4 }">
+             <h3 class="mb-100"><a class="text-dark">dsad</a></h3>
+             	<div>
+             	<img src="../img/1-7.png" width="300px" height="300px" hspace="5">&nbsp;&nbsp;<img src="../img/1-6.png" width="120px" height="120px">&nbsp;&nbsp;                       
+<span class="blinking"><img  style="border: 3px solid gold;border-radius: 7px;-moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;" src="../img/1-8.jpg" width="300px" height="300px"></span>
+				</div>
+				<textarea rows="15" cols="80" name="content" id="textarea" >
+				</textarea>
+            <table>
+
+</table>
+            
+            
+            
+            </c:if>
             </div>
           </div>
         </div>
 			<hr>
 			<center>
-				<button class="btn btn-primary btn-block" type="submit"
-					style="text-align: center; width: 270px; height: 45px;" onclick="javascript:board_submit()">동영상
-					업로드</button>
+			
+			<c:if test="${param.board_type == 1}">
+				<!-- <a href="javascript:board_submit()"> --><button class="btn btn-primary btn-block" type="submit"
+					style="text-align: center; width: 270px; height: 45px;">동영상
+					업로드</button></a></c:if>
+					
+					<c:if test="${param.board_type == 2 || param.board_type == 3}"><button class="btn btn-primary btn-block" type="submit"
+					style="text-align: center; width: 270px; height: 45px;">글 업로드
+					</button></c:if>
+					<c:if test="${param.board_type == 4}"><button class="btn btn-primary btn-block" type="submit"
+					style="text-align: center; width: 270px; height: 45px;">사진 업로드
+					</button></c:if>
 			</center>
 		</form:form>
 		<br>
@@ -95,10 +105,6 @@
 	</footer>
 	</div>
 
-
-
-
-
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
@@ -106,19 +112,25 @@
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
 	<script>
-	
-	
-	
+	function board_submit() {
+		
+		var file = [f.filename.value.split(".")];
+		
+		if(file[1] != "wmv" || file[1] != "mp4" || file[1] != "avi" && f.filename.value == null){
+			alert('동영상 파일을 업로드 해주세요');
+		     f.filename.focus();
+			return;
+	}
+		
+		var trans_text = document.getElementById("textarea");
+	    trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>");
+
+			f.submit();
+	}
 		window.jQuery
 				|| document
 						.write(
 								'<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-	</script>
-	<script src="../../assets/js/vendor/popper.min.js"></script>
-	<script src="../../dist/js/bootstrap.min.js"></script>
-	<script src="../../assets/js/vendor/holder.min.js"></script>
-	<script>
-		// Example starter JavaScript for disabling form submissions if there are invalid fields
 						(
 								function() {
 									'use strict';
@@ -155,7 +167,11 @@
 																							false);
 																		});
 													}, false);
-								})();
+								})();			
+								
 	</script>
+	<script src="../../assets/js/vendor/popper.min.js"></script>
+	<script src="../../dist/js/bootstrap.min.js"></script>
+	<script src="../../assets/js/vendor/holder.min.js"></script>
 </body>
 </html>

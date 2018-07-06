@@ -23,6 +23,7 @@
 		<mapper resource="dao/mapper/Message.xml"/>
 		<mapper resource="dao/mapper/Best.xml"/> 
 		<mapper resource="dao/mapper/Subscription.xml"/>
+		<mapper resource="dao/mapper/Recomment.xml"/>
 		<mapper resource="dao/mapper/FoodDB.xml"/>
 		<mapper resource="dao/mapper/InfoCalendar.xml"/>
 	</mappers>

@@ -35,6 +35,10 @@ public interface ShopService {
 	
 	// 파일 업로드 가져오기
 	List<UploadFile> getFileList(Integer shop_no);
-
-
+	
+	String checkConfirm(Integer shop_no, String confirmType);
+	
+	void confirmShop(Integer shop_no, String confirmType);
+	
+	void sellUpdate();
 }

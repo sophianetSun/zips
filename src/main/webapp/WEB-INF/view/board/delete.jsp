@@ -8,15 +8,14 @@
 	<title>게시물 삭제</title>
 </head>
 <body>
-	<form name="f" method="post" action="delete.zips?pageNum=${param.pageNum}">
-		<input type="hidden" name="num" value="${param.num}">
-		
+	<form name="f" method="post" action="delete.zips?pageNum=${param.pageNum}&board_type=${param.board_type}">
+		<input type="hidden" name="num" value="${param.num }">
 		 <div class="alert alert-warning">
     <strong>Warning!</strong> 정말로 회원님의 글 [ ${board.subject } ]을(를) 삭제하시겠습니까?
   </div>
   <br>
   <div align="center">
-		<a href="javascript:document.f.submit()"><button type="button" class="btn btn-outline-success" onclick="javascript:alert('게시물 삭제 완료');return true;">게시글 삭제하기</button></a>
+		<button type="submit" class="btn btn-outline-success">게시글 삭제하기</button>
 </div>
 <br>	
 	</form>

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import logic.Board;
+import logic.Recomment;
 
 public interface BoardDao {
 
@@ -13,7 +14,7 @@ public interface BoardDao {
 
 	int count(String searchType, String searchContent);
 
-	List<Board> list(String searchType, String searchContent, Integer pageNum, int limit);
+	List<Board> list(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
 
 	Board getBoard(Integer num);
 
@@ -25,7 +26,9 @@ public interface BoardDao {
 
 	int update(Board board, HttpServletRequest request);
 
-	int recommand(Board board, Integer board_type);
+	List<Board> totallist(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit);
+
+
 
 
 	
