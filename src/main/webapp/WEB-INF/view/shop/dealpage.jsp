@@ -74,11 +74,11 @@
 		$('#seller').html(seller_table);
 	
 	var buyer_table = "<table class='table table-bordered'>";
-		buyer_table += "<tr><td>아이디</td><td>" + "${sellerUser.id}" + "</td></tr>";
-		buyer_table += "<tr><td>이름</td><td>" + "${sellerUser.name}" + "</td></tr>";
-		buyer_table += "<tr><td>닉네임</td><td>" + "${sellerUser.nickname}" + "</td></tr>";
-		buyer_table += "<tr><td>전화번호</td><td>" + "${sellerUser.tel}" + "</td></tr>";
-		buyer_table += "<tr><td>주소</td><td>" + "${sellerUser.address}" + "</td></tr></table>";	
+		buyer_table += "<tr><td>아이디</td><td>" + "${buyerUser.id}" + "</td></tr>";
+		buyer_table += "<tr><td>이름</td><td>" + "${buyerUser.name}" + "</td></tr>";
+		buyer_table += "<tr><td>닉네임</td><td>" + "${buyerUser.nickname}" + "</td></tr>";
+		buyer_table += "<tr><td>전화번호</td><td>" + "${buyerUser.tel}" + "</td></tr>";
+		buyer_table += "<tr><td>주소</td><td>" + "${buyerUser.address}" + "</td></tr></table>";	
 	
 		$('#buyer').html(buyer_table);
 	

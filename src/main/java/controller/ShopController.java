@@ -319,7 +319,8 @@ public class ShopController {
 		mav.addObject(loginUser);
 		return mav;
 	}
-	 
+	
+	// AJAX 인수인계 확인 체크 
 	@ResponseBody
 	@RequestMapping(value="shop/checkConfirm")
 	public String checkconfirm(Integer shop_no, String confirmType, HttpServletRequest request) {
@@ -327,6 +328,7 @@ public class ShopController {
 		return shopService.checkConfirm(shop_no, confirmType);
 	}
 	
+	// AJAX 인수 인계 확인
 	@ResponseBody
 	@RequestMapping(value="shop/confirmShop")
 	public String confirmShop(Integer shop_no, String confirmType, HttpServletRequest request) {
