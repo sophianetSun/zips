@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 	<td colspan="2" align="center">
-	<form action="delete.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}" method="post">
+	<form action="delete.zips?shop_no=${shop.shop_no}" method="post">
 		<input type="hidden" name="shop_no" value="${param.shop_no}" />
 		<input type="hidden" name="pageNum" value="${param.pageNum}"/>
 	<button type="submit" class="btn btn-primary">상품 삭제</button> 

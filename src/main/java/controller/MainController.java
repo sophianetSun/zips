@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import logic.InfoCalendar;
 import logic.MainService;
 import logic.Message;
 import logic.Shop;
@@ -70,11 +71,24 @@ public class MainController {
 	public String myInfoCal() {
 		return "main/myInfoCal";
 	}
+	
+	@RequestMapping("myinfo/save")
+	public ModelAndView save(InfoCalendar myinfo, HttpSession session) {
+		ModelAndView mav = new ModelAndView("main/calendar");
+		//User user = (User)session.getAttribute("loginUser");
+		//String id = user.getId();
+		myinfo.setUser_id("test");
+		System.out.println(myinfo);
+		int result = mainService.saveMyInfoCalendar(myinfo);
+		return mav;
+	}
+	
 	// RestfulAPI
 	@RequestMapping(value="myinfo/search", produces="application/text; charset=utf8")
 	@ResponseBody
 	public String mySearchInfo(String searchType, String searchText) {
 		// searchType 에 따라 푸드 디비 or 워크아웃 결정
+		if (searchText == null || searchText.equals("")) return "";
 		return mainService.getFoodDBList(searchText).toString();
 	}
 	

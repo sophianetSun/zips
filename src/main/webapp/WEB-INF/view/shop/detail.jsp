@@ -43,7 +43,7 @@
 				<c:if test="${empty shop.shop_buyer_id}">
 					<button type="button" class="btn btn-sm btn-outline-primary"
 						style="width: 100px; height: 50px; font-weight: bold;"
-						onclick="location.href='deal.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+						onclick="location.href='deal.zips?shop_no=${shop.shop_no}'">
 						구매 신청
 					</button>
 				</c:if>
@@ -54,16 +54,16 @@
 			<c:if test="${shop.shop_seller_id == loginUser.id }">
 				<button type="button" class="btn btn-sm btn-outline-danger"
 					style="width: 100px; height: 50px;"
-					onclick="location.href='update.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+					onclick="location.href='update.zips?shop_no=${shop.shop_no}'">
 					상품 수정
 				</button>
 				<button type="button" class="btn btn-primary" 
-					onclick="location.href='delete.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+					onclick="location.href='delete.zips?shop_no=${shop.shop_no}'">
 					상품 삭제
 				</button>
 			</c:if>
 			<button type="button" class="btn btn-primary"
-				onclick="location.href='list.zips?pageNum=${pageNum}'">
+				onclick="location.href='list.zips'">
 				상품 목록
 			</button>
 			<br> 

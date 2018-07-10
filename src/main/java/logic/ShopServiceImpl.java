@@ -56,15 +56,45 @@ public class ShopServiceImpl implements ShopService {
 		shopDao.shopBuyerUpdate(shop_no, shop_buyer_id);
 	}
 
+
+	@Override
+	public String checkConfirm(Integer shop_no, String confirmType) {
+		return shopDao.checkConfirm(shop_no, confirmType);
+	}
+
+	@Override
+	public void confirmShop(Integer shop_no, String confirmType) {
+		shopDao.confirmShop(shop_no, confirmType);
+	}
+
+	@Override
+	public void sellUpdate() {
+		shopDao.sellUpdate();
+	}
+
 	@Override
 	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
 		shopDao.fileUpload(shop_no, originalfileName, saveFileName, fileSize);
 	}
-
+	
 	@Override
 	public List<UploadFile> getFileList(Integer shop_no) {
 		return shopDao.getFileList(shop_no);
 	}
 
+	@Override
+	public void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+		shopDao.fileUploadUpdate(shop_no, originalfileName, saveFileName, fileSize);
+	}
+
+	@Override
+	public void fileDelete(Integer shop_no) {
+		shopDao.fileDelte(shop_no);
+	}
+
+	@Override
+	public void shopDealCancel(Integer shop_no) {
+		shopDao.shopDealCancel(shop_no);
+	}
 	
 }

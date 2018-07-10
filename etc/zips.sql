@@ -154,15 +154,25 @@ CREATE TABLE zips_shop
 	shop_subject varchar(255) NOT NULL,
 
 	shop_content varchar(255),
-	shop_selller_confirm int NOT NULL,
+	
+	shop_selller_confirm varchar NOT NULL DEFAULT '0',
 
-	shop_buyer_confirm int NOT NULL,
+	shop_buyer_confirm varchar NOT NULL DEFAULT '0', 
 
-	shop_status varchar(20) NOT NULL,
+	shop_status varchar NOT NULL DEFAULT '0',
 
 	shop_price int NOT NULL,
 
 	shop_regdate datetime NOT NULL,
+	
 	PRIMARY KEY (shop_no)
 );
 
+
+CREATE TABLE uploadfile (
+   file_no INT(11) PRIMARY KEY AUTO_INCREMENT,
+   shop_no INT(11) NULL DEFAULT NULL,
+   originalname VARCHAR(255) NULL DEFAULT NULL,
+   filename VARCHAR(255) NULL DEFAULT NULL,
+   filesize INT(255) NULL DEFAULT NULL
+);

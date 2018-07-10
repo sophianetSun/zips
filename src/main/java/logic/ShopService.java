@@ -30,11 +30,25 @@ public interface ShopService {
 	// 글 삭제하기
 	void shopDelete(Integer shop_no);
 
+	
+	String checkConfirm(Integer shop_no, String confirmType);
+	
+	void confirmShop(Integer shop_no, String confirmType);
+	
+	void sellUpdate();
+	
 	// 파일 업로드
 	void fileUpload(Integer ref_no, String originalfileName, String saveFileName, long fileSize);
 	
 	// 파일 업로드 가져오기
 	List<UploadFile> getFileList(Integer shop_no);
-
-
+	
+	// 파일 업로드 수정
+	void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize);
+	
+	void fileDelete(Integer shop_no);
+	
+	// 판매, 구매취소로 판매중으로 재변경
+	void shopDealCancel(Integer shop_no);
+	
 }

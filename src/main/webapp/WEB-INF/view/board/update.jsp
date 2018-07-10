@@ -18,13 +18,13 @@
 			<img class="d-block mx-auto mb-4" src="../img/runicon.png" alt=""
 				width="72" height="72">
 			<p class="test">
-				<I><span>홈 트레이닝&nbsp;</span></I>
+				<I><span>글 쓰기 &nbsp;</span></I>
 			</p>
 		</div>
 	</div>
 
 <div class="jumbotron style="margin: auto;" >
-	<form:form modelAttribute="board" action="update.zips?pageNum=${param.pageNum}" method="post" enctype="multipart/form-data" name="f">
+	<form:form modelAttribute="board" action="update.zips?num=${param.num }&board_type=${param.board_type}&pageNum=${paramNum}" method="post" enctype="multipart/form-data" name="f">
 		<input type="hidden" name="num" value="${board.num }">
 		<input type="hidden" name="file2" value="${board.fileurl}">
 		<input type="hidden" name="pageNum" value="${param.pageNum}">
@@ -39,7 +39,7 @@
               <h6 class="mb-100">
 				<strong>작성자</strong>
 				<form:input path="board_userid" class="form-control"
-					style="width:400px; height:40px;" readonly="true" value="회원에서 받아온 닉네임" />
+					style="width:400px; height:40px;" readonly="true" value="${board.board_userid }" />
 				<font color="red"><form:errors path="board_userid" /></font></h6><hr style="background-color: red">
               <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
               <div class="mb-1 text-muted"><strong>제목</strong></div>
@@ -66,8 +66,7 @@
 					기존 파일 : 없음
 					</c:if>
 					</span> <br>
-				<form:textarea rows="15" cols="80" path="content"
-					placeholder="여기는 홈 트레이닝 게시판입니다. 게시판 취지에 맞는 글만 올려주시고 너무 과한 노출,홍보성 글은 관리자의 의해 즉시 삭제 됩니다." />
+				<form:textarea rows="15" cols="80" path="content"/>
 				<font color="red"><form:errors path="content" /></font></div>
             </div>
           </div>
@@ -76,9 +75,15 @@
 			</div>
 			<hr class="mb-4">
 			<center>
+			<c:if test="${param.board_type == 1 }">
 				<button class="btn btn-primary btn-block" type="submit"
-					style="text-align: center; width: 270px; height: 45px;" onclick="javascript:alert('동영상 수정 완료');return true;">동영상
-					업로드</button>
+					style="text-align: center; width: 270px; height: 45px;" onclick="javascript:alert('동영상 수정 완료');return true;">
+					동영상 업로드</button></c:if>
+			<c:if test="${param.board_type == 2  || param.board_type == 3 || param.board_type == 4}">
+				<button class="btn btn-primary btn-block" type="submit"
+					style="text-align: center; width: 270px; height: 45px;" onclick="javascript:alert('글 수정 완료');return true;">
+					글 업로드</button></c:if>
+					
 			</center>
 	</form:form>
 </body>

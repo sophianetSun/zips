@@ -12,7 +12,6 @@ public class Recomment implements Serializable{
 	private Date co_regdate;
 	private Date co_moddate;
 	private int co_apply;
-	private int board_type;
 	
 	public int getCo_no() {
 		return co_no;
@@ -62,19 +61,14 @@ public class Recomment implements Serializable{
 	public void setCo_apply(int co_apply) {
 		this.co_apply = co_apply;
 	}
-	public int getBoard_type() {
-		return board_type;
-	}
-	public void setBoard_type(int board_type) {
-		this.board_type = board_type;
-	}
 	
 	@Override
 	public String toString() {
 		return "Recomment [co_no=" + co_no + ", num=" + num + ", co_userid=" + co_userid + ", ref_board_no="
 				+ ref_board_no + ", co_content=" + co_content + ", co_regdate=" + co_regdate + ", co_moddate="
-				+ co_moddate + ", co_apply=" + co_apply + ", board_type=" + board_type + "]";
+				+ co_moddate + ", co_apply=" + co_apply + "]";
 	}
 	
+
 	
 }

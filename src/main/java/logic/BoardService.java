@@ -8,7 +8,7 @@ public interface BoardService {
 
 	int boardcount(String searchType, String searchContent);
 
-	List<Board> boardList(String searchType, String searchContent, Integer pageNum, int limit);
+	List<Board> boardList(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
 
 	int boardinsert(Board board, HttpServletRequest request);
 
@@ -16,13 +16,36 @@ public interface BoardService {
 
 	void updatereadcnt(Integer num);
 
-	int boardDelete(Board board, HttpServletRequest request);
-
 	int boardupdate(Board board, HttpServletRequest request);
 
-	int boardrecommand(Board board, Integer board_type);
+	int boardrecommand(Recomment recomment, Integer board_type);
 
-	int bestcnt(Board board, String userid);
+	List<Board> totalboardList(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
+
+	List<Recomment> recommentList(Integer co_no, int num);
+
+	// 채택하기 
+	void apply(Integer co_no, Integer num);
+
+	void noapply(Integer num);
+
+	int recount(Integer num);
+
+	int Hrecommand(Recomment recomment, Integer board_type);
+
+	int best(Best best);
+
+	int bestcnt(Best best);
+
+	List<Best> getbest(int num);
+
+	int boardDelete(Integer num);
+
+	Recomment getapply(int num);
+
+
+
+
 
 
 	

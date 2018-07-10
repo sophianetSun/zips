@@ -82,6 +82,30 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
+	public String checkConfirm(Integer shop_no, String confirmType) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("shop_no", shop_no);
+		map.put("confirmType", confirmType);
+		System.out.println(map);
+		String s = sqlSession.selectOne(NS+"checkConfirm", map);
+		return sqlSession.selectOne(NS+"checkConfirm", map);
+	}
+
+	@Override
+	public void confirmShop(Integer shop_no, String confirmType) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("shop_no", shop_no);
+		map.put("confirmType", confirmType);
+		System.out.println(map);
+		sqlSession.update(NS+"confirmShop", map);
+	}
+
+	@Override
+	public void sellUpdate() {
+		sqlSession.getMapper(ShopMapper.class).sellUpdate();
+	}
+
+	@Override
 	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
 	    HashMap<String, Object> map = new HashMap<>();
 	    map.put("shop_no", shop_no);
@@ -101,5 +125,26 @@ public class ShopDaoImpl implements ShopDao {
 		System.out.println(sqlSession.selectList(NS+"getFileList", map));
 		
 		return sqlSession.selectList(NS+"getFileList", map);
+	}
+	
+	@Override
+	public void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("shop_no", shop_no);
+		map.put("originalfileName", originalfileName);
+		map.put("saveFileName", saveFileName);
+		map.put("fileSize", fileSize);	     
+		
+		sqlSession.insert(NS+"fileUpload", map);	
+	}
+
+	@Override
+	public void fileDelte(Integer shop_no) {
+		sqlSession.getMapper(ShopMapper.class).fileDelete(shop_no);
+	}
+
+	@Override
+	public void shopDealCancel(Integer shop_no) {
+		sqlSession.getMapper(ShopMapper.class).shopDealCancel(shop_no);
 	}
 }

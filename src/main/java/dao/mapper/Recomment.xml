@@ -8,5 +8,28 @@ select * from zipscomment
  where num=#{num} 
  </if>
  </select>
+ 
+ <select id="applycheck" resultType="Recomment" parameterType="map">
+select co_no,num,co_userid,ref_board_no,co_regdate,co_modate,co_content,co_apply from zipscomment
+ <if test="num != null">
+ where num = #{num} and co_apply = 1
+ </if>
+ </select>
+ 
+ <select id="recommentlist" resultType="Recomment" parameterType="map">
+select * from zipscomment
+ <if test="ref_board_no != null">
+ where ref_board_no=${ref_board_no} 
+ </if>
+ <if test="num != null">
+and num=${num} order by co_no desc
+ </if>
+ </select>
+ <select id="recount" resultType="Integer" parameterType="map">
+select count(*) from zipscomment 
+<if test="num != null">
+where num=${num}
+ </if>
+ </select>
  </mapper>
  

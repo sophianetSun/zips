@@ -19,14 +19,30 @@
 		<if test="searchType != null and searchContent != null">
 		where ${searchType} like '%${searchContent}%'
 		</if>
-		order by shop_regdate
+		order by shop_status asc, shop_regdate desc
 		<if test="startrow != null and limit != null">
 		limit #{startrow}, #{limit}
 		</if>
 	</select>	
 	
+	<select id="checkConfirm" resultType="String" parameterType="map">
+		select ${confirmType} from zips_shop where shop_no = #{shop_no}
+	</select>
+	
+	<update id="confirmShop" parameterType="map">
+		update zips_shop set
+		<if test="confirmType == 'shop_seller_confirm'">
+		shop_seller_confirm = '1'
+		</if>
+		<if test="confirmType == 'shop_buyer_confirm'">
+		shop_buyer_confirm = '1'
+		</if>
+		where shop_no = #{shop_no}
+	</update>
+	
+	 <!-- 구매 신청 -->
 	<update id="shopBuyerUpdate" parameterType="map">
-		update zips_shop set shop_buyer_id=#{shop_buyer_id}, shop_status='구매진행중' where shop_no=#{shop_no}
+		update zips_shop set shop_buyer_id=#{shop_buyer_id}, shop_status='1' where shop_no=#{shop_no}
 	</update>
 	
 	<insert id="fileUpload" parameterType="map">

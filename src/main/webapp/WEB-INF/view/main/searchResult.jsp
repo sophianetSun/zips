@@ -22,6 +22,7 @@
 </style>
 </head>
 <body>
+${map }
 <div id="wordcloud1" class="wordcloud">
 	<c:forEach items="${map}" var="m">
 		<span data-weight="${m.value }">${m.key }</span>

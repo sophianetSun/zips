@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import dao.mapper.BoardMapper;
+import dao.mapper.RecommentMapper;
 import logic.Board;
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -33,13 +34,14 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<Board> list(String searchType, String searchContent, Integer pageNum, int limit) {
+	public List<Board> list(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		int startrow = (pageNum -1 ) * limit;
 		map.put("searchType", searchType);
 		map.put("searchContent", searchContent);
 		map.put("startrow", startrow);
 		map.put("limit", limit); 
+		map.put("board_type", board_type);
 		return sqlSession.selectList(NS+"list",map);
 	}
 
@@ -54,7 +56,6 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public void readcnt(Integer num) {
-		
 		sqlSession.getMapper(BoardMapper.class).readcnt(num);
 	}
 
@@ -65,8 +66,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int delete(Board board, HttpServletRequest request) {
-		return sqlSession.getMapper(BoardMapper.class).delete(board);
+	public int delete(Integer num) {
+		return sqlSession.getMapper(BoardMapper.class).delete(num);
 	}
 
 	@Override
@@ -75,10 +76,24 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int recommand(Board board, Integer board_type) {
-		return sqlSession.getMapper(BoardMapper.class).recommand(board,board_type);
+	public List<Board> totallist(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		int startrow = (pageNum -1 ) * limit;
+		map.put("searchType", searchType);
+		map.put("searchContent", searchContent);
+		map.put("startrow", startrow);
+		map.put("limit", limit); 
+		map.put("board_type", board_type);
+		return sqlSession.selectList(NS+"totallist",map);
 	}
 
+	@Override
+	public void board_applyupdate(Integer num) {
+		sqlSession.getMapper(BoardMapper.class).applyupdate(num);
+	}
+
+
+	
 	
 	
 	

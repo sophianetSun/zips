@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dao.CalendarDao;
 import dao.FoodDao;
 import dao.MessageDao;
 import dao.SearchInfoDao;
@@ -27,6 +28,8 @@ public class MainServiceImpl implements MainService {
 	private SubscriptionDao subDao;
 	@Autowired
 	private FoodDao foodDao;
+	@Autowired
+	private CalendarDao calendarDao;
 	
 	@Override
 	public Map<String, List<Board>> getMainBoards() {
@@ -173,5 +176,11 @@ public class MainServiceImpl implements MainService {
 	public List<FoodDB> getFoodDBList(String searchText) {
 		return foodDao.selectList(searchText);
 	}
+
+	@Override
+	public int saveMyInfoCalendar(InfoCalendar myinfo) {
+		return calendarDao.save(myinfo);
+	}
+	
 	
 }

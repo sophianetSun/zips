@@ -37,4 +37,5 @@ public interface MainService {
 	
 	// MyInfoCalendar
 	public List<FoodDB> getFoodDBList(String searchText);
+	public int saveMyInfoCalendar(InfoCalendar myinfo);
 }

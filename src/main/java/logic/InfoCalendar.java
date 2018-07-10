@@ -1,41 +1,47 @@
 package logic;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class InfoCalendar {
 	private Integer num;
 	private Date regdate;
-	private String userId;
-	private Integer inType;
+	private String user_id;
+	private Integer in_type;
 	private String name;
 	private Double carbohydrate;
 	private Double fat;
 	private Double protein;
 	private Integer amount;
 	private Double calorie;
-	private String nutriMemo;
-	private String workMemo;
+	private String nutri_memo;
+	private String work_memo;
+
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	// Constructor
-	public InfoCalendar(Integer num, Date regdate, String userId, Integer inType, String name, Double carbohydrate,
-			Double fat, Double protein, Integer amount, Double calorie, String nutriMemo, String workMemo) {
+	public InfoCalendar() { }
+	
+	public InfoCalendar(Integer num, Date regdate, String user_id, Integer in_type, String name, Double carbohydrate,
+			Double fat, Double protein, Integer amount, Double calorie, String nutri_memo, String work_memo) {
 		super();
 		this.num = num;
 		this.regdate = regdate;
-		this.userId = userId;
-		this.inType = inType;
+		this.user_id = user_id;
+		this.in_type = in_type;
 		this.name = name;
 		this.carbohydrate = carbohydrate;
 		this.fat = fat;
 		this.protein = protein;
 		this.amount = amount;
 		this.calorie = calorie;
-		this.nutriMemo = nutriMemo;
-		this.workMemo = workMemo;
+		this.nutri_memo = nutri_memo;
+		this.work_memo = work_memo;
 	}
-	
-	public InfoCalendar() { }
 
 	// Getter, Setter, toString
+
+
 	public Integer getNum() {
 		return num;
 	}
@@ -48,24 +54,24 @@ public class InfoCalendar {
 		return regdate;
 	}
 
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
+	public void setRegdate(String regdate) throws ParseException {
+		this.regdate = sdf.parse(regdate);
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUser_id() {
+		return user_id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
-	public Integer getInType() {
-		return inType;
+	public Integer getIn_type() {
+		return in_type;
 	}
 
-	public void setInType(Integer inType) {
-		this.inType = inType;
+	public void setIn_type(Integer in_type) {
+		this.in_type = in_type;
 	}
 
 	public String getName() {
@@ -116,33 +122,33 @@ public class InfoCalendar {
 		this.calorie = calorie;
 	}
 
-	public String getNutriMemo() {
-		return nutriMemo;
+	public String getNutri_memo() {
+		return nutri_memo;
 	}
 
-	public void setNutriMemo(String nutriMemo) {
-		this.nutriMemo = nutriMemo;
+	public void setNutri_memo(String nutri_memo) {
+		this.nutri_memo = nutri_memo;
 	}
 
-	public String getWorkMemo() {
-		return workMemo;
+	public String getWork_memo() {
+		return work_memo;
 	}
 
-	public void setWorkMemo(String workMemo) {
-		this.workMemo = workMemo;
+	public void setWork_memo(String work_memo) {
+		this.work_memo = work_memo;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("\"InfoCalendar\" : {\"num\":");
+		builder.append("{ \"InfoCalendar\" : {\"num\":");
 		builder.append(num);
 		builder.append(", \"regdate\":\"");
 		builder.append(regdate);
 		builder.append("\", \"userId\":\"");
-		builder.append(userId);
-		builder.append("\", \"inType\":\"");
-		builder.append(inType);
+		builder.append(user_id);
+		builder.append("\", \"in_type\":\"");
+		builder.append(in_type);
 		builder.append("\", \"name\":\"");
 		builder.append(name);
 		builder.append("\", \"carbohydrate\":");
@@ -155,15 +161,12 @@ public class InfoCalendar {
 		builder.append(amount);
 		builder.append(", \"calorie\":");
 		builder.append(calorie);
-		builder.append(", \"nutriMemo\":");
-		builder.append(nutriMemo);
-		builder.append(", \"workMemo\":");
-		builder.append(workMemo);
-		builder.append("}");
+		builder.append(", \"nutri_memo\":\"");
+		builder.append(nutri_memo);
+		builder.append("\", \"work_memo\":\"");
+		builder.append(work_memo);
+		builder.append("\"}}");
 		return builder.toString();
 	}
 
-	
-	
-	
 }

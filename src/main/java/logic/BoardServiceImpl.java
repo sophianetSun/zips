@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dao.BestDao;
 import dao.BoardDao;
+import dao.RecommentDao;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -21,14 +22,19 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
     private BestDao bestDao;
 	
+	@Autowired
+	private RecommentDao recommentDao;
+	
+	
+	
 	@Override
 	public int boardcount(String searchType, String searchContent) {
 		return boardDao.count(searchType,searchContent);
 	}
 
 	@Override
-	public List<Board> boardList(String searchType, String searchContent, Integer pageNum, int limit) {
-		return boardDao.list(searchType,searchContent,pageNum,limit);
+	public List<Board> boardList(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
+		return boardDao.list(board_type,searchType,searchContent,pageNum,limit);
 	}
 
 	@Override
@@ -68,8 +74,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int boardDelete(Board board, HttpServletRequest request) {
-		return boardDao.delete(board,request);
+	public int boardDelete(Integer num) {
+		return boardDao.delete(num);
 	}
 
 	@Override
@@ -78,15 +84,68 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int boardrecommand(Board board, Integer board_type) {
-		return boardDao.recommand(board,board_type);
+	public int boardrecommand(Recomment recomment,Integer board_type) {
+		int co_no = recommentDao.maxco_Num();
+		recomment.setCo_no(++co_no);
+		return recommentDao.recommand(recomment,board_type);
 	}
 
 	@Override
-	public int bestcnt(Board board, String userid) {
-		return bestDao.best(board,userid);
+	public int best(Best best) {
+	 	return bestDao.best(best);
 	}
 
+	@Override
+	public List<Board> totalboardList(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
+		return boardDao.totallist(board_type,searchType,searchContent,pageNum,limit);
+	}
+
+
+	@Override
+	public List<Recomment> recommentList(Integer board_type,int num) {
+		return recommentDao.recommentlist(board_type,num);
+	}
+
+	@Override
+	public void apply(Integer co_no,Integer num) {
+		recommentDao.apply(co_no,num);
+		boardDao.board_applyupdate(num);
+	}
+
+	@Override
+	public void noapply(Integer num) {
+		recommentDao.noapply(num);
+	}
+
+	@Override
+	public int recount(Integer num) {
+		return recommentDao.recount(num);
+	}
+
+	@Override
+	public int Hrecommand(Recomment recomment, Integer board_type) {
+		int co_no = recommentDao.maxco_Num();
+		recomment.setCo_no(++co_no);
+		return recommentDao.Hrecommand(recomment, board_type);
+	}
+
+	@Override
+	public int bestcnt(Best best) {
+		return bestDao.bestcnt(best);
+		
+	}
+
+	@Override
+	public List<Best> getbest(int num) {
+		
+		return bestDao.getbest(num);
+	}
+
+	@Override
+	public Recomment getapply(int num) {
+		
+		return recommentDao.getapply(num);
+	}
 
 		
 }
