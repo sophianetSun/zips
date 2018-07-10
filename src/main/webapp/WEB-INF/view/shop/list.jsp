@@ -41,7 +41,7 @@
  a.btn_worry em.oning {
     display: inline-block;
     border-radius: 3px;
-    border: 1px solid #aaa;
+    border: 1px solid green;
     color: green;
     width: 50px;
     font-size: 11px;
@@ -100,13 +100,13 @@
 				<c:if test="${shop.shop_status == '1'}">
 					<c:if test="${(shop.shop_seller_id == loginUser.id) || (shop.shop_buyer_id == loginUser.id)}">
 					<a href="dealpage.zips?shop_no=${shop.shop_no}">${shop.shop_subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="off">구매중</em></a>			    
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="oning">구매중</em></a>			    
 				    </c:if>
 				      
 					<c:if test="${(shop.shop_seller_id != loginUser.id) && (shop.shop_buyer_id != loginUser.id)}">    
 					<a href="detail.zips?shop_no=${shop.shop_no}">${shop.shop_subject}</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="oning">구매중</em></a>
-					</c:if>
+					</c:if> 
 				</c:if>
 				
 				<c:if test="${shop.shop_status == '2'}">

@@ -369,7 +369,7 @@ public class ShopController {
 		} else if (shop_id.equals(shop.getShop_buyer_id())) {
 			if(shop.getShop_buyer_confirm().equals(1)) {
 				userService.updateSellerCoinCancel(coin, shop.getShop_seller_id());
-			}
+			} 
 			String shop_buyer_id = shop_id;
 			userService.updateBuyerCoinCancel(coin, shop_buyer_id);
 			shopService.shopDealCancel(shop_no);

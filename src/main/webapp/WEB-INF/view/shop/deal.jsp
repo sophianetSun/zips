@@ -58,6 +58,9 @@
 			}
 		})
 		
+		$('#buy').click(function() {
+			alert('구매신청 하셨습니다');
+		})
 	});
 	
 </script>

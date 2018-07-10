@@ -1,42 +1,4 @@
-<!-- 판매중, 구매중 표시 -->
- a.btn_worry em.off {
-    display: inline-block;
-    border-radius: 3px;
-    border: 1px solid #aaa;
-    color: #777;
-    width: 50px;
-    font-size: 11px;
-    text-align: center;
-    vertical-align: top;
-    letter-spacing: -0.04em;
-    }
-    
-  a.btn_worry em.on {
-    display: inline-block;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border: 1px solid #e2614c;
-    color: #e2614c;
-    width: 50px;
-    font-size: 11px;
-    text-align: center;
-    vertical-align: top;
-    letter-spacing: -0.04em;
-	}	
 
- a.btn_worry em.oning {
-    display: inline-block;
-    border-radius: 3px;
-    border: 1px solid #aaa;
-    color: green;
-    width: 50px;
-    font-size: 11px;
-    text-align: center;
-    vertical-align: top;
-    letter-spacing: -0.04em;
-    }
     
  .my-hr1 {
     border: 0;
