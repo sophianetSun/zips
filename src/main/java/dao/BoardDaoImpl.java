@@ -56,7 +56,6 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public void readcnt(Integer num) {
-		
 		sqlSession.getMapper(BoardMapper.class).readcnt(num);
 	}
 
@@ -67,8 +66,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int delete(Board board, HttpServletRequest request) {
-		return sqlSession.getMapper(BoardMapper.class).delete(board);
+	public int delete(Integer num) {
+		return sqlSession.getMapper(BoardMapper.class).delete(num);
 	}
 
 	@Override

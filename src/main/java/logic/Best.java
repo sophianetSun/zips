@@ -7,6 +7,7 @@ public class Best implements Serializable {
 	private int num;
 	private String rec_user;
 	private int rec_board_type;
+	
 	public int getNum() {
 		return num;
 	}

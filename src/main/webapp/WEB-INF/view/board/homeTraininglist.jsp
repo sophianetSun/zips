@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
 <script type="text/javascript">
 function list(pageNum) {
 	var searchType = document.searchform.searchType.value;
@@ -18,11 +20,9 @@ function list(pageNum) {
 	}
 	return false;
 }
-
 </script>
 </head>
 <body>
-
  <div class="col-lg-4">
 <div class="w3-content w3-section" style="max-width:300px">
   <img class="mySlides" src="../img/1-2.gif" style="width:50%">
@@ -55,20 +55,6 @@ function list(pageNum) {
  var docHeight = $(card mb-4 box-shadow).height();
  var docWidth = $(card mb-4 box-shadow).width();
  
- $("#best").click(function(){
-	    $.ajax({
-	        type:"POST",
-	        url:"{% url 'board/homeTraininglist.zips'}",
-	        /* data : {name : "홍길동"}, */
-	        success: function(xml){
-	            console.log(xml);
-	        },
-	        error: function(xhr, status, error) {
-	            alert(error);
-	        }   
-	    });
-	});
-
 </script>
 </form>
 
@@ -126,8 +112,25 @@ function list(pageNum) {
 					조회수 :${board.board_count} 
 					<br>
                     <div class="btn-group">
-                      <button id="best" class="btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥<span class="badge badge-light">&nbsp;${board.recommand }</span></font></small></button>&nbsp;
-                      <button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;"><small>▶ 구독 <font color="red"></font></small></button>
+                    <%-- <c:choose>
+        			<c:when test="${true}">
+                    <c:forEach var="be" items="${dbbest}">
+						<c:if test="${be.rec_user == sessionScope.loginUser.id}">
+						이미추천
+						</c:if>                    
+           		 	 </c:forEach>
+       				</c:when>
+       				<c:otherwise>
+       				 </c:otherwise> 
+    					</c:choose>--%>
+                    <form action="best.zips?board_type=${param.board_type}">
+                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
+                    <input type="hidden" name="num" value="${board.num}">
+                    <input type="hidden" name="board_type" value="${board.board_type}">
+                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥
+                      <span class="badge badge-light">&nbsp;</span></font></small></button></a>&nbsp;
+                     </form>
+					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
                    </small>
                   </div>

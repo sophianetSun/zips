@@ -31,7 +31,6 @@ select num,board_userid,subject,content,filename fileurl,regdate,board_count,boa
  and ${searchType} like '%${searchContent}%'
  </if>
  
- 
  <if test="startrow != null and limit != null">
 order by regdate desc limit #{startrow},#{limit}
 </if>

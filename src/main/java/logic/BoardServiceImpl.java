@@ -25,6 +25,8 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private RecommentDao recommentDao;
 	
+	
+	
 	@Override
 	public int boardcount(String searchType, String searchContent) {
 		return boardDao.count(searchType,searchContent);
@@ -72,8 +74,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int boardDelete(Board board, HttpServletRequest request) {
-		return boardDao.delete(board,request);
+	public int boardDelete(Integer num) {
+		return boardDao.delete(num);
 	}
 
 	@Override
@@ -89,8 +91,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int bestcnt(Board board, String userid) {
-		return bestDao.best(board,userid);
+	public int best(Best best) {
+	 	return bestDao.best(best);
 	}
 
 	@Override
@@ -98,10 +100,6 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.totallist(board_type,searchType,searchContent,pageNum,limit);
 	}
 
-	@Override
-	public Recomment getRecomment(int co_no) {
-		return recommentDao.getRecomment(co_no);
-	}
 
 	@Override
 	public List<Recomment> recommentList(Integer board_type,int num) {
@@ -119,8 +117,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int recount() {
-		return recommentDao.recount();
+	public int recount(Integer num) {
+		return recommentDao.recount(num);
 	}
 
 	@Override
@@ -130,9 +128,21 @@ public class BoardServiceImpl implements BoardService {
 		return recommentDao.Hrecommand(recomment, board_type);
 	}
 
+	@Override
+	public int bestcnt(Best best) {
+		return bestDao.bestcnt(best);
+		
+	}
 
-	
+	@Override
+	public List<Best> getbest(int num) {
+		return bestDao.getbest(num);
+	}
 
+	@Override
+	public Recomment getapply(int num) {
+		return recommentDao.getapply(num);
+	}
 
 		
 }

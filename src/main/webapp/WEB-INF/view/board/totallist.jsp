@@ -8,35 +8,273 @@
  th {
  	text-align: center;
  }
+ 
+
+ *{margin: 0;padding: 0;list-style-type: none;}
+        .box1{background-color: #b3c4f8;}
+        .box2{background-color: #f8bfb4;}
+        .box3{background-color: #b4f8b6;}
+    
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
+		<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
+		<script src="assets/js/jquery.shuffleLetters.js"></script>
+        <script src="assets/js/script.js"></script>
 <script type="text/javascript">
 	// 스크립트 list function
-	function list(pageNum2) {
+	function list(pageNum) {
 		var searchType = document.searchform.searchType.value;
 		if(searchType == null || searchType.length == 0) {
 			document.searchform.searchContent.value = "";
-			document.searchform.pageNum2.value = 1;
-			location.href="totallist.zips?pageNum2=" + pageNum2+"&board_type="+${param.board_type};	
+			document.searchform.pageNum.value = 1;
+			location.href="totallist.zips?pageNum=" + pageNum+"&board_type="+${param.board_type};	
 		} else {
-			document.searchform.pageNum2.value = pageNum2;
+			document.searchform.pageNum.value = pageNum;
 			document.searchform.submit();
 			return true;
 		}
 		return false;
 	}
+	  
+	(function($){
+
+	    $.fn.shuffleLetters = function(prop){
+
+	        var options = $.extend({
+	        },prop)
+
+	        return this.each(function(){
+	        });
+	    };
+
+
+	    function randomChar(type){
+	    }
+
+	})(jQuery);
+	
+	function randomChar(type){
+	    var pool = "";
+
+	    if (type == "lowerLetter"){
+	        pool = "ㄱㅏㄴㅓㄷㅗㄻㅛㅄㅅㅇㄱㅈㅇㅊㄹㅋㅠㅍㅌㅎ123456789";
+	    }
+	    else if (type == "upperLetter"){
+	        pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	    }
+	    else if (type == "symbol"){
+	        pool = ",.?/\\(^)![]{}*&^%$#'\"";
+	    }
+
+	    var arr = pool.split('');
+	    return arr[Math.floor(Math.random()*arr.length)];
+	}
+	
+	$.fn.shuffleLetters = function(prop){
+
+	    var options = $.extend({
+	        "step"  : 8,    // How many times should the letters be changed
+	        "fps"   : 25,   // Frames Per Second
+	        "text"  : ""    // Use this text instead of the contents
+	    },prop)
+
+	    return this.each(function(){
+
+	        var el = $(this),
+	            str = "";
+
+	        if(options.text) {
+	            str = options.text.split('');
+	        }
+	        else {
+	            str = el.text().split('');
+	        }
+
+	        // The types array holds the type for each character;
+	        // Letters holds the positions of non-space characters;
+
+	        var types = [],
+	            letters = [];
+
+	        // Looping through all the chars of the string
+
+	        for(var i=0;i<str.length;i++){
+
+	            var ch = str[i];
+
+	            if(ch == " "){
+	                types[i] = "space";
+	                continue;
+	            }
+	            else if(/[a-z]/.test(ch)){
+	                types[i] = "lowerLetter";
+	            }
+	            else if(/[A-Z]/.test(ch)){
+	                types[i] = "upperLetter";
+	            }
+	            else {
+	                types[i] = "symbol";
+	            }
+
+	            letters.push(i);
+	        }
+
+	        el.html("");            
+
+	        // Self executing named function expression:
+
+	        (function shuffle(start){
+
+	            // This code is run options.fps times per second
+	            // and updates the contents of the page element
+
+	            var i,
+	                len = letters.length,
+	                strCopy = str.slice(0); // Fresh copy of the string
+
+	            if(start>len){
+	                return;
+	            }
+
+	            // All the work gets done here
+	            for(i=Math.max(start,0); i < len; i++){
+
+	                // The start argument and options.step limit
+	                // the characters we will be working on at once
+
+	                if( i < start+options.step){
+	                    // Generate a random character at this position
+	                    strCopy[letters[i]] = randomChar(types[letters[i]]);
+	                }
+	                else {
+	                    strCopy[letters[i]] = "";
+	                }
+	            }
+
+	            el.text(strCopy.join(""));
+
+	            setTimeout(function(){
+
+	                shuffle(start+1);
+
+	            },1000/options.fps);
+
+	        })(-options.step);
+
+	    });
+	};
+	
+	$(function(){
+
+	    var container = $("#container")
+
+	    container.shuffleLetters();
+
+	    setTimeout(function(){
+
+	        container.shuffleLetters({
+	            "text": "Question & Answer"
+	        });
+
+	        userText.val("type anything and hit return..").fadeIn();
+
+	    },3000);
+
+	});
+	
+	$(function(){
+
+	    var container = $("#container2")
+
+	    container.shuffleLetters();
+
+	    setTimeout(function(){
+
+	        container.shuffleLetters({
+	            "text": "자유 게시판"
+	        });
+
+	        userText.val("type anything and hit return..").fadeIn();
+
+	    },3000);
+
+	});
+	
+	$(function(){
+
+	    var container = $("#container3")
+
+	    container.shuffleLetters();
+
+	    setTimeout(function(){
+
+	        container.shuffleLetters({
+	            "text": "Before & After"
+	        });
+
+	        userText.val("type anything and hit return..").fadeIn();
+
+	    },4000);
+
+	});
+	
+	  $(function(){
+          var d = false;
+          $("html, body").on('mousewheel DOMMouseScroll', function(e) {
+              var E = e.originalEvent;
+              delta = 0;
+              if (E.detail) {
+                  delta = E.detail * -40;
+              }else{
+                  delta = E.wheelDelta;
+              };
+
+              var a = parseInt($("ul").css("left"));
+              var b = $("li").width();
+              var c = $('li').length;
+              
+              if(delta == -120 && a > (c-1)*-b && !d){
+                  // 마우스 휠을 아래로 내렸을 경우
+                  d = true;
+                  $('ul').stop().animate({
+                      "left": a += -b
+                  },400,function(){
+                      d = false;
+                  });
+              };
+              if(delta == 120 && a < 0 && !d){
+                  // 마우스 휠을 위로 올렸을 경우
+                  d = true;
+                  $('ul').stop().animate({
+                      "left": a += b
+                  },400,function(){
+                      d = false;
+                  });
+              };
+          });
+      });
 </script>
 </head>
 <body>
-
 <c:if test="${param.board_type == 2 }">
-<h2 align="center">질문과 답변 </h2>
+<div class="card mb-3">
+  <div class="card-body">
+   <h2 class="card-title" align="center" id="container" ><span>홈트레이닝 궁금증 시원하게 해결 !</span></h2>
+   <span class="rainbow">rainbow</span>
+  </div>
+  <div align="right">
+  <img class="card-img-right" src="../img/Q&A.jpg" style="width: 400px;height: 250px;" alt="Card image cap" id="changeimg">
+  <img class="card-img-right" src="../img/qqqaaa.jpg" style="width: 400px;height: 250px;" alt="Card image cap">
+</div>
+</div>
 </c:if>
 <c:if test="${param.board_type == 3 }">
-<h2 align="center">자유 게시판 </h2>
+<h2 align="center" id="container2">스트레스를 날려버릴 아무말 대잔치</h2>
 </c:if>
 <c:if test="${param.board_type == 4 }">
-<h2 align="center">Before & After</h2>
+<h2 align="center" id="container3">자신감 뿜뿜!! 드라마보다 더 드라마틱한  다이어트 성공신화</h2>
 </c:if>
 
 
@@ -45,25 +283,33 @@
 <table class="table table-hover">
 
 	<colgroup>
-    		<col style="width: 90px">
-    		<col style="width: auto">
-    		<col style="width: 80px">
-    		<col style="width: 80px">
-    		<col style="width: 80px">
-    		<col style="width: 89px">
+    		<col style="width: 5%;">
+    		<col style="width: 30%">
+    		<col style="width: 10%">
+    		<col style="width: 20%">
+    		<col style="width: 10%">
+    		<col style="width: 10%">
     </colgroup>
 			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>글쓴이</th>
+				<th>카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th>제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th>글쓴이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>날짜</th>
-				<th>조회수</th>
-				<th>추천수</th>
+				<th>조회수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th>추천수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 			</tr>
 			<c:forEach var="board" items="${boardlist2}">
 			<tr>
-				<td>${board.num }</td>
-				<td><a href="totallistForm.zips?num=${board.num}&pageNum2=${pageNum2}&board_type=${param.board_type}">${board.subject}</a>
+			<c:if test="${param.board_type == 2 }">
+				<td>Q&A</td>
+				</c:if>
+				<c:if test="${param.board_type == 3 }">
+				<td>자유</td>
+				</c:if>
+				<c:if test="${param.board_type == 4 }">
+				<td>Before&After</td>
+				</c:if>
+				<td><a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject}</a>
 				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></td>	
 				<td>${board.board_userid}</td>
 				<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></td>
@@ -72,21 +318,21 @@
 			</tr>
 			</c:forEach>
 			<tr align="center" height="26"><td colspan="5">
-				<c:if test="${pageNum2 > 1}"> 
-					<a href="javascript:list(${pageNum2 - 1})">[이전]</a>
+				<c:if test="${pageNum > 1}"> 
+					<a href="javascript:list(${pageNum - 1})">[이전]</a>
 				</c:if>&nbsp;
-				<c:if test="${pageNum2 <= 1}">[이전]</c:if>&nbsp;
+				<c:if test="${pageNum <= 1}">[이전]</c:if>&nbsp;
 				
 				<c:forEach var="a" begin="${startpage2}" end="${endpage2}">
-					<c:if test="${a == pageNum2}">[${a}]</c:if>
-					<c:if test="${a != pageNum2}">
+					<c:if test="${a == pageNum}">[${a}]</c:if>
+					<c:if test="${a != pageNum}">
 						<a href="javascript:list(${a})">[${a}]</a>
 					</c:if>
 				</c:forEach>
-					<c:if test="${pageNum2 < maxpage2}">
-						<a href="javascript:list(${pageNum2 + 1})">[다음]</a>
+					<c:if test="${pageNum < maxpage2}">
+						<a href="javascript:list(${pageNum + 1})">[다음]</a>
 					</c:if>&nbsp;
-					<c:if test="${pageNum2 >= maxpage2}">[다음]						
+					<c:if test="${pageNum >= maxpage2}">[다음]						
 					</c:if>&nbsp;
 				</td></tr>
 
@@ -96,13 +342,12 @@
 	</c:if>
 	
 	<tr><td colspan="4" align="center">
-		<form action="totallist.zips" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
-			<input type="hidden" name="pageNum2" value="1">
+		<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
+			<input type="hidden" name="pageNum" value="1">
 			<select name="searchType" id="searchType">
-				<option value="">선택하세요</option>
-				<option value="shop_subject">제목</option>
-				<option value="shop_seller_id">글쓴이</option>
-				<option value="shop_content">내용</option>
+				<option value="subject">제목</option>
+				<option value="board_userid">글쓴이</option>
+				<option value="content">내용</option>
 			</select>&nbsp;
 			<script type="text/javascript">
 				if('${param.searchType}' != '') {
