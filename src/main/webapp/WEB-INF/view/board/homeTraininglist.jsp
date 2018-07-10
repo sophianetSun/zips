@@ -175,7 +175,7 @@ $(function(){
   <img class="mySlides" src="../img/1-4.gif" style="width:50%">
   <img class="mySlides" src="../img/1-5.gif" style="width:50%">
             <!-- <img class="rounded-circle" src="../img/runicon.png" alt="Generic placeholder image" width="140" height="140"> -->
-            <p id="container4" class="raindow" ><span><a href="homeTraininglist.zips?board_type=${param.board_type}">You are the most beautiful who try.&nbsp;</a></span></p>
+            <p id="container4"><span><a href="homeTraininglist.zips?board_type=${param.board_type}">You are the most beautiful who try.&nbsp;</a></span></p>
             <br>
             <small><br>여러분도 이제 혼자 운동하지 말고 <br>동영상을 올려서 운동정보를 공유해보세요 </small>
             <br>

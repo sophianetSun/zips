@@ -5,13 +5,6 @@
 <html>
 <head>
 <style type="text/css">
-.rainbow {
-  background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
-  background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
-  color:transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-}
 
  em.off {
     display: inline-block;
@@ -113,9 +106,9 @@
 	$.fn.shuffleLetters = function(prop){
 
 	    var options = $.extend({
-	        "step"  : 8,    // How many times should the letters be changed
-	        "fps"   : 25,   // Frames Per Second
-	        "text"  : ""    // Use this text instead of the contents
+	        "step"  : 8,    
+	        "fps"   : 25,   
+	        "text"  : ""    
 	    },prop)
 
 	    return this.each(function(){
@@ -161,29 +154,22 @@
 
 	        el.html("");            
 
-	        // Self executing named function expression:
 
 	        (function shuffle(start){
 
-	            // This code is run options.fps times per second
-	            // and updates the contents of the page element
 
 	            var i,
 	                len = letters.length,
-	                strCopy = str.slice(0); // Fresh copy of the string
+	                strCopy = str.slice(0); 
 
 	            if(start>len){
 	                return;
 	            }
 
-	            // All the work gets done here
 	            for(i=Math.max(start,0); i < len; i++){
 
-	                // The start argument and options.step limit
-	                // the characters we will be working on at once
 
 	                if( i < start+options.step){
-	                    // Generate a random character at this position
 	                    strCopy[letters[i]] = randomChar(types[letters[i]]);
 	                }
 	                else {
@@ -216,7 +202,6 @@
 	            "text": "Question & Answer"
 	        });
 
-	        userText.val("type anything and hit return..").fadeIn();
 
 	    },3000);
 
@@ -234,7 +219,6 @@
 	            "text": "자유 게시판"
 	        });
 
-	        userText.val("type anything and hit return..").fadeIn();
 
 	    },3000);
 
@@ -252,7 +236,6 @@
 	            "text": "Before & After"
 	        });
 
-	        userText.val("type anything and hit return..").fadeIn();
 
 	    },4000);
 
@@ -262,12 +245,13 @@
 <body>
 <c:if test="${param.board_type == 2 }">
 <div class="card mb-3">
-  <div class="card-body">
-   <h2 class="card-title rainbow" align="center" id="container" ><span class="rainbow">홈트레이닝 궁금증 시원하게 해결 !</span></h2>
+
+  <div class="card-body" id="container"><h2 class="raindow">홈트레이닝 궁금증 시원하게 해결 !</h2>
+   <!-- <h2 class="card-title rainbow" align="center" id="container" ></h2> -->
   </div>
   <div align="right">
-  <img class="card-img-right" src="../img/Q&A.jpg" style="width: 400px;height: 250px;" alt="Card image cap" id="changeimg">
-  <img class="card-img-right" src="../img/qqqaaa.jpg" style="width: 400px;height: 250px;" alt="Card image cap">
+  <img class="card-img-right" src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+  <img class="card-img-right" src="../img/qqqaaa.jpg" style="width: 300px;height: 250px;" alt="Card image cap">
 </div>
 </div>
 </c:if>
@@ -310,19 +294,16 @@
 				<c:if test="${param.board_type == 4 }">
 				<td>Before&After</td>
 				</c:if>
-				
-				<c:choose>
-				<td><a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"><c:when test="${param.board_type == 2 }">
-				${board.subject} &nbsp;&nbsp;&nbsp;<em class="off">고민중</em></a>
-				</c:when>
-				<c:otherwise>
-            	<td><a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"><em class="on">고민해결</em></a>
-				</c:otherwise>
-				</c:choose>
-				    <c:if test="${param.board_type == 3 || param.board_type == 4}">
-				${board.subject}</a>
+				<td>
+				<c:if test="${param.board_type == 2}">
+			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} &nbsp;&nbsp;&nbsp;<em class="off">고민중</em></a></td>
+ 			<c:if test="${board.board_apply == 1}">
+ 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"><em class="on">고민해결</em></a>
+				</c:if>
+				</c:if>
+				<c:if test="${param.board_type == 3 || param.board_type == 4}">
+				<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject}</a></td>
 				    </c:if>	
-					
 				<td>${board.board_userid}</td>
 				<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></td>
 				<td>${board.board_count }</td>
