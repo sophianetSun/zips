@@ -7,9 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import exception.CartEmptyException;
 import exception.LoginException;
-import logic.Cart;
 import logic.User;
 
 // 1. 로그인이 안된 경우 : 로그인이 필요합니다. /user/login.shop
@@ -20,6 +18,7 @@ import logic.User;
 public class LoginAspect {
 	// UserController.mypage(String id, HttpSession session)
 	// 메서드가 호출전에 userLoginCheck(..) 메서드가 호출
+	/*
    @Around("execution(* controller.User*.my*(..))")
    public Object userLoginCheck(ProceedingJoinPoint joinPoint) throws Throwable{      
       String id = null;
@@ -93,4 +92,5 @@ public class LoginAspect {
 	   Object ret = joinPoint.proceed();
 	   return ret;
    }
+   */
 }
