@@ -45,7 +45,8 @@ public class RecommentDaolmpl implements RecommentDao {
 	}
 
 	@Override
-	public void apply(Integer co_no) {
+	public void apply(Integer co_no,Integer num) {
+		
 		sqlSession.getMapper(RecommentMapper.class).apply(co_no);
 	}
 

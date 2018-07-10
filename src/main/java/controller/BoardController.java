@@ -46,9 +46,11 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="board/apply")
-	public String apply(Integer co_no,Integer num, HttpServletRequest request) {
+	public String apply(Board board,Integer co_no,Integer num, HttpServletRequest request) {
+		
 		service.noapply(num);
-		service.apply(co_no);
+		service.apply(co_no,num);
+		
 		return "채택";
 	}
 	
@@ -92,12 +94,14 @@ public class BoardController {
 			int limit = 9;
 			int listcount = service.boardcount(searchType,searchContent);
 			List<Board> boardlist = service.totalboardList(board_type,searchType,searchContent,pageNum,limit);
+			/*recomment = service.getapply(num);*/
 			int recount = service.recount(num);
 			int maxpage = (int)((double)listcount/limit + 0.95);
 			int startpage = ((int)((pageNum/10.0 + 0.9) -1)) * 10 + 1;
 			int endpage = startpage + 9;
 			if(endpage > maxpage) endpage = maxpage;
 			int boardcnt = listcount - (pageNum - 1) * limit;
+			/*mav.addObject("recomment",recomment);*/
 			mav.addObject("recount",recount);
 			mav.addObject("pageNum",pageNum);
 			mav.addObject("maxpage2",maxpage);

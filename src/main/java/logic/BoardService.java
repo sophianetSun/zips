@@ -25,7 +25,7 @@ public interface BoardService {
 	List<Recomment> recommentList(Integer co_no, int num);
 
 	// 채택하기 
-	void apply(Integer co_no);
+	void apply(Integer co_no, Integer num);
 
 	void noapply(Integer num);
 

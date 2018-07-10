@@ -14,7 +14,7 @@ public interface RecommentDao {
 
 	List<Recomment> recommentlist(Integer co_no, int num);
 
-	void apply(Integer co_no);
+	void apply(Integer co_no, Integer num);
 
 	void noapply(Integer num);
 
