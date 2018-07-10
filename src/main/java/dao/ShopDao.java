@@ -41,5 +41,6 @@ public interface ShopDao {
 
 	void sellUpdate();
 
+	void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize);
 	
 }

@@ -30,11 +30,11 @@
 			$('#seller').html(seller_table);
 		
 		var buyer_table = "<table class='table table-bordered'>";
-			buyer_table += "<tr><td>아이디</td><td>" + "${sellerUser.id}" + "</td></tr>";
-			buyer_table += "<tr><td>이름</td><td>" + "${sellerUser.name}" + "</td></tr>";
-			buyer_table += "<tr><td>닉네임</td><td>" + "${sellerUser.nickname}" + "</td></tr>";
-			buyer_table += "<tr><td>전화번호</td><td>" + "${sellerUser.tel}" + "</td></tr>";
-			buyer_table += "<tr><td>주소</td><td>" + "${sellerUser.address}" + "</td></tr></table>";	
+			buyer_table += "<tr><td>아이디</td><td>" + "${buyerUser.id}" + "</td></tr>";
+			buyer_table += "<tr><td>이름</td><td>" + "${buyerUser.name}" + "</td></tr>";
+			buyer_table += "<tr><td>닉네임</td><td>" + "${buyerUser.nickname}" + "</td></tr>";
+			buyer_table += "<tr><td>전화번호</td><td>" + "${buyerUser.tel}" + "</td></tr>";
+			buyer_table += "<tr><td>주소</td><td>" + "${buyerUser.address}" + "</td></tr></table>";	
 		
 			$('#buyer').html(buyer_table);
 		
@@ -99,7 +99,7 @@
 			<!-- 판매자 아이디 != 로그인 유저 아이디 -->
 			<c:if test="${shop.shop_seller_id != loginUser.id }">
 				<c:if test="${empty shop.shop_buyer_id}">
-					<form action="dealpage.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}" method="post" id="f">
+					<form action="dealpage.zips?shop_no=${shop.shop_no}" method="post" id="f">
 						<input type="hidden" name="dealcoin" id="dealcoin" value="${shop.shop_price}">
 						<input type="submit" value="구매 신청" class="btn btn-sm btn-outline-primary"
 							style="width: 100px; height: 50px; font-weight: bold;">
@@ -118,16 +118,16 @@
 			<c:if test="${shop.shop_seller_id == loginUser.id }">
 				<button type="button" class="btn btn-sm btn-outline-danger"
 					style="width: 100px; height: 50px;"
-					onclick="location.href='update.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+					onclick="location.href='update.zips?shop_no=${shop.shop_no}'">
 					상품 수정
 				</button>
 				<button type="button" class="btn btn-primary" 
-					onclick="location.href='delete.zips?shop_no=${shop.shop_no}&pageNum=${param.pageNum}'">
+					onclick="location.href='delete.zips?shop_no=${shop.shop_no}'">
 					상품 삭제
 				</button>
 			</c:if>
 			<button type="button" class="btn btn-primary"
-				onclick="location.href='list.zips?pageNum=${pageNum}'">
+				onclick="location.href='list.zips'">
 				상품 목록
 			</button>
 			<br> 

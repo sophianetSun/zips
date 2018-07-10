@@ -19,7 +19,7 @@
 $(document).ready( function() {
 	        // 태그에 onchange를 부여한다.
 	        $('#file').change(function() {
-	                addPreview($(this)); //preview form 추가하기
+	               addPreview($(this)); //preview form 추가하기
 	        });
 	    });
 	 
@@ -56,7 +56,7 @@ $(document).ready( function() {
       
       <div class="form-group">
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>
-        <label for="subject">제목 <font color="red"><form:errors path="shop_subject" /></font> </label>
+        <label for="subject">제목 <font color="red"><form:errors path="shop_subject" /></font></label>
         <input type="text" class="form-control" id="subject" name="shop_subject" placeholder="제목을 입력하세요.">
       </div>
       
@@ -68,13 +68,13 @@ $(document).ready( function() {
       
       <div class="form-group">
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>
-        <label for="content">내용 <font color="red"><form:errors path="shop_content" /></font></label>
-        <textarea class="form-control" id="content" name="shop_content" rows="10"></textarea>
+        <label for="content">상품 내용 <font color="red"><form:errors path="shop_content" /></font></label>
+        <textarea class="form-control" id="content" name="shop_content" rows="10" placeholder="상품에 대한 설명을 작성해주세요." ></textarea>
       </div>
       
       <div class="form-group">
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>
-        <label for="price">상품 가격 <font color="red"><form:errors path="shop_price" /></font></label>
+        <label for="price">상품 가격(Zips Coin) <font color="red"><form:errors path="shop_price" /></font></label>
         <input type="text" class="form-control" style="width: 20%" id="shop_price" name="shop_price" placeholder="가격을 입력하세요.">
         <div id = "checkcoin" style="color: red;"></div>
       </div>
