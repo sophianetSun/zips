@@ -7,9 +7,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import exception.CartEmptyException;
-import exception.LoginException;
-import logic.Cart;
+import exception.ShopException;
+import logic.Shop;
 import logic.User;
 
 // 1. 로그인이 안된 경우 : 로그인이 필요합니다. /user/login.shop
@@ -20,33 +19,25 @@ import logic.User;
 public class LoginAspect {
 	// UserController.mypage(String id, HttpSession session)
 	// 메서드가 호출전에 userLoginCheck(..) 메서드가 호출
-   @Around("execution(* controller.User*.my*(..))")
+	
+	// 민수 : 중고장터 로그인 Aop
+@Around("execution(* controller.ShopController.*(..))")
    public Object userLoginCheck(ProceedingJoinPoint joinPoint) throws Throwable{      
-      String id = null;
-      HttpSession session = null;
-      User paramUser = null;
+	   HttpSession session = null;
       
-      if(joinPoint.getArgs()[0] instanceof User) {
-    	  paramUser = (User)joinPoint.getArgs()[0];
-    	  session = (HttpSession)joinPoint.getArgs()[2];
-    	  id = paramUser.getUserId();
-      } else {
-    	  id = (String)joinPoint.getArgs()[0];
-    	  session = (HttpSession)joinPoint.getArgs()[1];
-      } 
+	session = (HttpSession) joinPoint.getArgs()[0];
+    
+	User loginUser = (User)session.getAttribute("loginUser");
       
-      User loginUser = (User)session.getAttribute("loginUser");
-      if(loginUser == null) {
-         throw new LoginException("로그인 후 거래하세요.","../user/login.shop");
-      }
-      if(!id.equals(loginUser.getUserId()) && !loginUser.getUserId().equals("admin")) {
-         throw new LoginException("본인만 거래 가능합니다.", "../user/mypage.shop?id="+loginUser.getUserId());
-      }
-      Object ret = joinPoint.proceed();
-      return ret;
-   
+	if(loginUser == null) {
+		throw new ShopException("로그인 하신 후에 이용해주세요.","../user/login.zips");
+	} 
+      
+	Object ret = joinPoint.proceed();
+	return ret;
+	
    }
-   
+/*   
    // 1. 로그인이 안된 경우 : 로그인이 필요합니다. /user/login.shop
    // 2. 카트가 비어있는 경우 : 장바구니가 비었습니다. /item/list.shop
    
@@ -65,10 +56,10 @@ public class LoginAspect {
       
       Object ret = joinPoint.proceed();
       return ret;
-   }
+   }*/
    
    
-   @Around("execution(* controller.Admin*.admin*(..))")
+/*   @Around("execution(* controller.Admin*.admin*(..))")
    public Object adminLoginCheck(ProceedingJoinPoint joinPoint) throws Throwable {
 	   HttpSession session = null;
 	   User loginUser = null;
@@ -92,5 +83,5 @@ public class LoginAspect {
 	   }
 	   Object ret = joinPoint.proceed();
 	   return ret;
-   }
+   }*/
 }

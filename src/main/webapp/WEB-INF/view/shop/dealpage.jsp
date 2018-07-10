@@ -162,7 +162,7 @@
 		<hr>
 		<div align="right">
 			<button type="button" class="btn btn-primary"
-				onclick="location.href='list.zips?pageNum=${pageNum}'">
+				onclick="location.href='list.zips'">
 				상품 목록
 			</button>
 			<br> 

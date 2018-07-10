@@ -82,29 +82,6 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
-	    HashMap<String, Object> map = new HashMap<>();
-	    map.put("shop_no", shop_no);
-	    map.put("originalfileName", originalfileName);
-	    map.put("saveFileName", saveFileName);
-	    map.put("fileSize", fileSize);
-	     
-	    sqlSession.insert(NS+"fileUpload", map);	
-	}
-
-	@Override
-	public List<UploadFile> getFileList(Integer shop_no) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("shop_no", shop_no);
-		
-		System.out.println("업로드 파일 리스트 DB 호출:"+map);
-		System.out.println(sqlSession.selectList(NS+"getFileList", map));
-		
-		return sqlSession.selectList(NS+"getFileList", map);
-	}
-
-
-	@Override
 	public String checkConfirm(Integer shop_no, String confirmType) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("shop_no", shop_no);
@@ -127,5 +104,40 @@ public class ShopDaoImpl implements ShopDao {
 	@Override
 	public void sellUpdate() {
 		sqlSession.getMapper(ShopMapper.class).sellUpdate();
+	}
+
+	@Override
+	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+	    HashMap<String, Object> map = new HashMap<>();
+	    map.put("shop_no", shop_no);
+	    map.put("originalfileName", originalfileName);
+	    map.put("saveFileName", saveFileName);
+	    map.put("fileSize", fileSize);
+	     
+	    sqlSession.insert(NS+"fileUpload", map);	
+	}
+
+	@Override
+	public List<UploadFile> getFileList(Integer shop_no) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("shop_no", shop_no);
+		
+		System.out.println("업로드 파일 리스트 DB 호출:"+map);
+		System.out.println(sqlSession.selectList(NS+"getFileList", map));
+		
+		return sqlSession.selectList(NS+"getFileList", map);
+	}
+	
+	@Override
+	public void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+		sqlSession.getMapper(ShopMapper.class).fileDelete(shop_no);
+		System.out.println("---------------------------");
+		System.out.println(shop_no);
+		System.out.println(originalfileName);
+		System.out.println(saveFileName);
+		System.out.println(fileSize);
+		System.out.println("---------------------------");
+		
+		fileUpload(shop_no, originalfileName, saveFileName, fileSize);
 	}
 }

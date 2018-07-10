@@ -56,15 +56,6 @@ public class ShopServiceImpl implements ShopService {
 		shopDao.shopBuyerUpdate(shop_no, shop_buyer_id);
 	}
 
-	@Override
-	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
-		shopDao.fileUpload(shop_no, originalfileName, saveFileName, fileSize);
-	}
-
-	@Override
-	public List<UploadFile> getFileList(Integer shop_no) {
-		return shopDao.getFileList(shop_no);
-	}
 
 	@Override
 	public String checkConfirm(Integer shop_no, String confirmType) {
@@ -79,6 +70,21 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public void sellUpdate() {
 		shopDao.sellUpdate();
+	}
+
+	@Override
+	public void fileUpload(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+		shopDao.fileUpload(shop_no, originalfileName, saveFileName, fileSize);
+	}
+	
+	@Override
+	public List<UploadFile> getFileList(Integer shop_no) {
+		return shopDao.getFileList(shop_no);
+	}
+
+	@Override
+	public void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
+		shopDao.fileUploadUpdate(shop_no, originalfileName, saveFileName, fileSize);
 	}
 
 	
