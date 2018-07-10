@@ -5,16 +5,54 @@
 <html>
 <head>
 <style type="text/css">
- th {
- 	text-align: center;
- }
- 
+.rainbow {
+  background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+  background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+  color:transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
 
- *{margin: 0;padding: 0;list-style-type: none;}
-        .box1{background-color: #b3c4f8;}
-        .box2{background-color: #f8bfb4;}
-        .box3{background-color: #b4f8b6;}
+ em.off {
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    color: #777;
+    width: 50px;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: top;
+    letter-spacing: -0.04em;
+    }
     
+  em.on {
+    display: inline-block;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border: 1px solid #e2614c;
+    color: #e2614c;
+    width: 50px;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: top;
+    letter-spacing: -0.04em;
+	}	
+
+ em.oning {
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    color: green;
+    width: 50px;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: top;
+    letter-spacing: -0.04em;
+    }
+    
+
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -219,50 +257,13 @@
 	    },4000);
 
 	});
-	
-	  $(function(){
-          var d = false;
-          $("html, body").on('mousewheel DOMMouseScroll', function(e) {
-              var E = e.originalEvent;
-              delta = 0;
-              if (E.detail) {
-                  delta = E.detail * -40;
-              }else{
-                  delta = E.wheelDelta;
-              };
-
-              var a = parseInt($("ul").css("left"));
-              var b = $("li").width();
-              var c = $('li').length;
-              
-              if(delta == -120 && a > (c-1)*-b && !d){
-                  // 마우스 휠을 아래로 내렸을 경우
-                  d = true;
-                  $('ul').stop().animate({
-                      "left": a += -b
-                  },400,function(){
-                      d = false;
-                  });
-              };
-              if(delta == 120 && a < 0 && !d){
-                  // 마우스 휠을 위로 올렸을 경우
-                  d = true;
-                  $('ul').stop().animate({
-                      "left": a += b
-                  },400,function(){
-                      d = false;
-                  });
-              };
-          });
-      });
 </script>
 </head>
 <body>
 <c:if test="${param.board_type == 2 }">
 <div class="card mb-3">
   <div class="card-body">
-   <h2 class="card-title" align="center" id="container" ><span>홈트레이닝 궁금증 시원하게 해결 !</span></h2>
-   <span class="rainbow">rainbow</span>
+   <h2 class="card-title rainbow" align="center" id="container" ><span class="rainbow">홈트레이닝 궁금증 시원하게 해결 !</span></h2>
   </div>
   <div align="right">
   <img class="card-img-right" src="../img/Q&A.jpg" style="width: 400px;height: 250px;" alt="Card image cap" id="changeimg">
@@ -271,10 +272,10 @@
 </div>
 </c:if>
 <c:if test="${param.board_type == 3 }">
-<h2 align="center" id="container2">스트레스를 날려버릴 아무말 대잔치</h2>
+<h2 align="center" id="container2" class="rainbow">지금 이순간을 즐겨라 ! 스트레스를 날려버릴 아무말 대잔치</h2>
 </c:if>
 <c:if test="${param.board_type == 4 }">
-<h2 align="center" id="container3">자신감 뿜뿜!! 드라마보다 더 드라마틱한  다이어트 성공신화</h2>
+<h2 align="center" id="container3" class="rainbow">자신감 뿜뿜!! 드라마보다 더 드라마틱한  다이어트 성공신화</h2>
 </c:if>
 
 
@@ -309,8 +310,19 @@
 				<c:if test="${param.board_type == 4 }">
 				<td>Before&After</td>
 				</c:if>
-				<td><a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></td>	
+				
+				<c:choose>
+				<td><a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"><c:when test="${param.board_type == 2 }">
+				${board.subject} &nbsp;&nbsp;&nbsp;<em class="off">고민중</em></a>
+				</c:when>
+				<c:otherwise>
+            	<td><a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"><em class="on">고민해결</em></a>
+				</c:otherwise>
+				</c:choose>
+				    <c:if test="${param.board_type == 3 || param.board_type == 4}">
+				${board.subject}</a>
+				    </c:if>	
+					
 				<td>${board.board_userid}</td>
 				<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></td>
 				<td>${board.board_count }</td>

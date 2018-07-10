@@ -107,8 +107,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void apply(Integer co_no) {
-		recommentDao.apply(co_no);
+	public void apply(Integer co_no,Integer num) {
+		recommentDao.apply(co_no,num);
+		boardDao.board_applyupdate(num);
 	}
 
 	@Override
@@ -136,11 +137,13 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Best> getbest(int num) {
+		
 		return bestDao.getbest(num);
 	}
 
 	@Override
 	public Recomment getapply(int num) {
+		
 		return recommentDao.getapply(num);
 	}
 

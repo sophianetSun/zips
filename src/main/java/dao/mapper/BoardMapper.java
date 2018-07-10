@@ -9,8 +9,8 @@ import logic.Board;
 
 public interface BoardMapper {
 
-	@Insert("insert into totalboard (num,board_userid,subject,content,filename,regdate,board_count,board_type)" + 
-			"values(#{num},#{board_userid},#{subject},#{content},#{fileurl},now(),0,#{board_type})")
+	@Insert("insert into totalboard (num,board_userid,subject,board_apply,content,filename,regdate,board_count,board_type)" + 
+			"values(#{num},#{board_userid},#{subject},0,#{content},#{fileurl},now(),0,#{board_type})")
 	int insert(Board board);
 
 	@Update("update totalboard set board_count=board_count+1 where num=#{value}")	
@@ -24,6 +24,9 @@ public interface BoardMapper {
 
 	@Update("update totalboard set board_userid=#{board_userid},subject=#{subject},content=#{content},moddate=now(),filename=#{fileurl} where num=#{num}")
 	int update(Board board);
+
+	@Update("update totalboard set board_apply=1 where num=#{num}")
+	void applyupdate(Integer num);
 
 	
 

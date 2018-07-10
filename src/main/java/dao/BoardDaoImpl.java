@@ -87,6 +87,11 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.selectList(NS+"totallist",map);
 	}
 
+	@Override
+	public void board_applyupdate(Integer num) {
+		sqlSession.getMapper(BoardMapper.class).applyupdate(num);
+	}
+
 
 	
 	

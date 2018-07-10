@@ -29,6 +29,8 @@ public interface BoardDao {
 
 	int delete(Integer num);
 
+	void board_applyupdate(Integer num);
+
 
 
 
