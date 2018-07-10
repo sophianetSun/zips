@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import logic.User;
 
 public interface UserDao {
@@ -19,4 +21,10 @@ public interface UserDao {
 	
 	// 구매자 코인 사용
 	void updateBuyerCoin(Integer coin, String shop_buyer_id);
+
+	void pwchange(String userId, String dbpass);
+
+	List<User> list(String[] ids);
+
+	List<User> list();
 }

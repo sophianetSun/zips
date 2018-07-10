@@ -1,6 +1,7 @@
 package logic;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import ciper.CiperUtil;
 import dao.UserDao;
 
 @Service
@@ -63,6 +63,22 @@ public class UserServiceImpl implements UserService{
 	public void updateBuyerCoin(Integer dealcoin, String shop_buyer_id) {
 		userDao.updateBuyerCoin(dealcoin, shop_buyer_id);
 	}
+
+	@Override
+	public void updatePass(String userId, String dbpass) {
+		userDao.pwchange(userId, dbpass);
+	}
+
+	@Override
+	public List<User> userList(String[] ids) {
+		return userDao.list(ids);
+	}
+
+	@Override
+	public List<User> userList() {
+		return userDao.list();
+	}
+
 
 	// 코인 사용
 
