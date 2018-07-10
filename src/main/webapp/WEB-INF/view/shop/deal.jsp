@@ -58,7 +58,8 @@
 			}
 		})
 		
-	})
+	});
+	
 </script>
 </head>
 <body> 
@@ -88,7 +89,9 @@
 				<h2>결제 정보</h2>
 				<table class='table table-bordered'>
 					<tr><td>결제 코인</td>
-						<td>${shop.shop_price}</td></tr>
+						<td>${shop.shop_price} Coin</td></tr> 
+					<tr><td>나의 보유 코인</td>
+						<td>${buyerUser.coin} Coin</td></tr>  
 				</table>
 			</div>
 		</blockquote>
@@ -100,8 +103,8 @@
 			<c:if test="${shop.shop_seller_id != loginUser.id }">
 				<c:if test="${empty shop.shop_buyer_id}">
 					<form action="dealpage.zips?shop_no=${shop.shop_no}" method="post" id="f">
-						<input type="hidden" name="dealcoin" id="dealcoin" value="${shop.shop_price}">
-						<input type="submit" value="구매 신청" class="btn btn-sm btn-outline-primary"
+						<input type="hidden" name="coin" id="coin" value="${shop.shop_price}">
+						<input type="submit" id="buy" value="구매 신청" class="btn btn-sm btn-outline-primary"
 							style="width: 100px; height: 50px; font-weight: bold;">
 						<button type="button" class="btn btn-sm btn-outline-primary" 
 						style="width: 100px; height: 50px; font-weight: bold;"

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -197,13 +196,17 @@ public class ShopController {
 		List<MultipartFile> mf = mhsq.getFiles("file");
 		System.out.println(mf);
 		
+		System.out.println("기존에 있는 파일 모두 삭제");
+		
+		shopService.fileDelete(shop.getShop_no());
+		
 		if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
             
 		} else {
 			for (int i = 0; i < mf.size(); i++) {
                // 파일 중복명 처리
         	   String genId = UUID.randomUUID().toString(); 
-
+ 
                // 본래 파일명
                String originalfileName = mf.get(i).getOriginalFilename();
                 
@@ -215,7 +218,7 @@ public class ShopController {
                long fileSize = mf.get(i).getSize(); // 파일 사이즈
 
                mf.get(i).transferTo(new File(savePath)); // 파일 저장
-
+ 
                Integer shop_no = shop.getShop_no();
                
                shopService.fileUploadUpdate(shop_no, originalfileName, saveFileName, fileSize);
@@ -224,7 +227,7 @@ public class ShopController {
 		
 		try {  
 			shopService.shopUpdate(shop, mhsq);
-			mav.setViewName("redirect:list.zips");
+			mav.setViewName("redirect:list.zips"); 
 		} catch (Exception e) {
 			e.printStackTrace();
 			new ShopException("게시물 수정 실패", "update.zips?shop_no="+shop.getShop_no());
@@ -298,13 +301,14 @@ public class ShopController {
 	
 	// 중고 장터 게시물 구매 진행 페이지 
 	@RequestMapping(value="shop/dealpage", method=RequestMethod.POST)
-	public ModelAndView dealpage(HttpSession session, Integer shop_no, Integer dealcoin) {
+	public ModelAndView dealpage(HttpSession session, Integer shop_no, Integer coin) {
 		System.out.println("구매/판매 진행중 페이지 호출");
 		ModelAndView mav = new ModelAndView();
 		Shop shop = shopService.getShop(shop_no);
 		
-		System.out.println(dealcoin);
+		System.out.println(coin);
 		System.out.println(shop_no);
+		
 		
 		User loginUser = (User) session.getAttribute("loginUser");
 		System.out.println(loginUser);
@@ -313,12 +317,22 @@ public class ShopController {
 			try {
 				System.out.println("판매자, 구매자 코인 사용");
 				String shop_buyer_id = loginUser.getId();
+				
+				// 코인 체크
+				String coinCheck = userService.checkCoin(coin, shop_buyer_id);
+				System.out.println("코인 체크 " + coinCheck);
+				if(coinCheck.equals("0")) {
+					System.out.println("코인 부족");
+					throw new Exception();
+				} 
+				
 				shopService.shopBuyerUpdate(shop.getShop_no(), shop_buyer_id);
-				userService.updateBuyerCoin(dealcoin, loginUser.getId());
+				
+				userService.updateBuyerCoin(coin, loginUser.getId());
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-			
+				throw new ShopException("코인이 부족합니다", "../shop/list.zips");
 			}
 		}    
 		
@@ -331,15 +345,48 @@ public class ShopController {
 		
 		mav.addObject("shop_no",shop_no);
 		mav.addObject("shop", shop);
-		mav.addObject("dealcoin");
+		mav.addObject("coin");
 		mav.addObject(loginUser);
 		return mav;
 	}
 	
+	@RequestMapping(value="shop/dealcancel", method=RequestMethod.POST)
+	public ModelAndView dealcancel(HttpSession session, Integer shop_no, String shop_id, Integer coin) {
+		System.out.println("구매/판매 취소 호출");
+		ModelAndView mav = new ModelAndView();
+		Shop shop = shopService.getShop(shop_no);
+		
+		System.out.println(shop_no);
+		
+		if(shop_id.equals(shop.getShop_seller_id())) {
+			String shop_seller_id = shop_id;
+			if(shop.getShop_buyer_confirm().equals(1)) {
+				userService.updateSellerCoinCancel(coin, shop_seller_id);
+			}
+			userService.updateBuyerCoinCancel(coin, shop.getShop_buyer_id());
+			shopService.shopDealCancel(shop_no);
+		
+		} else if (shop_id.equals(shop.getShop_buyer_id())) {
+			if(shop.getShop_buyer_confirm().equals(1)) {
+				userService.updateSellerCoinCancel(coin, shop.getShop_seller_id());
+			}
+			String shop_buyer_id = shop_id;
+			userService.updateBuyerCoinCancel(coin, shop_buyer_id);
+			shopService.shopDealCancel(shop_no);
+		}
+		
+		mav.setViewName("redirect:list.zips");
+		mav.addObject("shop_no",shop_no);
+		mav.addObject("shop", shop);
+		
+		return mav;
+	}
+	
+	
 	// AJAX 인수인계 확인 체크 
 	@ResponseBody
 	@RequestMapping(value="shop/checkConfirm")
-	public String checkconfirm(HttpSession session, Integer shop_no, String confirmType, HttpServletRequest request) {
+	public String checkconfirm(HttpSession session, Integer shop_no, String confirmType) {
 		System.out.println("AJAX 인수 인계 확인 체크");
 		return shopService.checkConfirm(shop_no, confirmType);
 	}
@@ -347,9 +394,15 @@ public class ShopController {
 	// AJAX 인수 인계 확인
 	@ResponseBody
 	@RequestMapping(value="shop/confirmShop")
-	public String confirmShop(HttpSession session, Integer shop_no, String confirmType, HttpServletRequest request) {
+	public String confirmShop(HttpSession session, Integer shop_no, String confirmType, Integer coin, String shop_seller_id) {
 		System.out.println("AJAX 인수 인계 확인");
 		shopService.confirmShop(shop_no, confirmType);
+		
+		System.out.println(shop_no+ confirmType+ coin+ shop_seller_id);
+		// 인수시 나옴
+		if(confirmType.equals("shop_buyer_confirm")) {
+			userService.updateSellerCoin(coin, shop_seller_id);
+		}
 		return "완료";
 	}
 }

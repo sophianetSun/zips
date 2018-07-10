@@ -24,7 +24,25 @@
 		</if>
 	</select>
 	
+	<select id="checkCoin" resultType="String" parameterType="map">  
+		<![CDATA[
+		select count(*) from zipsuser z where id = #{shop_buyer_id} and #{coin} <= z.coin
+ 		]]>
+	</select> 
+	
 	<update id="updateBuyerCoin" parameterType="map">
-		update zipsuser set coin=coin-${dealcoin} where id = #{shop_buyer_id}
+		update zipsuser set coin=coin-${coin} where id = #{shop_buyer_id}
+	</update>
+	
+	<update id="updateBuyerCoinCancel" parameterType="map">
+		update zipsuser set coin=coin+${coin} where id = #{shop_buyer_id}
+	</update>
+	
+	<update id="updateSellerCoin" parameterType="map">
+		update zipsuser set coin=coin+${coin} where id = #{shop_seller_id}
+	</update>
+	
+	<update id="updateSellerCoinCancel" parameterType="map">
+		update zipsuser set coin=coin-${coin} where id = #{shop_seller_id}
 	</update>
 </mapper>

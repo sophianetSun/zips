@@ -1,8 +1,6 @@
-<body>
-<script type="text/javascript">
-var message = '${msg}';
-var returnUrl = '${url}';
-alert(message);
-document.location.href = returnUrl;
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR" isErrorPage="true" %>
+<script>
+	alert('${exception.message}');
+	location.href="${exception.url}";
 </script>
-</body>

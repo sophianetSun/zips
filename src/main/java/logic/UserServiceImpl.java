@@ -60,10 +60,34 @@ public class UserServiceImpl implements UserService{
 	public User dbuser(String id) {
 		return userDao.dbuser(id);
 	}
-	public void updateBuyerCoin(Integer dealcoin, String shop_buyer_id) {
-		userDao.updateBuyerCoin(dealcoin, shop_buyer_id);
+	
+	// 코인 체크
+	@Override
+	public String checkCoin(Integer coin, String shop_buyer_id ) {
+		return userDao.checkCoin(coin, shop_buyer_id);
 	}
 
-	// 코인 사용
+	// 구매자 코인 사용
+	public void updateBuyerCoin(Integer coin, String shop_buyer_id) {
+		userDao.updateBuyerCoin(coin, shop_buyer_id);
+	}
+
+	// 구매자 코인 사용 취소
+	@Override
+	public void updateBuyerCoinCancel(Integer coin, String shop_buyer_id) {
+		userDao.updateBuyerCoinCancel(coin, shop_buyer_id);
+	}
+
+	// 판매자 코인 증가
+	@Override
+	public void updateSellerCoin(Integer coin, String shop_seller_id) {
+		userDao.updateSellerCoin(coin, shop_seller_id);
+	}
+
+	// 판매자 코인 증가 취소
+	@Override
+	public void updateSellerCoinCancel(Integer coin, String shop_seller_id) {
+		userDao.updateSellerCoinCancel(coin, shop_seller_id);
+	}
 
 }

@@ -45,4 +45,10 @@ public interface ShopService {
 	
 	// 파일 업로드 수정
 	void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize);
+	
+	void fileDelete(Integer shop_no);
+	
+	// 판매, 구매취소로 판매중으로 재변경
+	void shopDealCancel(Integer shop_no);
+	
 }

@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import exception.ShopException;
-import logic.Shop;
 import logic.User;
 
 // 1. 로그인이 안된 경우 : 로그인이 필요합니다. /user/login.shop
