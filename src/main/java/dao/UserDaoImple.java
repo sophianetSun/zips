@@ -32,6 +32,8 @@ public class UserDaoImple implements UserDao{
 	
 	@Override
 	public void insert(User user) {
+		System.out.println("회원 가입 하는 부분입니다.");
+		System.out.println(user);
 		sqlSession.getMapper(UserMapper.class).insert(user);
 	}
 
@@ -140,23 +142,3 @@ public class UserDaoImple implements UserDao{
 		sqlSession.update(NS+"updateBuyerCoinCancel", map);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

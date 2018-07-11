@@ -95,14 +95,17 @@ $(function(){
   <h2>관리자 페이지</h2>
   <br><br><br>
 	<c:forEach items="${userList}" var="user" varStatus="stat">
+<p align="right">
+  <input class="w3-check" type="checkbox">
+  <label> 회원선택하기</label></p>
 <ul class="w3-ul w3-card-4">
     <li class="w3-bar">
         <button class="w3-button w3-xlarge w3-circle w3-black" onclick="myFunction('Demo${stat.index}')">+</button>
   <form:form modelAttribute="user" method="post" action="adminUpdate.zips" enctype="multipart/form-data">
-	 <img src="../img/${user.picture}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+ 	 <img src="../img/${user.picture}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
       <div class="w3-bar-item">
-        <span class="w3-large" id="name">${user.name}/</span>
-        <span class="w3-large" id="id">${user.id}</span>
+        <span class="w3-large">[ ${user.name}/</span>
+        <span class="w3-large">${user.id} ]님의 정보</span>
         <br>
         <div id="Demo${stat.index}" class="w3-container w3-hide">
         <table>
@@ -110,28 +113,29 @@ $(function(){
    <td rowspan="10" align="center" valign="bottom">
 				<div align="center">
 	<c:if test="${empty user.picture}"><td align="center"><img src="../img/join.png" width="280" height="300" id="img_ex"></c:if>
-    <c:if test="${!empty user.picture}"><td align="center"><img src="../img/${user.picture}" id="img_ex"></c:if>
+    <c:if test="${!empty user.picture}"><td align="center"><img src="../img/${user.picture}" width="280" height="300" id="img_ex"></c:if>
    <br>
-        <input type="file" id="file" name="pic" onchange="imageURL(this)" value="${dbuser.picture}"  id="picture"/>
+        <input type="file" id="file" name="pic" onchange="imageURL(this)" value="${user.picture}"/>
+      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현재파일<input type="text" id="picture" name="picture" value="${user.picture}">
       </div>
 			</td>
-			<td>
+			<td><!-- 흥미를 잃지 않았기에 학원에 있었던 6개월이라는 시간동안 밤늦게까지 공부하며 남아있어도 제가 좋아하는 일이기에 질리지 않고
+할 수 있었습니다. -->
 						
 <div align="right">
   <table class="w3-table">
     <tr>
-      <th>이름(name)</th>
-      <th></th>
       <th>아이디(id)</th>
       <th></th>
-    </tr>
-    <tr>
-      <td colspan="2"><input class="w3-input" type="text" value="${user.name}" id="name" name="name"></td>
-      <td colspan="2"><input class="w3-input" type="text" value="${user.id}" id="id" name="id"></td>
-    </tr>
-    <tr>
-      <th>닉네임(nick)</th>
+      <th>이름(name)</th>
       <th></th>
+    </tr>
+    <tr>
+      <td colspan="2"><input class="w3-input" type="text" value="${user.id}" id="id" name="id" readonly="readonly"></td>
+      <td colspan="2"><input class="w3-input" type="text" value="${user.name}" id="name" name="name"></td>
+    </tr>
+    <tr>
+      <th colspan="2">닉네임(nickname)</th>
       <th>연락처(phone)</th>
       <th></th>
     </tr>
@@ -140,50 +144,80 @@ $(function(){
       <td colspan="2"><input class="w3-input" type="text" value="${user.tel}" id="tel" name="tel"></td>
     </tr>
     <tr>
-    	<th>주소(address)</th>
+    	<th>코인(coin)</th>
         <th></th>
-        <th></th>     
-        <th><div onclick="execPostCode();" align="right">
-      [<i class="fa fa-search"></i> 변경]</div></th>
+        <th>포인트(point)</th>     
+        <th></th>
     </tr>
     <tr>
-   		
-      <td colspan="4"><input class="w3-input" type="text" value="${user.address}" id="address" name="address"></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td colspan="2"><input class="w3-input" type="text" value="${user.coin}" id="coin" name="coin"></td>
+      <td colspan="2"><input class="w3-input" type="text" value="${user.point}" id="point" name="point"></td>
 	</tr>
 	<tr>
-      <th>키(height)</th>
-      <th>몸무게(weight)</th>
-      <th>체지방(bodyfat)</th>
-      <th>골격근(muscle)</th>
+      <th>키(cm)</th>
+      <th>몸무게(kg)</th>
+      <th>체지방(kg)</th>
+      <th>골격근(kg)</th>
     </tr>
     <tr>
-      <td><input class="w3-input" type="text" value="${user.height}" id="height" name="heignt"></td>
+      <td><input class="w3-input" type="text" value="${user.height}" id="height" name="height"></td>
       <td><input class="w3-input" type="text" value="${user.weight}" id="weight" name="weight"></td>
       <td><input class="w3-input" type="text" value="${user.bodyfat}" id="bodyfat" name="bodyfat"></td>
       <td><input class="w3-input" type="text" value="${user.muscle}" id="muscle" name="muscle"></td>
     </tr>
-    <tr>
-      <th>포인트(point)</th>
-      <th></th>
-      <th>코인(coin)</th>
-      <th></th>
-    </tr>
-    <tr>
-    	<td colspan="2"><input class="w3-input" type="text" value="${user.point}" id="point" name="point"></td>
-        <td colspan="2"><input class="w3-input" type="text" value="${user.coin}" id="coin" name="coin"></td>
-     </tr>
   </table>
 </div>
 </td>
 </tr></table>
+<br>
+    <br>
+    <table class="w3-table">
+    <tr>
+      <th>이메일(email)</th>
+      <th>등록일자(reg)</th>
+      <th>logdate</th>
+      <th>성별(gender)</th>
+    </tr>
+    <tr>
+    	<td><input class="w3-input" type="text" value="${user.email}" id="email" name="email"></td>
+    	<td><input class="w3-input" type="text" value="${user.regdate}" id="regdate" name="regdate"></td>
+    	<td><input class="w3-input" type="text" value="${user.logdate}" id="logdate" name="logdate"></td>
+    	<td><c:if test="${user.gender=='남'}">
+	    <input type="radio" name="gender" value='남' checked="checked">남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <input type="radio" name="gender" value='여'>여자<br />
+ 	</c:if>
+    <c:if test="${user.gender=='여'}">
+	    <input type="radio" name="gender" value='남'>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <input type="radio" name="gender" value='여' checked="checked">여자<br />
+	</c:if></td>
+     </tr>
+     </table>
+    <table class="w3-table">
+    <tr>
+      <th colspan="4">주소(address)</th>
+    </tr>
+    <tr>
+    	<td colspan="4"><input class="w3-input" type="text" value="${user.address}" id="address" name="address"></td>
+     </tr>
+     </table>
+    <table class="w3-table">
+    <tr>
+      <th colspan="3">주소변경하기(address change)</th>
+      <th><div onclick="execPostCode();" align="right">
+      [<i class="fa fa-search"></i> 변경]</div></th>
+    </tr>
+    <tr>
+    	<td><input class="w3-input" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" ></td>
+    	<td colspan="2"><input class="w3-input" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" /></td>
+    	<td><input class="w3-input" placeholder="상세주소" name="addr3" id="addr3" type="text" /></td>
+     </tr>
+     </table>
 <br><div align="center">
-<a href="adminUpdate.zips?id=${user.id}">
-<button type="submit" class="btn btn-default">회원수정하기</button></a>
+<input type="submit" class="btn btn-default" value="회원수정하기">
 <a href="adminDelete.zips?id=${user.id}" id="userAdminDelete">
 <button type="button" class="btn btn-default">강제탈퇴하기</button></a>
+<a href="adminDelete.zips?id=${user.id}" id="userAdminDelete">
+<button type="button" class="btn btn-default">메일전송하기</button></a>
 </div>
 <br>
 </div>
@@ -195,7 +229,7 @@ $(function(){
 </c:forEach>
 <br>
 <div align="center">
-<button type="button" class="btn btn-default" onclick="location.href='mail.zips'">전체메일보내기</button>
+<button type="button" class="btn btn-default" onclick="location.href='mail.zips'">회원메일보내기</button>
 <button type="button" class="btn btn-default" onclick="location.href='join.zips'">선택한회원탈퇴</button><br>
 </div>
 <br>

@@ -80,11 +80,12 @@
 				         }).open();
 				     }
  </script>
-  <div align="center">
+  <div align="center"><!-- test : 문자의 참거짓을 판별하는 조건식 -->
  <c:if test="${empty dbuser.picture}"><td align="center"><img src="../img/join.png" width="304" height="236" id="img_ex"></c:if>
-   <c:if test="${!empty dbuser.picture}"><td align="center"><img src="../img/${dbuser.picture}" id="img_ex"></c:if>
+   <c:if test="${!empty dbuser.picture}"><td align="center"><img src="../img/${dbuser.picture}" width="304" height="236" id="img_ex"></c:if>
    <br>
-        <input type="file" id="file" name="pic" onchange="imageURL(this)" value="${dbuser.picture}"/><!-- this : 자기 자신을 넣을것이다. -->
+        <input type="file" id="file" name="pic" onchange="imageURL(this)"  value="${dbuser.picture}"/><!-- this : 자기 자신을 넣을것이다. -->
+		현재 파일명 : <input type="text" id="picture" name="picture" value="${dbuser.picture}">
       </div><br><br>
     <div class="mb-3">
               <label for="id" id="id">아이디</label>
@@ -130,6 +131,7 @@
 	<div class="form-group">
     	<input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text" />
 	</div>
+	
 	 <div class="row">
     	<div class="col-md-6 mb-3">
                 <label for="height">키(cm)</label>
