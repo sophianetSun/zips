@@ -81,7 +81,7 @@
 			<center>
 			
 			<c:if test="${param.board_type == 1}">
-				<!-- <a href="javascript:board_submit()"> --><button class="btn btn-primary btn-block" type="submit"
+					<!-- <a href="javascript:board_submit()"> --><button class="btn btn-primary btn-block" type="submit"
 					style="text-align: center; width: 270px; height: 45px;">동영상
 					업로드</button></a></c:if>
 					
@@ -110,21 +110,20 @@
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
 	<script>
-	function board_submit() {
-		
-		var file = [f.filename.value.split(".")];
-		
-		if(file[1] != "wmv" || file[1] != "mp4" || file[1] != "avi" && f.filename.value == null){
-			alert('동영상 파일을 업로드 해주세요');
+	/* function board_submit() {
+		var file = [filename.value.split(".")];
+		var file2 = [filename.split(",")];
+		if(file2[1] != "wmv" || file2[1] != "mp4" || file2[1] != "avi" && f.filename.value == null){
+			alert(file[0]);
 		     f.filename.focus();
 			return;
-	}
+	} */
 		
 		var trans_text = document.getElementById("textarea");
 	    trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>");
 
 			f.submit();
-	}
+	
 		window.jQuery
 				|| document
 						.write(

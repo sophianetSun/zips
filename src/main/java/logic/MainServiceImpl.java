@@ -86,9 +86,12 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void inputSearch(String query, HttpSession session) {
 		SearchInfo info = new SearchInfo();
-		String id = (String)session.getAttribute("loginUser");
-		if (id != null && !id.equals("")) {
-			info.setId(id);
+		User user = (User)session.getAttribute("loginUser");
+		if (user != null) {
+			String id = user.getId();
+			if (id != null && !id.equals("")) {
+				info.setId(id);
+			} 
 		} else {
 			info.setId("guest");			
 		}
@@ -104,7 +107,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public Map<String, Long> analyzeSearchResult() {
-		Map<String, Long> map = searchInfoDao.getSearchListAll().parallelStream()
+		Map<String, Long> map = searchInfoDao.getSearchListAll().stream()
 				.collect(Collectors.groupingBy(
 						SearchInfo::getContent,
 						Collectors.counting()));
@@ -142,10 +145,18 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public int subscribe(String userId, String subId) {
-		Subscription sub = new Subscription();
-		sub.setUserId(userId);
-		sub.setSubscribeId(subId);
-		return subDao.insert(sub);
+		List<Subscription> list = getSubscriptionList(userId);
+		Boolean isSubscribe = list.stream().anyMatch(sub -> 
+			sub.getUserId().equals(userId) && sub.getSubscribeId().equals(subId));
+		if (isSubscribe) {
+			cancelSubsciription(userId, subId);
+			return 2;
+		} else {
+			Subscription sub = new Subscription();
+			sub.setUserId(userId);
+			sub.setSubscribeId(subId);
+			return subDao.insert(sub);
+		}
 	}
 
 	@Override
@@ -171,7 +182,7 @@ public class MainServiceImpl implements MainService {
 		sub.setSubscribeId(subId);
 		return subDao.delete(sub);
 	}
-
+	
 	@Override
 	public List<FoodDB> getFoodDBList(String searchText) {
 		return foodDao.selectList(searchText);
@@ -180,6 +191,40 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public int saveMyInfoCalendar(InfoCalendar myinfo) {
 		return calendarDao.save(myinfo);
+	}
+
+	@Override
+	public List<InfoCalendar> loadMyInfoCalendar(String userId) {
+		return calendarDao.load(userId);
+	}
+
+	@Override
+	public Map<String, Double> myInfoMap(String userId) {
+		List<InfoCalendar> myInfoList = calendarDao.load(userId);
+		return myInfoListToMap(myInfoList);
+	}
+
+	@Override
+	public Map<String, Double> myInfoMap(String userId, String regdate) {
+		List<InfoCalendar> myInfoList = calendarDao.load(userId, regdate);
+		return myInfoListToMap(myInfoList);
+	}
+
+	private Map<String, Double> myInfoListToMap(List<InfoCalendar> myInfoList) {
+		Map<String, Double> map = new HashMap<>();
+		Double calorie = myInfoList.stream().
+				collect(Collectors.summingDouble(InfoCalendar::getCalorie));
+		Double carbohydrate = myInfoList.stream().
+				collect(Collectors.summingDouble(InfoCalendar::getCarbohydrate));
+		Double fat = myInfoList.stream().
+				collect(Collectors.summingDouble(InfoCalendar::getFat));
+		Double protein = myInfoList.stream().
+				collect(Collectors.summingDouble(InfoCalendar::getProtein));
+		map.put("calorie", calorie);
+		map.put("carbohydrate", carbohydrate);
+		map.put("fat", fat);
+		map.put("protein", protein);
+		return map;
 	}
 	
 	

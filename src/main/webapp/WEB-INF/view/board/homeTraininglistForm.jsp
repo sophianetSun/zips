@@ -6,7 +6,27 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>게시물 상세 보기</title>
-
+<!-- 구독 기능 script -->
+<script>
+	$(document).ready(function() {
+		$('#sub_btn').click(function() {
+			console.log("구독 버튼 클릭!");
+			var userId = '${sessionScope.loginUser.id}';
+			var subId = '${board.board_userid}';
+			$.get('${pageContext.request.contextPath }/user/subscribe.zips', {
+				userId : userId,
+				subId : subId
+			},
+			function(data) {
+				if (data.result == 1) {
+					alert(data.subId + ' 구독되었습니다!');
+				} else if (data.result == 2) {
+					alert(data.subId + " 구독취소 되었습니다!");
+				}
+			});
+		})
+	});
+</script>
 </head>
 <body>
 	   <div class="blog-post">
@@ -37,29 +57,17 @@
             <p>${board.content }</p>
             <hr>
             <div align="center">
-                    <c:forEach var="be" items="${dbbest}">
-            <c:choose>
-       				<c:when test="${be.rec_user != sessionScope.loginUser.id}">
             <form action="best.zips?board_type=${param.board_type}">
                     <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
                     <input type="hidden" name="num" value="${board.num}">
                     <input type="hidden" name="board_type" value="${board.board_type}">
               <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${bestcnt}</button>
                      </form>
-        			<c:when test="${be.rec_user == sessionScope.loginUser.id}">
-        			<c:out value="${be.rec_user}"/>
-        			<c:out value="${sessionScope.loginUser.id}"/>
-						이미추천
-       				</c:when>
-                     </c:when>
-       				<c:otherwise>
-        			<c:out value="${be.rec_user}"/>
-        			<c:out value="${sessionScope.loginUser.id}"/>
-       				 </c:otherwise> 
-    					</c:choose>
-           		 	 </c:forEach>
                      <br>
-              <button type="button" class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
+                     
+            <c:if test="${sessionScope.loginUser.id == board.board_userid}">
+            <button type="button" id="sub_btn"  class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
+            </c:if>
             <br>
             <br>
             </div>	

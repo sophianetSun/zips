@@ -39,7 +39,7 @@ public class ShopController {
 	private UserService userService;
 	
 	// 중고 장터 글쓰기 호출
-	@RequestMapping(value="shop/write", method=RequestMethod.GET)
+	@RequestMapping(value="shop/write*", method=RequestMethod.GET)
 	public ModelAndView write(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		System.out.println("게시물 작성 GET 방식 호출입니다.");
@@ -49,7 +49,7 @@ public class ShopController {
 	} 
 	
 	// 중고 장터 글 작성 호출
-	@RequestMapping(value="shop/write", method=RequestMethod.POST)
+	@RequestMapping(value="shop/write*", method=RequestMethod.POST)
 	public ModelAndView write(HttpSession session, MultipartHttpServletRequest mhsq, @Valid Shop shop, BindingResult bindingResult) throws IllegalStateException, IOException {
 		System.out.println("게시물 작성 POST 방식 호출입니다.");
 		

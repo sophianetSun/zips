@@ -33,7 +33,7 @@ public interface BoardService {
 
 	int Hrecommand(Recomment recomment, Integer board_type);
 
-	int best(Best best);
+	int best(Best best, Integer num);
 
 	int bestcnt(Best best);
 

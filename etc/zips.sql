@@ -149,7 +149,7 @@ CREATE TABLE zips_shop
 	
 	shop_seller_id varchar(16) NOT NULL,
 
-	shop_buyer_id varchar(16) NOT NULL,
+	shop_buyer_id varchar(16),
 
 	shop_subject varchar(255) NOT NULL,
 
@@ -159,9 +159,9 @@ CREATE TABLE zips_shop
 
 	shop_buyer_confirm varchar NOT NULL DEFAULT '0', 
 
-	shop_status varchar NOT NULL DEFAULT '0',
+	shop_status int(10) NOT NULL DEFAULT '0',
 
-	shop_price int NOT NULL,
+	shop_price int(50) NOT NULL,
 
 	shop_regdate datetime NOT NULL,
 	

@@ -31,11 +31,12 @@ public class BoardController {
 	@RequestMapping(value="board/best")
 	public ModelAndView best(Best best,Board board, String board_userid) {
 		ModelAndView mav = new ModelAndView();
+		Integer num = board.getNum();
 	   best.setNum(board.getNum());
 	   best.setRec_user(board_userid);
 	   best.setRec_board_type(board.getBoard_type());
 	   List<Best> dbbest = service.getbest(board.getNum());
-			int result = service.best(best);
+	   int result = service.best(best,num);
 			int bestcnt = service.bestcnt(best);
 			mav.addObject("bestcnt",bestcnt);
 				if(result > 0) {
@@ -136,11 +137,9 @@ public class BoardController {
 	ModelAndView mav = new ModelAndView();
 		try {
 		recomment.setRef_board_no(board_type);
-		System.out.println("recomment : "+recomment);
-		System.out.println("보드타입 "+board_type);
 		int result = service.Hrecommand(recomment,board_type);
 		if(result > 0) {
-			if(board_type == 2) {
+			if(board_type == 1) {
 				mav.addObject("co_no",recomment.getCo_no());
 				mav.setViewName("redirect:homeTraininglistForm.zips?num="+recomment.getNum()+"&board_type="+board_type);
 			} else {
@@ -225,7 +224,11 @@ public class BoardController {
 		int result = service.boardDelete(Integer.parseInt(map.get("num")));
 		ModelAndView mav = new ModelAndView();
 		if(result > 0) {
-			mav.setViewName("redirect:homeTraininglist.zips?board_type="+Integer.parseInt(map.get("board_type")));
+			if(Integer.parseInt(map.get("board_type")) == 1) {
+				mav.setViewName("redirect:homeTraininglist.zips?num="+map.get("num")+"&board_type="+map.get("board_type"));
+			} else {
+				mav.setViewName("redirect:totallist.zips?num="+map.get("num")+"&board_type="+map.get("board_type"));
+			}
 		} 
 		return mav;
 	}
@@ -243,7 +246,11 @@ public class BoardController {
 		try {
 				int result = service.boardupdate(board,request);
 				if(result > 0) {
-					mav.setViewName("redirect:homeTraininglist.zips?board_type="+board_type);
+					if(board_type == 1) {
+						mav.setViewName("redirect:homeTraininglist.zips?num="+board.getNum()+"&board_type="+board_type);
+					} else {
+						mav.setViewName("redirect:totallist.zips?num="+board.getNum()+"&board_type="+board_type);
+					}
 				} 
 			} catch(Exception e) {
 				throw new ShopException("게시물 수정 실패", "update.zips?num"+board.getNum()+"&pageNum="+pageNum+"&board_type="+board_type);

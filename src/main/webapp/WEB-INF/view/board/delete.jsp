@@ -16,7 +16,7 @@
   <br>
   <div align="center">
 		<button type="submit" class="btn btn-outline-success">게시글 삭제하기</button>
-</div>
+	</div>
 <br>	
 	</form>
 </body>
