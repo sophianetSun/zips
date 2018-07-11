@@ -42,5 +42,10 @@ public interface ShopDao {
 	void sellUpdate();
 
 	void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize);
+
+	void fileDelte(Integer shop_no);
+
+	// 판매중으로 재 변경
+	void shopDealCancel(Integer shop_no);
 	
 }

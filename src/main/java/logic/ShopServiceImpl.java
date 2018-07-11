@@ -87,5 +87,14 @@ public class ShopServiceImpl implements ShopService {
 		shopDao.fileUploadUpdate(shop_no, originalfileName, saveFileName, fileSize);
 	}
 
+	@Override
+	public void fileDelete(Integer shop_no) {
+		shopDao.fileDelte(shop_no);
+	}
+
+	@Override
+	public void shopDealCancel(Integer shop_no) {
+		shopDao.shopDealCancel(shop_no);
+	}
 	
 }

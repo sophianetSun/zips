@@ -11,17 +11,20 @@ public interface RecommentDao {
 
 	int maxco_Num();
 
-	Recomment getRecomment(int co_no);
 
 	List<Recomment> recommentlist(Integer co_no, int num);
 
-	void apply(Integer co_no);
+	void apply(Integer co_no, Integer num);
 
 	void noapply(Integer num);
 
-	int recount();
+	int recount(Integer num);
 
 	int Hrecommand(Recomment recomment, Integer board_type);
+
+
+	Recomment getapply(int num);
+
 	
 	
 }

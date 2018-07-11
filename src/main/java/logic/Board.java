@@ -13,6 +13,7 @@ public class Board implements Serializable{
 	private String subject;
 	@NotEmpty(message="내용을 입력해주세요")
 	private String content;
+	private int board_apply;
 	private int board_count;
 	private String fileurl;
 	private Date regdate;
@@ -94,15 +95,18 @@ public class Board implements Serializable{
 	public void setFilename(MultipartFile filename) {
 		this.filename = filename;
 	}
+	public int getBoard_apply() {
+		return board_apply;
+	}
+	public void setBoard_apply(int board_apply) {
+		this.board_apply = board_apply;
+	}
 	@Override
 	public String toString() {
 		return "Board [num=" + num + ", board_userid=" + board_userid + ", subject=" + subject + ", content=" + content
-				+ ", board_count=" + board_count + ", fileurl=" + fileurl + ", regdate=" + regdate + ", moddate="
-				+ moddate + ", recommand=" + recommand + ", admin_alert=" + admin_alert + ", board_type=" + board_type
-				+ ", filename=" + filename + "]";
+				+ ", board_apply=" + board_apply + ", board_count=" + board_count + ", fileurl=" + fileurl
+				+ ", regdate=" + regdate + ", moddate=" + moddate + ", recommand=" + recommand + ", admin_alert="
+				+ admin_alert + ", board_type=" + board_type + ", filename=" + filename + "]";
 	}
-	
-	
-	
 	
 }

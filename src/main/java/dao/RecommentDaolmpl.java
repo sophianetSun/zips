@@ -23,20 +23,18 @@ public class RecommentDaolmpl implements RecommentDao {
 		return sqlSession.getMapper(RecommentMapper.class).recommandinsert(recomment);
 	}
 
+	
+	@Override
+	public int Hrecommand(Recomment recomment, Integer board_type) {
+		return sqlSession.getMapper(RecommentMapper.class).Hrecommandinsert(recomment);
+	}
+	
 	@Override
 	public int maxco_Num() {
 		return sqlSession.getMapper(RecommentMapper.class).maxco_Num();
 	}
 
 
-	@Override
-	public Recomment getRecomment(int co_no) {
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		map.put("co_no", co_no);
-		map.put("startrow", 0);
-		map.put("limit", 1);
-		return sqlSession.selectOne(NS+"co_list",map);
-	}
 
 	@Override
 	public List<Recomment> recommentlist(Integer board_type,int num) {
@@ -47,7 +45,8 @@ public class RecommentDaolmpl implements RecommentDao {
 	}
 
 	@Override
-	public void apply(Integer co_no) {
+	public void apply(Integer co_no,Integer num) {
+		
 		sqlSession.getMapper(RecommentMapper.class).apply(co_no);
 	}
 
@@ -57,14 +56,21 @@ public class RecommentDaolmpl implements RecommentDao {
 	}
 
 	@Override
-	public int recount() {
-		Map<String,String> map = new HashMap<String,String>();
+	public int recount(Integer num) {
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("num", num);
 		return sqlSession.selectOne(NS+"recount",map);
 	}
 
+
 	@Override
-	public int Hrecommand(Recomment recomment, Integer board_type) {
-		return sqlSession.getMapper(RecommentMapper.class).Hrecommandinsert(recomment,board_type);
+	public Recomment getapply(int num) {
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("num", num);
+		return sqlSession.selectOne(NS+"applycheck",map);
 	}
+
+
+	
 	
 }

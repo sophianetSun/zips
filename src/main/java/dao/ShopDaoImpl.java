@@ -88,7 +88,6 @@ public class ShopDaoImpl implements ShopDao {
 		map.put("confirmType", confirmType);
 		System.out.println(map);
 		String s = sqlSession.selectOne(NS+"checkConfirm", map);
-		System.out.println("무슨값이얌??" + s);
 		return sqlSession.selectOne(NS+"checkConfirm", map);
 	}
 
@@ -130,14 +129,22 @@ public class ShopDaoImpl implements ShopDao {
 	
 	@Override
 	public void fileUploadUpdate(Integer shop_no, String originalfileName, String saveFileName, long fileSize) {
-		sqlSession.getMapper(ShopMapper.class).fileDelete(shop_no);
-		System.out.println("---------------------------");
-		System.out.println(shop_no);
-		System.out.println(originalfileName);
-		System.out.println(saveFileName);
-		System.out.println(fileSize);
-		System.out.println("---------------------------");
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("shop_no", shop_no);
+		map.put("originalfileName", originalfileName);
+		map.put("saveFileName", saveFileName);
+		map.put("fileSize", fileSize);	     
 		
-		fileUpload(shop_no, originalfileName, saveFileName, fileSize);
+		sqlSession.insert(NS+"fileUpload", map);	
+	}
+
+	@Override
+	public void fileDelte(Integer shop_no) {
+		sqlSession.getMapper(ShopMapper.class).fileDelete(shop_no);
+	}
+
+	@Override
+	public void shopDealCancel(Integer shop_no) {
+		sqlSession.getMapper(ShopMapper.class).shopDealCancel(shop_no);
 	}
 }

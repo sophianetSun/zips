@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
 <script type="text/javascript">
 function list(pageNum) {
 	var searchType = document.searchform.searchType.value;
@@ -18,11 +20,154 @@ function list(pageNum) {
 	}
 	return false;
 }
+(function($){
+
+    $.fn.shuffleLetters = function(prop){
+
+        var options = $.extend({
+        },prop)
+
+        return this.each(function(){
+        });
+    };
+
+
+    function randomChar(type){
+    }
+
+})(jQuery);
+
+function randomChar(type){
+    var pool = "";
+
+    if (type == "lowerLetter"){
+        pool = "ㄱㅏㄴㅓㄷㅗㄻㅛㅄㅅㅇㄱㅈㅇㅊㄹㅋㅠㅍㅌㅎ123456789";
+    }
+    else if (type == "upperLetter"){
+        pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    }
+    else if (type == "symbol"){
+        pool = ",.?/\\(^)![]{}*&^%$#'\"";
+    }
+
+    var arr = pool.split('');
+    return arr[Math.floor(Math.random()*arr.length)];
+}
+
+$.fn.shuffleLetters = function(prop){
+
+    var options = $.extend({
+        "step"  : 8,    // How many times should the letters be changed
+        "fps"   : 25,   // Frames Per Second
+        "text"  : ""    // Use this text instead of the contents
+    },prop)
+
+    return this.each(function(){
+
+        var el = $(this),
+            str = "";
+
+        if(options.text) {
+            str = options.text.split('');
+        }
+        else {
+            str = el.text().split('');
+        }
+
+        // The types array holds the type for each character;
+        // Letters holds the positions of non-space characters;
+
+        var types = [],
+            letters = [];
+
+        // Looping through all the chars of the string
+
+        for(var i=0;i<str.length;i++){
+
+            var ch = str[i];
+
+            if(ch == " "){
+                types[i] = "space";
+                continue;
+            }
+            else if(/[a-z]/.test(ch)){
+                types[i] = "lowerLetter";
+            }
+            else if(/[A-Z]/.test(ch)){
+                types[i] = "upperLetter";
+            }
+            else {
+                types[i] = "symbol";
+            }
+
+            letters.push(i);
+        }
+
+        el.html("");            
+
+        // Self executing named function expression:
+
+        (function shuffle(start){
+
+            // This code is run options.fps times per second
+            // and updates the contents of the page element
+
+            var i,
+                len = letters.length,
+                strCopy = str.slice(0); // Fresh copy of the string
+
+            if(start>len){
+                return;
+            }
+
+            // All the work gets done here
+            for(i=Math.max(start,0); i < len; i++){
+
+                // The start argument and options.step limit
+                // the characters we will be working on at once
+
+                if( i < start+options.step){
+                    // Generate a random character at this position
+                    strCopy[letters[i]] = randomChar(types[letters[i]]);
+                }
+                else {
+                    strCopy[letters[i]] = "";
+                }
+            }
+
+            el.text(strCopy.join(""));
+
+            setTimeout(function(){
+
+                shuffle(start+1);
+
+            },1000/options.fps);
+
+        })(-options.step);
+
+    });
+};
+
+$(function(){
+
+    var container = $("#container4")
+
+    container.shuffleLetters();
+
+    setTimeout(function(){
+
+        container.shuffleLetters({
+            "text": "홈 트레이닝"
+        });
+       
+
+    },4500);
+
+});
 
 </script>
 </head>
 <body>
-
  <div class="col-lg-4">
 <div class="w3-content w3-section" style="max-width:300px">
   <img class="mySlides" src="../img/1-2.gif" style="width:50%">
@@ -30,7 +175,7 @@ function list(pageNum) {
   <img class="mySlides" src="../img/1-4.gif" style="width:50%">
   <img class="mySlides" src="../img/1-5.gif" style="width:50%">
             <!-- <img class="rounded-circle" src="../img/runicon.png" alt="Generic placeholder image" width="140" height="140"> -->
-            <p class="test"><span><a href="homeTraininglist.zips?board_type=${param.board_type}">홈 트레이닝&nbsp;</a></span></p>
+            <p id="container4"><span><a href="homeTraininglist.zips?board_type=${param.board_type}">You are the most beautiful who try.&nbsp;</a></span></p>
             <br>
             <small><br>여러분도 이제 혼자 운동하지 말고 <br>동영상을 올려서 운동정보를 공유해보세요 </small>
             <br>
@@ -55,20 +200,6 @@ function list(pageNum) {
  var docHeight = $(card mb-4 box-shadow).height();
  var docWidth = $(card mb-4 box-shadow).width();
  
- $("#best").click(function(){
-	    $.ajax({
-	        type:"POST",
-	        url:"{% url 'board/homeTraininglist.zips'}",
-	        /* data : {name : "홍길동"}, */
-	        success: function(xml){
-	            console.log(xml);
-	        },
-	        error: function(xhr, status, error) {
-	            alert(error);
-	        }   
-	    });
-	});
-
 </script>
 </form>
 
@@ -126,8 +257,25 @@ function list(pageNum) {
 					조회수 :${board.board_count} 
 					<br>
                     <div class="btn-group">
-                      <button id="best" class="btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥<span class="badge badge-light">&nbsp;${board.recommand }</span></font></small></button>&nbsp;
-                      <button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;"><small>▶ 구독 <font color="red"></font></small></button>
+                    <%-- <c:choose>
+        			<c:when test="${true}">
+                    <c:forEach var="be" items="${dbbest}">
+						<c:if test="${be.rec_user == sessionScope.loginUser.id}">
+						이미추천
+						</c:if>                    
+           		 	 </c:forEach>
+       				</c:when>
+       				<c:otherwise>
+       				 </c:otherwise> 
+    					</c:choose>--%>
+                    <form action="best.zips?board_type=${param.board_type}">
+                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
+                    <input type="hidden" name="num" value="${board.num}">
+                    <input type="hidden" name="board_type" value="${board.board_type}">
+                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥
+                      <span class="badge badge-light">&nbsp;</span></font></small></button></a>&nbsp;
+                     </form>
+					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
                    </small>
                   </div>

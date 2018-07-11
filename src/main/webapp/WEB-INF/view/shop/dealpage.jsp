@@ -43,14 +43,16 @@
 			
 			if($(this).val() == 'shop_buyer_confirm') {			
 				
-				var shop_no = ${shop.shop_no}
+				var shop_no = ${shop.shop_no};
 				var confirmType = 'shop_buyer_confirm';
+				var coin = ${shop.shop_price};
+				var shop_seller_id = '${shop.shop_seller_id}';
 				
 				$.post("checkConfirm.zips", { shop_no : shop_no, confirmType : confirmType }, function(data, status) {
 					console.log(data);
 				
 					if(data == '0') {
-						$.post("confirmShop.zips", { shop_no : shop_no, confirmType : confirmType }, function(data, status) {
+						$.post("confirmShop.zips", { shop_no : shop_no, confirmType : confirmType, coin : coin, shop_seller_id : shop_seller_id }, function(data, status) {
 							console.log(data);
 							alert('인수 확인 하였습니다.');
 							location.href="list.zips";
@@ -101,7 +103,18 @@
 			$('#shop_buyer_id').text('-');
 		}
 	})
-	});
+	
+	$('#buyerdealcancel').click(function(){
+		alert('구매를 취소하셨습니다.');
+	})
+	
+	$('#sellerdealcancel').click(function(){
+		alert('판매를 취소하셨습니다.');
+	})
+});
+	
+	
+	
 </script>
 
 </head>
@@ -138,27 +151,53 @@
 		<br>
 		<hr>
 		
-		<div align="center" style="height: 50px;">
-			<!-- 판매자 아이디 != 로그인 유저 아이디 -->
+		<div class="row">
+		<div align="right" style="height: 100px; width: 50%;">
+			<!-- 판매자 아이디 == 로그인 유저 아이디 -->
 			<c:if test="${shop.shop_seller_id == loginUser.id }">
-				<button type="button" class="btn btn-sm btn-outline-danger"
+				<button type="button" class="btn btn-sm btn-outline-primary"
 					style="width: 100px; height: 50px;" id="confirm" name="shop_seller_confirm"
 					value="shop_seller_confirm">
 					인계 확인
 				</button>
 			</c:if>
+			
+			<!-- 구매자 아이디 == 로그인 유저 아이디 -->
 			<c:if test="${shop.shop_buyer_id == loginUser.id}">
-				<button type="button" class="btn btn-primary" id="confirm" name="shop_buyer_confirm"
-					value="shop_buyer_confirm">
+				<button type="button" class="btn btn-sm btn-outline-primary" id="confirm" name="shop_buyer_confirm"
+					value="shop_buyer_confirm" 
+					style="width: 100px; height: 50px; font-weight: bold;">
 					인수 확인
 				</button>
 			</c:if>
-			<button type="button" class="btn btn-sm btn-outline-primary" 
-						style="width: 100px; height: 50px; font-weight: bold;"
-						onclick="javascript:history.go(-1)">
+			
+		</div>
+		<div align="left" style="height: 100px; width: 50%;">	
+			<!-- 판매자 아이디 == 로그인 유저 아이디 -->
+			<c:if test="${shop.shop_seller_id == loginUser.id }">
+			<form action="dealcancel.zips?shop_no=${shop.shop_no}" method="post">
+			<input type="hidden" name="coin" value="${shop.shop_price}">
+			<input type="hidden" name="shop_id" value="${shop.shop_seller_id}">
+			<button type="submit" id="sellerdealcancel" class="btn btn-sm btn-outline-danger" 
+						style="width: 100px; height: 50px; font-weight: bold;">
+							판매 취소
+			</button>
+			</form>
+			</c:if>
+			<!-- 구매자 아이디 == 로그인 유저 아이디 -->
+			<c:if test="${shop.shop_buyer_id == loginUser.id}">
+			<form action="dealcancel.zips?shop_no=${shop.shop_no}" method="post">
+			<input type="hidden" name="coin" value="${shop.shop_price}">
+			<input type="hidden" name="shop_id" value="${shop.shop_buyer_id}">
+			<button type="submit" id="buyerdealcancel" class="btn btn-sm btn-outline-danger" 
+						style="width: 100px; height: 50px; font-weight: bold;">
 							구매 취소
 			</button>
+			</form>
+			</c:if>
 		</div>
+		</div>
+		
 		<hr>
 		<div align="right">
 			<button type="button" class="btn btn-primary"

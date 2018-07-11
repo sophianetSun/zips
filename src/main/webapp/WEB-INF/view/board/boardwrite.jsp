@@ -13,7 +13,7 @@
 			<img class="d-block mx-auto mb-4" src="../img/runicon.png" alt=""
 				width="72" height="72">
 			<p class="test">
-				<I><span>홈 트레이닝&nbsp;</span></I>
+				<I><span>글 쓰기 &nbsp;</span></I>
 			</p>
 		</div>
 	</div>
@@ -47,7 +47,6 @@
             <div class="card-body d-flex flex-column align-items-start">
               <strong class="d-inline-block mb-10 text-success">본문</strong>
                 <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
-				<c:if test="${param.board_type == 2 || param.board_type == 3 }">
 				              
               <h3 class="mb-100">
                 <a class="text-dark">글 내용</a>
@@ -60,7 +59,6 @@
 					 <br>
 				<form:textarea rows="15" cols="80" path="content" id="textarea"/>
 				<font color="red"><form:errors path="content" /></font></div>
-            </c:if>
             <c:if test="${param.board_type == 4 }">
              <h3 class="mb-100"><a class="text-dark">dsad</a></h3>
              	<div>

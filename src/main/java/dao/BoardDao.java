@@ -22,11 +22,14 @@ public interface BoardDao {
 
 	int maxNum();
 
-	int delete(Board board, HttpServletRequest request);
 
 	int update(Board board, HttpServletRequest request);
 
 	List<Board> totallist(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit);
+
+	int delete(Integer num);
+
+	void board_applyupdate(Integer num);
 
 
 

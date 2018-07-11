@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.ShopException;
+import logic.Best;
 import logic.Board;
 import logic.BoardService;
 import logic.Recomment;
-import logic.User;
 
 @Controller
 public class BoardController {
@@ -26,34 +28,53 @@ public class BoardController {
 	@Autowired 
 	private BoardService service;
 	
-	
-	@RequestMapping(value="board/bestcnt" , method = RequestMethod.POST)
-	public ModelAndView best(@Valid Board board , HttpSession session) {
+	@RequestMapping(value="board/best")
+	public ModelAndView best(Best best,Board board, String board_userid) {
 		ModelAndView mav = new ModelAndView();
-		String userid = (String) session.getAttribute("id");
-		System.out.println(userid);
-		int result = service.bestcnt(board,userid);
-		System.out.println(result);
-		if(result > 0) {
-			mav.setViewName("redirect:homeTraininglist.zips");
-		} 
+	   best.setNum(board.getNum());
+	   best.setRec_user(board_userid);
+	   best.setRec_board_type(board.getBoard_type());
+	   List<Best> dbbest = service.getbest(board.getNum());
+			int result = service.best(best);
+			int bestcnt = service.bestcnt(best);
+			mav.addObject("bestcnt",bestcnt);
+				if(result > 0) {
+					mav.setViewName("redirect:homeTraininglist.zips?board_type="+board.getBoard_type());
+			}
 		return mav;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="board/apply")
+	public String apply(Board board,Integer co_no,Integer num, HttpServletRequest request) {
+		
+		service.noapply(num);
+		service.apply(co_no,num);
+		
+		return "채택";
+	}
+	
 	@RequestMapping("board/homeTraininglist")
-	public ModelAndView list(Integer board_type ,Integer num,Integer pageNum, String searchType, String searchContent) {
+	public ModelAndView list(Best best,Board board,Integer board_type ,Integer num,Integer pageNum, String searchType, String searchContent) {
 		if(pageNum == null || pageNum.toString().equals("")) {
 				pageNum = 1;
 			}
 			ModelAndView mav = new ModelAndView();
+			best.setNum(board.getNum());
+			int bestcnt = service.bestcnt(best);
 			int limit = 9;
 			int listcount = service.boardcount(searchType,searchContent);
+			int recount = service.recount(num);
 			List<Board> boardlist = service.boardList(board_type,searchType,searchContent,pageNum,limit);
 			int maxpage = (int)((double)listcount/limit + 0.95);
 			int startpage = ((int)((pageNum/10.0 + 0.9) -1)) * 10 + 1;
+			List<Best> dbbest = service.getbest(board.getNum());
 			int endpage = startpage + 9;
 			if(endpage > maxpage) endpage = maxpage;
 			int boardcnt = listcount - (pageNum - 1) * limit;
+			mav.addObject("dbbest",dbbest);
+			mav.addObject("bestcnt",bestcnt);
+			mav.addObject("recount",recount);
 			mav.addObject("pageNum",pageNum);
 			mav.addObject("maxpage",maxpage);
 			mav.addObject("startpage",startpage);
@@ -73,13 +94,16 @@ public class BoardController {
 			int limit = 9;
 			int listcount = service.boardcount(searchType,searchContent);
 			List<Board> boardlist = service.totalboardList(board_type,searchType,searchContent,pageNum,limit);
-			
+			/*recomment = service.getapply(num);*/
+			int recount = service.recount(num);
 			int maxpage = (int)((double)listcount/limit + 0.95);
 			int startpage = ((int)((pageNum/10.0 + 0.9) -1)) * 10 + 1;
 			int endpage = startpage + 9;
 			if(endpage > maxpage) endpage = maxpage;
 			int boardcnt = listcount - (pageNum - 1) * limit;
-			mav.addObject("pageNum2",pageNum);
+			/*mav.addObject("recomment",recomment);*/
+			mav.addObject("recount",recount);
+			mav.addObject("pageNum",pageNum);
 			mav.addObject("maxpage2",maxpage);
 			mav.addObject("startpage2",startpage);
 			mav.addObject("endpage2",endpage);
@@ -108,21 +132,27 @@ public class BoardController {
 		}
 	@RequestMapping(value="board/recomment" , method = RequestMethod.POST)
 	public ModelAndView recomment(@Valid Recomment recomment,Integer board_type , Integer pageNum2) {
+		
 	ModelAndView mav = new ModelAndView();
 		try {
-			
 		recomment.setRef_board_no(board_type);
+		System.out.println("recomment : "+recomment);
+		System.out.println("보드타입 "+board_type);
 		int result = service.Hrecommand(recomment,board_type);
 		if(result > 0) {
-			mav.addObject("co_no",recomment.getCo_no());
-			mav.setViewName("redirect:totallistForm.zips?num="+recomment.getNum()+"&board_type="+board_type);
+			if(board_type == 2) {
+				mav.addObject("co_no",recomment.getCo_no());
+				mav.setViewName("redirect:homeTraininglistForm.zips?num="+recomment.getNum()+"&board_type="+board_type);
+			} else {
+				mav.addObject("co_no",recomment.getCo_no());
+				mav.setViewName("redirect:totallistForm.zips?num="+recomment.getNum()+"&board_type="+board_type);
+			}
 		} 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
-	
 	
 	@RequestMapping(value="board/boardwrite" , method = RequestMethod.POST)
 	public ModelAndView detailform(@Valid Board board, BindingResult bindingResult , HttpServletRequest request) {
@@ -147,15 +177,26 @@ public class BoardController {
 	}
 	
 	@RequestMapping("board/homeTraininglistForm")
-	public ModelAndView homeTraininglistForm(@Valid int num,HttpSession session,HttpServletRequest request) {
+	public ModelAndView homeTraininglistForm(@Valid Recomment recomment,Best best,Integer board_type,int num,HttpSession session,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Board board = service.getBoard(num);
+		int recount = service.recount(num);
+		best.setNum(num);
+		System.out.println("num값몇?"+num);
+		List<Best> dbbest = service.getbest(num);
+		System.out.println("homeTraininglistForm의 dbbest의 값은?? :" + dbbest);
+		int bestcnt = service.bestcnt(best);
+		List<Recomment> recommentlist = service.recommentList(board_type,num);
 		String url = request.getServletPath();
 		if(url.contains("/board/homeTraininglistForm.zips")) {
 			service.updatereadcnt(num);
 		}
+		mav.addObject("dbbest",dbbest);
+		mav.addObject("bestcnt",bestcnt);
 		mav.addObject("num",num);
 		mav.addObject("board",board);
+		mav.addObject("recount",recount);
+		mav.addObject("recommentlist",recommentlist);
 		return mav;
 }
 	 
@@ -163,47 +204,29 @@ public class BoardController {
 	public ModelAndView totallistForm(@Valid Recomment recomment,Integer board_type,int num,HttpSession session,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Board board = service.getBoard(num);
-		int recount = service.recount();
+		int recount = service.recount(num);
+		recomment = service.getapply(num);
+		System.out.println("최종:::::"+recomment);
 		List<Recomment> recommentlist = service.recommentList(board_type,num);
-		Recomment recommentOne = service.getRecomment(recomment.getCo_no());
 		String url = request.getServletPath();
 		if(url.contains("/board/totallistForm.zips")) {
 			service.updatereadcnt(num);
 		}
+		mav.addObject("recomment",recomment);
 		mav.addObject("num",num);
 		mav.addObject("board",board);
 		mav.addObject("recount",recount);
-		mav.addObject("recommentOne",recommentOne);
 		mav.addObject("recommentlist",recommentlist);
 		return mav;
 }
-	
-	@ResponseBody
-	@RequestMapping(value="board/apply")
-	public String apply(Integer co_no,Integer num, HttpServletRequest request) {
-		service.noapply(num);
-		service.apply(co_no);
-		
-		return "채택";
-		
-	}
-	
-	
-	
-	
 	@RequestMapping(value="board/delete" , method = RequestMethod.POST)
-	public ModelAndView delete(@Valid Board board,Integer board_type, BindingResult bindingResult , HttpServletRequest request,Integer pageNum) {
+	public ModelAndView delete2(@RequestParam HashMap<String,String> map) {
+		System.out.println(map);
+		int result = service.boardDelete(Integer.parseInt(map.get("num")));
 		ModelAndView mav = new ModelAndView();
-		Board dbUser = service.getBoard(board.getNum());
-		System.out.println("dbUser 의 값 "+dbUser);	
-		try {
-				int result = service.boardDelete(board,request);
-				if(result > 0) {
-					mav.setViewName("redirect:homeTraininglist.zips?board_type="+board_type);
-				} 
-			}catch(Exception e) {
-			throw new ShopException("게시물 삭제 실패", "delete.zips?num="+board.getNum()+"&pageNum="+pageNum+"&board_type="+board_type);
-		}
+		if(result > 0) {
+			mav.setViewName("redirect:homeTraininglist.zips?board_type="+Integer.parseInt(map.get("board_type")));
+		} 
 		return mav;
 	}
 	

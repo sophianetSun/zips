@@ -3,10 +3,18 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="dao.mapper.BestMapper">
  <select id="bestlist" resultType="Best" parameterType="map">
-select * from best
+select num,rec_user,rec_board_type from best
  <if test="num != null">
  where num=#{num} 
  </if>
  </select>
+ 
+ <select id="bestcount" resultType="Integer" parameterType="map">
+ select count(*) from best 
+ <if test="num != null">
+where num=${num}
+ </if>
+ </select>
+ 
  </mapper>
  
