@@ -77,6 +77,7 @@ var html =   "<textarea rows='20' cols='90' name='co_content'>"
     		</c:if>
             <br>
             <p>${board.content }</p>
+			<a href="../img/${board.filename}">${board.filename}</a>
             <hr>
             <br>
             <br>

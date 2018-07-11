@@ -255,7 +255,6 @@
 <h2 align="center" id="container2" class="rainbow">지금 이순간을 즐겨라 ! 스트레스를 날려버릴 아무말 대잔치</h2>
        <br>
         <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
         </div>
       </div>
 </c:if>
@@ -264,7 +263,8 @@
 <h2 align="center" id="container3" class="rainbow">자신감 뿜뿜!! 드라마보다 더 드라마틱한  다이어트 성공신화</h2>
 <br>
         <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+       <br>
+        <img src="../img/ohba.jpg" style="width: 300px;height: 200px;" alt="Card image cap" id="changeimg" class="w3-circle">
         </div>
       </div>
 </c:if>

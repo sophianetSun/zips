@@ -28,6 +28,7 @@ public class BoardController {
 	@Autowired 
 	private BoardService service;
 	
+	
 	@RequestMapping(value="board/best")
 	public ModelAndView best(Best best,Board board, String board_userid) {
 		ModelAndView mav = new ModelAndView();

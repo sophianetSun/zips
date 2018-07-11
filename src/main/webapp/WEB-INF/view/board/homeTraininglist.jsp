@@ -5,6 +5,8 @@
 <html>
 <head>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<link href="https://vjs.zencdn.net/7.0.5/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
 <script type="text/javascript">
 function list(pageNum) {
@@ -164,10 +166,10 @@ $(function(){
     },4500);
 
 });
-
 </script>
 </head>
 <body>
+<a href="xxx.zips">아직 안한 것들</a>
 <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
  <h1 class="test" id="container4"><span>You are the most beautiful who try</span></h1>
   <br>
@@ -196,7 +198,6 @@ $(function(){
  if('${param.searchType}' != ''){
 	document.getElementById("searchType").value='${param.searchType}'	 
  }
- var docHeight = $(card mb-4 box-shadow).height();
  var docWidth = $(card mb-4 box-shadow).width();
  
 </script>
@@ -238,9 +239,8 @@ $(function(){
 <c:forEach var="board" items="${boardlist}">
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-               <video width="docWidth" height="174" controls>
- 	 		<source src="mov_bbb.mp4" type="video/mp4">
- 			 <source src="mov_bbb.ogg" type="video/ogg">
+               <video width="docWidth" height="174" class="video-js"  controls>
+ 	 		<source src="../img/${board.fileurl}" type="video/mp4">
 				</video>
                 <div class="card-body">
                   <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"
@@ -256,25 +256,9 @@ $(function(){
 					조회수 :${board.board_count} 
 					<br>
                     <div class="btn-group">
-                    <%-- <c:choose>
-        			<c:when test="${true}">
-                    <c:forEach var="be" items="${dbbest}">
-						<c:if test="${be.rec_user == sessionScope.loginUser.id}">
-						이미추천
-						</c:if>                    
-           		 	 </c:forEach>
-       				</c:when>
-       				<c:otherwise>
-       				 </c:otherwise> 
-    					</c:choose>--%>
-                    <form action="best.zips?board_type=${param.board_type}">
-                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
-                    <input type="hidden" name="num" value="${board.num}">
-                    <input type="hidden" name="board_type" value="${board.board_type}">
-                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥
-                      <span class="badge badge-light">&nbsp;</span></font></small></button></a>&nbsp;
-                     </form>
-					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;"><small>▶ 구독 <font color="red"></font></small></button>
+                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천 <font color="red">♥
+                      <span class="badge badge-light">&nbsp;${board.recommand}</span></font></small></button>
+					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;" disabled="disabled"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
                    </small>
                   </div>

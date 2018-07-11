@@ -22,7 +22,6 @@ public interface BoardDao {
 
 	int maxNum();
 
-
 	int update(Board board, HttpServletRequest request);
 
 	List<Board> totallist(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit);

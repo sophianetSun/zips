@@ -138,13 +138,11 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Best> getbest(int num) {
-		
 		return bestDao.getbest(num);
 	}
 
 	@Override
 	public Recomment getapply(int num) {
-		
 		return recommentDao.getapply(num);
 	}
 

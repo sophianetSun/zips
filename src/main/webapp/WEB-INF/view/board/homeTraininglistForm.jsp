@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -45,8 +45,7 @@
             <blockquote>
             <div align="center">
              <video width="700" height="450" controls >
- 	 		<source src="mov_bbb.mp4" type="video/mp4">
- 			 <source src="mov_bbb.ogg" type="video/ogg">
+ 	 		<source src="../img/${board.fileurl}" type="video/mp4">
 				</video>
 				</div>
             </blockquote>
