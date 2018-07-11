@@ -37,27 +37,12 @@
             <p>${board.content }</p>
             <hr>
             <div align="center">
-                    <c:forEach var="be" items="${dbbest}">
-            <c:choose>
-       				<c:when test="${be.rec_user != sessionScope.loginUser.id}">
             <form action="best.zips?board_type=${param.board_type}">
                     <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
                     <input type="hidden" name="num" value="${board.num}">
                     <input type="hidden" name="board_type" value="${board.board_type}">
               <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${bestcnt}</button>
                      </form>
-        			<c:when test="${be.rec_user == sessionScope.loginUser.id}">
-        			<c:out value="${be.rec_user}"/>
-        			<c:out value="${sessionScope.loginUser.id}"/>
-						이미추천
-       				</c:when>
-                     </c:when>
-       				<c:otherwise>
-        			<c:out value="${be.rec_user}"/>
-        			<c:out value="${sessionScope.loginUser.id}"/>
-       				 </c:otherwise> 
-    					</c:choose>
-           		 	 </c:forEach>
                      <br>
               <button type="button" class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
             <br>

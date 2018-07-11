@@ -91,7 +91,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int best(Best best) {
+	public int best(Best best,Integer num) {
+		boardDao.recommand(num);
 	 	return bestDao.best(best);
 	}
 

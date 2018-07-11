@@ -92,6 +92,11 @@ public class BoardDaoImpl implements BoardDao {
 		sqlSession.getMapper(BoardMapper.class).applyupdate(num);
 	}
 
+	@Override
+	public int recommand(Integer num) {
+		return sqlSession.getMapper(BoardMapper.class).recommand(num);
+	}
+
 
 	
 	

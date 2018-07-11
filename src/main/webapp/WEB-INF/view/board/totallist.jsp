@@ -245,13 +245,12 @@
 <body>
 <c:if test="${param.board_type == 2 }">
 <div class="card mb-3">
-
   <div class="card-body" id="container"><h2 class="raindow">홈트레이닝 궁금증 시원하게 해결 !</h2>
    <!-- <h2 class="card-title rainbow" align="center" id="container" ></h2> -->
   </div>
-  <div align="right">
+  <div>
   <img class="card-img-right" src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
-  <img class="card-img-right" src="../img/qqqaaa.jpg" style="width: 300px;height: 250px;" alt="Card image cap">
+  <img class="card-img-right" src="../img/qqqaaa.jpg" style="width: 300px;height: 250px; " alt="Card image cap">
 </div>
 </div>
 </c:if>
@@ -295,12 +294,16 @@
 				<td>Before&After</td>
 				</c:if>
 				<td>
-				<c:if test="${param.board_type == 2}">
+			<c:if test="${param.board_type == 2}">
+			<c:choose>
+			<c:when test="${board.board_apply == 0}">
 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} &nbsp;&nbsp;&nbsp;<em class="off">고민중</em></a></td>
- 			<c:if test="${board.board_apply == 1}">
- 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"><em class="on">고민해결</em></a>
-				</c:if>
-				</c:if>
+			</c:when>
+			<c:when test="${board.board_apply == 1}">
+ 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} <em class="on">고민해결</em></a>
+			</c:when>
+			</c:choose>
+			</c:if>
 				<c:if test="${param.board_type == 3 || param.board_type == 4}">
 				<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject}</a></td>
 				    </c:if>	

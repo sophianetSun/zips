@@ -27,6 +27,9 @@ public interface BoardMapper {
 
 	@Update("update totalboard set board_apply=1 where num=#{num}")
 	void applyupdate(Integer num);
+	
+	@Update("update totalboard set recommand=recommand+1 where num=#{num}")
+	int recommand(Integer num);
 
 	
 

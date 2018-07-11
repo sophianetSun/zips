@@ -22,7 +22,6 @@ public interface RecommentDao {
 
 	int Hrecommand(Recomment recomment, Integer board_type);
 
-
 	Recomment getapply(int num);
 
 	

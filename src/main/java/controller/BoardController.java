@@ -31,11 +31,12 @@ public class BoardController {
 	@RequestMapping(value="board/best")
 	public ModelAndView best(Best best,Board board, String board_userid) {
 		ModelAndView mav = new ModelAndView();
+		Integer num = board.getNum();
 	   best.setNum(board.getNum());
 	   best.setRec_user(board_userid);
 	   best.setRec_board_type(board.getBoard_type());
 	   List<Best> dbbest = service.getbest(board.getNum());
-			int result = service.best(best);
+			int result = service.best(best,num);
 			int bestcnt = service.bestcnt(best);
 			mav.addObject("bestcnt",bestcnt);
 				if(result > 0) {
