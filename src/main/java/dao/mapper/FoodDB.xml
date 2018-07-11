@@ -3,10 +3,10 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="dao.mapper.FoodDBMapper">
    <select id="list" resultType="FoodDB" parameterType="map">
-   	select * from food_db where food_name like '%${first}%' limit 10
+   	select * from food_db where food_name like '%${first}%'
    </select>
    <select id="listDouble" resultType="FoodDB" parameterType="map">
-     select * from (select * from food_db where food_name like '%${first}%' limit 10) as ot
-     	where food_name like '%${second}%' limit 10
+     select * from (select * from food_db where food_name like '%${first}%') as ot
+     	where food_name like '%${second}%'
    </select>
  </mapper>

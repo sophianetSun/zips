@@ -51,8 +51,8 @@
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
-		<script src="assets/js/jquery.shuffleLetters.js"></script>
-        <script src="assets/js/script.js"></script>
+		<script src="../js/jquery.shuffleLetters.js"></script>
+        <script src="../js/script.js"></script>
 <script type="text/javascript">
 	// 스크립트 list function
 	function list(pageNum) {
@@ -90,13 +90,13 @@
 	    var pool = "";
 
 	    if (type == "lowerLetter"){
-	        pool = "ㄱㅏㄴㅓㄷㅗㄻㅛㅄㅅㅇㄱㅈㅇㅊㄹㅋㅠㅍㅌㅎ123456789";
+	        pool = "qwerkdosavwertogvkapowoekrgmskd";
 	    }
 	    else if (type == "upperLetter"){
 	        pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	    }
 	    else if (type == "symbol"){
-	        pool = ",.?/\\(^)![]{}*&^%$#'\"";
+	        pool = "ㄱㅏ,ㄷㅜ시어ㄴㄷㅂㄴㅊㅍㅜㅈㄷㅅㅕㅁㅌㅊ";
 	    }
 
 	    var arr = pool.split('');
@@ -189,24 +189,7 @@
 
 	    });
 	};
-	
-	$(function(){
 
-	    var container = $("#container")
-
-	    container.shuffleLetters();
-
-	    setTimeout(function(){
-
-	        container.shuffleLetters({
-	            "text": "Question & Answer"
-	        });
-
-
-	    },3000);
-
-	});
-	
 	$(function(){
 
 	    var container = $("#container2")
@@ -240,35 +223,73 @@
 	    },4000);
 
 	});
+	$(function(){
+
+	    var container = $("#container5")
+
+	    container.shuffleLetters();
+
+	    setTimeout(function(){
+
+	        container.shuffleLetters({
+	            "text": "Question & Answer"
+	        });
+
+
+	    },4000);
+
+	});
 </script>
 </head>
 <body>
 <c:if test="${param.board_type == 2 }">
-<div class="card mb-3">
-
-  <div class="card-body" id="container"><h2 class="raindow">홈트레이닝 궁금증 시원하게 해결 !</h2>
-   <!-- <h2 class="card-title rainbow" align="center" id="container" ></h2> -->
-  </div>
-  <div align="right">
-  <img class="card-img-right" src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
-  <img class="card-img-right" src="../img/qqqaaa.jpg" style="width: 300px;height: 250px;" alt="Card image cap">
-</div>
-</div>
+<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+          <h2 align="center" id="container5" class="rainbow">홈트레이닝에 대한 궁금증 시원하게 해결 !</h2><br>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+        </div>
+      </div>
 </c:if>
 <c:if test="${param.board_type == 3 }">
+<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
 <h2 align="center" id="container2" class="rainbow">지금 이순간을 즐겨라 ! 스트레스를 날려버릴 아무말 대잔치</h2>
+       <br>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+        </div>
+      </div>
 </c:if>
 <c:if test="${param.board_type == 4 }">
+<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
 <h2 align="center" id="container3" class="rainbow">자신감 뿜뿜!! 드라마보다 더 드라마틱한  다이어트 성공신화</h2>
+<br>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+        </div>
+      </div>
 </c:if>
 
 
 <div class="container">
 
+	<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
+			<input type="hidden" name="pageNum" value="1">
+			 <div class="search__container" align="center">
+			<select name="searchType" id="searchType" class="custom-select d-block" style="width:100px;height:40px;">
+			<option value="subject">제목</option>
+			<option value="board_userid">글쓴이</option>   
+				</select>
+				<br>
+    <input class="search__input" type="text" name="searchContent" placeholder="Search" value="${param.searchContent}">
+			</div>
+		</form>
+		<br><br>
+	
+
 <table class="table table-hover">
 
 	<colgroup>
-    		<col style="width: 5%;">
+    		<col style="width: 15%;">
     		<col style="width: 30%">
     		<col style="width: 10%">
     		<col style="width: 20%">
@@ -276,12 +297,14 @@
     		<col style="width: 10%">
     </colgroup>
 			<tr>
-				<th>카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th>게시판&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>글쓴이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>날짜</th>
 				<th>조회수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<c:if test="${param.board_type == 3 || param.board_type == 4}">
 				<th>추천수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				</c:if>
 			</tr>
 			<c:forEach var="board" items="${boardlist2}">
 			<tr>
@@ -295,19 +318,25 @@
 				<td>Before&After</td>
 				</c:if>
 				<td>
-				<c:if test="${param.board_type == 2}">
+			<c:if test="${param.board_type == 2}">
+			<c:choose>
+			<c:when test="${board.board_apply == 0}">
 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} &nbsp;&nbsp;&nbsp;<em class="off">고민중</em></a></td>
- 			<c:if test="${board.board_apply == 1}">
- 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"><em class="on">고민해결</em></a>
-				</c:if>
-				</c:if>
+			</c:when>
+			<c:when test="${board.board_apply == 1}">
+ 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} <em class="on">고민해결</em></a>
+			</c:when>
+			</c:choose>
+			</c:if>
 				<c:if test="${param.board_type == 3 || param.board_type == 4}">
 				<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject}</a></td>
 				    </c:if>	
 				<td>${board.board_userid}</td>
 				<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></td>
 				<td>${board.board_count }</td>
+				<c:if test="${param.board_type == 3 || param.board_type == 4}">
 				<td>${board.recommand }</td>
+				</c:if>
 			</tr>
 			</c:forEach>
 			<tr align="center" height="26"><td colspan="5">
@@ -334,28 +363,11 @@
 		<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 	</c:if>
 	
-	<tr><td colspan="4" align="center">
-		<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
-			<input type="hidden" name="pageNum" value="1">
-			<select name="searchType" id="searchType">
-				<option value="subject">제목</option>
-				<option value="board_userid">글쓴이</option>
-				<option value="content">내용</option>
-			</select>&nbsp;
-			<script type="text/javascript">
-				if('${param.searchType}' != '') {
-					document.getElementById("searchType").value = '${param.searchType}';
-				}
-			</script>
-			<input type="text" name="searchContent" value="${param.searchContent}">
-			<input type="submit" value="검색">
-		</form>
-	</td></tr>
-	
-	<tr><td align="right" colspan="4">
-		<a href="boardwrite.zips?board_type=${param.board_type }">[글쓰기]</a></td></tr>
 		<tr align="center" valign="middle">
 </table>
+		<a href="boardwrite.zips?board_type=${param.board_type }"><button type="button" class="btn btn-success" style="width: 120px;height: 50px;">글 작성하기</button></a>
+	<br>
+	<br>
 </div>
 
 </body>

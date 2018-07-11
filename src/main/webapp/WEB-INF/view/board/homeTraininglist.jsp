@@ -168,19 +168,18 @@ $(function(){
 </script>
 </head>
 <body>
- <div class="col-lg-4">
-<div class="w3-content w3-section" style="max-width:300px">
-  <img class="mySlides" src="../img/1-2.gif" style="width:50%">
-  <img class="mySlides" src="../img/1-3.gif" style="width:50%">
-  <img class="mySlides" src="../img/1-4.gif" style="width:50%">
-  <img class="mySlides" src="../img/1-5.gif" style="width:50%">
-            <!-- <img class="rounded-circle" src="../img/runicon.png" alt="Generic placeholder image" width="140" height="140"> -->
-            <p id="container4"><span><a href="homeTraininglist.zips?board_type=${param.board_type}">You are the most beautiful who try.&nbsp;</a></span></p>
-            <br>
-            <small><br>여러분도 이제 혼자 운동하지 말고 <br>동영상을 올려서 운동정보를 공유해보세요 </small>
-            <br>
-          </div>
-          </div>
+<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+ <h1 class="test" id="container4"><span>You are the most beautiful who try</span></h1>
+  <br>
+  <br>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;" align="center">
+  <img class="mySlides" src="../img/1-2.gif" style="width:30%">
+  <img class="mySlides" src="../img/1-3.gif" style="width:30%">
+  <img class="mySlides" src="../img/1-4.gif" style="width:30%">
+  <img class="mySlides" src="../img/1-5.gif" style="width:30%">
+        </div>
+      </div>
+      <BR>
 <hr class="my-hr1">
 <form action="homeTraininglist.zips?board_type=${param.board_type}" method="post" name="searchform" onsubmit="return list(1)">
 <input type="hidden" name="pageNum" value="1">
@@ -204,7 +203,7 @@ $(function(){
 </form>
 
 <ul>
-<li><p class="testred"><I><span>Best Hot 동영상 &nbsp;</span></I></p></li>
+<li><p class="testred"><I><span>Best Hot 3 &nbsp;</span></I></p></li>
 </ul>
 <%-- <c:forEach var="best" items="${recommandlist }" begin="0" end="2">
 <div class="col-md-4">

@@ -127,9 +127,11 @@
 		 	foodDBs = JSON.parse(data);
 		 	var html = "";
 			for(var idx in foodDBs) {
-				var food = foodDBs[idx].FoodDB;
-				html += '<a href="#" id="' + idx + '" class="list-group-item list-group-item-action" onclick="selectSearchFood(this)">'
-			 		+ food.food_name + '</a>'
+				if (idx < 5) {
+					var food = foodDBs[idx].FoodDB;
+					html += '<a href="#" id="' + idx + '" class="list-group-item list-group-item-action" onclick="selectSearchFood(this)">'
+				 		+ food.food_name + '</a>'
+				}
 			}		 	
 		 	$('.list-group').html(html);
 			 $('.list-group').show();		 		

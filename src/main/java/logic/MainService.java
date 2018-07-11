@@ -38,4 +38,7 @@ public interface MainService {
 	// MyInfoCalendar
 	public List<FoodDB> getFoodDBList(String searchText);
 	public int saveMyInfoCalendar(InfoCalendar myinfo);
+	public List<InfoCalendar> loadMyInfoCalendar(String userId);
+	public Map<String, Double> myInfoMap(String userId);
+	public Map<String, Double> myInfoMap(String userId, String regdate);
 }

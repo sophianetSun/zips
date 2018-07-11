@@ -9,8 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,10 +34,14 @@ public class MainController {
 	private ShopService shopService;
 	
 	@RequestMapping("main")
-	public ModelAndView main() {
+	public ModelAndView main(HttpSession session) {
 		ModelAndView mav = new ModelAndView("main");
+		User user = (User)session.getAttribute("loginUser");
 		List<Shop> shopList = shopService.shopList("shop_subject", "", 1, 5);
 		mav.addObject("shopList", shopList);
+		if (user != null) {
+			mav.addObject("userId", user.getId());
+		}
 		return mav;
 	}
 	
@@ -63,8 +71,12 @@ public class MainController {
 	}
 	
 	@RequestMapping("calendar")
-	public String calendar() {
-		return "main/calendar";
+	public ModelAndView calendar(HttpSession session) {
+		ModelAndView mav = new ModelAndView("main/calendar");
+		User user = (User)session.getAttribute("loginUser");
+		List<InfoCalendar> list = mainService.loadMyInfoCalendar(user.getId());
+		mav.addObject("list", list);
+		return mav;
 	}
 	
 	@RequestMapping("myInfoCal")
@@ -75,15 +87,46 @@ public class MainController {
 	@RequestMapping("myinfo/save")
 	public ModelAndView save(InfoCalendar myinfo, HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/calendar");
-		//User user = (User)session.getAttribute("loginUser");
-		//String id = user.getId();
-		myinfo.setUser_id("test");
-		System.out.println(myinfo);
+		User user = (User)session.getAttribute("loginUser");
+		myinfo.setUser_id(user.getId());
 		int result = mainService.saveMyInfoCalendar(myinfo);
+		if (result > 0) {
+			List<InfoCalendar> list = mainService.loadMyInfoCalendar(user.getId());
+			mav.addObject("list", list);
+		}
+		return mav;
+	}
+	
+	@RequestMapping("myinfo/graph")
+	public ModelAndView graph(HttpSession session,
+			@RequestParam(value="regdate", required=false) String regdate) {
+		ModelAndView mav = new ModelAndView("main/graph");
+		Map<String, Double> map;
+		User user = (User)session.getAttribute("loginUser");
+		if (regdate == null && regdate.equals("")) 	map = mainService.myInfoMap(user.getId());
+		else map = mainService.myInfoMap(user.getId(), regdate);
+		mav.addObject("map", map);
 		return mav;
 	}
 	
 	// RestfulAPI
+	@GetMapping(value="user/subscribe.zips", produces="application/json; charset=utf8")
+	@ResponseBody
+	public String subscribeapi(String userId, String subId) {
+		int result = mainService.subscribe(userId, subId); 
+		if (result == 1) return "{\"result\" : 1, \"subId\" : \"" + subId + "\"}";
+		else if (result == 2) return "{\"result\" : 2, \"subId\" : \"" + subId + "\"}";
+		else return "{\"result\" : 0}";
+	}
+	
+	@GetMapping(value="graphapi", produces="application/json; charset=utf8")
+	@ResponseBody
+	public Map<String, Double> graphapi(String id) {
+		Map<String, Double> map;
+		map = mainService.myInfoMap(id);
+		return map;
+	}
+	
 	@RequestMapping(value="myinfo/search", produces="application/text; charset=utf8")
 	@ResponseBody
 	public String mySearchInfo(String searchType, String searchText) {

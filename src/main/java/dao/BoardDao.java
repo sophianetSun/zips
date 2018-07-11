@@ -31,6 +31,8 @@ public interface BoardDao {
 
 	void board_applyupdate(Integer num);
 
+	int recommand(Integer num);
+
 
 
 

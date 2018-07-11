@@ -6,6 +6,61 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>집스 메인 홈입니다</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script>
+var randomColorFactor = function() {
+	return Math.round(Math.random() * 255);
+};
+var randomColor = function(opacity) {
+	return "rgba(" + randomColorFactor() + "," 
+	 					+ randomColorFactor() + ","
+	 					+ randomColorFactor() + ","
+	 					+ (opacity || '.3') + ")";
+};
+
+	$(document).ready(function() {
+		var id = '${userId}';
+		if (id) {
+			$.get('graphapi.zips', {
+				id: id
+			},
+			function(data, status) {
+				var ctx = document.getElementById("chart-area").getContext("2d");
+				var chart = new Chart(ctx, {
+					type : 'pie',
+					data : {
+						datasets : [{
+								label: "",
+								data: [
+									data.carbohydrate, data.fat, data.protein
+									],
+								backgroundColor: [
+									randomColor(1), randomColor(1), randomColor(1)
+									],
+							}],
+						labels: [
+							'탄수화물', '지방', '단백질'
+						]
+					},
+					options: {
+						responsive: false,
+						title: {
+					            display: true,
+					            fontSize: 16,
+					            text: '총 칼로리 : ' + data.calorie + ' kcal'
+					    }
+					}
+				});
+			});
+		} else {
+			$('#main_graph').html(
+					'<div class="jumbotron"><h1>로그인 해주세요!</h1></div>'
+			);
+		}
+		
+		
+	});
+</script>
 </head>
 <body>
 <!-- 홈트 -->
@@ -48,8 +103,29 @@
 	</div>
 </div>
 <!-- 그래프 -->
-<div class="jumbotron">
-  <h1 style="height:350px;">그래프 들어감</h1> 
+<div id="main_graph" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#main_graph" data-slide-to="0" class="active"></li>
+    <!--<li data-target="#main_graph" data-slide-to="1"></li>
+    <li data-target="#main_graph" data-slide-to="2"></li>-->
+  </ul>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div id="canvas-holder">
+		<canvas id="chart-area" class="mx-auto" width="500" height="500"></canvas>
+	  </div>
+    </div>
+  </div>
+	
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#main_graph" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#main_graph" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
 </div>
 
 <!-- 중고장터, 우수회원 -->
@@ -85,7 +161,7 @@
 </div>
 
 <!-- Before and After -->
-<div class="row" style="margin-top: 12px; background-color: #00ff00;">
+<div class="row" style="margin-top: 18px;">
   <div class="col-sm-4">
 		<div class="fakeimg">Fake Image</div>
 		<h5>오늘의 스쿼트</h5>

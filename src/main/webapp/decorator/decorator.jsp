@@ -28,28 +28,30 @@
 </head>
 <body>
 <!-- Header -->
+<div class="container">
 <div class="row" style="margin-bottom:0">
-  <div class="col-sm-10">
+  <div class="col-sm-9">
   <a href="${pageContext.request.contextPath }">
   	<img src="${pageContext.request.contextPath }/img/team.png" class="rounded main_logo" alt="teamlogo">
-  </a> 
-  </div>
-<div class="col-sm-2 align-self-center">
+  </a> </div>
+<div class="col-sm-3 align-self-center">
 <c:if test="${!empty loginUser }">${loginUser.nickname }(${loginUser.id }) 님 환영합니다!!</c:if><br>
 <c:if test="${empty sessionScope.loginUser}">
   <a href="${pageContext.request.contextPath}/user/join.zips">회원가입</a></c:if>
-
 <c:if test="${empty sessionScope.loginUser}">
-  <a href="${pageContext.request.contextPath}/user/login.zips">로그인</a></c:if>
-  
+  <a href="${pageContext.request.contextPath}/user/login.zips">로그인</a>
+</c:if>
 <c:if test="${!empty sessionScope.loginUser}">
   <a href="${pageContext.request.contextPath}/user/logout.zips">로그아웃</a></c:if>
-  <a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
+  
 <c:if test="${!empty sessionScope.loginUser }">
-	<a href="${pageContext.request.contextPath}/user/mypage.zips">마이페이지</a></c:if>
-  <br>
+	<a href="${pageContext.request.contextPath}/user/mypage.zips">마이페이지</a>
+	<a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
+	<a href="${pageContext.request.contextPath}/myInfoCal.zips">영양</a>
+	<a href="${pageContext.request.contextPath}/calendar.zips">달력</a>	 
+</c:if>
   <form action="${pageContext.request.contextPath }/search.zips" method="POST" id="search">
-<div class="input-group mb-3">  	
+<div class="input-group">  	
   	<input type="text" name="query">
   	<div class="input-group-append">
   	<span class="input-group-text">
@@ -57,13 +59,12 @@
   	</div>
 </div>
   </form>
-  <a href="${pageContext.request.contextPath}/myInfoCal.zips">영양정보입력</a>
 </div>
 <div class="col-sm-12">
   <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
 </div>
 </div>
-	 
+</div>
 <!-- Navi -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
  <a class="navbar-brand" href="#"></a>
@@ -95,7 +96,7 @@
 	<decorator:body/>
 </div>
 <!-- Footer -->
-<footer class="jumbotron text-center" style="margin-bottom:0"> 
+<footer class="jumbotron text-center mt-24 mb-0"> 
   <p>Powered by <a href="http://cafe.naver.com/itisgoodee" target="_blank" class="w3-hover-text-grey"><strong>GOODEE ACADEMY</strong></a></p>
 </footer>
 </body>

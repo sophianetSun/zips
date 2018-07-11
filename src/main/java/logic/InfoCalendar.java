@@ -22,11 +22,10 @@ public class InfoCalendar {
 	// Constructor
 	public InfoCalendar() { }
 	
-	public InfoCalendar(Integer num, Date regdate, String user_id, Integer in_type, String name, Double carbohydrate,
-			Double fat, Double protein, Integer amount, Double calorie, String nutri_memo, String work_memo) {
-		super();
+	public InfoCalendar(Integer num, String regdate, String user_id, Integer in_type, String name, Double carbohydrate,
+			Double fat, Double protein, Integer amount, Double calorie, String nutri_memo, String work_memo) throws ParseException {
 		this.num = num;
-		this.regdate = regdate;
+		this.regdate = sdf.parse(regdate);
 		this.user_id = user_id;
 		this.in_type = in_type;
 		this.name = name;
@@ -50,8 +49,8 @@ public class InfoCalendar {
 		this.num = num;
 	}
 
-	public Date getRegdate() {
-		return regdate;
+	public String getRegdate() {
+		return sdf.format(regdate);
 	}
 
 	public void setRegdate(String regdate) throws ParseException {
