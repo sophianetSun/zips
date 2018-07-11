@@ -59,7 +59,9 @@
 		})
 		
 		$('#buy').click(function() {
+			if(${buyerUser.coin >= shop.shop_price})
 			alert('구매신청 하셨습니다');
+			
 		})
 	});
 	

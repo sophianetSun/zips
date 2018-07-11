@@ -18,6 +18,7 @@
 		<hr>
 		<div align="right">
 			<small>작성자 :${shop.shop_seller_id}</small>
+			<p>구매 포인트 : ${shop.shop_price} Coin </p>
 			<br>
 			<br> 
 			<br>
@@ -26,17 +27,18 @@
 			<div align="center">&nbsp;
 				<c:forEach var="file" items="${uploadFileList}">
 					<div>
-						<img src="../shopfile/${file.filename}" width="500px" height="250px">
+						<img src="../shopfile/${file.filename}" width="600px" height="350px">
 					</div>
+					<div style="height: 50px;"></div> 
 				</c:forEach>
 			</div>
 		</blockquote>
 		<br> <br>
-		<h3>상품 설명</h3>
+
+		<blockquote style="text-align: center;" >
 		<br>
-		<p>구매 포인트 : ${shop.shop_price}</p>
-		<p>${shop.shop_content}</p>
-		
+		<h3>${shop.shop_content}</h3>
+		</blockquote>
 		<div align="center" style="height: 100px;">
 			<!-- 판매자 아이디 != 로그인 유저 아이디 -->
 			<c:if test="${shop.shop_seller_id != loginUser.id }">
@@ -52,17 +54,19 @@
 		<hr>
 		<div align="right">
 			<c:if test="${shop.shop_seller_id == loginUser.id }">
-				<button type="button" class="btn btn-sm btn-outline-danger"
-					style="width: 100px; height: 50px;"
+				<button type="button" class="btn btn-sm btn-primary"
+					style="width: 100px; height: 50px;" 
 					onclick="location.href='update.zips?shop_no=${shop.shop_no}'">
 					상품 수정
 				</button>
 				<button type="button" class="btn btn-primary" 
+					style="width: 100px; height: 50px;" 
 					onclick="location.href='delete.zips?shop_no=${shop.shop_no}'">
 					상품 삭제
 				</button>
 			</c:if>
 			<button type="button" class="btn btn-primary"
+				style="width: 100px; height: 50px;" 
 				onclick="location.href='list.zips'">
 				상품 목록
 			</button>
