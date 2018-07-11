@@ -65,9 +65,9 @@
                      </form>
                      <br>
                      
-                     
-              <button type="button" id="sub_btn"  class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
-            
+            <c:if test="${sessionScope.loginUser.id == board.board_userid}">
+            <button type="button" id="sub_btn"  class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
+            </c:if>
             <br>
             <br>
             </div>	

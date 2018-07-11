@@ -51,8 +51,8 @@
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
-		<script src="assets/js/jquery.shuffleLetters.js"></script>
-        <script src="assets/js/script.js"></script>
+		<script src="../js/jquery.shuffleLetters.js"></script>
+        <script src="../js/script.js"></script>
 <script type="text/javascript">
 	// 스크립트 list function
 	function list(pageNum) {
@@ -90,13 +90,13 @@
 	    var pool = "";
 
 	    if (type == "lowerLetter"){
-	        pool = "ㄱㅏㄴㅓㄷㅗㄻㅛㅄㅅㅇㄱㅈㅇㅊㄹㅋㅠㅍㅌㅎ123456789";
+	        pool = "qwerkdosavwertogvkapowoekrgmskd";
 	    }
 	    else if (type == "upperLetter"){
 	        pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	    }
 	    else if (type == "symbol"){
-	        pool = ",.?/\\(^)![]{}*&^%$#'\"";
+	        pool = "ㄱㅏ,ㄷㅜ시어ㄴㄷㅂㄴㅊㅍㅜㅈㄷㅅㅕㅁㅌㅊ";
 	    }
 
 	    var arr = pool.split('');
@@ -189,24 +189,7 @@
 
 	    });
 	};
-	
-	$(function(){
 
-	    var container = $("#container")
-
-	    container.shuffleLetters();
-
-	    setTimeout(function(){
-
-	        container.shuffleLetters({
-	            "text": "Question & Answer"
-	        });
-
-
-	    },3000);
-
-	});
-	
 	$(function(){
 
 	    var container = $("#container2")
@@ -240,25 +223,50 @@
 	    },4000);
 
 	});
+	$(function(){
+
+	    var container = $("#container5")
+
+	    container.shuffleLetters();
+
+	    setTimeout(function(){
+
+	        container.shuffleLetters({
+	            "text": "Question & Answer"
+	        });
+
+
+	    },4000);
+
+	});
 </script>
 </head>
 <body>
 <c:if test="${param.board_type == 2 }">
-<div class="card mb-3">
-  <div class="card-body" id="container"><h2 class="raindow">홈트레이닝 궁금증 시원하게 해결 !</h2>
-   <!-- <h2 class="card-title rainbow" align="center" id="container" ></h2> -->
-  </div>
-  <div>
-  <img class="card-img-right" src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
-  <img class="card-img-right" src="../img/qqqaaa.jpg" style="width: 300px;height: 250px; " alt="Card image cap">
-</div>
-</div>
+<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+          <h2 align="center" id="container5" class="rainbow">홈트레이닝에 대한 궁금증 시원하게 해결 !</h2><br>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+        </div>
+      </div>
 </c:if>
 <c:if test="${param.board_type == 3 }">
+<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
 <h2 align="center" id="container2" class="rainbow">지금 이순간을 즐겨라 ! 스트레스를 날려버릴 아무말 대잔치</h2>
+       <br>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+        </div>
+      </div>
 </c:if>
 <c:if test="${param.board_type == 4 }">
+<div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
 <h2 align="center" id="container3" class="rainbow">자신감 뿜뿜!! 드라마보다 더 드라마틱한  다이어트 성공신화</h2>
+<br>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <img src="../img/Q&A.jpg" style="width: 300px;height: 250px;" alt="Card image cap" id="changeimg">
+        </div>
+      </div>
 </c:if>
 
 
@@ -281,7 +289,7 @@
 <table class="table table-hover">
 
 	<colgroup>
-    		<col style="width: 5%;">
+    		<col style="width: 15%;">
     		<col style="width: 30%">
     		<col style="width: 10%">
     		<col style="width: 20%">
@@ -289,7 +297,7 @@
     		<col style="width: 10%">
     </colgroup>
 			<tr>
-				<th>카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th>게시판&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>글쓴이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>날짜</th>
@@ -355,10 +363,11 @@
 		<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 	</c:if>
 	
-	<tr><td align="right" colspan="4">
-		<a href="boardwrite.zips?board_type=${param.board_type }">[글쓰기]</a></td></tr>
 		<tr align="center" valign="middle">
 </table>
+		<a href="boardwrite.zips?board_type=${param.board_type }"><button type="button" class="btn btn-success" style="width: 120px;height: 50px;">글 작성하기</button></a>
+	<br>
+	<br>
 </div>
 
 </body>
