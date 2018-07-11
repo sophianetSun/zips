@@ -145,12 +145,18 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public int subscribe(String userId, String subId) {
-		Subscription sub = new Subscription();
-		sub.setUserId(userId);
-		sub.setSubscribeId(subId);
-		System.out.println(userId);
-		System.out.println(subId);
-		return subDao.insert(sub);
+		List<Subscription> list = getSubscriptionList(userId);
+		Boolean isSubscribe = list.stream().anyMatch(sub -> 
+			sub.getUserId().equals(userId) && sub.getSubscribeId().equals(subId));
+		if (isSubscribe) {
+			cancelSubsciription(userId, subId);
+			return 2;
+		} else {
+			Subscription sub = new Subscription();
+			sub.setUserId(userId);
+			sub.setSubscribeId(subId);
+			return subDao.insert(sub);
+		}
 	}
 
 	@Override

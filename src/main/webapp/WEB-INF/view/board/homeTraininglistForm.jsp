@@ -17,9 +17,11 @@
 				userId : userId,
 				subId : subId
 			},
-			function(data,status) {
-				if (data) {
+			function(data) {
+				if (data.result == 1) {
 					alert(data.subId + ' 구독되었습니다!');
+				} else if (data.result == 2) {
+					alert(data.subId + " 구독취소 되었습니다!");
 				}
 			});
 		})

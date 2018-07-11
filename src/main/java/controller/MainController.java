@@ -114,8 +114,9 @@ public class MainController {
 	@ResponseBody
 	public String subscribeapi(String userId, String subId) {
 		int result = mainService.subscribe(userId, subId); 
-		if (result == 1) return "{\"status\" : 200, \"subId\" : \"" + subId + "\"}";
-		else return "{\"status\" : 500}";
+		if (result == 1) return "{\"result\" : 1, \"subId\" : \"" + subId + "\"}";
+		else if (result == 2) return "{\"result\" : 2, \"subId\" : \"" + subId + "\"}";
+		else return "{\"result\" : 0}";
 	}
 	
 	@GetMapping(value="graphapi", produces="application/json; charset=utf8")
