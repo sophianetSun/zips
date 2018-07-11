@@ -264,6 +264,20 @@
 
 <div class="container">
 
+	<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
+			<input type="hidden" name="pageNum" value="1">
+			 <div class="search__container" align="center">
+			<select name="searchType" id="searchType" class="custom-select d-block" style="width:100px;height:40px;">
+			<option value="subject">제목</option>
+			<option value="board_userid">글쓴이</option>   
+				</select>
+				<br>
+    <input class="search__input" type="text" name="searchContent" placeholder="Search" value="${param.searchContent}">
+			</div>
+		</form>
+		<br><br>
+	
+
 <table class="table table-hover">
 
 	<colgroup>
@@ -280,7 +294,9 @@
 				<th>글쓴이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>날짜</th>
 				<th>조회수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<c:if test="${param.board_type == 3 || param.board_type == 4}">
 				<th>추천수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				</c:if>
 			</tr>
 			<c:forEach var="board" items="${boardlist2}">
 			<tr>
@@ -310,7 +326,9 @@
 				<td>${board.board_userid}</td>
 				<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></td>
 				<td>${board.board_count }</td>
+				<c:if test="${param.board_type == 3 || param.board_type == 4}">
 				<td>${board.recommand }</td>
+				</c:if>
 			</tr>
 			</c:forEach>
 			<tr align="center" height="26"><td colspan="5">
@@ -336,24 +354,6 @@
 	<c:if test="${listcount2 ==0}">
 		<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 	</c:if>
-	
-	<tr><td colspan="4" align="center">
-		<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
-			<input type="hidden" name="pageNum" value="1">
-			<select name="searchType" id="searchType">
-				<option value="subject">제목</option>
-				<option value="board_userid">글쓴이</option>
-				<option value="content">내용</option>
-			</select>&nbsp;
-			<script type="text/javascript">
-				if('${param.searchType}' != '') {
-					document.getElementById("searchType").value = '${param.searchType}';
-				}
-			</script>
-			<input type="text" name="searchContent" value="${param.searchContent}">
-			<input type="submit" value="검색">
-		</form>
-	</td></tr>
 	
 	<tr><td align="right" colspan="4">
 		<a href="boardwrite.zips?board_type=${param.board_type }">[글쓰기]</a></td></tr>

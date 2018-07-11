@@ -6,25 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>게시물 상세 보기</title>
-<!-- 구독 기능 script -->
-<script>
-	$(document).ready(function() {
-		$('#sub_btn').click(function() {
-			console.log("구독 버튼 클릭!");
-			var userId = '${sessionScope.loginUser.id}';
-			var subId = '${board.board_userid}';
-			$.get('user/subscribe.zips', {
-				userId : userId,
-				subId : subId
-			},
-			function(data,status) {
-				if (status == 200) {
-					alert('구독되었습니다!');
-				}
-			});
-		})
-	});
-</script>
+
 </head>
 <body>
 	   <div class="blog-post">
@@ -62,7 +44,10 @@
               <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${bestcnt}</button>
                      </form>
                      <br>
-              <button id="sub_btn" type="button" class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
+                     
+                     
+              <button type="button" class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
+            
             <br>
             <br>
             </div>	
