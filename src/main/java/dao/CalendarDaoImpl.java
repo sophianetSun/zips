@@ -1,5 +1,10 @@
 package dao;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,4 +24,18 @@ public class CalendarDaoImpl implements CalendarDao {
 		return sqlSession.getMapper(InfoCalendarMapper.class).insert(myinfo);
 	}
 
+	@Override
+	public List<InfoCalendar> load(String userId) {
+		Map<String, String> map = new HashMap<>();
+		map.put("id", userId);
+		return sqlSession.selectList(NS + "list", map);
+	}
+
+	@Override
+	public List<InfoCalendar> load(String userId, String regdate) {
+		Map<String, String> map = new HashMap<>();
+		map.put("id", userId);
+		map.put("regdate", regdate);
+		return sqlSession.selectList(NS + "list", map);
+	}
 }

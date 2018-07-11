@@ -13,14 +13,12 @@ function deleteMsg(button) {
 	if (flag == true) {
 		button.parentNode.parentNode.style.display = "none";
 		$.post("message/hide.zips", { num : button.id }, function(data, status) {
-			console.log(data);
 		});
-	} else { }
+	}
 }
 
 function makeTable(msgs, m_type) {
 	var msgs = msgs.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
-	console.log(msgs);
 	var jsonMsgs = JSON.parse(msgs);  
 	var table = "<table class='table table-bordered'><thead><tr>";
 	if (m_type == "re") {
@@ -66,7 +64,6 @@ function makeTable(msgs, m_type) {
 				function(data, status) {
 					showTable(data, "re");
 				});
-		console.log("remsg");
 	});
 	$('#se_msg').click(function() {
 		$.post("message/list.zips",
@@ -77,10 +74,8 @@ function makeTable(msgs, m_type) {
 				function(data, status) {
 					showTable(data, "se");
 				});
-		console.log("semsg");
 	});
 	$('#send').click(function() {
-		console.log("send");
 		var msgForm = "<form action='message/send.zips'><div class='form-group'>";
 		msgForm += "<label for='receiver'>받는 사람ID</label>" +
 			"<input type='text' class='form-control' id='receiver' name='receiver'></div>";
