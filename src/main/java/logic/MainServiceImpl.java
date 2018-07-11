@@ -148,6 +148,8 @@ public class MainServiceImpl implements MainService {
 		Subscription sub = new Subscription();
 		sub.setUserId(userId);
 		sub.setSubscribeId(subId);
+		System.out.println(userId);
+		System.out.println(subId);
 		return subDao.insert(sub);
 	}
 

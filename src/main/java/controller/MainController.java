@@ -112,8 +112,10 @@ public class MainController {
 	// RestfulAPI
 	@GetMapping(value="user/subscribe.zips", produces="application/json; charset=utf8")
 	@ResponseBody
-	public int subscribeapi(String userId, String subId) {
-		return mainService.subscribe(userId, subId);
+	public String subscribeapi(String userId, String subId) {
+		int result = mainService.subscribe(userId, subId); 
+		if (result == 1) return "{\"status\" : 200, \"subId\" : \"" + subId + "\"}";
+		else return "{\"status\" : 500}";
 	}
 	
 	@GetMapping(value="graphapi", produces="application/json; charset=utf8")
