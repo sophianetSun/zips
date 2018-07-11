@@ -110,6 +110,12 @@ public class MainController {
 	}
 	
 	// RestfulAPI
+	@GetMapping(value="user/subscribe.zips", produces="application/json; charset=utf8")
+	@ResponseBody
+	public int subscribeapi(String userId, String subId) {
+		return mainService.subscribe(userId, subId);
+	}
+	
 	@GetMapping(value="graphapi", produces="application/json; charset=utf8")
 	@ResponseBody
 	public Map<String, Double> graphapi(String id) {
