@@ -45,8 +45,8 @@ public class ShopController {
 		System.out.println("게시물 작성 GET 방식 호출입니다.");
 		
 		mav.addObject(new Shop()); 
-		return mav;
-	} 
+		return mav;  
+	}  
 	
 	// 중고 장터 글 작성 호출
 	@RequestMapping(value="shop/write*", method=RequestMethod.POST)

@@ -111,6 +111,7 @@
 	$('#sellerdealcancel').click(function(){
 		alert('판매를 취소하셨습니다.');
 	})
+
 });
 	
 	
@@ -120,6 +121,10 @@
 </head>
 <body> 
 <div class="blog-post">
+		<input type="text" name="quantity" id="quantity">
+
+		<input type="text" name="quantity2" id="quantity2">
+		
 		<h2 class="blog-post-title">구매정보 확인</h2>
 		<p class="blog-post-meta">
 			<fmt:formatDate value="${shop.shop_regdate}"
@@ -198,8 +203,13 @@
 		</div>
 		</div>
 		
+		<div align="center"> 
+		<h2>실시간 채팅</h2>
+			+
+		</div>
 		<hr>
 		<div align="right">
+			
 			<button type="button" class="btn btn-primary"
 				onclick="location.href='list.zips'">
 				상품 목록
