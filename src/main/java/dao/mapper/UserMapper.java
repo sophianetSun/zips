@@ -27,4 +27,7 @@ public interface UserMapper {
 
 	@Delete("delete from zipsuser where id=#{value}")
 	void delete(String id);
+
+	@Select("select * from zipsuser where email=#{value}")
+	User findEmail(String email);
 }

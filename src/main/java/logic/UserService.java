@@ -38,6 +38,8 @@ public interface UserService {
 
 	List<User> userList();
 
+	User findEmail(String email);
+
 	
 
 }
