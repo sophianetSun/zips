@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface BoardService {
 
-	int boardcount(String searchType, String searchContent);
+	int boardcount(Integer board_type, String searchType, String searchContent);
 
 	List<Board> boardList(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
 
@@ -42,6 +42,8 @@ public interface BoardService {
 	int boardDelete(Integer num);
 
 	Recomment getapply(int num);
+
+	List<Board> Bestlist(Board board);
 
 
 

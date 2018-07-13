@@ -5,6 +5,8 @@
 <html>
 <head>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<link href="https://vjs.zencdn.net/7.0.5/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
 <script type="text/javascript">
 function list(pageNum) {
@@ -164,7 +166,6 @@ $(function(){
     },4500);
 
 });
-
 </script>
 </head>
 <body>
@@ -196,41 +197,51 @@ $(function(){
  if('${param.searchType}' != ''){
 	document.getElementById("searchType").value='${param.searchType}'	 
  }
- var docHeight = $(card mb-4 box-shadow).height();
  var docWidth = $(card mb-4 box-shadow).width();
  
 </script>
 </form>
 
 <ul>
-<li><p class="testred"><I><span>Best Hot 3 &nbsp;</span></I></p></li>
+<li><p class="testred"><I><span>Best Hot 동영상  3 &nbsp;</span></I></p></li>
 </ul>
-<%-- <c:forEach var="best" items="${recommandlist }" begin="0" end="2">
-<div class="col-md-4">
+<div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row">
+<c:forEach var="best" items="${Bestlist}" begin="0" end="2">
+            <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-               <video width="docWidth" height="174" controls>
- 	 		<source src="mov_bbb.mp4" type="video/mp4">
- 			 <source src="mov_bbb.ogg" type="video/ogg">
+               <video width="docWidth" height="174" class="video-js" controls>
+ 	 		<source src="../img/${best.fileurl}" type="video/mp4">
 				</video>
                 <div class="card-body">
-                  <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${board.num}&=pageNum=${pageNum}&board_type=${param.board_type}"
-                   >${best.subject }</a></p>
+                  <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${best.num}&pageNum=${pageNum}&board_type=${best.board_type}">
+                   ${best.subject }</a></p>
+                   <hr>
                   <div class="d-flex justify-content-between align-items-center">
+                  
+					<small class="text-muted"><c:if test="${best.moddate != null }">등록일 :<fmt:formatDate value="${best.moddate}" pattern="yyyy-MM-dd-HH:mm:ss"/></c:if>
+					<c:if test="${best.moddate == null }"><fmt:formatDate value="${best.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></c:if>
+					<br>
+					작성자 :${best.board_userid}
+					<br>
+					조회수 :${best.board_count} 
+					<br>
                     <div class="btn-group">
-                      <button type="button" class="fun-btn">추천 <font color="red">♥ :</font>${best.recommand }</button>
+                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천 <font color="red">♥
+                      <span class="badge badge-light">&nbsp;${best.recommand}</span></font></small></button>
+					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;" disabled="disabled"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
-					<small class="text-muted">작성자 :${best.board_userid}
-					<br>
-					
-					등록일 :<fmt:formatDate value="${best.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/>
-					<br>
-					조회수 :${best.board_count}
                    </small>
                   </div>
                 </div>
               </div>
             </div>
-</c:forEach> --%>
+</c:forEach>
+</div>
+</div>
+</div>
+
 <hr>
  <div class="album py-5 bg-light">
         <div class="container">
@@ -238,9 +249,8 @@ $(function(){
 <c:forEach var="board" items="${boardlist}">
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-               <video width="docWidth" height="174" controls>
- 	 		<source src="mov_bbb.mp4" type="video/mp4">
- 			 <source src="mov_bbb.ogg" type="video/ogg">
+               <video width="docWidth" height="174" class="video-js"  controls>
+ 	 		<source src="../img/${board.fileurl}" type="video/mp4">
 				</video>
                 <div class="card-body">
                   <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}"
@@ -256,25 +266,9 @@ $(function(){
 					조회수 :${board.board_count} 
 					<br>
                     <div class="btn-group">
-                    <%-- <c:choose>
-        			<c:when test="${true}">
-                    <c:forEach var="be" items="${dbbest}">
-						<c:if test="${be.rec_user == sessionScope.loginUser.id}">
-						이미추천
-						</c:if>                    
-           		 	 </c:forEach>
-       				</c:when>
-       				<c:otherwise>
-       				 </c:otherwise> 
-    					</c:choose>--%>
-                    <form action="best.zips?board_type=${param.board_type}">
-                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
-                    <input type="hidden" name="num" value="${board.num}">
-                    <input type="hidden" name="board_type" value="${board.board_type}">
-                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;"><small>추천 <font color="red">♥
-                      <span class="badge badge-light">&nbsp;</span></font></small></button></a>&nbsp;
-                     </form>
-					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;"><small>▶ 구독 <font color="red"></font></small></button>
+                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천 <font color="red">♥
+                      <span class="badge badge-light">&nbsp;${board.recommand}</span></font></small></button>
+					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;" disabled="disabled"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
                    </small>
                   </div>
@@ -282,6 +276,8 @@ $(function(){
               </div>
             </div>
 </c:forEach>
+
+
             </div>
             </div>
             </div>

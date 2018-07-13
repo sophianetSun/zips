@@ -3,31 +3,15 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="dao.mapper.BoardMapper">
   <select id="totallist" resultType="Board" parameterType="map">
-select num,board_userid,subject,board_apply,content,filename fileurl,regdate,board_count,board_type from totalboard
+select num,board_userid,subject,board_apply,content,filename fileurl,regdate,board_count,board_type,recommand from totalboard
+
  <if test="board_type != null">
  where board_type=#{board_type} 
  </if>
- 
  <if test="num != null">
  where num =#{num}
  </if>
- 
- <if test="startrow != null and limit != null">
-order by regdate desc limit #{startrow},#{limit}
-</if>
- </select>
- 
- <select id="list" resultType="Board" parameterType="map">
-select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type from totalboard
- 
- <if test="board_type != null">
- where board_type=${board_type} 
- </if>
-
- <if test="num != null">
- where num=${num}
- </if>
- <if test="searchType != null and searchContent != null">
+<if test="searchType != null and searchContent != null">
  and ${searchType} like '%${searchContent}%'
  </if>
  
@@ -35,17 +19,45 @@ select num,board_userid,subject,content,filename fileurl,regdate,board_count,boa
 order by regdate desc limit #{startrow},#{limit}
 </if>
 
+ </select>
+ 
+<select id="list" resultType="Board" parameterType="map">
+select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand from totalboard
+ <if test="board_type != null">
+ where board_type=#{board_type} 
+ </if>
+ <if test="num != null">
+ where num=${num}
+ </if>
+ <if test="searchType != null and searchContent != null">
+ and ${searchType} like '%${searchContent}%'
+ </if>
+ <if test="startrow != null and limit != null">
+order by regdate desc limit #{startrow},#{limit}
+</if>
+ </select>
+ <select id="recommandlist" resultType="Board" parameterType="map">
+select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand from totalboard
+ 
+ <if test="board_type != null">
+ where board_type=${board_type} 
+ </if>
 
 <if test="recommand != null">
-  order by bestcnt desc
+  order by recommand desc
 </if>
 
  </select>
  
 <select id="count" resultType="Integer" parameterType="map">
  select count(*) from totalboard 
+ 
+  <if test="board_type != null">
+ where board_type=${board_type} 
+ </if>
+ 
  <if test="searchType != null and searchContent != null">
- where ${searchType} like '%${searchContent}%'
+ and ${searchType} like '%${searchContent}%'
  </if>
  </select>
  </mapper>

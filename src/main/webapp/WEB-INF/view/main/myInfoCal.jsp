@@ -7,30 +7,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>캘린더 입력 정보 뷰</title>
 <script>
-	var foodDBs;
-	var myInfoDB;
+	var databases;
+	var infoType = 0;
+	var userWeight = '${sessionScope.loginUser.weight}';
+	console.log(userWeight);
+	var regdate = '${param.regdate}';
+	console.log(regdate);
 	
 	function saveMyInfo() {
 		var carbohydrate = $('tfoot td:nth-of-type(2)').text();
 		var fat = $('tfoot td:nth-of-type(3)').text();
 		var protein = $('tfoot td:nth-of-type(4)').text();
 		var calorie = $('tfoot td:nth-of-type(5)').text();
-		var d = new Date();
-		var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-		var type = $('#type').val() =='food'? 0:1;
-		alert(date);
+		if (infoType == 1) 
+			$('#comment').attr('name', 'work_memo');
 		$('#form').append("<input type='hidden' name='carbohydrate' value='" + carbohydrate + "'>");
 		$('#form').append("<input type='hidden' name='fat' value='" + fat + "'>");		
 		$('#form').append("<input type='hidden' name='protein' value='" + protein + "'>");		
 		$('#form').append("<input type='hidden' name='calorie' value='" + calorie + "'>");		
-		$('#form').append("<input type='hidden' name='regdate' value='" + date + "'>");		
-		$('#form').append("<input type='hidden' name='in_type' value='"+ type + "'>");
+		$('#form').append("<input type='hidden' name='regdate' value='" + regdate + "'>");		
+		$('#form').append("<input type='hidden' name='in_type' value='"+ infoType + "'>");
 		$('#form').submit();
 	}
 	
 	function observeRow() {
 		var trs = $('tbody > tr');
-		console.log(trs);
 		var btn = document.getElementById("save");
 		if (trs.length == 0) btn.setAttribute("disabled", "disabled");  
 		else btn.removeAttribute("disabled");	
@@ -44,9 +45,12 @@
 	
 	function selectSearchFood(aTag) {
 		$('#search_text').val(aTag.text);
-		//alert(foodDBs[aTag.id].FoodDB.food_name);
 		$('.list-group').hide();
-		makeTbRow(foodDBs[aTag.id].FoodDB);
+		if (infoType == 0) {
+			makeTbRow(databases[aTag.id].FoodDB);			
+		} else {
+			makeWorkoutRow(databases[aTag.id].WorkoutDB);
+		}
 	}
 	
 	function changeCalorie(foodAmount) {
@@ -79,21 +83,93 @@
 	} 
 	
 	function makeTbRow(food) {
-		var d = new Date();
-		var dateStr = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
 		$('table #tb_body').append(
 			"<tr><td><button type='button' onclick='deleteRow(this)' " 
 			+ "class='btn btn-danger'>삭제</button></td>"
-			+ "<td>" + dateStr + "</td><td>" + food.food_name + "</td>"
-			+ "<td>식품</td><td>" + food.carbohydrate + "</td>"
+			+ "<td>" + regdate + "</td><td>" + food.food_name + "</td>"
+			+ "<td>" + food.amount + "</td><td>" + food.carbohydrate + "</td>"
 			+ "<td>" + food.fat + "</td><td>" + food.protein + "</td><td>"
 			+ food.calorie + "</td></tr>"		 
 			 );
 		addSumRow();
 		$('#search_text').val('');
-	};
+	}
 	
+	function addSumWorkoutRow() {
+		var arrCalorie = $('tbody td:nth-of-type(7)').toArray();
+		var sumCalorie = 0;
+		for(var i=0; i<arrCalorie.length;i++) {
+			sumCalorie += Number(arrCalorie[i].innerHTML);
+		}
+		$('tfoot td:nth-of-type(5)').text(sumCalorie.toFixed(1));
+		observeRow()
+	}
+	
+	function changeCal(row, time) {
+		//console.log(row + ", " + time);
+		var tds = row.children;
+		var mets = tds[3].innerText;
+		var weight = tds[4].innerText;
+		tds[6].innerText = (mets * weight * (time/60) * 1.05).toFixed(1);
+		addSumWorkoutRow();
+	}
+	
+	function makeWorkoutRow(workout) {
+		var mets = workout.calorie;
+		$('table #tb_body').append(
+				"<tr><td><button type='button' onclick='deleteRow(this)' " 
+				+ "class='btn btn-danger'>삭제</button></td>"
+				+ "<td>" + regdate + "</td><td colspan='2'>" + workout.name + "</td>"
+				+ "<td>" + mets + "</td>"
+				+ "<td>" + userWeight + "</td><td>" 
+				+ "<input type='number' name='act_time' min='0' value='10' onchange='changeCal(this.parentNode.parentNode, this.value)'>" + "</td><td>"
+				+ (mets*userWeight*(10/60)*1.05).toFixed(1) + "</td></tr>"		 
+				 );
+			addSumWorkoutRow();
+			$('#search_text').val('');
+	}
+	
+	function toggleTableHead() {
+		 if ($('#type').val() == 'food') {
+			  infoType = 0;
+			  $('.nutri').show();
+			  $('.workout').hide();
+			  console.log(infoType);
+		  } else {
+			  infoType = 1;
+			  $('.nutri').hide();
+			  $('.workout').show();
+			  console.log(infoType);
+		  }
+	}
   $(document).ready(function() {
+	  $('.workout').hide();
+	  $('#type').change(function(event) {
+		  var flag;
+		  if ($('#tb_body > tr').length > 0) {
+			flag = confirm("입력하던 자료가 있습니다! 삭제하시겠습니까?");	 
+			if (flag == true) {
+				$('#tb_body').empty();
+				addSumRow();
+				toggleTableHead();
+			} else {
+				event.preventDefault();
+				if (infoType == 0) $('#type :nth-child(1)').attr("selected", "selected");
+				else $('#type :nth-child(2)').attr("selected", "selected");			
+			}
+		  } else {
+			  if ($('#type').val() == 'food') {
+				  infoType = 0;
+				  $('.nutri').show();
+				  $('.workout').hide();
+			  } else {
+				  infoType = 1;
+				  $('.nutri').hide();
+				  $('.workout').show();
+			  }
+		  }
+	  });
+	  
 	  $(':submit').click(function(event) {
 		  event.preventDefault();
 		  saveMyInfo();
@@ -124,13 +200,20 @@
 		 	searchText : text
 		 }, function(data, status) {
 		 	if (data) {
-		 	foodDBs = JSON.parse(data);
+		 	databases = JSON.parse(data);
 		 	var html = "";
-			for(var idx in foodDBs) {
+			for(var idx in databases) {
 				if (idx < 5) {
-					var food = foodDBs[idx].FoodDB;
-					html += '<a href="#" id="' + idx + '" class="list-group-item list-group-item-action" onclick="selectSearchFood(this)">'
-				 		+ food.food_name + '</a>'
+					var db_data;
+					if (infoType == 0) {
+						db_data = databases[idx].FoodDB;
+						html += '<a href="#" id="' + idx + '" class="list-group-item list-group-item-action" onclick="selectSearchFood(this)">'
+					 		+ db_data.food_name + '</a>'
+					} else {
+						db_data = databases[idx].WorkoutDB;
+						html += '<a href="#" id="' + idx + '" class="list-group-item list-group-item-action" onclick="selectSearchFood(this)">'
+				 		+ db_data.name + '</a>'
+					}
 				}
 			}		 	
 		 	$('.list-group').html(html);
@@ -155,9 +238,6 @@
 </div>
 <div id='search_div' class="input-group">
   <input id='search_text' type="text" class="form-control" placeholder="Search">
-  <!-- <div class="input-group-append">
-    <button id='search_btn' class="btn btn-success" type="submit">OK</button> 
-  </div> -->
 </div>
 <div class="list-group">
   <a href="#" class="list-group-item list-group-item-action">First item</a>
@@ -168,14 +248,23 @@
 <div class="container">
   	<table class="table">
   	  <thead class="thead-dark">
-  	    <tr>
+  	    <tr class="nutri">
   	      <th></th>
   	      <th>날짜</th>
   	      <th>타입</th>
-  	      <th>항목</th>
+  	      <th>양(g)</th>
   	      <th>탄수화물</th>
   	      <th>지방</th>
   	      <th>단백질</th>
+  	      <th>열량</th>
+  	    </tr>
+  	    <tr class="workout">
+  	      <th></th>
+  	      <th>날짜</th>
+  	      <th colspan="2">타입</th>
+  	      <th>METs</th>
+  	      <th>체중</th>
+  	      <th>시간(분)</th>
   	      <th>열량</th>
   	    </tr>
   	  </thead>

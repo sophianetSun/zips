@@ -32,20 +32,27 @@
 			},
 			events : [
 				<c:forEach items='${list}' var='infoCal'>
+				
 				{
 					id : '${infoCal.num}',
-					title : '칼로리 : ' +  '${infoCal.calorie}' + '한마디 : ' + '${infoCal.nutri_memo}',
+					title : '(${infoCal.calorie}), ${infoCal.nutri_memo}',
 					start : '${infoCal.regdate}',
-					url : "myinfo/graph.zips?regdate=" + "${infoCal.regdate}"
+					url : "${pageContext.request.contextPath}/myinfo/graph.zips?regdate=${infoCal.regdate}&in_type=${infoCal.in_type}"
 				},
 				</c:forEach>
 			],
+			
 			eventClick: function(event) {
 				if (event.url) {
 					window.open(event.url);
 					return false;
 				}
-			}
+			},
+			 dayClick: function(date, jsEvent, view) {
+			    location.href = "${pageContext.request.contextPath}/myInfoCal.zips?regdate=" + date.format();
+			    //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+			    //alert('Current view: ' + view.name);
+			 }
 		  });
 	});
 </script>

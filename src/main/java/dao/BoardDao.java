@@ -12,7 +12,7 @@ public interface BoardDao {
 
 	int insert(Board board);
 
-	int count(String searchType, String searchContent);
+	int count(Integer board_type, String searchType, String searchContent);
 
 	List<Board> list(Integer board_type, String searchType, String searchContent, Integer pageNum, int limit);
 
@@ -21,7 +21,6 @@ public interface BoardDao {
 	void readcnt(Integer num);
 
 	int maxNum();
-
 
 	int update(Board board, HttpServletRequest request);
 
@@ -32,6 +31,8 @@ public interface BoardDao {
 	void board_applyupdate(Integer num);
 
 	int recommand(Integer num);
+
+	List<Board> bestlist(Board board);
 
 
 
