@@ -51,7 +51,7 @@ var html =   "<textarea rows='20' cols='90' name='co_content'>"
             </c:if>
             <p class="blog-post-meta"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></p>
 				
-            <h2>제목  : ${board.subject}(${recount })</h2>
+            <h2>${board.subject}(${recount })</h2>
             <hr>
             <div align="right">
             	<small>닉네임 :${board.board_userid}</small>
@@ -76,8 +76,8 @@ var html =   "<textarea rows='20' cols='90' name='co_content'>"
            <h3>Before & After 후기 </h3>
     		</c:if>
             <br>
+            <img src="../img/${board.fileurl}" style="width: 500px;height: 500px;">
             <p>${board.content }</p>
-			<a href="../img/${board.filename}">${board.filename}</a>
             <hr>
             <br>
             <br>
@@ -111,7 +111,7 @@ var html =   "<textarea rows='20' cols='90' name='co_content'>"
 <c:if test="${param.board_type == 3 || param.board_type == 4 }">
      	                <strong>댓글 쓰기</strong><br>
      	                
-<form action="recomment.zips" method="post">
+<form action="chrecomment.zips" method="post">
 <input type="hidden" name="board_type" value="${param.board_type }">
 <input type="hidden" name="co_userid" value="${sessionScope.loginUser.id}">
 <input type="hidden" name="num" value="${board.num }">

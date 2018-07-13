@@ -26,10 +26,11 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public int count(String searchType, String searchContent) {
+	public int count(Integer board_type,String searchType, String searchContent) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("searchType", searchType);
 		map.put("searchContent", searchContent);
+		map.put("board_type", board_type+"");
 		return sqlSession.selectOne(NS+"count",map);
 	}
 
@@ -79,11 +80,15 @@ public class BoardDaoImpl implements BoardDao {
 	public List<Board> totallist(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		int startrow = (pageNum -1 ) * limit;
+		System.out.println("startrow::::::::::::::"+startrow);
 		map.put("searchType", searchType);
 		map.put("searchContent", searchContent);
 		map.put("startrow", startrow);
 		map.put("limit", limit); 
 		map.put("board_type", board_type);
+		System.out.println("startrow::::::::::::::"+startrow);
+		System.out.println("limit:디에오임플::::::::::"+limit);
+		System.out.println("board_type::디에오임플 아마이게 안되는게아닐까?::::::"+board_type);
 		return sqlSession.selectList(NS+"totallist",map);
 	}
 
@@ -97,9 +102,12 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.getMapper(BoardMapper.class).recommand(num);
 	}
 
-
-	
-	
-	
+	@Override
+	public List<Board> bestlist(Board board) {
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("board_type", board.getBoard_type());
+		map.put("recommand", board.getRecommand());
+		return sqlSession.selectList(NS+"recommandlist",map);
+	}
 	
 }

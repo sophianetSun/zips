@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link href="form-validation.css" rel="stylesheet">
-<!-- Custom styles for this template -->
 </head>
 
 <body class="bg-center">
@@ -53,7 +52,6 @@
               </h3>
               <div class="mb-1 text-muted"><span class="input-group-text"
 					style="text-align: center; width: 230px; height: 40px;">
-					
 					<form:input path="filename" type="file"/>
 					<font color="red"><form:errors path="filename" /></font></span>
 					
@@ -82,8 +80,9 @@
 			<center>
 			
 			<c:if test="${param.board_type == 1}">
-					<a href="javascript:board_submit()"><button class="btn btn-primary btn-block" type="button"  
-					style="text-align: center; width: 270px; height: 45px;">동영상 업로드</button></a></c:if>
+					<a href="javascript:board_submit()"><button class="btn btn-primary btn-block" type="button"
+					style="text-align: center; width: 270px; height: 45px;">동영상
+					업로드</button></a></c:if>
 					
 					<c:if test="${param.board_type == 2 || param.board_type == 3}"><button class="btn btn-primary btn-block" type="submit"
 					style="text-align: center; width: 270px; height: 45px;">글 업로드
@@ -111,24 +110,21 @@
 		crossorigin="anonymous"></script>
 	<script>
 	function board_submit() {
-		var file = filename.value.split(".");
+	var file = filename.value.split(".");
 		if(file[1] == null){
 			alert('동영상 파일을 꼭 올려주셔야 업로드가 가능합니다\n동영상 확장자 파일은 "mp4"만 가능합니다')
+			return false;
 		}
 		else if(file[1] == "mp4"){
 			f.submit();
 	     } else if(file[1] != "mp4") {
 			alert('동영상 파일만 업로드 가능합니다. 파일을 확인하세요\n동영상 확장자 파일은 "mp4"만 가능합니다')
 		     f.filename.focus();
+			return false;
 	     }
-			return;
-	}
 		var trans_text = document.getElementById("textarea");
 	    trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>");
-	    
-
-			f.submit();
-	
+	}
 		window.jQuery
 				|| document
 						.write(

@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import exception.BoardException;
 import exception.ShopException;
 import logic.User;
 
@@ -36,6 +37,24 @@ public class LoginAspect {
 	return ret;
 	
    }
+
+// 주한 게시판  Aop
+@Around("execution(* controller.BoardController.ch*(..))")
+public Object BoardLoginCheck(ProceedingJoinPoint joinPoint) throws Throwable{      
+	   HttpSession session = null;
+   
+	session = (HttpSession) joinPoint.getArgs()[0];
+ 
+	User loginUser = (User)session.getAttribute("loginUser");
+   
+	if(loginUser == null) {
+		throw new BoardException("로그인 하신 후에 이용해주세요.","../user/login.zips");
+	} 
+   
+	Object ret = joinPoint.proceed();
+	return ret;
+	
+}
 /*   
    // 1. 로그인이 안된 경우 : 로그인이 필요합니다. /user/login.shop
    // 2. 카트가 비어있는 경우 : 장바구니가 비었습니다. /item/list.shop

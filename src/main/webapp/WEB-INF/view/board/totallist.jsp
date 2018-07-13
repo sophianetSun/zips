@@ -271,8 +271,8 @@
 
 
 <div class="container">
-
-	<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
+<%-- 
+	<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" onsubmit="return list(1)">
 			<input type="hidden" name="pageNum" value="1">
 			 <div class="search__container" align="center">
 			<select name="searchType" id="searchType" class="custom-select d-block" style="width:100px;height:40px;">
@@ -282,7 +282,33 @@
 				<br>
     <input class="search__input" type="text" name="searchContent" placeholder="Search" value="${param.searchContent}">
 			</div>
-		</form>
+			
+<script type="text/javascript">
+ if('${param.searchType}' != ''){
+	document.getElementById("searchType").value='${param.searchType}'	 
+ }
+ </script>
+</form>
+ --%>
+<form action="totallist.zips?board_type=${param.board_type}" method="post" name="searchform" onsubmit="return list(1)">
+<input type="hidden" name="pageNum" value="1">
+ <div class="search__container" align="center">
+<select name="searchType" id="searchType" class="custom-select d-block" style="width:100px;height:40px;">
+<option value="subject">제목</option>
+<option value="board_userid">글쓴이</option>   
+</select>
+<br>
+    <input class="search__input" type="text" name="searchContent" placeholder="Search" value="${param.searchContent}">
+</div>
+
+<script type="text/javascript">
+ if('${param.searchType}' != ''){
+	document.getElementById("searchType").value='${param.searchType}'	 
+ }
+</script>
+</form>
+
+
 		<br><br>
 	
 
@@ -324,7 +350,7 @@
 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} &nbsp;&nbsp;&nbsp;<em class="off">고민중</em></a></td>
 			</c:when>
 			<c:when test="${board.board_apply == 1}">
- 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} <em class="on">고민해결</em></a>
+ 			<c:if test="${!empty board.fileurl }"><img src="../img/imgicon.PNG" style="width:30px;height: 30px; "></c:if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} <em class="on">고민해결</em></a>
 			</c:when>
 			</c:choose>
 			</c:if>
@@ -339,29 +365,48 @@
 				</c:if>
 			</tr>
 			</c:forEach>
+			
 			<tr align="center" height="26"><td colspan="5">
-				<c:if test="${pageNum > 1}"> 
-					<a href="javascript:list(${pageNum - 1})">[이전]</a>
-				</c:if>&nbsp;
-				<c:if test="${pageNum <= 1}">[이전]</c:if>&nbsp;
-				
-				<c:forEach var="a" begin="${startpage2}" end="${endpage2}">
-					<c:if test="${a == pageNum}">[${a}]</c:if>
-					<c:if test="${a != pageNum}">
-						<a href="javascript:list(${a})">[${a}]</a>
-					</c:if>
-				</c:forEach>
-					<c:if test="${pageNum < maxpage2}">
-						<a href="javascript:list(${pageNum + 1})">[다음]</a>
-					</c:if>&nbsp;
-					<c:if test="${pageNum >= maxpage2}">[다음]						
-					</c:if>&nbsp;
-				</td></tr>
+	<ul class="pagination justify-content-center">
+<%-- <c:if test="${pageNum <= 1}"><button type="button" class="btn btn-info">이전</button></c:if>&nbsp; --%>
+<c:forEach var="a" begin="${startpage2}" end="${endpage2}">
+<c:if test="${a == pageNum}">
+<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}</a></li>
+</c:if>
+<c:if test="${a != pageNum}">
+<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}&nbsp;</a></li>
+</c:if>
+</c:forEach>
+<%-- <c:if test="${pageNum < maxpage}">
+<a href="javascript:list(${pageNum + 1})"><li><button type="button" class="btn btn-info">다음</button></li></a>
+</c:if>
+<c:if test="${pageNum > 1}">
+<a href="javascript:list(${pageNum - 1})"><li><button type="button" class="btn btn-info">이전</button></li></a>
+</c:if>&nbsp;
+<c:if test="${pageNum >= maxpage}">
+<li><button type="button" class="btn btn-info">다음</button></li></c:if>&nbsp; --%>
+<c:if test="${listcount2 == 0}">
+등록된 게시물이 없습니다
+</c:if>
+</td></tr>
 
-				
-	<c:if test="${listcount2 ==0}">
-		<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
-	</c:if>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		<tr align="center" valign="middle">
 </table>

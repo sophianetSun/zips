@@ -28,8 +28,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	
 	@Override
-	public int boardcount(String searchType, String searchContent) {
-		return boardDao.count(searchType,searchContent);
+	public int boardcount(Integer board_type,String searchType, String searchContent) {
+		return boardDao.count(board_type,searchType,searchContent);
 	}
 
 	@Override
@@ -144,6 +144,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Recomment getapply(int num) {
 		return recommentDao.getapply(num);
+	}
+
+	@Override
+	public List<Board> Bestlist(Board board) {
+		return boardDao.bestlist(board);
 	}
 
 		
