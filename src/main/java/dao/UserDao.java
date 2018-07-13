@@ -37,4 +37,6 @@ public interface UserDao {
 
 	// 구매자 코인 사용 취소
 	void updateBuyerCoinCancel(Integer coin, String shop_buyer_id);
+
+	User findEmail(String email);
 }

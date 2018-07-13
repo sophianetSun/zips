@@ -41,4 +41,8 @@ public interface MainService {
 	public List<InfoCalendar> loadMyInfoCalendar(String userId);
 	public Map<String, Double> myInfoMap(String userId);
 	public Map<String, Double> myInfoMap(String userId, String regdate);
+	public List<WorkoutDB> getWorkoutDBList(String searchText);
+	public List<InfoCalendar> getWorkoutList(String userId);
+	public List<String> myInfoNutriWords(String userId, String regdate);
+	public List<String> myInfoWorkoutWords(String userId, String regdate);
 }

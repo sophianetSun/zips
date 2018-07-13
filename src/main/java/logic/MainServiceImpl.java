@@ -16,6 +16,7 @@ import dao.FoodDao;
 import dao.MessageDao;
 import dao.SearchInfoDao;
 import dao.SubscriptionDao;
+import dao.WorkoutDao;
 
 @Service
 public class MainServiceImpl implements MainService {
@@ -30,6 +31,8 @@ public class MainServiceImpl implements MainService {
 	private FoodDao foodDao;
 	@Autowired
 	private CalendarDao calendarDao;
+	@Autowired
+	private WorkoutDao workoutDao;
 	
 	@Override
 	public Map<String, List<Board>> getMainBoards() {
@@ -197,6 +200,12 @@ public class MainServiceImpl implements MainService {
 	public List<InfoCalendar> loadMyInfoCalendar(String userId) {
 		return calendarDao.load(userId);
 	}
+	
+	@Override
+	public List<String> myInfoNutriWords(String userId, String regdate) {
+		return calendarDao.load(userId, regdate).stream().
+			map(info -> info.getNutri_memo()).collect(Collectors.toList());
+	}
 
 	@Override
 	public Map<String, Double> myInfoMap(String userId) {
@@ -212,19 +221,38 @@ public class MainServiceImpl implements MainService {
 
 	private Map<String, Double> myInfoListToMap(List<InfoCalendar> myInfoList) {
 		Map<String, Double> map = new HashMap<>();
-		Double calorie = myInfoList.stream().
-				collect(Collectors.summingDouble(InfoCalendar::getCalorie));
-		Double carbohydrate = myInfoList.stream().
-				collect(Collectors.summingDouble(InfoCalendar::getCarbohydrate));
-		Double fat = myInfoList.stream().
-				collect(Collectors.summingDouble(InfoCalendar::getFat));
-		Double protein = myInfoList.stream().
-				collect(Collectors.summingDouble(InfoCalendar::getProtein));
+		Double calorie = myInfoList.stream().filter(info -> info.getIn_type().equals(0))
+				.collect(Collectors.summingDouble(InfoCalendar::getCalorie));
+		Double carbohydrate = myInfoList.stream().filter(info -> info.getIn_type().equals(0))
+				.collect(Collectors.summingDouble(InfoCalendar::getCarbohydrate));
+		Double fat = myInfoList.stream().filter(info -> info.getIn_type().equals(0))
+				.collect(Collectors.summingDouble(InfoCalendar::getFat));
+		Double protein = myInfoList.stream().filter(info -> info.getIn_type().equals(0))
+				.collect(Collectors.summingDouble(InfoCalendar::getProtein));
 		map.put("calorie", calorie);
 		map.put("carbohydrate", carbohydrate);
 		map.put("fat", fat);
 		map.put("protein", protein);
 		return map;
+	}
+
+	
+	@Override
+	public List<WorkoutDB> getWorkoutDBList(String searchText) {
+		return workoutDao.getList(searchText);
+	}
+
+	@Override
+	public List<InfoCalendar> getWorkoutList(String userId) {
+		List<InfoCalendar> myInfoList = calendarDao.load(userId);
+		return myInfoList.stream().filter(
+				info -> info.getIn_type().equals(1)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<String> myInfoWorkoutWords(String userId, String regdate) {
+		return calendarDao.load(userId, regdate).stream().
+				map(info -> info.getWork_memo()).collect(Collectors.toList());
 	}
 	
 	

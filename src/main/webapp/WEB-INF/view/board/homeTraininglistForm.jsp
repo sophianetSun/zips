@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -45,8 +45,7 @@
             <blockquote>
             <div align="center">
              <video width="700" height="450" controls >
- 	 		<source src="mov_bbb.mp4" type="video/mp4">
- 			 <source src="mov_bbb.ogg" type="video/ogg">
+ 	 		<source src="../img/${board.fileurl}" type="video/mp4">
 				</video>
 				</div>
             </blockquote>
@@ -61,11 +60,11 @@
                     <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
                     <input type="hidden" name="num" value="${board.num}">
                     <input type="hidden" name="board_type" value="${board.board_type}">
-              <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${bestcnt}</button>
+              <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand}</button>
                      </form>
                      <br>
                      
-            <c:if test="${sessionScope.loginUser.id == board.board_userid}">
+            <c:if test="${sessionScope.loginUser.id != board.board_userid}">
             <button type="button" id="sub_btn"  class="btn btn-sm btn-outline-danger" style="width: 103px;height: 50px">▶ 구독하기 <font color="red"></font></button>
             </c:if>
             <br>
@@ -101,10 +100,10 @@ ${re.co_content}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <hr>
 </c:forEach>
           <div>
-          <%-- <c:if test="${sessionScope.loginUser.nickname == board.board_userid}"> </c:if> --%>
+          <c:if test="${sessionScope.loginUser.id == board.board_userid}">
 				<a href="update.zips?num=${board.num }&pageNum=${param.pageNum}&board_type=${param.board_type}"><button type="button" class="btn btn-primary">수정</button></a>
 				<a href="delete.zips?num=${board.num }&pageNum=${param.pageNum}&board_type=${param.board_type}"><button type="button" class="btn btn-warning">삭제</button></a>
-				<a href="homeTraininglist.zips?board_type=${param.board_type}"><button type="button" class="btn btn-light">목록</button></a>
+				</c:if><a href="homeTraininglist.zips?board_type=${param.board_type}"><button type="button" class="btn btn-light">목록</button></a> 
           </div>
 </body>
 </html>

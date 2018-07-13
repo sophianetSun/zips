@@ -105,4 +105,9 @@ public class UserServiceImpl implements UserService{
 		userDao.updateSellerCoinCancel(coin, shop_seller_id);
 	}
 
+	@Override
+	public User findEmail(String email) {
+		return userDao.findEmail(email);
+	}
+
 }

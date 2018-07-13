@@ -9,8 +9,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 </head>
 <body>
-<div id="canvas-holder" style="width:70%">
-	<canvas id="chart-area" width="200" height="200"></canvas>
+<div class="card">
+<div class="card-header">${sessionScope.loginUser.nickname } 님의 
+	<fmt:parseDate value="${param.regdate }" pattern="yyyy-MM-dd" var="selectedDate"/>
+	<fmt:formatDate value="${selectedDate }" pattern="yyyy년 MM월 dd일"/>
+	영양 섭취 정보입니다.</div>
+	<div id="canvas-holder" class="mx-auto" style="width:70%">
+		<canvas id="chart-area" width="200" height="200"></canvas>
+	</div>
+<div class="card-footer">
+	<c:forEach items="${words }" var="word">
+		<p class="card-text">${word }</p>
+	</c:forEach>
+</div>
 </div>
 <script>
 	var randomColorFactor = function() {
