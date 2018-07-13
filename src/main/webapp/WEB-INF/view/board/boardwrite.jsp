@@ -126,6 +126,9 @@
 		var trans_text = document.getElementById("textarea");
 	    trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>");
 	    
+
+			f.submit();
+	
 		window.jQuery
 				|| document
 						.write(

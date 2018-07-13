@@ -8,14 +8,13 @@
 <title>중고 장터 물품 등록</title>
 <style type="text/css">
 	#preview img {
-		width: 300px;
-		height: 300px;
+		width: 200px;
+		height: 200px;
 	}
 	label {
 		font-weight: bold;
 	}
 </style>
-<script type="text/javascript" src="//cdn.ckeditor.com/4.5.7/full/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready( function() {
 	        // 태그에 onchange를 부여한다.
@@ -33,12 +32,12 @@ $(document).ready( function() {
 	            for (var fileIndex = 0 ; fileIndex < input[0].files.length ; fileIndex++) {
 	                var file = input[0].files[fileIndex];
 	                var reader = new FileReader();
-	  
+	 
 	                reader.onload = function (img) {
 	                    //div id="preview" 내에 동적코드추가.
 	                    //이 부분을 수정해서 이미지 링크 외 파일명, 사이즈 등의 부가설명을 할 수 있을 것이다.
 	                    $("#preview").append(
-	                    	"<div style='height: 350px;'><img src=\"" + img.target.result + "\"\/></div>"
+	                        "<img src=\"" + img.target.result + "\"\/>"
 	                    );
 	                };
 	              
@@ -54,7 +53,7 @@ $(document).ready( function() {
 <div class="jumbotron" style="margin: auto;">
 <div class="container">
     <form:form modelAttribute="shop" action="write.zips" enctype="multipart/form-data" method="post">
-
+      
       <div class="form-group">
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>
         <label for="subject">제목 <font color="red"><form:errors path="shop_subject" /></font></label>
@@ -71,8 +70,7 @@ $(document).ready( function() {
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>
         <label for="content">상품 내용 <font color="red"><form:errors path="shop_content" /></font></label>
         <textarea class="form-control" id="content" name="shop_content" rows="10" placeholder="상품에 대한 설명을 작성해주세요." ></textarea>
-      	<script type="text/javascript">CKEDITOR.replace('shop_content');</script>
-      </div> 
+      </div>
       
       <div class="form-group">
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>
@@ -85,17 +83,15 @@ $(document).ready( function() {
         <label for="file">상품 사진 첨부</label>
         <input type="file" class="form-control" id="file" name="file" multiple>
       </div>
+      
     <br>
-    <h3>상품 이미지 미리 보기</h3>  
-    
- 	<div id="preview" align="center">
- 	</div> 
+    <br>
+    <h3>이미지 미리 보기</h3>  
+ 	<div id="preview">
  	
- 	<br>
- 	<div align="right">
+ 	</div>
       <button type="submit" class="btn btn-primary">작성</button>
       <input type="button" class="btn btn-primary" value="상품 목록" onclick="location.href='list.zips'">
- 	</div>
     </form:form>
 </div>
 

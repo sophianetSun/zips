@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>상품 수정 하기</title>
+<script type="text/javascript" src="//cdn.ckeditor.com/4.5.7/full/ckeditor.js"></script>
 </head>
 <body>
 <h2 align="center"> 중고 장터 게시물 수정 </h2>
@@ -31,6 +32,7 @@
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>
         <label for="content">상품 내용 <font color="red"><form:errors path="shop_content" /></font></label>
         <textarea class="form-control" id="content" name="shop_content" rows="3">${shop.shop_content}</textarea>
+      	<script type="text/javascript">CKEDITOR.replace('shop_content');</script>
       </div>
       <div class="form-group">
       	<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small><br>

@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
 <html>
 <head>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
 <style type="text/css">
  th {
  	text-align: center;
@@ -14,8 +15,8 @@
   a.btn_worry em.off {
     display: inline-block;
     border-radius: 3px;
-    border: 1px solid #aaa;
-    color: #777;
+    border: 1px solid blue;
+    color: blue;
     width: 50px;
     font-size: 11px;
     text-align: center;
@@ -49,12 +50,16 @@
     vertical-align: top;
     letter-spacing: -0.04em;
     }
-
+  
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>중고 장터 게시판 목록</title>
 <script type="text/javascript">
 	// 스크립트 list function
+	$(document).ready(function(){
+		$('a').css('color', '#17a2b8');
+	})
+	
 	function list(pageNum) {
 		var searchType = document.searchform.searchType.value;
 		if(searchType == null || searchType.length == 0) {
@@ -71,10 +76,38 @@
 </script>
 </head>
 <body>
-<h2 align="center">중고 장터 게시판 목록 </h2> 글개수:${listcount}
-
+<h2 align="center">중고 장터 게시판 목록 </h2> <%-- 글개수:${listcount} --%>
+ 
 <div class="container">
-<table class="table table-hover">
+	<div align="center">
+		<form action="list.zips" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
+			<input type="hidden" name="pageNum" value="${pageNum}">
+			<div align="center">
+			<select name="searchType"  id="searchType" class="custom-select d-block" style="width:100px; height:40px;">
+				<option value="">카테고리</option>
+				<option value="shop_subject">제목</option>
+				<option value="shop_seller_id">작성자</option>
+				<option value="shop_content">내용</option>
+			</select>&nbsp;
+			</div>
+			<script type="text/javascript">
+				if('${param.searchType}' != '') {
+					document.getElementById("searchType").value = '${param.searchType}';
+				}
+			</script>
+			<input type="text" class="search__input" name="searchContent" value="${param.searchContent}" placeholder="Search">
+		</form> 
+	</div>
+	<br> 
+		<div align="right"> 
+		<button type="button" class="btn btn-primary"
+				onclick="location.href='write.zips'"> 
+				글쓰기
+		</button> 
+	</div> 
+	<br>
+	<div align="center">
+	<table class="table table-hover">
 	<colgroup>
     		<col style="width: 100px">
     		<col style="width: auto">
@@ -94,24 +127,28 @@
 					<c:set var="shopcnt" value="${shopcnt-1}"/>
 				<td style="text-align: left;"> 
 				<c:if test="${shop.shop_status == '0'}">
+				<a class="btn_worry mr10"><em class="off">판매중</em></a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="detail.zips?shop_no=${shop.shop_no}">${shop.shop_subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="off">판매중</em></a>
-				</c:if>
+				</c:if> 
 				<c:if test="${shop.shop_status == '1'}">
 					<c:if test="${(shop.shop_seller_id == loginUser.id) || (shop.shop_buyer_id == loginUser.id)}">
-					<a href="dealpage.zips?shop_no=${shop.shop_no}">${shop.shop_subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="oning">구매중</em></a>			    
+					<a class="btn_worry mr10"><em class="oning">구매중</em></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="dealpage.zips?shop_no=${shop.shop_no}">${shop.shop_subject}</a>  
 				    </c:if>
 				      
 					<c:if test="${(shop.shop_seller_id != loginUser.id) && (shop.shop_buyer_id != loginUser.id)}">    
+					<a class="btn_worry mr10"><em class="oning">구매중</em></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="detail.zips?shop_no=${shop.shop_no}">${shop.shop_subject}</a>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="oning">구매중</em></a>
 					</c:if> 
 				</c:if>
 				
 				<c:if test="${shop.shop_status == '2'}">
+					<a class="btn_worry mr10"><em class="on">판매완료</em></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="detail.zips?shop_no=${shop.shop_no}">${shop.shop_subject}</a>
-				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn_worry mr10"><em class="on">판매완료</em></a>
 				</c:if>
 				</td>	
 				<td>${shop.shop_seller_id}</td>
@@ -119,51 +156,23 @@
 			</tr>
 			</c:forEach>
 			<tr align="center" height="26"><td colspan="5">
-				<c:if test="${pageNum > 1}"> 
-					<a href="javascript:list(${pageNum - 1})">[이전]</a>
-				</c:if>&nbsp;
-				<c:if test="${pageNum <= 1}">[이전]</c:if>&nbsp;
-				
-				<c:forEach var="a" begin="${startpage}" end="${endpage}">
-					<c:if test="${a == pageNum}">[${a}]</c:if>
-					<c:if test="${a != pageNum}">
-						<a href="javascript:list(${a})">[${a}]</a>
-					</c:if>
+			<ul class="pagination justify-content-center">
+			<c:forEach var="a" begin="${startpage}" end="${endpage}">
+				<c:if test="${a == pageNum}">
+				<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}</a></li>
+				</c:if>
+				<c:if test="${a != pageNum}">
+				<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}&nbsp;</a></li>
+				</c:if>
 				</c:forEach>
-					<c:if test="${pageNum < maxpage}">
-						<a href="javascript:list(${pageNum + 1})">[다음]</a>
-					</c:if>&nbsp;
-					<c:if test="${pageNum >= maxpage}">[다음]						
-					</c:if>&nbsp;
-				</td></tr>
+			</ul>
+			</td></tr>
 	</c:if>
 	<c:if test="${listcount ==0}">
 		<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 	</c:if>
-	
-	<tr><td colspan="4" align="center">
-		<form action="list.zips" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
-			<input type="hidden" name="pageNum" value="1">
-			<select name="searchType" id="searchType">
-				<option value="">선택하세요</option>
-				<option value="shop_subject">제목</option>
-				<option value="shop_seller_id">글쓴이</option>
-				<option value="shop_content">내용</option>
-			</select>&nbsp;
-			<script type="text/javascript">
-				if('${param.searchType}' != '') {
-					document.getElementById("searchType").value = '${param.searchType}';
-				}
-			</script>
-			<input type="text" name="searchContent" value="${param.searchContent}">
-			<input type="submit" value="검색">
-		</form>
-	</td></tr>
-	
-	<tr><td align="right" colspan="4">
-		<a href="write.zips">[글쓰기]</a></td></tr>
-		<tr align="center" valign="middle">
-</table>
+	</table>
+	</div>
 </div>
 
 </body>

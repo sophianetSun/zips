@@ -5,31 +5,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>상품 상세 보기</title>
+<title>상품 삭제 화면</title>
 </head>
 <body>
-<h2 align="center">중고 장터 상품 상세 보기</h2>
-<div class="container">
-<table>
-	<tr><td>상품 제목</td><td>${shop.shop_subject}</td></tr>
-	<tr><td>등록일</td><td>${shop.shop_regdate}</td></tr>
-	<tr><td>판매 회원 정보</td><td>${shop.shop_seller_id}</td></tr>
-	<tr><td>상품 내용</td>
-		<td><table border="0" width="490" height="250">
-			<tr><td>${shop.shop_content}</td></tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-	<td colspan="2" align="center">
+<h2 align="center">중고 장터 상품 삭제 하기</h2>
+<div class="container" align="center"> 
+	<div class="alert alert-warning">
+    	<strong> Warning! </strong> 정말로 ${sessionScope.loginUser.id} 회원님의 글 [ ${shop.shop_subject} ]을(를) 삭제하시겠습니까?
+  	</div>	
+<div align="center"></div>
 	<form action="delete.zips?shop_no=${shop.shop_no}" method="post">
-		<input type="hidden" name="shop_no" value="${param.shop_no}" />
-		<input type="hidden" name="pageNum" value="${param.pageNum}"/>
 	<button type="submit" class="btn btn-primary">상품 삭제</button> 
 	<input type="button" class="btn btn-primary" value="취소 하기" onclick="javascript:history.go(-1)">
 	</form>
-	</td></tr>
-</table>
-</div>
+</div>	
 </body>
 </html>

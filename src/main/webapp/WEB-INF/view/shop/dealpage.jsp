@@ -144,7 +144,7 @@
 				<h2>결제 정보</h2>
 				<table class='table table-bordered'>
 					<tr><td>결제 코인</td>
-						<td>${shop.shop_price}</td></tr>
+						<td>${shop.shop_price} Coin</td></tr>
 				</table>
 			</div>
 		</blockquote>

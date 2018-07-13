@@ -169,7 +169,6 @@ $(function(){
 </script>
 </head>
 <body>
-<a href="xxx.zips">아직 안한 것들</a>
 <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
  <h1 class="test" id="container4"><span>You are the most beautiful who try</span></h1>
   <br>
