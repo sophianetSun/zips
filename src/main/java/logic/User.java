@@ -30,6 +30,7 @@ public class User implements Serializable{
 	private String picture;
 	private MultipartFile pic;
 	private double muscle;
+	
 	public String getId() {
 		return id;
 	}

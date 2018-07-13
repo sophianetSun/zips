@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class Usercontroller {
 		if(bindingResult.hasErrors()) {
 			mav.getModel().putAll(bindingResult.getModel());
 			return mav;
-		}
+		} 
 		String pass = user.getPw();//user의 비밀번호를 가져옴(이 때는 String타입)
 		String dbpass = CiperUtil.encrypt(pass, "secretpw");//암호화할 user의 비밀번호를 secretpw라는 키값에 저장->현재 암호화가 된 상태
 		user.setPw(dbpass);
@@ -54,8 +55,8 @@ public class Usercontroller {
 			userService.userCreate(user, request);
 			mav.setViewName("user/login");
 			mav.addObject("user",user);
-		} catch (DataIntegrityViolationException e) {
-			bindingResult.reject("error.duplicate.user");
+			} catch (DataIntegrityViolationException e) {
+				bindingResult.reject("error.duplicate.user");
 		}
 		return mav;
 	}
@@ -129,13 +130,29 @@ public class Usercontroller {
 		String pass = user.getPw();//user의 비밀번호를 가져옴(이 때는 String타입)
 		String dbpass = CiperUtil.encrypt(pass, "secretpw");//암호화할 user의 비밀번호를 secretpw라는 키값에 저장->현재 암호화가 된 상태
 		user.setPw(dbpass);
-		String addr1 = request.getParameter("addr1");
-		String addr2 = request.getParameter("addr2");
-		String addr3 = request.getParameter("addr3");
-		user.setAddress(addr1 + " " + addr2 + " " + addr3);
+		User dbUser = userService.getUser(user.getId());
+		String addr = dbUser.getAddress();
+		int blacklist = dbUser.getBlacklist();
+		user.setBlacklist(blacklist);
+		int point  = dbUser.getPoint();
+		user.setPoint(point);
+		int coin = dbUser.getCoin();
+		user.setCoin(coin);
+		Date regdate  = dbUser.getRegdate();
+		user.setRegdate(regdate);
+		Date logdate  = dbUser.getLogdate();
+		user.setLogdate(logdate);
+		if(addr.isEmpty() || addr == null) {
+			String addr1 = request.getParameter("addr1");
+			String addr2 = request.getParameter("addr2");
+			String addr3 = request.getParameter("addr3");
+			user.setAddress(addr1 + " " + addr2 + " " + addr3);
+		} else {
+			user.setAddress(user.getAddress());
+		}
 		userService.updateUser(user, request);
 		mav.addObject("dbuser", user);
-		mav.setViewName("redirect:mypage.zips?id="+user.getId());//setViewName은 .jsp가 붙음
+		mav.setViewName("redirect:mypage.zips");//setViewName은 .jsp가 붙음
 		return mav;
 	}
 	
@@ -231,11 +248,18 @@ public class Usercontroller {
 	@RequestMapping("user/adminUpdate")
 	public ModelAndView adminUpdate(String id, User user, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("user/userAdmin");
-		
-		
-		
-		System.out.println(user);
-		
+		User updateUser = userService.dbuser(user.getId());//user의 모든 정보
+		String pass = updateUser.getPw();
+		user.setPw(pass);	
+		String addr = updateUser.getAddress();
+		if(addr.isEmpty() || addr == null) {
+			String addr1 = request.getParameter("addr1");
+			String addr2 = request.getParameter("addr2");
+			String addr3 = request.getParameter("addr3");
+			user.setAddress(addr1 + " " + addr2 + " " + addr3);
+		} else {
+			user.setAddress(user.getAddress());
+		}
 		userService.updateUser(user, request);
 		mav.addObject("updateUser", user);
 		mav.setViewName("redirect:admin.zips");
