@@ -44,7 +44,8 @@ public class WorkoutDB implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WorkoutDB [num=" + num + ", name=" + name + ", calorie=" + calorie + "]";
+		return "{\"WorkoutDB\": {\"num\":" + num + ", \"name\":\"" 
+				+ name + "\", \"calorie\":" + calorie + "}}";
 	}
 
 }

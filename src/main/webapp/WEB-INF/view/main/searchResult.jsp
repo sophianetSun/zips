@@ -38,6 +38,5 @@
 			})
 		});
 </script>
-${map }
 </body>
 </html>
