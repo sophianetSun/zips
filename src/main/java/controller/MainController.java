@@ -99,20 +99,33 @@ public class MainController {
 	
 	@RequestMapping("myinfo/graph")
 	public ModelAndView graph(HttpSession session,
-			@RequestParam(value="regdate", required=false) String regdate) {
-		ModelAndView mav = new ModelAndView("main/graph");
-		Map<String, Double> map;
+			@RequestParam(value="regdate", required=false) String regdate,
+			@RequestParam(value="in_type", required=false) String in_type) {
 		User user = (User)session.getAttribute("loginUser");
-		if (regdate == null && regdate.equals("")) 	map = mainService.myInfoMap(user.getId());
-		else map = mainService.myInfoMap(user.getId(), regdate);
-		mav.addObject("map", map);
-		return mav;
+
+		if (in_type.equals("0")) {
+			ModelAndView mav = new ModelAndView("main/graph");
+			Map<String, Double> map;
+			if (regdate == null && regdate.equals("")) 	map = mainService.myInfoMap(user.getId());
+			else map = mainService.myInfoMap(user.getId(), regdate);
+			List<String> words = mainService.myInfoNutriWords(user.getId(), regdate);
+			mav.addObject("words", words);
+			mav.addObject("map", map);
+			return mav;
+		} else {
+			ModelAndView mav = new ModelAndView("main/graph2");
+			List<InfoCalendar> list = mainService.getWorkoutList(user.getId());
+			List<String> words = mainService.myInfoWorkoutWords(user.getId(), regdate);
+			mav.addObject("list", list);
+			mav.addObject("words", words);
+			return mav;
+		}
 	}
 	
 	// RestfulAPI
-	@GetMapping(value="user/subscribe.zips", produces="application/json; charset=utf8")
+	@GetMapping(value="user/subscribe", produces="application/json; charset=utf8")
 	@ResponseBody
-	public String subscribeapi(String userId, String subId) {
+	public String subscribeapi(String userId, String subId, HttpSession session) {
 		int result = mainService.subscribe(userId, subId); 
 		if (result == 1) return "{\"result\" : 1, \"subId\" : \"" + subId + "\"}";
 		else if (result == 2) return "{\"result\" : 2, \"subId\" : \"" + subId + "\"}";
@@ -132,13 +145,23 @@ public class MainController {
 	public String mySearchInfo(String searchType, String searchText) {
 		// searchType 에 따라 푸드 디비 or 워크아웃 결정
 		if (searchText == null || searchText.equals("")) return "";
-		return mainService.getFoodDBList(searchText).toString();
+		if (searchType.equals("food")) {
+			return mainService.getFoodDBList(searchText).toString();			
+		} else {
+			return mainService.getWorkoutDBList(searchText).toString();
+		}
 	}
 	
 	@RequestMapping(value="message/list", produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String msgList(String receiverId, String senderId) {
 		return mainService.getMsgList(receiverId, senderId).toString();
+	}
+	
+	@RequestMapping(value="message/get", produces="application/json; charset=utf8")
+	@ResponseBody
+	public Message getMsg(String num) {
+		return mainService.getMsgById(num);
 	}
 	
 	@RequestMapping(value="message/send")

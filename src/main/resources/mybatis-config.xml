@@ -14,6 +14,7 @@
 		<typeAlias type="logic.UploadFile" alias="UploadFile"/>
 		<typeAlias type="logic.FoodDB" alias="FoodDB"/>
 		<typeAlias type="logic.InfoCalendar" alias="InfoCalendar"/>
+		<typeAlias type="logic.WorkoutDB" alias="WorkoutDB"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/User.xml"/>
@@ -26,5 +27,6 @@
 		<mapper resource="dao/mapper/Recomment.xml"/>
 		<mapper resource="dao/mapper/FoodDB.xml"/>
 		<mapper resource="dao/mapper/InfoCalendar.xml"/>
+		<mapper resource="dao/mapper/WorkoutDB.xml"/>
 	</mappers>
 </configuration>

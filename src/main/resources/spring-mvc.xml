@@ -43,7 +43,6 @@
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<value>
-				exception.CartEmptyException=exception
 				exception.LoginException=exception
 				exception.ShopException=exception
 			</value>

@@ -8,6 +8,29 @@
 <script src='${pageContext.request.contextPath}/js/moment-with-locales.min.js'></script>
 <title>쪽지</title>
 <script>
+function reply(btn) {
+	makeMsgForm();
+	$.get('message/get.zips',{
+		num : btn.id
+	}, function(res) {
+		var receiver = document.getElementById('receiver');
+		var content = document.getElementById('content');
+		var reMsg = "re : " + res.content;	
+		receiver.value = res.sender;
+		content.value = reMsg;
+	})
+}
+function makeMsgForm() {
+	var msgForm = "<form action='message/send.zips'><div class='form-group'>";
+	msgForm += "<label for='receiver'>받는 사람ID</label>" +
+		"<input type='text' class='form-control' id='receiver' name='receiver'></div>";
+	msgForm += "<div class='form-group'>";
+	msgForm += "<textarea rows='10' class='form-control' id='content' name='content'></textarea></div>";
+	msgForm += "<button type='submit' class='btn btn-primary'>쪽지 보내기</button></form>"
+
+	document.getElementById('msg_table').innerHTML = msgForm;	
+}
+
 function deleteMsg(button) {
 	var flag = confirm("쪽지를 삭제 하시겠습니까?");
 	if (flag == true) {
@@ -34,8 +57,12 @@ function makeTable(msgs, m_type) {
 		table += "<td>" + msg.content + "</td>";
 		moment.locale("ko");
 		var date = moment(dateFormatter(msg.regdate));
-		table += "<td>" + date.format("YY/MM/DD aHH:mm") + "</td>";
-		table += "<td><button type='button' id='" + msg.num 
+		table += "<td>" + date.format("YY/MM/DD aHH:mm") + "</td><td>";
+		if (m_type == 're') {
+			table += "<button type='button' id='" + msg.num 
+			+ "' class='btn btn-warning' onclick='reply(this)'>답장</button> ";
+		}
+		table += "<button type='button' id='" + msg.num 
 			+ "' class='btn btn-danger' onclick='deleteMsg(this)'>삭제</button></td></tr>";
 	}
 	table += "</tbody></table>";
@@ -76,14 +103,7 @@ function makeTable(msgs, m_type) {
 				});
 	});
 	$('#send').click(function() {
-		var msgForm = "<form action='message/send.zips'><div class='form-group'>";
-		msgForm += "<label for='receiver'>받는 사람ID</label>" +
-			"<input type='text' class='form-control' id='receiver' name='receiver'></div>";
-		msgForm += "<div class='form-group'>";
-		msgForm += "<textarea rows='10' class='form-control' id='content' name='content'></textarea></div>";
-		msgForm += "<button type='submit' class='btn btn-primary'>쪽지 보내기</button></form>"
-		
-		document.getElementById('msg_table').innerHTML = msgForm;
+		makeMsgForm();
 	});
 	
   });
@@ -91,9 +111,11 @@ function makeTable(msgs, m_type) {
 </head>
 <body>
 <div class="container">
+	<div class="clearfix">
 	<button type="button" id="re_msg" class="btn btn-primary">받은 쪽지</button>
 	<button type="button" id="se_msg" class="btn btn-info">보낸 쪽지</button>
-	<button type="button" id="send" class="btn btn-success">쪽지 보내기</button>
+	<button type="button" id="send" class="btn btn-success float-right">쪽지 보내기</button>
+	</div>
 	
 	<div id="msg_table" class="mt-4">
 	<table class="table table-bordered">
@@ -111,7 +133,10 @@ function makeTable(msgs, m_type) {
 		      <td>${msg.sender }</td>
 		      <td>${msg.content }</td>
 		      <td><fmt:formatDate value="${msg.regdate }" pattern="YY/MM/dd ahh:mm"/></td>
-		      <td><button type="button" id='${msg.num }' 
+		      <td>
+		      	<button type="button" id ='${msg.num }' 
+		      	onclick='reply(this)' class="btn btn-warning">답장</button>
+		      	<button type="button" id='${msg.num }' 
 		      	onclick='deleteMsg(this)' class="btn btn-danger">삭제</button></td>
 		  </tr>  	    
 	    </c:forEach>
