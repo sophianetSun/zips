@@ -19,10 +19,18 @@ public class Board implements Serializable{
 	private Date regdate;
 	private Date moddate;
 	private int recommand;
+	private int totalrecommand;
 	private int admin_alert;
 	private int board_type;
 	private MultipartFile filename;
 			
+	
+	public int getTotalrecommand() {
+		return totalrecommand;
+	}
+	public void setTotalrecommand(int totalrecommand) {
+		this.totalrecommand = totalrecommand;
+	}
 	public int getNum() {
 		return num;
 	}

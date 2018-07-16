@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import dao.BestDao;
 import dao.BoardDao;
 import dao.RecommentDao;
+import dao.ShopDao;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -24,8 +25,6 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private RecommentDao recommentDao;
-	
-	
 	
 	@Override
 	public int boardcount(Integer board_type,String searchType, String searchContent) {
@@ -149,6 +148,28 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> Bestlist(Board board) {
 		return boardDao.bestlist(board);
+	}
+
+	@Override
+	public List<Board> totalBestlist(Board board) {
+		return boardDao.totalbestlist(board);
+	}
+	
+	@Override
+	public int totalbest(Best best, Integer num) {
+		boardDao.totalrecommand(num);
+	 	return bestDao.best(best);
+	}
+
+	@Override
+	public void fileUpload(int num, String originalfileName, String saveFileName, long fileSize) {
+		num = boardDao.maxNum();
+		boardDao.fileUpload(++num, originalfileName, saveFileName, fileSize);
+	}
+
+	@Override
+	public List<UploadFile> getFileList(int num) {
+		return boardDao.getFileList(num);
 	}
 
 		
