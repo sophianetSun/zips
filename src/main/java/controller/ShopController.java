@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-
 import exception.ShopException;
 import logic.Shop;
 import logic.ShopService;
@@ -43,10 +42,9 @@ public class ShopController {
 	public ModelAndView write(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		System.out.println("게시물 작성 GET 방식 호출입니다.");
-		
 		mav.addObject(new Shop()); 
-		return mav;
-	} 
+		return mav;  
+	}  
 	
 	// 중고 장터 글 작성 호출
 	@RequestMapping(value="shop/write*", method=RequestMethod.POST)

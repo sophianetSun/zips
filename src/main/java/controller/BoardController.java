@@ -1,12 +1,16 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.BoardException;
@@ -22,6 +28,7 @@ import logic.Best;
 import logic.Board;
 import logic.BoardService;
 import logic.Recomment;
+import logic.UploadFile;
 import logic.User;
 
 @Controller
@@ -53,11 +60,51 @@ public class BoardController {
 				 throw new BoardException("해당 게시물은 이미 추천을 누르셨습니다", "homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
 			 }
 		 }
+	   } else {
+		   int result = service.best(best,num);
+		   if(result > 0) {
+			throw new BoardException("추천 완료 !", "homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+			 } 
 	   }
 			int bestcnt = service.bestcnt(best);
 			mav.addObject("bestcnt",bestcnt);
 		return mav;
 	}
+	
+	@RequestMapping("board/totalbest")
+	public ModelAndView chtotalbest(HttpSession session,Best best,Board board, String board_userid) {
+		ModelAndView mav = new ModelAndView();
+	    User sessionId = (User) session.getAttribute("loginUser");
+	    sessionId.getId();
+		Integer num = board.getNum();
+	   best.setNum(board.getNum());
+	   best.setRec_user(board_userid);
+	   best.setRec_board_type(board.getBoard_type());
+	   List<Best> dbbest = service.getbest(board.getNum());
+	   if(dbbest.iterator().hasNext()) {
+		 for(int i=0; i<dbbest.size(); i++) {
+			 dbbest.iterator().next().getRec_user();
+			 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
+				 int result = service.best(best,num);
+				 if(result > 0) {
+					 mav.setViewName("redirect:totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+				 } 
+			 } else {
+				 throw new BoardException("해당 게시물은 이미 추천을 누르셨습니다", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+			 }
+		 }
+	   } else {
+		   int result = service.totalbest(best,num);
+		   if(result > 0) {
+			throw new BoardException("추천 완료 !", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+			 } 
+	   }
+			int bestcnt = service.bestcnt(best);
+			mav.addObject("bestcnt",bestcnt);
+		return mav;
+	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value="board/apply")
@@ -103,7 +150,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("board/totallist")
-	public ModelAndView totallist(@Valid Recomment recomment, Integer board_type,Integer num,Integer pageNum, String searchType, String searchContent) {
+	public ModelAndView totallist(@Valid Recomment recomment,Board board, Integer board_type,Integer num,Integer pageNum, String searchType, String searchContent) {
 			if(pageNum == null || pageNum.toString().equals("")) {
 				pageNum = 1;
 			}
@@ -111,7 +158,7 @@ public class BoardController {
 			int limit = 9;
 			int listcount = service.boardcount(board_type,searchType,searchContent);
 			List<Board> boardlist = service.totalboardList(board_type,searchType,searchContent,pageNum,limit);
-			
+			List<Board> totalBestlist = service.totalBestlist(board);
 			int recount = service.recount(num);
 			int maxpage = (int)((double)listcount/limit + 0.95);
 			int startpage = ((int)((pageNum/10.0 + 0.9) -1)) * 10 + 1;
@@ -119,6 +166,7 @@ public class BoardController {
 			if(endpage > maxpage) endpage = maxpage;
 			int boardcnt = listcount - (pageNum - 1) * limit;
 			mav.addObject("recount",recount);
+			mav.addObject("totalbestlist",totalBestlist);
 			mav.addObject("pageNum",pageNum);
 			mav.addObject("maxpage2",maxpage);
 			mav.addObject("startpage2",startpage);
@@ -169,12 +217,65 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="board/boardwrite" , method = RequestMethod.POST)
-	public ModelAndView chdetailform(@Valid HttpSession session, Board board, BindingResult bindingResult , HttpServletRequest request) {
+	public ModelAndView chdetailform(@Valid HttpSession session, Board board,MultipartHttpServletRequest mhsq, BindingResult bindingResult , HttpServletRequest request) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
 		if(bindingResult.hasErrors()) {
 			mav.getModel().putAll(bindingResult.getModel());
 			return mav;
 		}
+		String realFolder = session.getServletContext().getRealPath("/") + "/bafile/";
+		File dir = new File(realFolder);
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		List<MultipartFile> mf = mhsq.getFiles("beforefile");
+		List<MultipartFile> aftermf = mhsq.getFiles("afterfile");
+		
+	   if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
+            
+       } else {
+           for (int i = 0; i < mf.size(); i++) {
+               // 파일 중복명 처리
+        	   String genId = UUID.randomUUID().toString(); 
+
+               // 본래 파일명
+               String originalfileName = mf.get(i).getOriginalFilename();
+                
+               String saveFileName = genId + "." + FilenameUtils.getExtension(originalfileName);
+               // 저장되는 파일 이름
+
+               String savePath = realFolder + saveFileName; // 저장 될 파일 경로
+
+               long fileSize = mf.get(i).getSize(); // 파일 사이즈
+
+               mf.get(i).transferTo(new File(savePath)); // 파일 저장
+
+               service.fileUpload(board.getNum(), originalfileName, saveFileName, fileSize);
+           }
+       }
+	   
+	   if (aftermf.size() == 1 && aftermf.get(0).getOriginalFilename().equals("")) {
+           
+       } else {
+           for (int i = 0; i < aftermf.size(); i++) {
+               // 파일 중복명 처리
+        	   String genId = UUID.randomUUID().toString(); 
+
+               // 본래 파일명
+               String originalfileName = aftermf.get(i).getOriginalFilename();
+                
+               String saveFileName = genId + "." + FilenameUtils.getExtension(originalfileName);
+               // 저장되는 파일 이름
+
+               String savePath = realFolder + saveFileName; // 저장 될 파일 경로
+
+               long fileSize = aftermf.get(i).getSize(); // 파일 사이즈
+
+               aftermf.get(i).transferTo(new File(savePath)); // 파일 저장
+
+               service.fileUpload(board.getNum(), originalfileName, saveFileName, fileSize);
+           }
+       }
 		int result = service.boardinsert(board,request);
 		int boardtype = board.getBoard_type();
 		if(boardtype == 1) {
@@ -218,11 +319,14 @@ public class BoardController {
 		Board board = service.getBoard(num);
 		int recount = service.recount(num);
 		recomment = service.getapply(num);
+		List<UploadFile> uploadFileList = service.getFileList(num);
 		List<Recomment> recommentlist = service.recommentList(board_type,num);
 		String url = request.getServletPath();
 		if(url.contains("/board/totallistForm.zips")) {
 			service.updatereadcnt(num);
 		}
+		System.out.println("num::::::::::::::::"+num);
+		mav.addObject("uploadFileList",uploadFileList);
 		mav.addObject("recomment",recomment);
 		mav.addObject("num",num);
 		mav.addObject("board",board);

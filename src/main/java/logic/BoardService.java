@@ -44,6 +44,14 @@ public interface BoardService {
 	Recomment getapply(int num);
 
 	List<Board> Bestlist(Board board);
+	
+	List<Board> totalBestlist(Board board);
+
+	int totalbest(Best best, Integer num);
+
+	void fileUpload(int num, String originalfileName, String saveFileName, long fileSize);
+
+	List<UploadFile> getFileList(int num);
 
 
 

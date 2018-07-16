@@ -26,7 +26,7 @@
 	
 	<select id="checkCoin" resultType="String" parameterType="map">  
 		<![CDATA[
-		select count(*) from zipsuser z where id = #{shop_buyer_id} and #{coin} <= z.coin
+		select count(*) from zipsuser z where id = '${shop_buyer_id}' and ${coin} <= z.coin 
  		]]>
 	</select> 
 	

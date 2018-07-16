@@ -5,7 +5,7 @@
  <select id="bestlist" resultType="Best" parameterType="map">
 select num,rec_user,rec_board_type from best
  <if test="num != null">
- where num=#{num} 
+ where num=${num} 
  </if>
  </select>
  
