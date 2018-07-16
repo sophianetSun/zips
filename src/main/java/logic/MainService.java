@@ -10,15 +10,12 @@ import org.springframework.http.HttpRequest;
 public interface MainService {
 	// Main Board List
 	public Map<String, List<Board>> getMainBoards();
-	public List<Shop> getShopList();
 	public List<User> getTopUsers();
-	public InfoCalendar getMyCalInfo();
 	
 	// Search
 	public List<Board> searchBoard(String query);
 	public List<Shop> searchShop(String query);
 	public void inputSearch(String query, HttpSession session);
-	public List<Map<String, Integer>> getSearchMap();
 	public Map<String, Long> analyzeSearchResult();
 	
 	// Message

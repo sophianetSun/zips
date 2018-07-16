@@ -105,7 +105,7 @@ public class Usercontroller {
 			User dbUser = userService.getUser(user.getId());
 			if(dbUser.getPw().equals(user.getPw())) {
 				mav.addObject("dbUser", dbUser);
-				mav.setViewName("redirect:../main.zips");
+				mav.setViewName("main");
 				session.setAttribute("loginUser", dbUser);
 			} else {
 				bindingResult.reject("error.login.password");
@@ -354,7 +354,7 @@ public class Usercontroller {
 			mail.setRecipient(email);
 			mail.setTitle("아이디찾기");
 			adminMailSend(mail);
-			return "user/login";
+			return "mav";
 		}
 	   
 	   @ResponseBody
@@ -367,6 +367,7 @@ public class Usercontroller {
 	        }
 		   Mail mail = new Mail();
 			mail.setContents("jkl;");
+			mail.setContents("랜덤 비밀번호 입력");
 			mail.setGmailId("winnerzips");
 			mail.setGmailPw("winnerzips!");
 			mail.setMtype("text/html");

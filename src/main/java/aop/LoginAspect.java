@@ -56,14 +56,14 @@ public Object BoardLoginCheck(ProceedingJoinPoint joinPoint) throws Throwable{
 	
 }
 
-@Around("execution(* controller.MainController.subscribeapi(..))")
+@Around("execution(* controller.MainController.my*(..))")
 	public Object loginCheck(ProceedingJoinPoint joinPoint) throws Throwable {
 		int argsNum = joinPoint.getArgs().length;
 		HttpSession session = (HttpSession)joinPoint.getArgs()[argsNum-1];
 		User loginUser = (User)session.getAttribute("loginUser");
 		if (loginUser == null) {
 			throw new LoginException("로그인 하세요!!", 
-					session.getServletContext().getContextPath() + "user/login.zips");
+					session.getServletContext().getContextPath() + "/user/login.zips");
 		}
 		return joinPoint.proceed();
 	}

@@ -20,7 +20,7 @@
 			<value>org.mariadb.jdbc.Driver</value>
 		</property>	
 		<property name="jdbcUrl">
-			<value>jdbc:mariadb://localhost:3306/zips</value>
+			<value>jdbc:mariadb://192.168.0.69:3306/zips</value>
 		</property>
 		<property name="user">
 			<value>scott</value>
