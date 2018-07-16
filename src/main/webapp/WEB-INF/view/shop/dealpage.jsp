@@ -202,7 +202,7 @@
 			</c:if>
 		</div>
 		</div>
-		<hr>
+		<hr> 
 		<div align="right">
 			
 			<button type="button" class="btn btn-primary"
