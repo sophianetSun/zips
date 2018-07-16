@@ -1,9 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -57,8 +60,22 @@ public class MainController {
 	@RequestMapping("search")
 	public ModelAndView search(String query, HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/searchResult");
-		if (query != null && !query.equals(""))
+		User user = (User)session.getAttribute("loginUser");
+		if (query != null && !query.equals("")) {
 			mainService.inputSearch(query, session);
+			mav.addObject("boardSearchResult", mainService.searchBoard(query));			
+		}
+		if (user != null) {
+			String[] typeList = {"shop_subject", "shop_seller_id", "shop_content"};
+			List<Shop> shopSearchList = new ArrayList<>();
+			for(String type : typeList) {				
+				shopSearchList.addAll(shopService.shopList(type, query, 1, 10));
+			}
+			shopSearchList.stream().distinct()
+				.sorted(Comparator.comparing(Shop::getShop_regdate)
+				.reversed()).collect(Collectors.toList());
+			mav.addObject("shopSearchResult", shopSearchList);
+		}
 		Map<String, Long> map = mainService.analyzeSearchResult();
 		mav.addObject("map", map);
 		return mav;

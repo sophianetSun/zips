@@ -16,7 +16,6 @@ public interface MainService {
 	public List<Board> searchBoard(String query);
 	public List<Shop> searchShop(String query);
 	public void inputSearch(String query, HttpSession session);
-	public List<Map<String, Integer>> getSearchMap();
 	public Map<String, Long> analyzeSearchResult();
 	
 	// Message

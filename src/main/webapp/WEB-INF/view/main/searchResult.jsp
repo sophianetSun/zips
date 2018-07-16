@@ -38,5 +38,85 @@
 			})
 		});
 </script>
+<!-- 검색결과 보드 -->
+<div class="container mt-3">
+<table class="table table-dark table-hover">
+	<thead>
+		<tr>
+			<th>카테고리</th>
+			<th>제목</th>
+			<th>내용</th>
+			<th>작성자</th>
+			<th>날짜</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${boardSearchResult }" var="bodRes">
+			<tr onclick="location.href='board/totallistForm.zips?num=${bodRes.num
+				}&pageNum=1&board_type=${bodRes.board_type}'" style="cursor:pointer">
+				<td>
+					<c:choose>
+					<c:when test="${bodRes.board_type == 1 }">홈트레이닝</c:when>
+					<c:when test="${bodRes.board_type == 2 }">질문게시판</c:when>
+					<c:when test="${bodRes.board_type == 3 }">자유게시판</c:when>
+					<c:when test="${bodRes.board_type == 4 }">비포앤에프터</c:when>
+					<c:otherwise></c:otherwise>
+					</c:choose>
+				</td>
+				<td class="searchResult">${bodRes.subject }</td>
+				<td class="searchResult">${bodRes.content }</td>
+				<td class="searchResult">${bodRes.board_userid }</td>
+				<td><fmt:formatDate value="${bodRes.regdate }" pattern="yyyy-MM-dd HH:mm"/></td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
+<!-- 장터 검색 결과 -->
+<div class="card bg-primary text-white">
+   	<div class="card-body"><h4>장터 검색 결과</h4></div>
+</div>
+<table class="table table-dark table-hover mt-3">
+	<thead>
+		<tr>
+			<th>카테고리</th>
+			<th>제목</th>
+			<th>내용</th>
+			<th>날짜</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${shopSearchResult }" var="shopRes">
+			<tr onclick="location.href='shop/detail.zips?shop_no=${shopRes.shop_no}&pageNum=1'" 
+				style="cursor:pointer">
+				<td>중고장터</td>
+				<td class="searchResult">${shopRes.shop_subject }</td>
+				<td class="searchResult">${shopRes.shop_content}
+				<c:choose>
+					<c:when test="${shopRes.shop_status == 0}">
+						<span class="badge badge-primary float-right">판매중</span></c:when>
+					<c:when test="${shopRes.shop_status == 1}">
+						<span class="badge badge-info float-right">거래중</span></c:when>
+					<c:otherwise>
+						<span class="badge badge-danger float-right">판매완료</span></c:otherwise>
+				</c:choose>
+				</td>
+				<td><fmt:formatDate value="${shopRes.shop_regdate }" pattern="yyyy-MM-dd HH:mm"/></td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
+</div>
+<script>
+	var contents = document.getElementsByClassName("searchResult");
+	for (var idx in contents) {
+		var content = contents[idx].innerHTML;
+		if (typeof(content) == 'string' && content.search("${param.query }") >= 0) {
+			contents[idx].innerHTML = content.replace("${param.query }", 
+					"<span style='background-color:tomato;'>${param.query }</span>");
+		} 
+	}
+	
+</script>
+
 </body>
 </html>
