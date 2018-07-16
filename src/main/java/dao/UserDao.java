@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import logic.Board;
 import logic.User;
 
 public interface UserDao {
@@ -16,7 +17,6 @@ public interface UserDao {
 
 	User dbuser(String id);
 	
-
 	void pwchange(String userId, String dbpass);
 
 	List<User> list(String[] ids);
@@ -39,4 +39,11 @@ public interface UserDao {
 	void updateBuyerCoinCancel(Integer coin, String shop_buyer_id);
 
 	User findEmail(String email);
+
+	void sellUpdate();
+
+	int count(String searchType, String searchContent);
+
+	List<User> list(String searchType, String searchContent, Integer pageNum, int limit);
+
 }

@@ -3,13 +3,13 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="dao.mapper.BoardMapper">
   <select id="totallist" resultType="Board" parameterType="map">
-select num,board_userid,subject,board_apply,content,filename fileurl,regdate,board_count,board_type,recommand from totalboard
+select num,board_userid,subject,board_apply,content,filename fileurl,regdate,board_count,board_type,recommand,totalrecommand from totalboard
 
  <if test="board_type != null">
  where board_type=#{board_type} 
  </if>
  <if test="num != null">
- where num =#{num}
+ where num=#{num}
  </if>
 <if test="searchType != null and searchContent != null">
  and ${searchType} like '%${searchContent}%'
@@ -18,11 +18,20 @@ select num,board_userid,subject,board_apply,content,filename fileurl,regdate,boa
  <if test="startrow != null and limit != null">
 order by regdate desc limit #{startrow},#{limit}
 </if>
-
+ </select>
+ 
+ <select id="totalrecommandlist" resultType="Board" parameterType="map">
+select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand,totalrecommand from totalboard
+ <if test="board_type != null">
+ where board_type=${board_type} 
+ </if>
+<if test="totalrecommand != null">
+  order by totalrecommand desc
+</if>
  </select>
  
 <select id="list" resultType="Board" parameterType="map">
-select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand from totalboard
+select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand,totalrecommand from totalboard
  <if test="board_type != null">
  where board_type=#{board_type} 
  </if>
@@ -37,16 +46,13 @@ order by regdate desc limit #{startrow},#{limit}
 </if>
  </select>
  <select id="recommandlist" resultType="Board" parameterType="map">
-select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand from totalboard
- 
+select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand,totalrecommand from totalboard
  <if test="board_type != null">
  where board_type=${board_type} 
  </if>
-
 <if test="recommand != null">
   order by recommand desc
 </if>
-
  </select>
  
 <select id="count" resultType="Integer" parameterType="map">
@@ -60,5 +66,15 @@ select num,board_userid,subject,content,filename fileurl,regdate,board_count,boa
  and ${searchType} like '%${searchContent}%'
  </if>
  </select>
+ 
+ <insert id="fileUpload" parameterType="map">
+		insert into uploadfile (board_no,originalName,filename,fileSize) values(#{board_no},#{originalfileName},#{saveFileName},#{fileSize})
+	</insert>
+<select id="getFileList" resultType="UploadFile" parameterType="map">
+select * from uploadfile
+<if test="board_no != null">
+where board_no=#{board_no}
+</if>
+	</select>
  </mapper>
  

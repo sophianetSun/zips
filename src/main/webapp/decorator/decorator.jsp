@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/zipsboard.css">
+  
   <title><decorator:title default="집에서 헬스하자 - zips" /></title>
   <decorator:head />
   <script>
@@ -29,7 +30,7 @@
 <body>
 <!-- Header -->
 <div class="container">
-<div class="row" style="margin-bottom:0">
+<div class="row mb-0">
   <div class="col-sm-9">
   <a href="${pageContext.request.contextPath }">
   	<img src="${pageContext.request.contextPath }/img/team.png" class="rounded main_logo" alt="teamlogo">
@@ -47,7 +48,6 @@
 <c:if test="${!empty sessionScope.loginUser }">
 	<a href="${pageContext.request.contextPath}/user/mypage.zips">마이페이지</a>
 	<a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
-	<a href="${pageContext.request.contextPath}/myInfoCal.zips">영양</a>
 	<a href="${pageContext.request.contextPath}/calendar.zips">달력</a>	 
 </c:if>
   <form action="${pageContext.request.contextPath }/search.zips" method="POST" id="search">
@@ -92,11 +92,11 @@
 </div>  
 </nav>
 <!-- Main  -->
-<div class="container" style="margin-top:30px">
+<div class="container bg-light pt-1 pb-2">
 	<decorator:body/>
 </div>
 <!-- Footer -->
-<footer class="jumbotron text-center mt-24 mb-0"> 
+<footer class="jumbotron text-center mb-0"> 
   <p>Powered by <a href="http://cafe.naver.com/itisgoodee" target="_blank" class="w3-hover-text-grey"><strong>GOODEE ACADEMY</strong></a></p>
 </footer>
 </body>

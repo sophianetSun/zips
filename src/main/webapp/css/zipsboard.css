@@ -46,7 +46,7 @@
   -webkit-text-fill-color: transparent;
   background: linear-gradient(to right, #1ddb16, #ffbb00);
   }
-.test {
+.testgreen {
   display: inline-block;
   margin: 30px auto 0;
   font-family: 'Nanum Pen Script';
@@ -258,9 +258,6 @@ a:visited {
     outline: none;
 }
 
-
-
-
 .rainbow {
   background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
   background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
@@ -268,4 +265,57 @@ a:visited {
   -webkit-background-clip: text;
   background-clip: text;
 }
+
+
+@-webkit-keyframes sparkle {
+  from {
+    background-position: 0% 100%;
+  }
+  to {
+    background-position: 200% 100%;
+  }
+}
+
+
+@keyframes sparkle {
+  from {
+    background-position: 0% 100%;
+  }
+  to {
+    background-position: 200% 100%;
+  }
+}
+
+.test {
+  background: white;
+  display: inline-block;
+  padding: 1em;
+  font-family: Helvetica Neue;
+  border-radius: 4px;
+  position: relative;
+}
+.test:before {
+  -webkit-animation: sparkle 4s infinite linear;
+          animation: sparkle 4s infinite linear;
+  background: linear-gradient(90deg, #7FEFBD 0%, #FFF689 11%, #EC0B43 22%, #7FEFBD 33%, #FFF689 44%, #EC0B43 55%, #7FEFBD 66%, #FFF689 77%, #EC0B43 88%, #7FEFBD 100%);
+  background-size: 300% 100%;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  -webkit-filter: blur(6px);
+          filter: blur(6px);
+  z-index: -1;
+  -webkit-transform: scale(0.99) translateY(3px);
+          transform: scale(0.99) translateY(3px);
+}
+
+
+
+
+
+
     

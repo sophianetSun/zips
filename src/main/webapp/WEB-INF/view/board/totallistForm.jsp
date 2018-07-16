@@ -76,14 +76,32 @@ var html =   "<textarea rows='20' cols='90' name='co_content'>"
            <h3>Before & After 후기 </h3>
     		</c:if>
             <br>
+            <c:if test="${!empty board.fileurl}">
             <img src="../img/${board.fileurl}" style="width: 500px;height: 500px;">
+            </c:if>
             <p>${board.content }</p>
+            <c:forEach var="file" items="${uploadFileList}">
+            
+            <img src="../bafile/${file.filename}" width="400px" height="350px">
+            
+            </c:forEach>
             <hr>
             <br>
             <br>
             <br>
             <br>
             <br>
+            <div align="center">
+            <c:if test="${param.board_type == 3 || param.board_type == 4 }">
+            <form action="totalbest.zips?board_type=${param.board_type}">
+                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
+                    <input type="hidden" name="num" value="${board.num}">
+                    <input type="hidden" name="board_type" value="${board.board_type}">
+              <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.totalrecommand}</button>
+                     </form>
+            </c:if>
+            </div>
+                     <br>
             <c:if test="${param.board_type == 2 }">
             <h1><strong>A</strong></h1><h3>답변</h3>
             <hr>
@@ -111,7 +129,7 @@ var html =   "<textarea rows='20' cols='90' name='co_content'>"
 <c:if test="${param.board_type == 3 || param.board_type == 4 }">
      	                <strong>댓글 쓰기</strong><br>
      	                
-<form action="chrecomment.zips" method="post">
+<form action="recomment.zips" method="post">
 <input type="hidden" name="board_type" value="${param.board_type }">
 <input type="hidden" name="co_userid" value="${sessionScope.loginUser.id}">
 <input type="hidden" name="num" value="${board.num }">

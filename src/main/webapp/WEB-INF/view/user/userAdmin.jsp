@@ -91,22 +91,57 @@ $(function(){
 	  });
 	});
 
-/* function sendmail() ({
-	  url:"/controller/Usercontroller/mail.zips",
-	  data:{},
-	  type:"POST",
-	  dataType:"json"
-	}) */
+function list(pageNum) {
+	var searchType = document.searchform.searchType.value;
+	if(searchType == null || searchType.length == 0) {
+		document.searchform.searchContent.value = "";
+		document.searchform.pageNum.value = 1;
+		location.href="admin.zips?pageNum="+pageNum;			
+	} else {
+		document.searchform.pageNum.value = pageNum;
+		document.searchform.submit();
+		return true;
+	}
+	return false;
+}
+
+
+
+
+
+
+
 </script>
+
 </head>
 <body>
 <div class="w3-container">
   <h2>관리자 페이지</h2>
+  <input type="hidden" name="pageNum" value="${pageNum}">
+  <form action="list.zips" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
+  <input type="hidden" name="pageNum" value="${pageNum}">
+			<div align="center">
+			<select name="searchType"  id="searchType" class="custom-select d-block" style="width:100px; height:40px;">
+				<option value="">카테고리</option>
+				<option value="id">ID</option>
+				<option value="name">이름</option>
+			</select>&nbsp;
+			</div>
+			<script type="text/javascript">
+				if('${param.searchType}' != '') {
+					document.getElementById("searchType").value = '${param.searchType}';
+				}
+			</script>
+			<input type="text" class="search__input" name="searchContent" value="${param.searchContent}" placeholder="Search">
+		</form> 
+
+
   <br><br><br>
 	<c:forEach items="${userList}" var="user" varStatus="stat">
 <p align="right">
   <input class="w3-check" type="checkbox">
   <label> 회원선택하기</label></p>
+  
 <ul class="w3-ul w3-card-4">
     <li class="w3-bar">
         <button class="w3-button w3-xlarge w3-circle w3-black" onclick="myFunction('Demo${stat.index}')">+</button>
@@ -235,12 +270,35 @@ $(function(){
 </li>
 </ul>
 <br>
+
 </c:forEach>
 <br>
 <div align="center">
 <button type="button" class="btn btn-default" onclick="location.href='mail.zips'">회원메일보내기</button>
-<button type="button" class="btn btn-default" onclick="location.href='join.zips'">선택한회원탈퇴</button><br>
+<button type="button" class="btn btn-default" onclick="location.href='join.zips'">선택한회원탈퇴</button><br><br>
+
 </div>
+<br>
+
+<ul class="pagination justify-content-center">
+
+			<c:forEach var="a" begin="${startpage}" end="${endpage}">
+				<c:if test="${a == pageNum}">
+				<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}</a></li>
+				</c:if>
+				<c:if test="${a != pageNum}">
+				<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}&nbsp;</a></li>
+				</c:if>
+				</c:forEach>
+			</ul>
+
+<c:if test="${listcount == 0}">
+등록된 게시물이 없습니다
+</c:if>
+
+            <br>
+
+<br>
 <br>
 </div>
 </body>
