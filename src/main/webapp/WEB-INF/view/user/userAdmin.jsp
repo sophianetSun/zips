@@ -6,6 +6,8 @@
 <head>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
 <script type="text/javascript">
 $(document).ready(
 		  function() {
@@ -88,6 +90,13 @@ $(function(){
 		  alert('회원삭제완료');
 	  });
 	});
+
+/* function sendmail() ({
+	  url:"/controller/Usercontroller/mail.zips",
+	  data:{},
+	  type:"POST",
+	  dataType:"json"
+	}) */
 </script>
 </head>
 <body>
@@ -119,8 +128,7 @@ $(function(){
       	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현재파일<input type="text" id="picture" name="picture" value="${user.picture}">
       </div>
 			</td>
-			<td><!-- 흥미를 잃지 않았기에 학원에 있었던 6개월이라는 시간동안 밤늦게까지 공부하며 남아있어도 제가 좋아하는 일이기에 질리지 않고
-할 수 있었습니다. -->
+			<td>
 						
 <div align="right">
   <table class="w3-table">
@@ -216,8 +224,9 @@ $(function(){
 <input type="submit" class="btn btn-default" value="회원수정하기">
 <a href="adminDelete.zips?id=${user.id}" id="userAdminDelete">
 <button type="button" class="btn btn-default">강제탈퇴하기</button></a>
-<a href="adminDelete.zips?id=${user.id}" id="userAdminDelete">
+<a href="onemail.zips?id=${user.id}">
 <button type="button" class="btn btn-default">메일전송하기</button></a>
+<!-- <button type="button" class="btn btn-default" onclick="sendmail()">메일전송하기</button> -->
 </div>
 <br>
 </div>

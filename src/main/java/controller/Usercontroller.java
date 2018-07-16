@@ -1,9 +1,26 @@
 package controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Date;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,14 +29,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ciper.CiperUtil;
 import exception.LoginException;
+import logic.Mail;
 import logic.User;
 import logic.UserService;
+
+import javax.mail.internet.AddressException;
 
 @Controller
 public class Usercontroller {
@@ -96,7 +119,7 @@ public class Usercontroller {
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping("user/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -138,10 +161,10 @@ public class Usercontroller {
 		user.setPoint(point);
 		int coin = dbUser.getCoin();
 		user.setCoin(coin);
-		Date regdate  = dbUser.getRegdate();
+		/*Date regdate  = dbUser.getRegdate();
 		user.setRegdate(regdate);
 		Date logdate  = dbUser.getLogdate();
-		user.setLogdate(logdate);
+		user.setLogdate(logdate);*/
 		if(addr.isEmpty() || addr == null) {
 			String addr1 = request.getParameter("addr1");
 			String addr2 = request.getParameter("addr2");
@@ -157,7 +180,7 @@ public class Usercontroller {
 	}
 	
 	@RequestMapping(value="user/delete", method=RequestMethod.GET)
-	public ModelAndView delete(String id, HttpSession session) {
+	public ModelAndView delete(String id) {
 		ModelAndView mav = new ModelAndView();
 		User user = userService.getUser(id);
 		mav.addObject("user", user);
@@ -276,11 +299,141 @@ public class Usercontroller {
 		return mav;
 	}
 	
+	@RequestMapping(value="user/onemail", method=RequestMethod.GET)
+	public ModelAndView sendmail(String id, HttpSession session) {
+		ModelAndView mav = new ModelAndView("user/mail");
+		User onemailsend = userService.dbuser(id);
+		String onemailsender = onemailsend.getEmail();
+		mav.addObject("sender", onemailsender);
+		/*if(idchks == null || idchks.length == 0) {
+			throw new LoginException("메일전송이 완료되었습니다.", "user/mail");
+		}
+		List<User> userList = userService.userList(idchks);
+		mav.addObject("userList", userList);*/
+		//mav.setViewName("redirect:userAdmin.zips");
+		return mav;
+	}
+	
+	    @ResponseBody
+		@RequestMapping(value="user/findid", method=RequestMethod.POST)
+		public String findid(String email) {
+			User forgeter = userService.findEmail(email);//이메일을 통해서 회원의 정보를 가져옴. 
+			String userEmail = forgeter.getEmail();
+			String forgeterId = forgeter.getId();
+			String text = email + "님의 아이디는 " + forgeterId + "입니다.";
+			Mail mail = new Mail();
+			mail.setContents(text);
+			mail.setGmailId("winnerzips");
+			mail.setGmailPw("winnerzips!");
+			mail.setMtype("text/html");
+			mail.setRecipient(email);
+			mail.setTitle("아이디찾기");
+			adminMailSend(mail);
+			return "mav";
+		}
+	   
+	   @ResponseBody
+	   @RequestMapping(value="user/findpw", method=RequestMethod.POST)
+	   public String findpw(String id) {
+		   User forgeter = userService.dbuser(id);
+		   String forgeterEmail = forgeter.getEmail();
+		   
+		   Mail mail = new Mail();
+			mail.setContents("랜덤 비밀번호 입력");
+			mail.setGmailId("winnerzips");
+			mail.setGmailPw("winnerzips!");
+			mail.setMtype("text/html");
+			mail.setRecipient(forgeterEmail);
+			mail.setTitle("비밀번호찾기");
+			adminMailSend(mail);
+		   return "mav";
+	   }
+	
+	private final class MyAuthenticator extends Authenticator {
+		private String id;
+		private String pw;
+		public MyAuthenticator(String id, String pw) {
+			this.id = id;
+			this.pw = pw;
+		}
+		@Override
+		protected PasswordAuthentication getPasswordAuthentication() {
+			return new PasswordAuthentication(id, pw);
+		}
+	}
+	
+	@RequestMapping("user/mail")
+	public ModelAndView mail(Mail mail, HttpSession session) {
+		ModelAndView mav = new ModelAndView("user/mailsuccess");
+		adminMailSend(mail);
+		return mav;
+	}
+
+	private void adminMailSend(Mail mail) {
+		String gmailId = mail.getGmailId();
+		String gmailPw = mail.getGmailPw();
+		MyAuthenticator auth = new MyAuthenticator(gmailId, gmailPw);
+		Properties prop = new Properties();
+		FileInputStream fis = null;
+		try {
+			File f = new File("C:\\Users\\user\\git\\zips\\mail.properties");
+			fis = new FileInputStream(f);
+			prop.load(fis);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		Session session = Session.getInstance(prop, auth);
+		MimeMessage msg = new MimeMessage(session);
+		try {
+			msg.setFrom(new InternetAddress(gmailId));
+			List<InternetAddress> addrs = new ArrayList<InternetAddress>();
+			String[] emails = mail.getRecipient().split(",");
+			for(int i=0; i<emails.length; i++) {
+				try {
+					addrs.add(new InternetAddress(new String(emails[i].getBytes("euc-kr"), "8859_1")));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+			InternetAddress[] arr = new InternetAddress[emails.length];
+			for(int i=0; i<addrs.size(); i++) {
+				arr[i] = addrs.get(i);
+			}
+			msg.setSentDate(new Date());
+			InternetAddress from = new InternetAddress(gmailId);
+			msg.setFrom(from);
+			msg.setRecipients(Message.RecipientType.TO, arr);
+			msg.setSubject(mail.getTitle());
+			MimeMultipart multipart = new MimeMultipart();
+			MimeBodyPart message = new MimeBodyPart();
+			message.setContent(mail.getContents(),mail.getMtype());
+			multipart.addBodyPart(message);
+			/*for(MultipartFile mf : mail.getFile1()) {
+				if((mf != null) && (!mf.isEmpty())) {
+					multipart.addBodyPart(bodyPart(mf));
+				}
+			}*/
+			msg.setContent(multipart);		
+			Transport.send(msg);
+		} catch(MessagingException me) {
+			me.printStackTrace();
+		}
+	}
+
+	private BodyPart bodyPart(MultipartFile mf) {
+		MimeBodyPart body = new MimeBodyPart();
+		String orgFile = mf.getOriginalFilename();
+		File f1 = new File("C:/Users/user/git/zips/src/main/webapp/img"+orgFile);
+		try {
+			mf.transferTo(f1);
+			body.attachFile(f1);
+			body.setFileName(new String(orgFile.getBytes("EUC-KR"), "8859_1"));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return body;
+	}
 }
-
-
-
-
 
 
 

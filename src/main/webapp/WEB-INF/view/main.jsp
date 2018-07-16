@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ include file="./jspHeader.jsp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -64,43 +64,69 @@ var randomColor = function(opacity) {
 </head>
 <body>
 <!-- 홈트 -->
-<div id="homeTraining" class="row">
+<ul><li><p class="testred"><I><span>Best Hot 동영상&nbsp;3</span></I></p></li></ul>
+<div id="bestTraining" class="row">
+	<!-- Best Top 3 -->
+	<c:forEach items="${bestTraining}" var="best">
 	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
+	<div class="card mb-4 box-shadow">
+		<video width="docWidth" height="174" class="video-js" controls>
+ 	 	<source src="../img/${best.fileurl}" type="video/mp4"></video>
+		<div class="card-body">
+        	<p class="card-text">&nbsp;&nbsp;<a href="board/homeTraininglistForm.zips?num=${best.num}&pageNum=${pageNum}&board_type=${best.board_type}">
+                   ${best.subject }</a></p>
+			<hr>
+            <div class="d-flex justify-content-between align-items-center">
+				<small class="text-muted"><c:if test="${best.moddate != null }">등록일 :<fmt:formatDate value="${best.moddate}" pattern="yyyy-MM-dd-HH:mm"/></c:if>
+				<c:if test="${best.moddate == null }"><fmt:formatDate value="${best.regdate}" pattern="yyyy-MM-dd-HH:mm"/></c:if>
+				<br>
+				작성자 :${best.board_userid}
+				<br>
+				조회수 :${best.board_count} 
+				<br></small>
+			</div>
+			<div class="btn-group">
+            	<button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천 <font color="red">♥
+                <span class="badge badge-light">&nbsp;${best.recommand}</span></font></small></button>
+				<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;" disabled="disabled"><small>▶ 구독 <font color="red"></font></small></button>
+			</div>
+		</div>
 	</div>
+	</div>
+	</c:forEach>
+</div>
+<div class="card bg-info text-white">
+   	<div class="card-body"><h4>최신 홈트 영상</h4></div>
+</div>
+<div id="homeTraining" class="row" style="margin-top:16px;">
+	<!-- Training Board -->
+	<c:forEach items="${homeTraining}" var="homeT">
 	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
+	<div class="card mb-4 box-shadow">
+		<video width="docWidth" height="174" class="video-js" controls>
+ 	 	<source src="../img/${homeT.fileurl}" type="video/mp4"></video>
+		<div class="card-body">
+        	<p class="card-text">&nbsp;&nbsp;<a href="board/homeTraininglistForm.zips?num=${homeT.num}&pageNum=${pageNum}&board_type=${homeT.board_type}">
+                   ${homeT.subject }</a></p>
+			<hr>
+            <div class="d-flex justify-content-between align-items-center">
+				<small class="text-muted"><c:if test="${homeT.moddate != null }">등록일 :<fmt:formatDate value="${homeT.moddate}" pattern="yyyy-MM-dd-HH:mm"/></c:if>
+				<c:if test="${homeT.moddate == null }"><fmt:formatDate value="${homeT.regdate}" pattern="yyyy-MM-dd-HH:mm"/></c:if>
+				<br>
+				작성자 :${homeT.board_userid}
+				<br>
+				조회수 :${homeT.board_count} 
+				<br></small>
+			</div>
+			<div class="btn-group">
+            	<button type="submit" class="homeT btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천 <font color="red">♥
+                <span class="badge badge-light">&nbsp;${homeT.recommand}</span></font></small></button>
+				<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;" disabled="disabled"><small>▶ 구독 <font color="red"></font></small></button>
+			</div>
+		</div>
 	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
 	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
+	</c:forEach>
 </div>
 <!-- 그래프 -->
 <div id="main_graph" class="carousel slide" data-ride="carousel">
@@ -132,13 +158,22 @@ var randomColor = function(opacity) {
 <div id="shop" class="row">
 	<div class="col-sm-8">
 		<h4 class="main_title">중고장터</h4>
-		<table class="table table-striped">
+		<table class="table table-striped table-hover">
 		<tr><th>글쓴이</th><th>제목</th><th>날짜</th></tr>
 		<c:forEach items="${shopList}" var="shop">
-		<tr>
-			<td>${shop.shop_seller_id}</td>
-			<td><a href="shop/detail.zips?shop_no=${shop.shop_no}&pageNum=1">${shop.shop_subject}</a></td>	
-			<td><fmt:formatDate value="${shop.shop_regdate}" pattern="YY/MM/dd"/></td>
+		<tr onclick="location.href = 'shop/detail.zips?shop_no=${shop.shop_no}&pageNum=1'">
+			<td class="w-25">${shop.shop_seller_id}</td>
+			<td class="w-50">${shop.shop_subject}
+			<c:choose>
+				<c:when test="${shop.shop_status == 0}">
+					<span class="badge badge-primary float-right">판매중</span></c:when>
+				<c:when test="${shop.shop_status == 1}">
+					<span class="badge badge-info float-right">거래중</span></c:when>
+				<c:otherwise>
+					<span class="badge badge-danger float-right">판매완료</span></c:otherwise>
+			</c:choose>
+			</td>	
+			<td class="w-25"><fmt:formatDate value="${shop.shop_regdate}" pattern="MM월dd일 HH시mm분"/></td>
 		</tr>
 		</c:forEach>
 		</table>
@@ -146,22 +181,36 @@ var randomColor = function(opacity) {
 	<div class="col-sm-4">
 		<ul class="list-group">
 		<li class="list-group-item">우수회원</li>
-		<li class="list-group-item list-group-item-success">
-			별주부전 27000pt</li>
-		<li class="list-group-item list-group-item-secondary">
-			허주환 13722pt</li>
-		<li class="list-group-item list-group-item-info">
-			운동계의 집스 6729pt</li>
-		<li class="list-group-item list-group-item-warning">
-			운동계의 집스 6729pt</li>							
-		<li class="list-group-item list-group-item-danger">
-			운동계의 집스 6729pt</li>
+		<c:forEach items="${topUserList}" var="topUser" varStatus="stat">
+		<c:choose>
+		<c:when test="${stat.index == 0}">
+			<li class="list-group-item list-group-item-success">
+				<span class="float-left">${topUser.nickname }</span>
+				<span class="float-right">${topUser.point }</span></li>
+		</c:when>
+		<c:when test="${stat.index == 1}">
+			<li class="list-group-item list-group-item-primary">
+				<span class="float-left">${topUser.nickname }</span>
+				<span class="float-right">${topUser.point }</span></li></c:when>
+		<c:when test="${stat.index == 2}">
+			<li class="list-group-item list-group-item-info">
+				<span class="float-left">${topUser.nickname }</span>
+				<span class="float-right">${topUser.point }</span></li></c:when>
+		<c:when test="${stat.index == 3}">
+			<li class="list-group-item list-group-item-warning">
+				<span class="float-left">${topUser.nickname }</span>
+				<span class="float-right">${topUser.point }</span></li></c:when>
+		<c:otherwise><li class="list-group-item list-group-item-danger">
+				<span class="float-left">${topUser.nickname }</span>
+				<span class="float-right">${topUser.point }</span></li></c:otherwise>
+		</c:choose>
+		</c:forEach>
 		</ul>
 	</div>
 </div>
 
 <!-- Before and After -->
-<div class="row" style="margin-top: 18px;">
+<div class="row" style="margin-top: 8px;">
   <div class="col-sm-4">
 		<div class="fakeimg">Fake Image</div>
 		<h5>오늘의 스쿼트</h5>
@@ -203,16 +252,25 @@ var randomColor = function(opacity) {
 <!-- Etc Boards -->
 <div class="row">
 	<div class="col-sm-6">
-		<h4 class="main_title">질문/답변</h4>
-		<p>헬린이 입니다. 운동 3개월 제 몸매 어떤가요?</p>
-		<p>닭가슴살 얼마나 먹어야 되나요?</p>
-		<p>헬스 보충제 잘 모르겠네요. 뭐 먹어야 되죠?</p>
+		<div class="list-group list-group-flush">
+		<a class="list-group-item list-group-item-primary"><h5>질문/답변</h5></a>
+			<c:forEach items="${qna}" var="q">
+				<a href="board/totallistForm.zips?num=${q.num}&pageNum=1&board_type=${q.board_type}" 
+					class="list-group-item list-group-item-action">${q.subject }
+					<c:if test="${q.board_apply == 0}">
+					<span class="badge badge-danger float-right">고민중</span></c:if></a>
+			</c:forEach>
+		</div>
 	</div>
 	<div class="col-sm-6">
-		<h4 class="main_title">자유게시판</h4>
-		<p>오늘 멕시코 전...</p>
-		<p>흥민이 불쌍함...</p>
-		<p>신태용 지구를 떠나라!!</p>
+		<div class="list-group list-group-flush">
+			<a class="list-group-item list-group-item-warning"><h5>자유게시판</h5></a>
+			<c:forEach items="${freeboard }" var="f">
+				<a href="board/totallistForm.zips?num=${f.num}&pageNum=1&board_type=${f.board_type}" 
+					class="list-group-item list-group-item-action">${f.subject }
+					<span class="badge badge-info float-right">${f.board_count }</span></a>
+			</c:forEach>
+		</div>
 	</div>
 </div>
 

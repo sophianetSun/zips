@@ -141,4 +141,9 @@ public class UserDaoImple implements UserDao{
 		System.out.println(shop_buyer_id);
 		sqlSession.update(NS+"updateBuyerCoinCancel", map);
 	}
+
+	@Override
+	public User findEmail(String email) {
+		return sqlSession.getMapper(UserMapper.class).findEmail(email);
+	}
 }

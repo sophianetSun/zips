@@ -178,19 +178,6 @@
  	<br><br>
     <input type="submit" class="btn btn-default btn-lg btn-block" value="회원가입">
     <br><br>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
   </form:form>
 </body>
 </html>
