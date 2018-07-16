@@ -36,10 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ciper.CiperUtil;
 import exception.LoginException;
-import logic.Best;
-import logic.Board;
 import logic.Mail;
-import logic.Shop;
 import logic.User;
 import logic.UserService;
 
@@ -105,7 +102,7 @@ public class Usercontroller {
 			User dbUser = userService.getUser(user.getId());
 			if(dbUser.getPw().equals(user.getPw())) {
 				mav.addObject("dbUser", dbUser);
-				mav.setViewName("main");
+				mav.setViewName("redirect:../main.zips");
 				session.setAttribute("loginUser", dbUser);
 			} else {
 				bindingResult.reject("error.login.password");
@@ -141,29 +138,7 @@ public class Usercontroller {
 	return mav;
 	}
 	
-	@RequestMapping("user/list")
-	public ModelAndView list(HttpSession session, Integer pageNum, String searchType, String searchContent) {
-		if (pageNum == null || pageNum.toString().equals("")) {
-			pageNum = 1;
-		} 
-		ModelAndView mav = new ModelAndView();
-		int limit = 5;
-		int listcount = userService.count(searchType, searchContent);
-		List<User> shoplist = userService.list(searchType, searchContent, pageNum, limit);
-		
-		int maxpage = (int)((double)listcount/limit + 0.95);
-		int startpage = ((int)((pageNum/10.0 + 0.9)-1))*10+1;
-		int endpage = startpage + 9;
-		if(endpage > maxpage) endpage = maxpage;
-		int shopcnt = listcount - (pageNum - 1) * limit;
-		mav.addObject("pageNum", pageNum);
-		mav.addObject("maxpage", maxpage);
-		mav.addObject("startpage", startpage);
-		mav.addObject("endpage", endpage);
-		mav.addObject("listcount", listcount);
-		//mav.setViewName("redirect:admin.zips");
-		return mav;
-	}
+	
 	
 	@RequestMapping(value="user/update", method=RequestMethod.POST)
 	public ModelAndView update(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
@@ -175,6 +150,7 @@ public class Usercontroller {
 		}
 		String pass = user.getPw();//user의 비밀번호를 가져옴(이 때는 String타입)
 		String dbpass = CiperUtil.encrypt(pass, "secretpw");//암호화할 user의 비밀번호를 secretpw라는 키값에 저장->현재 암호화가 된 상태
+		mav.addObject("secretpw", dbpass);
 		user.setPw(dbpass);
 		User dbUser = userService.getUser(user.getId());
 		String addr = dbUser.getAddress();
@@ -273,25 +249,47 @@ public class Usercontroller {
 	
 	
 	
-	@RequestMapping(value="user/admin", method=RequestMethod.GET)
+/*	@RequestMapping(value="user/admin", method=RequestMethod.GET)
 	public ModelAndView userAdmin(String id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		List<User> userList = userService.userList();
 		mav.addObject("userList", userList);
 		mav.setViewName("/user/userAdmin");
 		return mav;
+	}*/
+
+	@RequestMapping("user/admin")
+	public ModelAndView list(HttpSession session, String id, Integer pageNum, String searchType, String searchContent) {
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		} 
+		ModelAndView mav = new ModelAndView();
+		int limit = 5;
+		int listcount = userService.count(searchType, searchContent);
+		List<User> userList = userService.list(searchType, searchContent, pageNum, limit);
+		int maxpage = (int)((double)listcount/limit + 0.95);
+		int startpage = ((int)((pageNum/10.0 + 0.9)-1))*10+1;
+		int endpage = startpage + 9;
+		if(endpage > maxpage) endpage = maxpage;
+		int shopcnt = listcount - (pageNum - 1) * limit;
+		mav.addObject("userList", userList);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		mav.addObject("listcount", listcount);
+		//mav.setViewName("redirect:admin.zips");
+		mav.setViewName("/user/userAdmin");
+		return mav;
 	}
 	
-	@RequestMapping(value="user/admin", method=RequestMethod.POST)
+	/*@RequestMapping("user/admin")
 	public ModelAndView adminUser(String[] idchks, HttpSession session) {
 		ModelAndView mav = new ModelAndView("user/userAdmin");
-		if(idchks == null || idchks.length == 0) {
-			throw new LoginException("메일을 보낼 회원을 선택해 주세요.", "userAdmin.zips");
-		}
 		List<User> userList = userService.userList(idchks);
 		mav.addObject("userList", userList);
 		return mav;
-	}
+	}*/
 	
 	@RequestMapping("user/adminUpdate")
 	public ModelAndView adminUpdate(String id, User user, HttpServletRequest request) {
@@ -362,12 +360,13 @@ public class Usercontroller {
 	   public String findpw(String id) {
 		   User forgeter = userService.dbuser(id);
 		   String forgeterEmail = forgeter.getEmail();
-		   for (int i = 0; i < 6; i++) {
-	            int random = (int) (Math.random() * 11);
-	        }
 		   Mail mail = new Mail();
-			mail.setContents("jkl;");
-			mail.setContents("랜덤 비밀번호 입력");
+		   /*for (int i = 0; i < 6; i++) {
+	            int random = (int) (Math.random() * 11);
+	        }*/
+		   String findpwid = forgeter.getPw();
+		   String dbpass = CiperUtil.decrypt(findpwid, "secretpw");
+			mail.setContents(dbpass);
 			mail.setGmailId("winnerzips");
 			mail.setGmailPw("winnerzips!");
 			mail.setMtype("text/html");
@@ -436,11 +435,11 @@ public class Usercontroller {
 			MimeBodyPart message = new MimeBodyPart();
 			message.setContent(mail.getContents(),mail.getMtype());
 			multipart.addBodyPart(message);
-			/*for(MultipartFile mf : mail.getFile1()) {
+			for(MultipartFile mf : mail.getFile1()) {
 				if((mf != null) && (!mf.isEmpty())) {
 					multipart.addBodyPart(bodyPart(mf));
 				}
-			}*/
+			}
 			msg.setContent(multipart);		
 			Transport.send(msg);
 		} catch(MessagingException me) {

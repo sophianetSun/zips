@@ -20,7 +20,7 @@ order by regdate desc limit #{startrow},#{limit}
 </if>
 
  </select>
- 
+
 <select id="list" resultType="Board" parameterType="map">
 select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand from totalboard
  <if test="board_type != null">
