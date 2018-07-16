@@ -13,16 +13,10 @@
 	</script>
 </head>
 <body>
-<div class="container">
-		<div class="py-5 text-center">
+<div class="py-5 text-center">
 			<img class="d-block mx-auto mb-4" src="../img/runicon.png" alt=""
 				width="72" height="72">
-			<p class="test">
-				<I><span>글 쓰기 &nbsp;</span></I>
-			</p>
 		</div>
-	</div>
-
 <div class="jumbotron style="margin: auto;" >
 	<form:form modelAttribute="board" action="update.zips?num=${param.num }&board_type=${param.board_type}&pageNum=${paramNum}" method="post" enctype="multipart/form-data" name="f">
 		<input type="hidden" name="num" value="${board.num }">

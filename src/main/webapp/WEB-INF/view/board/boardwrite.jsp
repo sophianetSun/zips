@@ -7,15 +7,11 @@
 </head>
 
 <body class="bg-center">
-	<div class="container">
+
 		<div class="py-5 text-center">
 			<img class="d-block mx-auto mb-4" src="../img/runicon.png" alt=""
 				width="72" height="72">
-			<p class="test">
-				<I><span>글 쓰기 &nbsp;</span></I>
-			</p>
 		</div>
-	</div>
 	<div class="jumbotron style=" margin:auto;" >
 
 		<form:form modelAttribute="board"
@@ -57,40 +53,71 @@
 				<div class="card flex-md-row mb-4 box-shadow h-md-200"
 					style="width: 840px; height: 600px;">
 					<div class="card-body d-flex flex-column align-items-start">
-						<strong class="d-inline-block mb-10 text-success">본문</strong> <small
-							class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
-
-						<h3 class="mb-100">
-							<a class="text-dark">글 내용</a>
-						</h3>
-						<%-- <div class="mb-1 text-muted"><span class="input-group-text"
-					style="text-align: center; width: 230px; height: 40px;">
-					<img src="../img/video.png" style="height: 50px;width: 50px;">
-					<form:input path="filename" type="file" id="ex_file"/>
-					<font color="red"><form:errors path="filename" /></font>
-					<img src="../img/1-7.png" width="200px" height="200px" hspace="5">&nbsp;&nbsp;
-					</span></div>
-					<br> --%>
-
-
+					<h3 class="mb-100">
+						<strong class="d-inline-block mb-10 text-success">글 내용</strong></h3> 
 						<c:if test="${param.board_type == 4 }">
-							<div class="mb-1 text-muted">
+<div style="display: inline-block;">						
+<div class="w3-container">
+  <h2>Before</h2>
+
+  <div class="w3-card-4 w3-dark-grey" style="width:50%">
+
+    <div class="w3-container w3-center">
+      <h3>Friend Request</h3>
+      <img src="img_avatar3.png" alt="Avatar" style="width:80%">
+      <h5>John Doe</h5>
+
+      <div class="w3-section">
+        <button class="w3-button w3-green">Accept</button>
+        <button class="w3-button w3-red">Decline</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="w3-container">
+  <h2>After</h2>
+
+  <div class="w3-card-4 w3-dark-grey" style="width:50%">
+
+    <div class="w3-container w3-center">
+      <h3>Friend Request</h3>
+      <img src="img_avatar3.png" alt="Avatar" style="width:80%">
+      <h5>John Doe</h5>
+
+      <div class="w3-section">
+        <button class="w3-button w3-green">Accept</button>
+        <button class="w3-button w3-red">Decline</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+							<h2><xmp>   Beforeimg             Afterimg</xmp></h2>
+							<div style="display: inline-block;">
 							<input type=file name='beforefile' style='display: none;'  multiple="multiple"> 
- 							<img src='../img/beforeimg-1.PNG' style="width: 200px;height: 150px;" border='1' hspace="5" onclick='document.all.beforefile.click(); document.all.beforefile2.value=document.all.beforefile.value' class="w3-circle" > 
+ 							<img src='../img/beforeimg-1.PNG' style="width: 200px;height: 150px;" border='1' hspace="5" 
+ 							onclick='document.all.beforefile.click(); document.all.beforefile2.value=document.all.beforefile.value' 
+ 							class="w3-circle"> 
  							<input type='text' name='beforefile2' id='beforefile2' readonly="readonly" style='display: none;'> 
 							<img src="../img/1-9.png" style="width: 120px;height: 120px;">
 							<input type=file name='afterfile' style='display: none;'  multiple="multiple"> 
- 							<img src='../img/after-1.jpg' style="width: 200px;height: 150px;" border='1' hspace="5" onclick='document.all.afterfile.click(); document.all.afterfile2.value=document.all.afterfile.value' class="w3-circle" > 
  							<input type='text' name='afterfile2' id='afterfile2' readonly="readonly" style='display: none;'> 
-							</div>
+ 							<img src='../img/after-1.jpg' style="width: 200px;height: 150px;" border='1' hspace="5" onclick='document.all.afterfile.click(); document.all.afterfile2.value=document.all.afterfile.value' class="w3-circle" > 
 							<br>
 							<br>
-							<form:textarea rows="15" cols="80" path="content" id="textarea" />
+							<form:textarea rows="10" cols="80" path="content" id="textarea" />
 							<font color="red"><form:errors path="content" /></font>
 					</div>
 					</c:if>
-					<c:if
-						test="${param.board_type == 1 || param.board_type == 2 || param.board_type == 3}">
+					<c:if test="${param.board_type == 1 || param.board_type == 2 || param.board_type == 3}">
+						<div class="mb-1 text-muted">
+					<input type=file name='filename' style='display: none;'> 
+ 					<img src='../img/video.png' style="width: 200px;height: 150px;" border='1' hspace="5" onclick='document.all.filename.click(); document.all.filename2.value=document.all.filename.value' class="w3-circle" > 
+ 					<input type='text' name='filename2' id='filename2' readonly="readonly" style='display: none;'> 
+					</div>
+					<br>
 						<form:textarea rows="15" cols="80" path="content" id="textarea" />
 						<font color="red"><form:errors path="content" /></font>
 					</c:if>
@@ -114,9 +141,9 @@
 		<c:if test="${param.board_type == 4}">
 			<button class="btn btn-primary btn-block" type="submit"
 				style="text-align: center; width: 270px; height: 45px;">사진
-				업로드</button>
+				업로드</button></div>
 		</c:if>
-	</center>
+		</center>
 	</form:form>
 	<br>
 	<footer class="my-5 pt-5 text-muted text-center text-small">
@@ -127,17 +154,9 @@
 	</footer>
 
 	<script>
-	$(function(){
-	    $("input[type=file]").filestyle({ 
-	   image: "../img/video.png",
-	   imageheight : 20,
-	  imagewidth : 58,
-	  marginleft : 7,
-	   width: 240
-	   });
-	 });
+	
 		function board_submit() {
-			var file = filename.value.split(".");
+			var file = filename2.value.split(".");
 			if (file[1] == null) {
 				alert('동영상 파일을 꼭 올려주셔야 업로드가 가능합니다\n동영상 확장자 파일은 "mp4"만 가능합니다')
 				return false;

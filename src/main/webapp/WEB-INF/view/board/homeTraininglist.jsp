@@ -170,7 +170,7 @@ $(function(){
 </head>
 <body>
 <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
- <h1 class="test" id="container4"><span>You are the most beautiful who try</span></h1>
+ <h1 id="container4"><span>You are the most beautiful who try</span></h1>
   <br>
   <br>
         <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;" align="center">
@@ -203,13 +203,13 @@ $(function(){
 </form>
 
 <ul>
-<li><p class="testred"><I><span>Best Hot 동영상  3 &nbsp;</span></I></p></li>
+<li><p class="testred test"><span>Best Hot 동영상  3 &nbsp;</span></p></li>
 </ul>
 <div class="album py-5 bg-light">
         <div class="container">
           <div class="row">
 <c:forEach var="best" items="${Bestlist}" begin="0" end="2">
-            <div class="col-md-4">
+            <div class="col-md-4 test">
               <div class="card mb-4 box-shadow">
                <video width="docWidth" height="174" class="video-js" controls>
  	 		<source src="../img/${best.fileurl}" type="video/mp4">
