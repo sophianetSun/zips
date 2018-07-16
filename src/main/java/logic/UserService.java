@@ -40,6 +40,8 @@ public interface UserService {
 
 	User findEmail(String email);
 
-	
+	int count(String searchType, String searchContent);
+
+	List<User> list(String searchType, String searchContent, Integer pageNum, int limit);
 
 }

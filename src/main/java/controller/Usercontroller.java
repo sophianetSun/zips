@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,13 +35,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ciper.CiperUtil;
-import ciper.PassWord;
 import exception.LoginException;
+import logic.Best;
+import logic.Board;
 import logic.Mail;
+import logic.Shop;
 import logic.User;
 import logic.UserService;
-
-import javax.mail.internet.AddressException;
 
 @Controller
 public class Usercontroller {
@@ -107,7 +105,7 @@ public class Usercontroller {
 			User dbUser = userService.getUser(user.getId());
 			if(dbUser.getPw().equals(user.getPw())) {
 				mav.addObject("dbUser", dbUser);
-				mav.setViewName("main");
+				mav.setViewName("redirect:../main.zips");
 				session.setAttribute("loginUser", dbUser);
 			} else {
 				bindingResult.reject("error.login.password");
@@ -141,6 +139,30 @@ public class Usercontroller {
 	User dbuser = userService.dbuser(loginUser.getId());
 	mav.addObject("dbuser", dbuser);
 	return mav;
+	}
+	
+	@RequestMapping("user/list")
+	public ModelAndView list(HttpSession session, Integer pageNum, String searchType, String searchContent) {
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		} 
+		ModelAndView mav = new ModelAndView();
+		int limit = 5;
+		int listcount = userService.count(searchType, searchContent);
+		List<User> shoplist = userService.list(searchType, searchContent, pageNum, limit);
+		
+		int maxpage = (int)((double)listcount/limit + 0.95);
+		int startpage = ((int)((pageNum/10.0 + 0.9)-1))*10+1;
+		int endpage = startpage + 9;
+		if(endpage > maxpage) endpage = maxpage;
+		int shopcnt = listcount - (pageNum - 1) * limit;
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		mav.addObject("listcount", listcount);
+		//mav.setViewName("redirect:admin.zips");
+		return mav;
 	}
 	
 	@RequestMapping(value="user/update", method=RequestMethod.POST)
@@ -249,6 +271,8 @@ public class Usercontroller {
 		return mav;
 	}
 	
+	
+	
 	@RequestMapping(value="user/admin", method=RequestMethod.GET)
 	public ModelAndView userAdmin(String id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -330,7 +354,7 @@ public class Usercontroller {
 			mail.setRecipient(email);
 			mail.setTitle("아이디찾기");
 			adminMailSend(mail);
-			return "mav";
+			return "user/login";
 		}
 	   
 	   @ResponseBody
@@ -342,14 +366,14 @@ public class Usercontroller {
 	            int random = (int) (Math.random() * 11);
 	        }
 		   Mail mail = new Mail();
-			mail.setContents(random);
+			mail.setContents("jkl;");
 			mail.setGmailId("winnerzips");
 			mail.setGmailPw("winnerzips!");
 			mail.setMtype("text/html");
 			mail.setRecipient(forgeterEmail);
 			mail.setTitle("비밀번호찾기");
 			adminMailSend(mail);
-		   return "mav";
+		   return "user/pwchange";
 	   }
 	
 	private final class MyAuthenticator extends Authenticator {
@@ -393,7 +417,7 @@ public class Usercontroller {
 			String[] emails = mail.getRecipient().split(",");
 			for(int i=0; i<emails.length; i++) {
 				try {
-					addrs.add(new InternetAddress(new String(emails[i].getBytes("euc-kr"), "8859_1")));
+					addrs.add(new InternetAddress(new String(emails[i].getBytes("UTF-8"), "8859_1")));
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
@@ -430,7 +454,7 @@ public class Usercontroller {
 		try {
 			mf.transferTo(f1);
 			body.attachFile(f1);
-			body.setFileName(new String(orgFile.getBytes("EUC-KR"), "8859_1"));
+			body.setFileName(new String(orgFile.getBytes("UTF-8"), "8859_1"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

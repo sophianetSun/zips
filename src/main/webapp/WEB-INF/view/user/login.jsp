@@ -17,7 +17,6 @@ function sendCheckId() {
 }
 
 function sendCheckPW() {
-	console.log("Hello world!");
 	$.ajax({
 	    url: "findpw.zips",
 	    data: { id: $("#findidpw").val() }, 
