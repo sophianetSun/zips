@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import dao.mapper.ShopMapper;
 import dao.mapper.UserMapper;
+import logic.Board;
 import logic.User;
 
 @Repository
@@ -146,4 +148,39 @@ public class UserDaoImple implements UserDao{
 	public User findEmail(String email) {
 		return sqlSession.getMapper(UserMapper.class).findEmail(email);
 	}
+
+	@Override
+	public void sellUpdate() {
+		sqlSession.getMapper(ShopMapper.class).sellUpdate();
+		
+	}
+
+	
+
+	@Override
+	public int count(String searchType, String searchContent) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchType", searchType);
+		map.put("searchContent", searchContent);
+		Integer count = sqlSession.selectOne(NS+"count", map);
+		return count;
+	}
+
+	@Override
+	public List<User> list(String searchType, String searchContent, Integer pageNum, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int startrow = (pageNum - 1) * limit;
+		map.put("searchType", searchType);
+		map.put("searchContent", searchContent);
+		map.put("startrow", startrow);
+		map.put("limit", limit);
+		map.put("pageNum", pageNum);
+		
+		return sqlSession.selectList(NS+"list", map);
+	}
+
+
+
+	
+	
 }
