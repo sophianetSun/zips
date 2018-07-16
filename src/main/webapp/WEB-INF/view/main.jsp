@@ -129,7 +129,7 @@ var randomColor = function(opacity) {
 	</c:forEach>
 </div>
 <!-- 그래프 -->
-<div id="main_graph" class="carousel slide" data-ride="carousel">
+<div id="main_graph" class="carousel slide bg-white" data-ride="carousel">
   <!-- Indicators -->
   <ul class="carousel-indicators">
     <li data-target="#main_graph" data-slide-to="0" class="active"></li>
@@ -155,13 +155,14 @@ var randomColor = function(opacity) {
 </div>
 
 <!-- 중고장터, 우수회원 -->
-<div id="shop" class="row">
+<div id="shop" class="row" style="margin-top: 12px;">
 	<div class="col-sm-8">
 		<h4 class="main_title">중고장터</h4>
 		<table class="table table-striped table-hover">
 		<tr><th>글쓴이</th><th>제목</th><th>날짜</th></tr>
 		<c:forEach items="${shopList}" var="shop">
-		<tr onclick="location.href = 'shop/detail.zips?shop_no=${shop.shop_no}&pageNum=1'">
+		<tr onclick="location.href = 'shop/detail.zips?shop_no=${shop.shop_no}&pageNum=1'"
+			style="cursor:pointer">
 			<td class="w-25">${shop.shop_seller_id}</td>
 			<td class="w-50">${shop.shop_subject}
 			<c:choose>
@@ -210,7 +211,7 @@ var randomColor = function(opacity) {
 </div>
 
 <!-- Before and After -->
-<div class="row" style="margin-top: 8px;">
+<div class="row mt-1">
   <div class="col-sm-4">
 		<div class="fakeimg">Fake Image</div>
 		<h5>오늘의 스쿼트</h5>
@@ -258,7 +259,10 @@ var randomColor = function(opacity) {
 				<a href="board/totallistForm.zips?num=${q.num}&pageNum=1&board_type=${q.board_type}" 
 					class="list-group-item list-group-item-action">${q.subject }
 					<c:if test="${q.board_apply == 0}">
-					<span class="badge badge-danger float-right">고민중</span></c:if></a>
+					<span class="badge badge-danger float-right">고민중</span></c:if>
+					<c:if test="${q.board_apply == 1}">
+					<span class="badge badge-primary float-right">고민해결</span></c:if>
+					</a>
 			</c:forEach>
 		</div>
 	</div>

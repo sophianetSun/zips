@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,8 +69,17 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public List<Board> searchBoard(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Board> list = new ArrayList<Board>();
+		for(int i=1; i<=8; i++) {
+			if(i<=4) {
+				list.addAll(boardDao.list(i, "subject", query, 1, 10));							
+			} else {
+				list.addAll(boardDao.list(i%4, "board_userid", query, 1, 10));
+			}
+		}
+		list = list.stream().distinct().sorted(Comparator.comparing(Board::getRegdate).reversed())
+				.collect(Collectors.toList());
+		return list;
 	}
 
 	@Override
@@ -108,11 +118,6 @@ public class MainServiceImpl implements MainService {
 		searchInfoDao.setSearchContent(info);
 	}
 	
-	@Override
-	public List<Map<String, Integer>> getSearchMap() {
-		return searchInfoDao.getSearchListGroupBy();
-	}
-
 	@Override
 	public Map<String, Long> analyzeSearchResult() {
 		Map<String, Long> map = searchInfoDao.getSearchListAll().parallelStream()
