@@ -202,11 +202,6 @@
 			</c:if>
 		</div>
 		</div>
-		
-		<div align="center"> 
-		<h2>실시간 채팅</h2>
-			+
-		</div>
 		<hr>
 		<div align="right">
 			

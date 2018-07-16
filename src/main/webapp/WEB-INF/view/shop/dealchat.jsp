@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>WEbSocket Client</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js"></script>
 <c:set var="port" value="${pageContext.request.localPort}"/>
@@ -16,11 +16,12 @@
 		
 		var ws = new WebSocket("ws://${server}:${port}/zips/echo.zips");
 		ws.onopen = function() {
-			$("#chatStatus").text("연결이 완료되었습니다.");
+			$("#chatStatus").text("채팅 연결이 완료되었습니다.");
 			$("input[name=chatInput]").on("keydown", function(evt){
 				if(evt.keyCode == 13) {	// 13 : Enter 키
 					var msg = $("input[name=chatInput]").val();
-					ws.send(msg);
+					var user = '${sessionScope.loginUser.getId()}';
+					ws.send(user + " : " + msg);
 					$("input[name=chatInput]").val("");
 				}
 			});
@@ -31,7 +32,7 @@
 		}
 		
 		ws.onclode = function(event) {
-			$("#chatStatus").text("info:connection closed.");
+			$("#chatStatus").text("채팅 연결이 헤제 되었습니다.");
 		}
 		
 	});
