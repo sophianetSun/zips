@@ -3,6 +3,7 @@ package controller;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import logic.Board;
+import logic.BoardService;
 import logic.InfoCalendar;
 import logic.MainService;
 import logic.Message;
@@ -42,6 +45,12 @@ public class MainController {
 		if (user != null) {
 			mav.addObject("userId", user.getId());
 		}
+		// keys : bestTraining, homeTraining, beforeAndAfter, qna, freeboard 
+		mav.addObject("topUserList", mainService.getTopUsers());
+		Set<String> keys = mainService.getMainBoards().keySet();
+		for(String key : keys) {
+			mav.addObject(key, mainService.getMainBoards().get(key));
+		}
 		return mav;
 	}
 	
@@ -56,7 +65,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("message")
-	public ModelAndView message(HttpSession session) {
+	public ModelAndView myMessage(HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/message");
 		User user = (User)session.getAttribute("loginUser");
 		if (user == null) {
@@ -71,7 +80,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("calendar")
-	public ModelAndView calendar(HttpSession session) {
+	public ModelAndView myCalendar(HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/calendar");
 		User user = (User)session.getAttribute("loginUser");
 		List<InfoCalendar> list = mainService.loadMyInfoCalendar(user.getId());
@@ -80,12 +89,12 @@ public class MainController {
 	}
 	
 	@RequestMapping("myInfoCal")
-	public String myInfoCal() {
+	public String myInfoCal(HttpSession session) {
 		return "main/myInfoCal";
 	}
 	
 	@RequestMapping("myinfo/save")
-	public ModelAndView save(InfoCalendar myinfo, HttpSession session) {
+	public ModelAndView mySave(InfoCalendar myinfo, HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/calendar");
 		User user = (User)session.getAttribute("loginUser");
 		myinfo.setUser_id(user.getId());
@@ -98,9 +107,9 @@ public class MainController {
 	}
 	
 	@RequestMapping("myinfo/graph")
-	public ModelAndView graph(HttpSession session,
-			@RequestParam(value="regdate", required=false) String regdate,
-			@RequestParam(value="in_type", required=false) String in_type) {
+	public ModelAndView myGraph(@RequestParam(value="regdate", required=false) String regdate,
+			@RequestParam(value="in_type", required=false) String in_type,
+			HttpSession session) {
 		User user = (User)session.getAttribute("loginUser");
 
 		if (in_type.equals("0")) {
@@ -125,7 +134,7 @@ public class MainController {
 	// RestfulAPI
 	@GetMapping(value="user/subscribe", produces="application/json; charset=utf8")
 	@ResponseBody
-	public String subscribeapi(String userId, String subId, HttpSession session) {
+	public String mySubscribeapi(String userId, String subId, HttpSession session) {
 		int result = mainService.subscribe(userId, subId); 
 		if (result == 1) return "{\"result\" : 1, \"subId\" : \"" + subId + "\"}";
 		else if (result == 2) return "{\"result\" : 2, \"subId\" : \"" + subId + "\"}";
@@ -142,7 +151,7 @@ public class MainController {
 	
 	@RequestMapping(value="myinfo/search", produces="application/text; charset=utf8")
 	@ResponseBody
-	public String mySearchInfo(String searchType, String searchText) {
+	public String mySearchInfo(String searchType, String searchText, HttpSession session) {
 		// searchType 에 따라 푸드 디비 or 워크아웃 결정
 		if (searchText == null || searchText.equals("")) return "";
 		if (searchType.equals("food")) {
@@ -165,7 +174,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="message/send")
-	public ModelAndView sendMsg(Message msg, HttpSession session) {
+	public ModelAndView mySendMsg(Message msg, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/message.zips");
 		User user = (User)session.getAttribute("loginUser");
@@ -183,7 +192,7 @@ public class MainController {
 	
 	@RequestMapping(value="message/hide", produces="application/json; charset=utf8")
 	@ResponseBody
-	public String hideMsg(Message msg, HttpSession session) {
+	public String myHideMsg(Message msg, HttpSession session) {
 		User user = (User)session.getAttribute("loginUser");
 		String userId = user.getId();
 		msg = mainService.getMsgById(Integer.toString(msg.getNum()));

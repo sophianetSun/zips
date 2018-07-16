@@ -37,7 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ciper.CiperUtil;
-import ciper.PassWord;
 import exception.LoginException;
 import logic.Mail;
 import logic.User;
@@ -338,11 +337,9 @@ public class Usercontroller {
 	   public String findpw(String id) {
 		   User forgeter = userService.dbuser(id);
 		   String forgeterEmail = forgeter.getEmail();
-		   for (int i = 0; i < 6; i++) {
-	            int random = (int) (Math.random() * 11);
-	        }
+		   
 		   Mail mail = new Mail();
-			mail.setContents(random);
+			mail.setContents("랜덤 비밀번호 입력");
 			mail.setGmailId("winnerzips");
 			mail.setGmailPw("winnerzips!");
 			mail.setMtype("text/html");

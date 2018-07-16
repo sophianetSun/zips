@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +12,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dao.BoardDao;
 import dao.CalendarDao;
 import dao.FoodDao;
 import dao.MessageDao;
 import dao.SearchInfoDao;
 import dao.SubscriptionDao;
+import dao.UserDao;
 import dao.WorkoutDao;
 
 @Service
@@ -33,10 +36,15 @@ public class MainServiceImpl implements MainService {
 	private CalendarDao calendarDao;
 	@Autowired
 	private WorkoutDao workoutDao;
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private BoardDao boardDao;
 	
 	@Override
 	public Map<String, List<Board>> getMainBoards() {
 		Map<String, List<Board>> map = new HashMap<String, List<Board>>();
+		map.put("bestTraining", getBestTrainingList());
 		map.put("homeTraining", getHomeTrainingList());
 		map.put("beforeAndAfter", getBeforeAndAfterList());
 		map.put("qna", getQnAList());
@@ -44,21 +52,18 @@ public class MainServiceImpl implements MainService {
 		return map;
 	}
 
-	@Override
-	public List<Shop> getShopList() {
-		return null;
+	private List<Board> getBestTrainingList() {
+		Board board = new Board();
+		board.setBoard_type(1);
+		board.setRecommand(1);
+		return boardDao.bestlist(board).stream().limit(3).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<User> getTopUsers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public InfoCalendar getMyCalInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> list = userDao.list().stream().sorted(Comparator.comparing(User::getPoint).reversed())
+			.limit(5).collect(Collectors.toList());
+		return list;
 	}
 
 	@Override
@@ -74,16 +79,16 @@ public class MainServiceImpl implements MainService {
 	}
 
 	public List<Board> getHomeTrainingList() {
-		return null;
+		return boardDao.list(1, null, null, 1, 3);
 	}
 	public List<Board> getBeforeAndAfterList() {
-		return null;
+		return boardDao.list(4, null, null, 1, 3);
 	}
 	public List<Board> getQnAList() {
-		return null;
+		return boardDao.list(2, null, null, 1, 5);
 	}
 	public List<Board> getFreeBoard() {
-		return null;
+		return boardDao.list(3, null, null, 1, 3);
 	}
 
 	@Override
@@ -110,7 +115,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public Map<String, Long> analyzeSearchResult() {
-		Map<String, Long> map = searchInfoDao.getSearchListAll().stream()
+		Map<String, Long> map = searchInfoDao.getSearchListAll().parallelStream()
 				.collect(Collectors.groupingBy(
 						SearchInfo::getContent,
 						Collectors.counting()));
