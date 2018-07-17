@@ -118,11 +118,10 @@ function list(pageNum) {
 <div class="w3-container">
   <h2>관리자 페이지</h2>
   <input type="hidden" name="pageNum" value="${pageNum}">
-  <form action="list.zips" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
+  <form action="admin.zips" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
   <input type="hidden" name="pageNum" value="${pageNum}">
    <div align="center">
    <select name="searchType"  id="searchType" class="custom-select d-block" style="width:100px; height:40px;">
-    <option value="">카테고리</option>
     <option value="id">ID</option>
     <option value="name">이름</option>
    </select>&nbsp;

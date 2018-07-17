@@ -51,9 +51,9 @@
 	</update>
 	
 	<select id="count" resultType="Integer" parameterType="map">
- 		select count(*) from zipsuser 
+ 		select count(*) from zipsuser
  	<if test="searchType != null and searchContent != null">
- 		${searchType} like '%${searchContent}%'
+ 		where ${searchType} like '%${searchContent}%'
  	</if>
  	</select>
  	

@@ -18,7 +18,27 @@
    </c:forEach>
   </font>
  </spring:hasBindErrors>
-
+<style type="text/css">
+		#preview img {
+			width:304px;
+			height:236px;
+		}
+		.mb-3 {
+			margin:0 auto;
+		}
+		.form-control {
+			margin:0 auto;
+		}
+		.form-control {
+			margin:0 auto;
+		}
+		.form-group {
+			margin:0 auto;
+		}
+		.row {
+			margin:0 auto;
+		}
+	</style>
  <script type="text/javascript">
  $(document).ready(/* ready : mypage가 실행될 때 바로 실행되는 것 */
   function() {
@@ -87,71 +107,71 @@
         <input type="file" id="file" name="pic" onchange="imageURL(this)"  value="${dbuser.picture}"/><!-- this : 자기 자신을 넣을것이다. -->
 		현재 파일명 : <input type="text" id="picture" name="picture" value="${dbuser.picture}">
       </div><br><br>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="id" id="id">아이디</label>
               <input type="text" class="form-control" name="id" id="id" readonly value="${dbuser.id}">
             </div>
-    <div class="mb-3">
-              <label for="pw">비밀번호</label>&nbsp;&nbsp;&nbsp;
-              <input type="button" name="pwchange" id="pwchange" onclick="location.href='pwchange.zips'" value="비밀번호수정">
+    <div class="mb-3" style="width:600px;">
+              <label for="pw" style="width:600px;">비밀번호 <input type="button" name="pwchange" id="pwchange" onclick="location.href='pwchange.zips'" value="비밀번호수정"></label>
               <font color="red"><form:errors path="pw" /></font>
               <input type="password" class="form-control" name="pw" placeholder="회원정보를 변경하시려면 비밀번호를 입력해 주세요">
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="name">이름</label>
               <input type="text" class="form-control" name="name" value="${dbuser.name}">
             </div>
-    <div class="mb-3">
-              <label for="nickname">닉네임</label>
+    <div class="mb-3" style="width:600px;">
+              <label for="nickname" style="width:600px;">닉네임</label>
               <input type="text" class="form-control" name="nickname" value="${dbuser.nickname}">
             </div>
-    <div class="mb-3">
-              <label for="tel">연락처</label>
+    <div class="mb-3" style="width:600px;">
+              <label for="tel" style="width:600px;">연락처</label>
               <input type="tel" class="form-control" name="tel" value="${dbuser.tel}">
             </div>
-    <div class="mb-3">
-              <label for="email">이메일</label>
+    <div class="mb-3" style="width:600px;">
+              <label for="email" style="width:600px;">이메일</label>
               <input type="email" class="form-control" name="email" value="${dbuser.email}">
             </div>
             
-<div class="mb-3">
+<div class="mb-3" style="width:600px;">
               <label for="address">주소</label>
               <input type="text" class="form-control" name="address" value="${dbuser.address}">
             </div>
             
-     <div class="form-group">    
+     <div class="form-group" style="width:600px;">    
     	<label for="address">주소변경하기</label><br>          
 		<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
     	<button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 주소 변경하기</button>                               
-	</div>
+	</div><br>
 	
-	<div class="form-group">
+	<div class="form-group" style="width:600px;">
     	<input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
-	</div>
-	<div class="form-group">
+	</div><br>
+	<div class="form-group" style="width:600px;">
     	<input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text" />
-	</div>
+	</div><br>
 	
-	 <div class="row">
-    	<div class="col-md-6 mb-3">
+	 <div class="row" style="width:630px;">
+    	<div class="col-md-6 mb-3" style="width:600px;">
                 <label for="height">키(cm)</label>
                 <input type="text" class="form-control" name="height" value="${dbuser.height}"><!--  value="" required="" -->
               </div>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-6 mb-3" style="width:600px;">
                 <label for="weight">몸무게(kg)</label>
                 <input type="text" class="form-control" name="weight" value="${dbuser.weight}">
               </div>
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="bodyfat">체지방(kg)</label>
               <input type="text" class="form-control" name="bodyfat" value="${dbuser.bodyfat}">
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="muscle">골격근량(kg)</label>
               <input type="text" class="form-control" name="muscle" value="${dbuser.muscle}">
             </div>
  
- <label for="gender">성별</label><br>
+ <div class="mb-3" align="center">
+ <br>
     <c:if test="${dbuser.gender=='남'}">
 	    <input type="radio" name="gender" value='남' checked="checked">남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <input type="radio" name="gender" value='여'>여자<br />
@@ -159,15 +179,14 @@
     <c:if test="${dbuser.gender=='여'}">
 	    <input type="radio" name="gender" value='남'>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <input type="radio" name="gender" value='여' checked="checked">여자<br />
-	</c:if>
-  <br>
-  <small class="d-inline-block mb-10 text-danger">*회원번호를 변경하시기 전 비밀번호를 입력하셨는지 다시한번 확인해 주세요. 비밀번호칸을 공백으로 두실 경우 회원수정이 불가능합니다.</small>
+	</c:if></div>
   <br><br>
   <div align="center">
   <c:if test="${sessionScope.loginUser.id == 'admin'}">
 <input type="button" class="btn btn-default" value="&nbsp;관리자 &nbsp;" onclick="location.href='admin.zips'"></c:if>
     <button type="submit" class="btn btn-default">수정하기</button>
  <input type="button" class="btn btn-default" value="탈퇴하기" onclick="location.href='delete.zips'">
+ <input type="button" class="btn btn-default" value="내게시물" onclick="location.href='sublist.zips?subtype=user'">
     </div>
     <br><br>
   </form:form>

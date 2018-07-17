@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -117,9 +118,11 @@ public class Usercontroller {
 	}
 
 	@RequestMapping("user/logout")
-	public String logout(HttpSession session) {
+	public ModelAndView logout(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:../main.zips");
 		session.invalidate();
-		return "/main";
+		return mav;
 	}
 	
 	@RequestMapping("user/create")
@@ -137,9 +140,7 @@ public class Usercontroller {
 	mav.addObject("dbuser", dbuser);
 	return mav;
 	}
-	
-	
-	
+
 	@RequestMapping(value="user/update", method=RequestMethod.POST)
 	public ModelAndView update(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("user/mypage");
@@ -246,17 +247,6 @@ public class Usercontroller {
 		}
 		return mav;
 	}
-	
-	
-	
-/*	@RequestMapping(value="user/admin", method=RequestMethod.GET)
-	public ModelAndView userAdmin(String id, HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		List<User> userList = userService.userList();
-		mav.addObject("userList", userList);
-		mav.setViewName("/user/userAdmin");
-		return mav;
-	}*/
 
 	@RequestMapping("user/admin")
 	public ModelAndView list(HttpSession session, String id, Integer pageNum, String searchType, String searchContent) {
@@ -278,18 +268,9 @@ public class Usercontroller {
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
 		mav.addObject("listcount", listcount);
-		//mav.setViewName("redirect:admin.zips");
 		mav.setViewName("/user/userAdmin");
 		return mav;
 	}
-	
-	/*@RequestMapping("user/admin")
-	public ModelAndView adminUser(String[] idchks, HttpSession session) {
-		ModelAndView mav = new ModelAndView("user/userAdmin");
-		List<User> userList = userService.userList(idchks);
-		mav.addObject("userList", userList);
-		return mav;
-	}*/
 	
 	@RequestMapping("user/adminUpdate")
 	public ModelAndView adminUpdate(String id, User user, HttpServletRequest request) {
@@ -328,27 +309,24 @@ public class Usercontroller {
 		User onemailsend = userService.dbuser(id);
 		String onemailsender = onemailsend.getEmail();
 		mav.addObject("sender", onemailsender);
-		/*if(idchks == null || idchks.length == 0) {
-			throw new LoginException("메일전송이 완료되었습니다.", "user/mail");
-		}
-		List<User> userList = userService.userList(idchks);
-		mav.addObject("userList", userList);*/
-		//mav.setViewName("redirect:userAdmin.zips");
 		return mav;
 	}
 	
 	    @ResponseBody
 		@RequestMapping(value="user/findid", method=RequestMethod.POST)
 		public String findid(String email) {
-			User forgeter = userService.findEmail(email);//이메일을 통해서 회원의 정보를 가져옴. 
+			User forgeter = userService.findEmail(email);//이메일을 통해서 회원의 정보를 가져옴.
 			String userEmail = forgeter.getEmail();
+			System.out.println(forgeter);
+			System.out.println(forgeter);
 			String forgeterId = forgeter.getId();
 			String text = email + "님의 아이디는 " + forgeterId + "입니다.";
 			Mail mail = new Mail();
 			mail.setContents(text);
 			mail.setGmailId("winnerzips");
 			mail.setGmailPw("winnerzips!");
-			mail.setMtype("text/html");
+			//mail.setMtype("text/html");
+			mail.setMtype("text/html; charset=EUC-KR");
 			mail.setRecipient(email);
 			mail.setTitle("아이디찾기");
 			adminMailSend(mail);
@@ -361,15 +339,12 @@ public class Usercontroller {
 		   User forgeter = userService.dbuser(id);
 		   String forgeterEmail = forgeter.getEmail();
 		   Mail mail = new Mail();
-		   /*for (int i = 0; i < 6; i++) {
-	            int random = (int) (Math.random() * 11);
-	        }*/
 		   String findpwid = forgeter.getPw();
 		   String dbpass = CiperUtil.decrypt(findpwid, "secretpw");
-			mail.setContents(dbpass);
+			mail.setContents(forgeter.getId() + "님의 비밀번호는 " + dbpass + "입니다.");
 			mail.setGmailId("winnerzips");
 			mail.setGmailPw("winnerzips!");
-			mail.setMtype("text/html");
+			mail.setMtype("text/html; charset=EUC-KR");
 			mail.setRecipient(forgeterEmail);
 			mail.setTitle("비밀번호찾기");
 			adminMailSend(mail);
@@ -417,7 +392,7 @@ public class Usercontroller {
 			String[] emails = mail.getRecipient().split(",");
 			for(int i=0; i<emails.length; i++) {
 				try {
-					addrs.add(new InternetAddress(new String(emails[i].getBytes("UTF-8"), "8859_1")));
+					addrs.add(new InternetAddress(new String(emails[i].getBytes("EUC-KR"), "8859_1")));
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
@@ -435,11 +410,11 @@ public class Usercontroller {
 			MimeBodyPart message = new MimeBodyPart();
 			message.setContent(mail.getContents(),mail.getMtype());
 			multipart.addBodyPart(message);
-			for(MultipartFile mf : mail.getFile1()) {
+			/*for(MultipartFile mf : mail.getFile1()) {
 				if((mf != null) && (!mf.isEmpty())) {
 					multipart.addBodyPart(bodyPart(mf));
 				}
-			}
+			}*/
 			msg.setContent(multipart);		
 			Transport.send(msg);
 		} catch(MessagingException me) {
@@ -454,7 +429,7 @@ public class Usercontroller {
 		try {
 			mf.transferTo(f1);
 			body.attachFile(f1);
-			body.setFileName(new String(orgFile.getBytes("UTF-8"), "8859_1"));
+			body.setFileName(new String(orgFile.getBytes("EUC-KR"), "8859_1"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

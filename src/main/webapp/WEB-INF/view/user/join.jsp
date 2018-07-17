@@ -19,9 +19,12 @@
 	   }
    }
 </script>
+<!-- <style type="text/css">
+	@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+	.hn{font-family: 'Hanna', sans-serif;}
+</style> -->
 </head>
 <body>
-
   <h1><strong>회원 가입</strong></h1><br>
   <form:form modelAttribute="user" method="post" action="userEntry.zips" enctype="multipart/form-data" onsubmit="return inputcheck(this)">
   <form:hidden path="coin" value="500" />
@@ -36,6 +39,24 @@
 		#preview img {
 			width:304px;
 			height:236px;
+		}
+		.mb-3 {
+			margin:0 auto;
+		}
+		.form-control {
+			margin:0 auto;
+		}
+		.form-control {
+			margin:0 auto;
+		}
+		.form-group {
+			margin:0 auto;
+		}
+		.row {
+			margin:0 auto;
+		}
+		.w3-row-padding {
+			margin:0 auto;
 		}
 	</style>
 	
@@ -107,50 +128,49 @@
         <input type="file" id="file" name="pic" onchange="imageURL(this)"/>
       </div><br><br>
 				
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="id" id="id">아이디</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="id" /></font>
               <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해 주세요">
             </div>
-    <div class="row">
+    <div class="row" style="width:630px;">
     <div class="col-md-6 mb-3">
                 <label for="pw">비밀번호</label>
-                <input type="password" class="form-control" name="pw" placeholder="비밀번호를 입력해 주세요"><!--  value="" required="" -->
+                <input type="password" class="form-control" name="pw" placeholder="비밀번호">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="pwch">비밀번호 확인</label>
-                <input type="password" class="form-control" name="pwch" placeholder="비밀번호입력을 위해 다시 한 번 입력해 주세요">
+                <input type="password" class="form-control" name="pwch" placeholder="비밀번호확인">
               </div>
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="name">이름</label>&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="name" /></font>
               <input type="text" class="form-control" name="name" placeholder="이름을 입력해 주세요">
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="nickname">닉네임</label>
               <input type="text" class="form-control" name="nickname" placeholder="닉네임을 입력해 주세요">
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="tel">연락처</label>
               <input type="text" class="form-control" name="tel" placeholder="연락처를 '010-0000-0000'형식으로 입력해 주세요">
             </div>
-    <div class="mb-3">
-              <label for="email">이메일</label>
-              <input type="text" class="form-control" name="email" placeholder="이메일을  'zips@zips.com'형식으로 입력해 주세요">
+        <div class="mb-3" style="width:600px;">
+              <label for="email" style="width:600px;">이메일</label>
+              <input type="email" class="form-control" name="email" placeholder="이메일을 zips@zips.com형식으로 입력해 주세요">
             </div>
-            
-    <div class="form-group">    
+    <div class="form-group" style="width:600px;">    
     	<label for="address">주소</label><br>          
-		<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
-    	<button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
-	</div>
-	<div class="form-group">
+		<input class="form-control" style="width: 70%; display: inline;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
+    	<button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button><br>                           
+	</div><br>   
+	<div class="form-group" style="width:600px;">
     	<input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" />
-	</div>
-	<div class="form-group">
+	</div><br>
+	<div class="form-group" style="width:600px;">
     	<input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
-	</div>
+	</div><br>   
 	
-    <div class="row">
+    <div class="row" style="width:630px;">
     <div class="col-md-6 mb-3">
                 <label for="height">키</label>
                 <input type="text" class="form-control" name="height" placeholder="cm"><!--  value="" required="" -->
@@ -160,23 +180,19 @@
                 <input type="text" class="form-control" name="weight" placeholder="kg">
               </div>
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="bodyfat">체지방</label>
               <input type="text" class="form-control" name="bodyfat" placeholder="체지방을 입력해 주세요">
             </div>
-    <div class="mb-3">
+    <div class="mb-3" style="width:600px;">
               <label for="muscle">골격근량</label>
               <input type="text" class="form-control" name="muscle" placeholder="골격근량을 입력해 주세요">
             </div>
-    <label for="gender">성별</label><br>
-    <label class="radio-inline">
-      <input type="radio" name="gender" value="남" checked>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="gender" value="여">여자
-    </label>
+            <div class="mb-3" align="center"><br>
+      <input type="radio" name="gender" value="남"checked>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="gender" value="여">여자</div>
  	<br><br>
-    <input type="submit" class="btn btn-default btn-lg btn-block" value="회원가입">
+    <center><input type="submit" class="btn btn-default btn-lg btn-block" value="회원가입" style="width:300px;"></center>
     <br><br>
   </form:form>
 </body>

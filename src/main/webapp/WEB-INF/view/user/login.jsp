@@ -22,7 +22,7 @@ function sendCheckPW() {
 	    data: { id: $("#findidpw").val() }, 
 	    type: "POST",
 	    success : function(result) {
-	    	alert("인증번호를 이메일로 보내드렸습니다.확인해 주세요");
+	    	alert("이메일을 확인해 주세요");
 	    	}
 	    })
 }
@@ -62,8 +62,8 @@ $(document).ready(function() {
 	    <div align="center">
 	    <button type="submit" class="btn btn-default">로그인</button>
 		<input type="button" class="btn btn-default" value="회원가입" onclick="location.href='join.zips'">
-  		<button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal">ID찾기</button>
-  		<button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal2">PW찾기</button><br><br>
+  		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">ID찾기</button>
+  		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">PW찾기</button><br><br>
 	    </div><br>
 	    <!-- Button to Open the Modal -->
 
