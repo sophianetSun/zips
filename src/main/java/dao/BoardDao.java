@@ -47,6 +47,8 @@ public interface BoardDao {
 
 	void totaldeleterecommand(Integer num);
 
+	void afterfileUpload(int num, String originalfileName, String saveFileName, long fileSize);
+
 
 
 

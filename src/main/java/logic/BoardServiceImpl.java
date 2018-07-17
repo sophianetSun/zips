@@ -211,4 +211,11 @@ public class BoardServiceImpl implements BoardService {
 			return 2;
 		}
 	}
+
+	@Override
+	public void afterfileUpload(int num, String originalfileName, String saveFileName, long fileSize) {
+		num = boardDao.maxNum();
+		boardDao.afterfileUpload(++num, originalfileName, saveFileName, fileSize);
+	}
+
 }

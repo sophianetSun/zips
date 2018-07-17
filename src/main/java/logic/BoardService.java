@@ -59,6 +59,8 @@ public interface BoardService {
 	
 	int totalbestinsert(String board_userid, Integer num, Integer board_type);
 
+	void afterfileUpload(int num, String originalfileName, String saveFileName, long fileSize);
+
 
 
 
