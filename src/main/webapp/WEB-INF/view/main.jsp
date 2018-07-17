@@ -11,6 +11,7 @@
 var randomColorFactor = function() {
 	return Math.round(Math.random() * 255);
 };
+
 var randomColor = function(opacity) {
 	return "rgba(" + randomColorFactor() + "," 
 	 					+ randomColorFactor() + ","
@@ -18,53 +19,63 @@ var randomColor = function(opacity) {
 	 					+ (opacity || '.3') + ")";
 };
 
-	$(document).ready(function() {
-		var id = '${userId}';
-		if (id) {
-			$.get('graphapi.zips', {
-				id: id
-			},
-			function(data, status) {
-				var ctx = document.getElementById("chart-area").getContext("2d");
-				var chart = new Chart(ctx, {
-					type : 'pie',
-					data : {
-						datasets : [{
-								label: "",
-								data: [
-									data.carbohydrate, data.fat, data.protein
-									],
-								backgroundColor: [
-									randomColor(1), randomColor(1), randomColor(1)
-									],
-							}],
-						labels: [
-							'탄수화물', '지방', '단백질'
-						]
-					},
-					options: {
-						responsive: false,
-						title: {
-					            display: true,
-					            fontSize: 16,
-					            text: '총 칼로리 : ' + data.calorie + ' kcal'
-					    }
-					}
-				});
+function parseGraph() {
+	console.log("그래프 실행");
+	$.get('parsegraph.zips', {
+		
+	}, function(res) {
+		console.log(res);
+	})	
+}
+
+$(document).ready(function() {
+	var id = '${userId}';
+	if (id) {
+		$.get('graphapi.zips', {
+			id: id
+		},
+		function(data, status) {
+			var ctx = document.getElementById("chart-area").getContext("2d");
+			var chart = new Chart(ctx, {
+				type : 'pie',
+				data : {
+					datasets : [{
+							label: "",
+							data: [
+								(data.carbohydrate).toFixed(1), (data.fat).toFixed(1), (data.protein).toFixed(1)
+								],
+							backgroundColor: [
+								randomColor(1), randomColor(1), randomColor(1)
+								],
+						}],
+					labels: [
+						'탄수화물', '지방', '단백질'
+					]
+				},
+				options: {
+					responsive: false,
+					title: {
+				            display: true,
+				            fontSize: 16,
+				            text: '총 칼로리 : ' + data.calorie + ' kcal'
+				    }
+				}
 			});
-		} else {
-			$('#main_graph').html(
-					'<div class="jumbotron"><h1>로그인 해주세요!</h1></div>'
-			);
-		}
-		
-		
-	});
+		});
+	} else {
+		$('#main_graph').html(
+				'<div class="jumbotron"><h1>로그인 해주세요!</h1></div>'
+		);
+	}
+	
+	
+	
+});
 </script>
 </head>
 <body>
 <!-- 홈트 -->
-<ul><li><p class="testred"><I><span>Best Hot 동영상&nbsp;3</span></I></p></li></ul>
+<ul><li><p class="testred"><I><span>Best Hot 동영상&nbsp;3&nbsp;&nbsp;</span></I></p></li></ul>
 <div id="bestTraining" class="row">
 	<!-- Best Top 3 -->
 	<c:forEach items="${bestTraining}" var="best">
@@ -129,13 +140,7 @@ var randomColor = function(opacity) {
 	</c:forEach>
 </div>
 <!-- 그래프 -->
-<div id="main_graph" class="carousel slide bg-white" data-ride="carousel">
-  <!-- Indicators -->
-  <ul class="carousel-indicators">
-    <li data-target="#main_graph" data-slide-to="0" class="active"></li>
-    <!--<li data-target="#main_graph" data-slide-to="1"></li>
-    <li data-target="#main_graph" data-slide-to="2"></li>-->
-  </ul>
+<div id="main_graph" class="carousel slide bg-white" data-ride="carousel"> 
   <!-- The slideshow -->
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -144,21 +149,15 @@ var randomColor = function(opacity) {
 	  </div>
     </div>
   </div>
-	
-  <!-- Left and right controls -->
-  <a class="carousel-control-prev" href="#main_graph" data-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </a>
-  <a class="carousel-control-next" href="#main_graph" data-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </a>
 </div>
 
 <!-- 중고장터, 우수회원 -->
 <div id="shop" class="row" style="margin-top: 12px;">
 	<div class="col-sm-8">
-		<h4 class="main_title">중고장터</h4>
-		<table class="table table-striped table-hover">
+		 <div class="card bg-dark text-white">
+   		 	<div class="card-body"><b>중고장터</b></div>
+  		 </div>
+		<table class="table table-striped table-hover border">
 		<tr><th>글쓴이</th><th>제목</th><th>날짜</th></tr>
 		<c:forEach items="${shopList}" var="shop">
 		<tr onclick="location.href = 'shop/detail.zips?shop_no=${shop.shop_no}&pageNum=1'"
@@ -211,43 +210,33 @@ var randomColor = function(opacity) {
 </div>
 
 <!-- Before and After -->
-<div class="row mt-1">
-  <div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
-	<div class="col-sm-4">
-		<div class="fakeimg">Fake Image</div>
-		<h5>오늘의 스쿼트</h5>
-		<p>작성자 : 홍길동</p>
-		<p>추천수 : 55</p>
-	</div>
+<div>
+<div class="card bg-primary text-white">
+    <div class="card-body"><h4>Before &amp; After</h4></div>
+</div>
+   	<table class="table table-bordered table-hover mt-2">
+    	<thead>
+    		<tr>
+    			<th class="w-50">제목</th>
+    			<th class="w-10">글쓴이</th>
+    			<th class="w-20">날짜</th>
+    			<th class="w-10">조회수</th>
+    			<th class="w-10">추천수</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<c:forEach items="${beforeAndAfter }" var="bna">
+    		<tr onclick="location.href='board/totallistForm.zips?num=${bna.num}&pageNum=1&board_type=${bna.board_type}'"
+				style="cursor:pointer">
+    			<td>${bna.subject }</td>
+    			<td>${bna.board_userid }</td>
+    			<td><fmt:formatDate value="${bna.regdate }" pattern="yyyy-MM-dd HH:mm"/></td>
+    			<td>${bna.board_count }</td>
+    			<td>${bna.recommand }</td>
+    		</tr>
+    		</c:forEach>
+    	</tbody>
+    </table>
 </div>
 
 <!-- Etc Boards -->

@@ -161,7 +161,6 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public int subscribe(String userId, String subId) {
 		List<Subscription> list = getSubscriptionList(userId);
-		System.out.println(list);
 		Boolean isSubscribe = list.stream().anyMatch(sub -> 
 			sub.getUser_id().equals(userId) && sub.getSubscribe_id().equals(subId));
 		if (isSubscribe) {

@@ -47,8 +47,8 @@
   
 <c:if test="${!empty sessionScope.loginUser }">
 	<a href="${pageContext.request.contextPath}/user/mypage.zips">마이페이지</a>
-	<a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
-	<a href="${pageContext.request.contextPath}/calendar.zips">달력</a>	 
+	<a href="${pageContext.request.contextPath }/message.zips"><i class="fa fa-envelope" style="font-size:20px"></i></a>
+	<a href="${pageContext.request.contextPath}/calendar.zips"><i class="fa fa-calendar" style="font-size:20px"></i></a>	 
 </c:if>
   <form action="${pageContext.request.contextPath }/search.zips" method="POST" id="search">
 <div class="input-group">  	

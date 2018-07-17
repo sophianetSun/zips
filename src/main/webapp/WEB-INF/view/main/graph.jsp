@@ -33,13 +33,16 @@
 		 					+ randomColorFactor() + ","
 		 					+ (opacity || '.3') + ")";
 	};
+	var carbohydrate = ${map.carbohydrate}.toFixed(1);
+	var fat = ${map.fat}.toFixed(1);
+	var protein = ${map.protein}.toFixed(1);
 	var config = {
 		type : 'pie',
 		data : {
 			datasets : [{
 					label: "",
 					data: [
-						'${map.carbohydrate}', '${map.fat}', '${map.protein}'
+						carbohydrate, fat, protein
 						],
 					backgroundColor: [
 						randomColor(1), randomColor(1), randomColor(1)
