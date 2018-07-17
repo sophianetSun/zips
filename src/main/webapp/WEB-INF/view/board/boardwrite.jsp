@@ -4,6 +4,22 @@
 <!DOCTYPE html PUBLIC>
 <html>
 <link href="form-validation.css" rel="stylesheet">
+<head>
+<script type="text/javascript">
+function board_submit() {
+			var file = filename2.value.split(".");
+			if (file[1] == null) {
+				alert('동영상 파일을 꼭 올려주셔야 업로드가 가능합니다\n동영상 확장자 파일은 "mp4"만 가능합니다')
+				return false;
+			} else if (file[1] == "mp4") {
+				f.submit();
+			} else if (file[1] != "mp4") {
+				alert('동영상 파일만 업로드 가능합니다. 파일을 확인하세요\n동영상 확장자 파일은 "mp4"만 가능합니다')
+				f.filename.focus();
+				return false;
+			}
+		}
+</script>
 </head>
 
 <body class="bg-center">
@@ -87,16 +103,14 @@
 			</div>
 			</c:if>
 	</div>
-	<c:if
-		test="${param.board_type == 1 || param.board_type == 2 || param.board_type == 3}">
-		<div class="mb-1 text-muted">
-			<input type=file name='filename' style='display: none;'> <img
+	<c:if test="${param.board_type == 1 || param.board_type == 2 || param.board_type == 3}">
+		<div class="mb-1 text-muted"><br>
+			<input type=file name='filename' style='display: none;'><img
 				src='../img/video.png' style="width: 200px; height: 150px;"
 				border='1' hspace="5"
 				onclick='document.all.filename.click(); document.all.filename2.value=document.all.filename.value'
 				class="w3-circle"> <input type='text' name='filename2'
 				id='filename2' readonly="readonly" style='display: none;'>
-		</div>
 		<br>
 		<h3 class="mb-100">
 							<strong class="d-inline-block mb-10 text-success">글 설명</strong>
@@ -104,52 +118,34 @@
 		<form:textarea rows="15" cols="80" path="content" id="textarea" />
 		<font color="red"><form:errors path="content" /></font>
 	</c:if>
-	<hr>
 	<center>
-		<c:if test="${param.board_type == 1}">
-			<a href="javascript:board_submit()"><button
+	<c:choose>
+	<c:when test="${param.board_type == 1}">
+		<a href="javascript:board_submit()"><button
 					class="btn btn-primary btn-block" type="button"
 					style="text-align: center; width: 270px; height: 45px;">동영상
 					업로드</button></a>
-		</c:if>
-
-		<c:if test="${param.board_type == 2 || param.board_type == 3}">
-			<button class="btn btn-primary btn-block" type="submit"
+	</c:when>
+	<c:when test="${param.board_type == 2 || param.board_type == 3}">
+		<button class="btn btn-primary btn-block" type="submit"
 				style="text-align: center; width: 270px; height: 45px;">글
 				업로드</button>
-		</c:if>
-		<c:if test="${param.board_type == 4}">
-			<button class="btn btn-primary btn-block" type="submit"
+	</c:when>
+	<c:when test="${param.board_type == 4}">
+	<button class="btn btn-primary btn-block" type="submit"
 				style="text-align: center; width: 270px; height: 45px;">사진
 				업로드</button>
-	</div>
-	</c:if>
+	</c:when>
+	</c:choose>
 	</center>
 	</form:form>
+	</div>
+	</div>
 	<br>
-	<footer class="my-5 pt-5 text-muted text-center text-small">
-		<p class="mb-1">&copy; 2017-2018 Zips</p>
-		<ul class="list-inline">
-			<li class="list-inline-item"><a href="#">www.zips.co.kr</a></li>
-		</ul>
-	</footer>
-
 	<script>
-		function board_submit() {
-			var file = filename2.value.split(".");
-			if (file[1] == null) {
-				alert('동영상 파일을 꼭 올려주셔야 업로드가 가능합니다\n동영상 확장자 파일은 "mp4"만 가능합니다')
-				return false;
-			} else if (file[1] == "mp4") {
-				f.submit();
-			} else if (file[1] != "mp4") {
-				alert('동영상 파일만 업로드 가능합니다. 파일을 확인하세요\n동영상 확장자 파일은 "mp4"만 가능합니다')
-				f.filename.focus();
-				return false;
-			}
-			/* var trans_text = document.getElementById("textarea");
-			trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>"); */
-		}
+			var trans_text = document.getElementById("textarea");
+			trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>"); 
+			
 		window.jQuery
 				|| document
 						.write(

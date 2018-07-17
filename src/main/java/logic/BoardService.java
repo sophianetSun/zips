@@ -37,7 +37,7 @@ public interface BoardService {
 
 	int bestcnt(Best best);
 
-	List<Best> getbest(int num);
+	/*List<Best> getbest(int num);*/
 
 	int boardDelete(Integer num);
 
@@ -52,6 +52,8 @@ public interface BoardService {
 	void fileUpload(int num, String originalfileName, String saveFileName, long fileSize);
 
 	List<UploadFile> getFileList(int num);
+
+	int bestinsert(String board_userid, Integer num, Integer board_type);
 
 
 

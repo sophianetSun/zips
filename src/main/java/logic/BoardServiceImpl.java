@@ -135,10 +135,10 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 
-	@Override
+	/*@Override
 	public List<Best> getbest(int num) {
 		return bestDao.getbest(num);
-	}
+	}*/
 
 	@Override
 	public Recomment getapply(int num) {
@@ -172,5 +172,24 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.getFileList(num);
 	}
 
-		
+	@Override
+	public int bestinsert(String board_userid, Integer num, Integer board_type) {
+		Best list = getBestlist(board_userid,num);
+		if(list == null || list.getNum() != num) {
+		boardDao.recommand(num);
+		Best best = new Best();
+		best.setNum(num);
+		best.setRec_board_type(board_type);
+		best.setRec_user(board_userid);
+		return bestDao.bestinsert(best);
+		} else {
+			boardDao.deleterecommand(num);
+			bestDao.bestdelete(list);
+			return 2;
+		}
+	}
+
+	private Best getBestlist(String board_userid, Integer num) {
+		return bestDao.bestlist(board_userid,num);
+	}
 }

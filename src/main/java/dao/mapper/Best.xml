@@ -5,14 +5,17 @@
  <select id="bestlist" resultType="Best" parameterType="map">
 select num,rec_user,rec_board_type from best
  <if test="num != null">
- where num=${num} 
+ where num=#{num} 
+ </if>
+ <if test="rec_user != null">
+ and rec_user = #{rec_user}
  </if>
  </select>
  
  <select id="bestcount" resultType="Integer" parameterType="map">
  select count(*) from best 
  <if test="num != null">
-where num=${num}
+where num=#{num}
  </if>
  </select>
  

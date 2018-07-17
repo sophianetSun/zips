@@ -14,6 +14,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,8 +38,17 @@ public class BoardController {
 	@Autowired 
 	private BoardService service;
 	
+	@GetMapping(value="board/ajaxbest", produces="application/json; charset=utf8")
+	@ResponseBody
+	public String ajaxbest(HttpSession session,String board_userid, Integer num, Integer board_type) {
+		System.out.println("첫번째");
+		int result = service.bestinsert(board_userid, num,board_type); 
+		if (result == 1) return "{\"result\" : 1, \"board_userid\" : \"" + board_userid + "\"}";
+		else if (result == 2) return "{\"result\" : 2, \"board_userid\" : \"" + board_userid + "\"}";
+		else return "{\"result\" : 0}";
+	}
 	
-	@RequestMapping("board/best")
+	/*@RequestMapping("board/best")
 	public ModelAndView chbest(HttpSession session,Best best,Board board, String board_userid) {
 		ModelAndView mav = new ModelAndView();
 	    User sessionId = (User) session.getAttribute("loginUser");
@@ -52,6 +62,9 @@ public class BoardController {
 		 for(int i=0; i<dbbest.size(); i++) {
 			 dbbest.iterator().next().getRec_user();
 			 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
+				 System.out.println("홈트의 :::::::::::!dbbest.iterator().next().getRec_user().equals(sessionId.getId())"+!dbbest.iterator().next().getRec_user().equals(sessionId.getId()));
+				 System.out.println("dbbest.iterator().next().getRec_user()"+dbbest.iterator().next().getRec_user());
+				 System.out.println("sessionId.getId()"+sessionId.getId());
 				 int result = service.best(best,num);
 				 if(result > 0) {
 					 mav.setViewName("redirect:homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
@@ -61,6 +74,7 @@ public class BoardController {
 			 }
 		 }
 	   } else {
+		   System.out.println("best의 인설트부분");
 		   int result = service.best(best,num);
 		   if(result > 0) {
 			throw new BoardException("추천 완료 !", "homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
@@ -69,9 +83,9 @@ public class BoardController {
 			int bestcnt = service.bestcnt(best);
 			mav.addObject("bestcnt",bestcnt);
 		return mav;
-	}
+	}*/
 	
-	@RequestMapping("board/totalbest")
+	/*@RequestMapping("board/totalbest")
 	public ModelAndView chtotalbest(HttpSession session,Best best,Board board, String board_userid) {
 		ModelAndView mav = new ModelAndView();
 	    User sessionId = (User) session.getAttribute("loginUser");
@@ -81,29 +95,32 @@ public class BoardController {
 	   best.setRec_user(board_userid);
 	   best.setRec_board_type(board.getBoard_type());
 	   List<Best> dbbest = service.getbest(board.getNum());
+	   System.out.println("dbbest.iterator().hasNext()"+dbbest.iterator().hasNext());
 	   if(dbbest.iterator().hasNext()) {
-		 for(int i=0; i<dbbest.size(); i++) {
-			 dbbest.iterator().next().getRec_user();
-			 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
-				 int result = service.best(best,num);
-				 if(result > 0) {
-					 mav.setViewName("redirect:totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-				 } 
-			 } else {
-				 throw new BoardException("해당 게시물은 이미 추천을 누르셨습니다", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+			 for(int i=0; i<dbbest.size(); i++) {
+				 dbbest.iterator().next().getRec_user();
+				 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
+					 System.out.println("!dbbest.iterator().next().getRec_user().equals(sessionId.getId())"+!dbbest.iterator().next().getRec_user().equals(sessionId.getId()));
+					 int result = service.best(best,num);
+					 if(result > 0) {
+						 mav.setViewName("redirect:totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+					 } 
+				 } else {
+					 throw new BoardException("해당 게시물은 이미 추천을 누르셨습니다", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+				 }
 			 }
-		 }
-	   } else {
-		   int result = service.totalbest(best,num);
-		   if(result > 0) {
-			throw new BoardException("추천 완료 !", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-			 } 
-	   }
-			int bestcnt = service.bestcnt(best);
-			mav.addObject("bestcnt",bestcnt);
+		   } else {
+			   System.out.println(":::::::::::::;자꾸여기로오나??");
+			   int result = service.totalbest(best,num);
+			   if(result > 0) {
+				throw new BoardException("추천 완료 !", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
+				 } 
+		   }
+				int bestcnt = service.bestcnt(best);
+				mav.addObject("bestcnt",bestcnt);
 		return mav;
 	}
-	
+	*/
 	
 	
 	@ResponseBody
@@ -131,12 +148,10 @@ public class BoardController {
 			List<Board> boardlist = service.boardList(board_type,searchType,searchContent,pageNum,limit);
 			int maxpage = (int)((double)listcount/limit + 0.95);
 			int startpage = ((int)((pageNum/10.0 + 0.9) -1)) * 10 + 1;
-			List<Best> dbbest = service.getbest(board.getNum());
 			int endpage = startpage + 9;
 			if(endpage > maxpage) endpage = maxpage;
 			int boardcnt = listcount - (pageNum - 1) * limit;
 			mav.addObject("Bestlist",Bestlist);
-			mav.addObject("dbbest",dbbest);
 			mav.addObject("bestcnt",bestcnt);
 			mav.addObject("recount",recount);
 			mav.addObject("pageNum",pageNum);
@@ -297,14 +312,12 @@ public class BoardController {
 		Board board = service.getBoard(num);
 		int recount = service.recount(num);
 		best.setNum(num);
-		List<Best> dbbest = service.getbest(num);
 		int bestcnt = service.bestcnt(best);
 		List<Recomment> recommentlist = service.recommentList(board_type,num);
 		String url = request.getServletPath();
 		if(url.contains("/board/homeTraininglistForm.zips")) {
 			service.updatereadcnt(num);
 		}
-		mav.addObject("dbbest",dbbest);
 		mav.addObject("bestcnt",bestcnt);
 		mav.addObject("num",num);
 		mav.addObject("board",board);

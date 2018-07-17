@@ -8,7 +8,6 @@
 	<title>게시물 상세 보기</title>
 <!-- 구독 기능 script -->
 <script>
-<script>
 $(window).ready(function(){
 	$(".boton").wrapInner('<div class=botontext></div>');
 	    
@@ -18,9 +17,6 @@ $(window).ready(function(){
 	    
 	    $(".twist").css("width", "25%").css("width", "+=3px");
 	});
-
-
-
 
 	$(document).ready(function() {
 		$('#sub_btn').click(function() {
@@ -39,7 +35,27 @@ $(window).ready(function(){
 				}
 			});
 		})
+		$('#bst_btn').click(function() {
+			console.log("추천 버튼 클릭!");
+			var board_userid = '${sessionScope.loginUser.id}';
+			var num = '${board.num}';
+			var board_type = '${board.board_type}';
+			$.get('${pageContext.request.contextPath }/board/ajaxbest.zips', {
+				board_userid : board_userid,
+				num : num,
+				board_type : board_type
+			},
+			function(data) {
+			console.log("여기까지 감??");
+				if (data.result == 1) {
+					alert(' 추천되었습니다!');
+				} else if (data.result == 2) {
+					alert(" 추천이 취소 되었습니다!");
+				}
+			});
+		})
 	});
+	
 </script>
 </head>
 <body>
@@ -70,12 +86,7 @@ $(window).ready(function(){
             <p>${board.content }</p>
             <hr>
             <div align="center">
-            <form action="best.zips?board_type=${param.board_type}">
-                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
-                    <input type="hidden" name="num" value="${board.num}">
-                    <input type="hidden" name="board_type" value="${board.board_type}">
-              <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand}</button>
-                     </form>
+              <button type="button" id="bst_btn" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand}</button>
                      <br>
                      
             <c:if test="${sessionScope.loginUser.id != board.board_userid}">

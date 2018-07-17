@@ -35,11 +35,32 @@ public class BestDaolmpl implements BestDao {
 	}
 
 
-	@Override
+/*	@Override
 	public List<Best> getbest(int num) {
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		map.put("num", num);
 		return sqlSession.selectList(NS+"bestlist",map);
+	}*/
+
+
+	@Override
+	public int bestinsert(Best best) {
+		return sqlSession.getMapper(BestMapper.class).bestinsert(best);
+	}
+
+
+	@Override
+	public Best bestlist(String board_userid, Integer num) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("num", num);
+		map.put("rec_user", board_userid);
+		return sqlSession.selectOne(NS+"bestlist",map);
+	}
+
+
+	@Override
+	public void bestdelete(Best list) {
+		sqlSession.getMapper(BestMapper.class).bestdelete(list);
 	}
 
 }
