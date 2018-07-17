@@ -26,6 +26,10 @@ public interface RecommentMapper {
 	@Update("update zipscomment set co_apply=2 where num = #{num} and co_apply=0")
 	void noapply(Integer num);
 
+	@Select("select co_userid from zipscomment where ref_board_no = 2 and co_apply=2 and num=#{num}")
+	String getApplyId(Integer num);
+
+
 
 
 

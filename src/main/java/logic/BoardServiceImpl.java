@@ -193,4 +193,9 @@ public class BoardServiceImpl implements BoardService {
 	private Best getBestlist(String board_userid, Integer num) {
 		return bestDao.bestlist(board_userid,num);
 	}
+
+	@Override
+	public String getApplyId(Integer num) {
+		return recommentDao.getApplyId(num);
+	}
 }

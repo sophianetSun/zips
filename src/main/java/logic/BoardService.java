@@ -55,6 +55,8 @@ public interface BoardService {
 
 	int bestinsert(String board_userid, Integer num, Integer board_type);
 
+	String getApplyId(Integer num);
+
 
 
 

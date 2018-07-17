@@ -46,8 +46,7 @@ public class BoardController {
 	@ResponseBody
 	public String ajaxbest(HttpSession session,String board_userid, Integer num, Integer board_type) {
 		System.out.println("첫번째");
-		User loginUser = (User)session.getAttribute("loginUser");
-		userService.getPointCoin(loginUser.getId(), 50);
+		userService.getPointCoin(board_userid, 50);
 		int result = service.bestinsert(board_userid, num,board_type); 
 		if (result == 1) return "{\"result\" : 1, \"board_userid\" : \"" + board_userid + "\"}";
 		else if (result == 2) return "{\"result\" : 2, \"board_userid\" : \"" + board_userid + "\"}";
@@ -100,8 +99,9 @@ public class BoardController {
 		
 		service.noapply(num);
 		service.apply(co_no,num);
-		User loginUser = (User)session.getAttribute("loginUser");
-		userService.getPointCoin(loginUser.getId(), 50);
+		String applyUser = service.getApplyId(num);
+		userService.getPointCoin(applyUser, 50);
+		
 		return "채택";
 	}
 	

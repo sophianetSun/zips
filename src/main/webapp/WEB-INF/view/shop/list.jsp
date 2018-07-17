@@ -73,10 +73,148 @@
 		}
 		return false;
 	}
+	
+	(function($){
+
+	    $.fn.shuffleLetters = function(prop){
+
+	        var options = $.extend({
+	        },prop)
+
+	        return this.each(function(){
+	        });
+	    };
+
+
+	    function randomChar(type){
+	    }
+
+	})(jQuery);
+	
+	function randomChar(type){
+	    var pool = "";
+
+	    if (type == "lowerLetter"){
+	        pool = "qwerkdosavwertogvkapowoekrgmskd";
+	    }
+	    else if (type == "upperLetter"){
+	        pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	    }
+	    else if (type == "symbol"){
+	        pool = "ㄱㅏ,ㄷㅜ시어ㄴㄷㅂㄴㅊㅍㅜㅈㄷㅅㅕㅁㅌㅊ";
+	    }
+
+	    var arr = pool.split('');
+	    return arr[Math.floor(Math.random()*arr.length)];
+	}
+	
+	$.fn.shuffleLetters = function(prop){
+
+	    var options = $.extend({
+	        "step"  : 8,    
+	        "fps"   : 25,   
+	        "text"  : ""    
+	    },prop)
+
+	    return this.each(function(){
+
+	        var el = $(this),
+	            str = "";
+
+	        if(options.text) {
+	            str = options.text.split('');
+	        }
+	        else {
+	            str = el.text().split('');
+	        }
+
+	        // The types array holds the type for each character;
+	        // Letters holds the positions of non-space characters;
+
+	        var types = [],
+	            letters = [];
+
+	        // Looping through all the chars of the string
+
+	        for(var i=0;i<str.length;i++){
+
+	            var ch = str[i];
+
+	            if(ch == " "){
+	                types[i] = "space";
+	                continue;
+	            }
+	            else if(/[a-z]/.test(ch)){
+	                types[i] = "lowerLetter";
+	            }
+	            else if(/[A-Z]/.test(ch)){
+	                types[i] = "upperLetter";
+	            }
+	            else {
+	                types[i] = "symbol";
+	            }
+
+	            letters.push(i);
+	        }
+
+	        el.html("");            
+
+
+	        (function shuffle(start){
+
+
+	            var i,
+	                len = letters.length,
+	                strCopy = str.slice(0); 
+
+	            if(start>len){
+	                return;
+	            }
+
+	            for(i=Math.max(start,0); i < len; i++){
+
+
+	                if( i < start+options.step){
+	                    strCopy[letters[i]] = randomChar(types[letters[i]]);
+	                }
+	                else {
+	                    strCopy[letters[i]] = "";
+	                }
+	            }
+
+	            el.text(strCopy.join(""));
+
+	            setTimeout(function(){
+
+	                shuffle(start+1);
+
+	            },1000/options.fps);
+
+	        })(-options.step);
+
+	    });
+	};
+
+	$(function(){
+
+	    var container = $("#shop_shop")
+
+	    container.shuffleLetters();
+
+	    setTimeout(function(){
+
+	        container.shuffleLetters({
+	            "text": "중 고 장 터"
+	        });
+
+
+	    },3000);
+
+	});
 </script>
 </head>
 <body>
-<h2 align="center">중고 장터 게시판 목록 </h2> <%-- 글개수:${listcount} --%>
+<h2 align="center" id="shop_shop">너도 파니? 나도 판다!</h2> 
  
 <div class="container">
 	<div align="center">
