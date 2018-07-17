@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import logic.Board;
 import logic.Recomment;
+import logic.UploadFile;
 
 public interface BoardDao {
 
@@ -33,6 +34,14 @@ public interface BoardDao {
 	int recommand(Integer num);
 
 	List<Board> bestlist(Board board);
+	
+	List<Board> totalbestlist(Board board);
+
+	void totalrecommand(Integer num);
+
+	void fileUpload(int num, String originalfileName, String saveFileName, long fileSize);
+
+	List<UploadFile> getFileList(int num);
 
 
 

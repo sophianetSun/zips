@@ -271,25 +271,7 @@
 
 
 <div class="container">
-<%-- 
-	<form action="totallist.zips?board_type=${param.board_type }" method="post" name="searchform" onsubmit="return list(1)">
-			<input type="hidden" name="pageNum" value="1">
-			 <div class="search__container" align="center">
-			<select name="searchType" id="searchType" class="custom-select d-block" style="width:100px;height:40px;">
-			<option value="subject">제목</option>
-			<option value="board_userid">글쓴이</option>   
-				</select>
-				<br>
-    <input class="search__input" type="text" name="searchContent" placeholder="Search" value="${param.searchContent}">
-			</div>
-			
-<script type="text/javascript">
- if('${param.searchType}' != ''){
-	document.getElementById("searchType").value='${param.searchType}'	 
- }
- </script>
-</form>
- --%>
+
 <form action="totallist.zips?board_type=${param.board_type}" method="post" name="searchform" onsubmit="return list(1)">
 <input type="hidden" name="pageNum" value="1">
  <div class="search__container" align="center">
@@ -332,6 +314,28 @@
 				<th>추천수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				</c:if>
 			</tr>
+			<c:if test="${param.board_type == 3 || param.board_type == 4}">
+			<c:forEach var="totalbest" items="${totalbestlist}" begin="0" end="2">
+			<tr>
+				<c:if test="${param.board_type == 3 }">
+				<th>[Best 글]</th>
+				</c:if>
+				<c:if test="${param.board_type == 4 }">
+				<th>[Best 글]</th>
+				</c:if>
+				<td>
+				<c:if test="${param.board_type == 3 || param.board_type == 4}">
+				<a href="totallistForm.zips?num=${totalbest.num}&pageNum=${pageNum}&board_type=${param.board_type}">${totalbest.subject}</a></td>
+				 </c:if>	
+				<td>${totalbest.board_userid}</td>
+				<td><fmt:formatDate value="${totalbest.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></td>
+				<td>${totalbest.board_count }</td>
+				<c:if test="${param.board_type == 3 || param.board_type == 4}">
+				<td>${totalbest.totalrecommand }</td>
+				</c:if>
+			</tr>
+			</c:forEach>
+			</c:if>
 			<c:forEach var="board" items="${boardlist2}">
 			<tr>
 			<c:if test="${param.board_type == 2 }">
@@ -350,7 +354,7 @@
 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} &nbsp;&nbsp;&nbsp;<em class="off">고민중</em></a></td>
 			</c:when>
 			<c:when test="${board.board_apply == 1}">
- 			<c:if test="${!empty board.fileurl }"><img src="../img/imgicon.PNG" style="width:30px;height: 30px; "></c:if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} <em class="on">고민해결</em></a>
+ 			<a href="totallistForm.zips?num=${board.num}&pageNum=${pageNum}&board_type=${param.board_type}">${board.subject} <em class="on">고민해결</em></a>
 			</c:when>
 			</c:choose>
 			</c:if>
@@ -361,11 +365,10 @@
 				<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd-HH:mm:ss"/></td>
 				<td>${board.board_count }</td>
 				<c:if test="${param.board_type == 3 || param.board_type == 4}">
-				<td>${board.recommand }</td>
+				<td>${board.totalrecommand }</td>
 				</c:if>
 			</tr>
 			</c:forEach>
-			
 			<tr align="center" height="26"><td colspan="5">
 	<ul class="pagination justify-content-center">
 <%-- <c:if test="${pageNum <= 1}"><button type="button" class="btn btn-info">이전</button></c:if>&nbsp; --%>

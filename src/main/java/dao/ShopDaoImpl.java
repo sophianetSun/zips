@@ -112,7 +112,6 @@ public class ShopDaoImpl implements ShopDao {
 	    map.put("originalfileName", originalfileName);
 	    map.put("saveFileName", saveFileName);
 	    map.put("fileSize", fileSize);
-	     
 	    sqlSession.insert(NS+"fileUpload", map);	
 	}
 

@@ -29,6 +29,15 @@
 <div class="container">
 <br>
   <h2>비밀번호 변경하기</h2><br><br>
+
+    <%-- <div class="form-group">
+      <label class="control-label col-sm-2" for="pw">인증번호:</label>
+      <div class="col-sm-10">    
+        <font color="red"><form:errors path="pw" /></font>      
+        <input type="password" class="form-control" id="pw" placeholder="기존에 사용하시던 비밀번호를 입력해 주세요" name="pw"  value="secretpw">
+      </div>
+    </div> --%>
+    
     <div class="form-group">
       <label class="control-label col-sm-2" for="pw">기존 비밀번호:</label>
       <div class="col-sm-10">    

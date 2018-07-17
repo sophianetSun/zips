@@ -26,7 +26,7 @@
 	
 	<select id="checkCoin" resultType="String" parameterType="map">  
 		<![CDATA[
-		select count(*) from zipsuser z where id = #{shop_buyer_id} and #{coin} <= z.coin
+		select count(*) from zipsuser z where id = '${shop_buyer_id}' and ${coin} <= z.coin 
  		]]>
 	</select> 
 	
@@ -49,4 +49,22 @@
 	<update id="pwchange" parameterType="map">
 		update zipsuser set pw=#{dbpass} where id = #{userId}
 	</update>
+	
+	<select id="count" resultType="Integer" parameterType="map">
+ 		select count(*) from zipsuser 
+ 	<if test="searchType != null and searchContent != null">
+ 		${searchType} like '%${searchContent}%'
+ 	</if>
+ 	</select>
+ 	
+	<select id="list" resultType="User" parameterType="map">
+		select * from zipsuser
+		<if test="searchType != null and searchContent != null">
+ 		where ${searchType} like '%${searchContent}%'
+ 		</if>
+ 		<if test="startrow != null and limit != null">
+		order by regdate desc limit #{startrow},#{limit}
+		</if>
+	</select>
+
 </mapper>

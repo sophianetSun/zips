@@ -57,8 +57,8 @@
 <script type="text/javascript">
 	// 스크립트 list function
 	$(document).ready(function(){
-		$('a').css('color', '#17a2b8');
-	})
+		$('a.page-link').css('color', '#17a2b8');
+	}) 
 	
 	function list(pageNum) {
 		var searchType = document.searchform.searchType.value;

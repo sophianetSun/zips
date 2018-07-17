@@ -110,4 +110,13 @@ public class UserServiceImpl implements UserService{
 		return userDao.findEmail(email);
 	}
 
+	@Override
+	public int count(String searchType, String searchContent) {
+		return userDao.count(searchType, searchContent);
+	}
+
+	@Override
+	public List<User> list(String searchType, String searchContent, Integer pageNum, int limit) {
+		return userDao.list(searchType, searchContent, pageNum, limit);
+	}
 }

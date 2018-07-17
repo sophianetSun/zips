@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import dao.mapper.BoardMapper;
 import dao.mapper.RecommentMapper;
 import logic.Board;
+import logic.UploadFile;
 @Repository
 public class BoardDaoImpl implements BoardDao {
 	
@@ -80,15 +81,11 @@ public class BoardDaoImpl implements BoardDao {
 	public List<Board> totallist(Integer board_type,String searchType, String searchContent, Integer pageNum, int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		int startrow = (pageNum -1 ) * limit;
-		System.out.println("startrow::::::::::::::"+startrow);
 		map.put("searchType", searchType);
 		map.put("searchContent", searchContent);
 		map.put("startrow", startrow);
 		map.put("limit", limit); 
 		map.put("board_type", board_type);
-		System.out.println("startrow::::::::::::::"+startrow);
-		System.out.println("limit:디에오임플::::::::::"+limit);
-		System.out.println("board_type::디에오임플 아마이게 안되는게아닐까?::::::"+board_type);
 		return sqlSession.selectList(NS+"totallist",map);
 	}
 
@@ -108,6 +105,38 @@ public class BoardDaoImpl implements BoardDao {
 		map.put("board_type", board.getBoard_type());
 		map.put("recommand", board.getRecommand());
 		return sqlSession.selectList(NS+"recommandlist",map);
+	}
+	
+	@Override
+	public List<Board> totalbestlist(Board board) {
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("board_type", board.getBoard_type());
+		map.put("totalrecommand", board.getTotalrecommand());
+		return sqlSession.selectList(NS+"totalrecommandlist",map);
+	}
+
+	@Override
+	public void totalrecommand(Integer num) {
+		sqlSession.getMapper(BoardMapper.class).totalrecommand(num);
+	}
+
+	@Override
+	public void fileUpload(int num, String originalfileName, String saveFileName, long fileSize) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("board_no", num);
+		map.put("originalfileName", originalfileName);
+		map.put("saveFileName", saveFileName);
+		map.put("fileSize", fileSize);
+		sqlSession.selectList(NS+"fileUpload",map);
+	
+	}
+
+	@Override
+	public List<UploadFile> getFileList(int num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board_no", num);
+		
+		return sqlSession.selectList(NS+"getFileList", map);
 	}
 	
 }
