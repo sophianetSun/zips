@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import dao.mapper.UserMapper;
 import logic.Board;
 import logic.User;
 
-@Repository
+@Repository 
 public class UserDaoImple implements UserDao{
 	private NamedParameterJdbcTemplate template;
 	private RowMapper<User> mapper = new BeanPropertyRowMapper<User>(User.class);
@@ -144,16 +145,26 @@ public class UserDaoImple implements UserDao{
 		sqlSession.update(NS+"updateBuyerCoinCancel", map);
 	}
 
+	// 포인트, 코인 부여
 	@Override
-	public User findEmail(String email) {
-		return sqlSession.getMapper(UserMapper.class).findEmail(email);
+	public void getPointCoin(String id, int pointCoin) {
+		Map<Object, Object> map = new HashMap<Object,Object>();
+		map.put("id", id);
+		map.put("pointCoin", pointCoin);
+		sqlSession.update(NS+"getPointCoin", map);
 	}
-
+	
 	@Override
 	public void sellUpdate() {
 		sqlSession.getMapper(ShopMapper.class).sellUpdate();
 		
 	}
+	
+	@Override
+	public User findEmail(String email) {
+		return sqlSession.getMapper(UserMapper.class).findEmail(email);
+	}
+
 
 	
 
@@ -184,8 +195,17 @@ public class UserDaoImple implements UserDao{
 		return sqlSession.selectList(NS+"list", map);
 	}
 
+	// 최근 접속 시간 수정
+	@Override
+	public void logDateUpdate(String id) {
+		sqlSession.getMapper(UserMapper.class).logDateUpdate(id);
+	}
+
+	// 최근 접속시간 가져오기
+	@Override
+	public Date getlogDate(String id) {
+		return sqlSession.getMapper(UserMapper.class).getlogDate(id); 
+	}
 
 
-	
-	
 }

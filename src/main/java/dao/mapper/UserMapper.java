@@ -1,5 +1,7 @@
 package dao.mapper;
 
+import java.util.Date;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -30,4 +32,10 @@ public interface UserMapper {
 
 	@Select("select * from zipsuser where email=#{value}")
 	User findEmail(String email);
+
+	@Update("update zipsuser set logdate=now() where id = #{id}")
+	void logDateUpdate(String id);
+	
+	@Select("select logdate from zipsuser where id = #{id}")
+	Date getlogDate(String id);
 }

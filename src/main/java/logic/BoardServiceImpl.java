@@ -181,6 +181,7 @@ public class BoardServiceImpl implements BoardService {
 		best.setNum(num);
 		best.setRec_board_type(board_type);
 		best.setRec_user(board_userid);
+		
 		return bestDao.bestinsert(best);
 		} else {
 			boardDao.deleterecommand(num);

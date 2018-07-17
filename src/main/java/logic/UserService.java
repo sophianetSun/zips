@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,9 @@ public interface UserService {
 	// 구매자 코인 사용 취소
 	void updateBuyerCoinCancel(Integer coin, String shop_buyer_id);
 
+	// 포인트, 코인 부여
+	void getPointCoin(String id, int pointCoin);
+
 	void updatePass(String userId, String dbpass);
 
 	List<User> userList(String[] idchks);
@@ -43,5 +47,10 @@ public interface UserService {
 	int count(String searchType, String searchContent);
 
 	List<User> list(String searchType, String searchContent, Integer pageNum, int limit);
+
+	void logDateUpdate(String id);
+
+	Date getlogDate(String id);
+
 
 }

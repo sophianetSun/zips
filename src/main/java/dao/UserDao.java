@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
 import logic.Board;
@@ -38,6 +39,9 @@ public interface UserDao {
 	// 구매자 코인 사용 취소
 	void updateBuyerCoinCancel(Integer coin, String shop_buyer_id);
 
+	// 포인트, 코인 증가
+	void getPointCoin(String id, int pointCoin);
+	
 	User findEmail(String email);
 
 	void sellUpdate();
@@ -45,5 +49,10 @@ public interface UserDao {
 	int count(String searchType, String searchContent);
 
 	List<User> list(String searchType, String searchContent, Integer pageNum, int limit);
+
+	void logDateUpdate(String id);
+
+	Date getlogDate(String id);
+
 
 }

@@ -31,6 +31,7 @@ import logic.BoardService;
 import logic.Recomment;
 import logic.UploadFile;
 import logic.User;
+import logic.UserService;
 
 @Controller
 public class BoardController {
@@ -38,52 +39,22 @@ public class BoardController {
 	@Autowired 
 	private BoardService service;
 	
+	@Autowired
+	private UserService userService;
+	
 	@GetMapping(value="board/ajaxbest", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String ajaxbest(HttpSession session,String board_userid, Integer num, Integer board_type) {
 		System.out.println("첫번째");
+		User loginUser = (User)session.getAttribute("loginUser");
+		userService.getPointCoin(loginUser.getId(), 50);
 		int result = service.bestinsert(board_userid, num,board_type); 
 		if (result == 1) return "{\"result\" : 1, \"board_userid\" : \"" + board_userid + "\"}";
 		else if (result == 2) return "{\"result\" : 2, \"board_userid\" : \"" + board_userid + "\"}";
 		else return "{\"result\" : 0}";
+	
 	}
 	
-	/*@RequestMapping("board/best")
-	public ModelAndView chbest(HttpSession session,Best best,Board board, String board_userid) {
-		ModelAndView mav = new ModelAndView();
-	    User sessionId = (User) session.getAttribute("loginUser");
-	    sessionId.getId();
-		Integer num = board.getNum();
-	   best.setNum(board.getNum());
-	   best.setRec_user(board_userid);
-	   best.setRec_board_type(board.getBoard_type());
-	   List<Best> dbbest = service.getbest(board.getNum());
-	   if(dbbest.iterator().hasNext()) {
-		 for(int i=0; i<dbbest.size(); i++) {
-			 dbbest.iterator().next().getRec_user();
-			 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
-				 System.out.println("홈트의 :::::::::::!dbbest.iterator().next().getRec_user().equals(sessionId.getId())"+!dbbest.iterator().next().getRec_user().equals(sessionId.getId()));
-				 System.out.println("dbbest.iterator().next().getRec_user()"+dbbest.iterator().next().getRec_user());
-				 System.out.println("sessionId.getId()"+sessionId.getId());
-				 int result = service.best(best,num);
-				 if(result > 0) {
-					 mav.setViewName("redirect:homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-				 } 
-			 } else {
-				 throw new BoardException("해당 게시물은 이미 추천을 누르셨습니다", "homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-			 }
-		 }
-	   } else {
-		   System.out.println("best의 인설트부분");
-		   int result = service.best(best,num);
-		   if(result > 0) {
-			throw new BoardException("추천 완료 !", "homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-			 } 
-	   }
-			int bestcnt = service.bestcnt(best);
-			mav.addObject("bestcnt",bestcnt);
-		return mav;
-	}*/
 	
 	/*@RequestMapping("board/totalbest")
 	public ModelAndView chtotalbest(HttpSession session,Best best,Board board, String board_userid) {
@@ -129,7 +100,8 @@ public class BoardController {
 		
 		service.noapply(num);
 		service.apply(co_no,num);
-		
+		User loginUser = (User)session.getAttribute("loginUser");
+		userService.getPointCoin(loginUser.getId(), 50);
 		return "채택";
 	}
 	
@@ -292,6 +264,8 @@ public class BoardController {
            }
        }
 		int result = service.boardinsert(board,request);
+		User loginUser = (User)session.getAttribute("loginUser");
+		userService.getPointCoin(loginUser.getId(), 3);
 		int boardtype = board.getBoard_type();
 		if(boardtype == 1) {
 			if(result > 0) {
