@@ -2,8 +2,10 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
+
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
 
  em.off {
@@ -239,6 +241,8 @@
 	    },4000);
 
 	});
+	
+
 </script>
 </head>
 <body>
@@ -255,6 +259,11 @@
 <h2 align="center" id="container2" class="rainbow">지금 이순간을 즐겨라 ! 스트레스를 날려버릴 아무말 대잔치</h2>
        <br>
         <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <br>
+        <div class="w3-content w3-section" style="max-width:500px" align="center">
+        <img class="mySlides w3-animate-fading w3-round w3-opacity" src="../img/free1.jpg" style="width: 520px;height: 250px;">
+		<img class="mySlides w3-animate-fading w3-round w3-opacity" src="../img/free2.jpg" style="width: 520px;height: 250px;">
+        </div>
         </div>
       </div>
 </c:if>
@@ -287,6 +296,21 @@
  if('${param.searchType}' != ''){
 	document.getElementById("searchType").value='${param.searchType}'	 
  }
+ 
+	var myIndex = 0;
+	carousel();
+
+	function carousel() {
+	    var i;
+	    var x = document.getElementsByClassName("mySlides");
+	    for (i = 0; i < x.length; i++) {
+	       x[i].style.display = "none";  
+	    }
+	    myIndex++;
+	    if (myIndex > x.length) {myIndex = 1}    
+	    x[myIndex-1].style.display = "block";  
+	    setTimeout(carousel, 9000);    
+	}
 </script>
 </form>
 
@@ -309,9 +333,9 @@
 				<th>제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>글쓴이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<th>날짜</th>
-				<th>조회수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th style="padding-right:0">조회수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<c:if test="${param.board_type == 3 || param.board_type == 4}">
-				<th>추천수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th style="padding-right:0">추천수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				</c:if>
 			</tr>
 			<c:if test="${param.board_type == 3 || param.board_type == 4}">

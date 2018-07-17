@@ -76,13 +76,9 @@ $.fn.shuffleLetters = function(prop){
             str = el.text().split('');
         }
 
-        // The types array holds the type for each character;
-        // Letters holds the positions of non-space characters;
-
         var types = [],
             letters = [];
 
-        // Looping through all the chars of the string
 
         for(var i=0;i<str.length;i++){
 
@@ -107,13 +103,7 @@ $.fn.shuffleLetters = function(prop){
 
         el.html("");            
 
-        // Self executing named function expression:
-
         (function shuffle(start){
-
-            // This code is run options.fps times per second
-            // and updates the contents of the page element
-
             var i,
                 len = letters.length,
                 strCopy = str.slice(0); // Fresh copy of the string
@@ -122,14 +112,9 @@ $.fn.shuffleLetters = function(prop){
                 return;
             }
 
-            // All the work gets done here
             for(i=Math.max(start,0); i < len; i++){
 
-                // The start argument and options.step limit
-                // the characters we will be working on at once
-
                 if( i < start+options.step){
-                    // Generate a random character at this position
                     strCopy[letters[i]] = randomChar(types[letters[i]]);
                 }
                 else {
@@ -170,7 +155,7 @@ $(function(){
 </head>
 <body>
 <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
- <h1 id="container4"><span>You are the most beautiful who try</span></h1>
+ <h1 id="container4" class="testgreen"><span>You are the most beautiful who try</span></h1>
   <br>
   <br>
         <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;" align="center">
@@ -181,7 +166,6 @@ $(function(){
         </div>
       </div>
       <BR>
-<hr class="my-hr1">
 <form action="homeTraininglist.zips?board_type=${param.board_type}" method="post" name="searchform" onsubmit="return list(1)">
 <input type="hidden" name="pageNum" value="1">
  <div class="search__container" align="center">
@@ -266,7 +250,7 @@ $(function(){
 					조회수 :${board.board_count} 
 					<br>
                     <div class="btn-group">
-                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천 <font color="red">♥
+                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천<font color="red">♥
                       <span class="badge badge-light">${board.recommand}</span></font></small></button>
 					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;" disabled="disabled"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
