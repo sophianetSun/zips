@@ -19,8 +19,6 @@ function board_submit() {
 				return false;
 			}
 		}
-	
-
 </script>
 </head>
 

@@ -228,10 +228,10 @@ ${re.co_content}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </c:forEach>
 </c:if>
           <div>
-          <%-- <c:if test="${sessionScope.loginUser.nickname == board.board_userid}"> </c:if> --%>
+          <c:if test="${sessionScope.loginUser.nickname == board.board_userid}">
 				<a href="update.zips?num=${board.num }&pageNum=${param.pageNum}&board_type=${param.board_type}"><button type="button" class="btn btn-primary">수정</button></a>
 				<a href="delete.zips?num=${board.num }&pageNum=${param.pageNum}&board_type=${param.board_type}"><button type="button" class="btn btn-warning">삭제</button></a>
-				<a href="totallist.zips?board_type=${param.board_type }"><button type="button" class="btn btn-light">목록</button></a>
+				</c:if><a href="totallist.zips?board_type=${param.board_type }"><button type="button" class="btn btn-light">목록</button></a>
           </div>
 </body>
 </html>

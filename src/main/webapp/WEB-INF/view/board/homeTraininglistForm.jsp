@@ -88,7 +88,7 @@ $(window).ready(function(){
             <h3>운동 설명 & 운동 후기 </h3>
             <br>
             <p>${board.content }</p>
-            <hr>
+             <br> <br> <br>
             <div align="center">
               <button type="button" id="bst_btn" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand}</button>
                      <br>
@@ -100,7 +100,8 @@ $(window).ready(function(){
             <br>
             </div>	
           </div>
-     	                <strong>댓글 쓰기</strong><br>
+          <hr>
+     	                <strong>댓글</strong><br><br>
 <form action="recomment.zips" method="post">
 <input type="hidden" name="board_type" value="${param.board_type }">
 <input type="hidden" name="co_userid" value="${sessionScope.loginUser.id}">

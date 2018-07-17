@@ -293,7 +293,7 @@ public class BoardController {
 		return mav;
 }
 	@RequestMapping(value="board/delete" , method = RequestMethod.POST)
-	public ModelAndView chdelete2(@RequestParam HttpSession session, HashMap<String,String> map) {
+	public ModelAndView delete2(@RequestParam HashMap<String,String> map) {
 		System.out.println(map);
 		int result = service.boardDelete(Integer.parseInt(map.get("num")));
 		ModelAndView mav = new ModelAndView();
