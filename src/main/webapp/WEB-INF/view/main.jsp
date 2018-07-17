@@ -140,7 +140,7 @@ $(document).ready(function() {
 	</c:forEach>
 </div>
 <!-- 그래프 -->
-<div id="main_graph" class="carousel slide bg-white" data-ride="carousel"> 
+<div id="main_graph" class="carousel slide bg-light border" data-ride="carousel"> 
   <!-- The slideshow -->
   <div class="carousel-inner">
     <div class="carousel-item active">
