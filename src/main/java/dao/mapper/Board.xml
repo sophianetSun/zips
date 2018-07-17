@@ -29,7 +29,7 @@ select num,board_userid,subject,content,filename fileurl,regdate,board_count,boa
   order by totalrecommand desc
 </if>
  </select>
- 
+
 <select id="list" resultType="Board" parameterType="map">
 select num,board_userid,subject,content,filename fileurl,regdate,board_count,board_type,recommand,totalrecommand from totalboard
  <if test="board_type != null">

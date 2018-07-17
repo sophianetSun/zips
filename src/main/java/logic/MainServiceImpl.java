@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mchange.v2.sql.filter.SynchronizedFilterDataSource;
+
 import dao.BoardDao;
 import dao.CalendarDao;
 import dao.FoodDao;
@@ -159,15 +161,16 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public int subscribe(String userId, String subId) {
 		List<Subscription> list = getSubscriptionList(userId);
+		System.out.println(list);
 		Boolean isSubscribe = list.stream().anyMatch(sub -> 
-			sub.getUserId().equals(userId) && sub.getSubscribeId().equals(subId));
+			sub.getUser_id().equals(userId) && sub.getSubscribe_id().equals(subId));
 		if (isSubscribe) {
 			cancelSubsciription(userId, subId);
 			return 2;
 		} else {
 			Subscription sub = new Subscription();
-			sub.setUserId(userId);
-			sub.setSubscribeId(subId);
+			sub.setUser_id(userId);
+			sub.setSubscribe_id(subId);
 			return subDao.insert(sub);
 		}
 	}
@@ -191,8 +194,8 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public int cancelSubsciription(String userId, String subId) {
 		Subscription sub = new Subscription();
-		sub.setUserId(userId);
-		sub.setSubscribeId(subId);
+		sub.setUser_id(userId);
+		sub.setSubscribe_id(subId);
 		return subDao.delete(sub);
 	}
 	

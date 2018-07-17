@@ -25,20 +25,28 @@ public class Subscription implements Serializable {
 		this.num = num;
 	}
 
-	public String getUserId() {
+	public String getUser_id() {
 		return user_id;
 	}
 
-	public void setUserId(String userId) {
-		this.user_id = userId;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
-	public String getSubscribeId() {
+	public String getSubscribe_id() {
 		return subscribe_id;
 	}
 
-	public void setSubscribeId(String subscribeId) {
-		this.subscribe_id = subscribeId;
+	public void setSubscribe_id(String subscribe_id) {
+		this.subscribe_id = subscribe_id;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Subscription [num=").append(num).append(", user_id=").append(user_id).append(", subscribe_id=")
+				.append(subscribe_id).append("]");
+		return builder.toString();
 	}
 	
 }

@@ -10,22 +10,22 @@
 
 <script type="text/javascript">
 $(document).ready(
-		  function() {
-			   $('#file').change(function() {
-			    addPreview($(this));
-			   });
-			  });
-			function imageURL(input) {
-					if(input.files && input.files[0]) {
-					var reader = new FileReader();
-										
-					reader.onload = function(img) {
-				$("#img_ex").attr("src",img.target.result)
-			};
-		reader.readAsDataURL(input.files[0]);
-	}else alert('파일입력이 잘못되었습니다.');
+    function() {
+      $('#file').change(function() {
+       addPreview($(this));
+      });
+     });
+   function imageURL(input) {
+     if(input.files && input.files[0]) {
+     var reader = new FileReader();
+          
+     reader.onload = function(img) {
+    $("#img_ex").attr("src",img.target.result)
+   };
+  reader.readAsDataURL(input.files[0]);
+ }else alert('파일입력이 잘못되었습니다.');
 }
-			
+   
 function myFunction(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {
@@ -36,12 +36,12 @@ function myFunction(id) {
 }
 
 function allchkbox(chk) {
-		var chks = documemt.getElementsByName("idchks")
-		for(var i=0; i<chks.length; i++) {
-		chks[i].checked = chk.checked;
-		}	
-	}
-	
+  var chks = documemt.getElementsByName("idchks")
+  for(var i=0; i<chks.length; i++) {
+  chks[i].checked = chk.checked;
+  } 
+ }
+ 
 function execPostCode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -86,30 +86,30 @@ function execPostCode() {
 }
 
 $(function(){
-	  $('#userAdminDelete').click(function(event){
-		  alert('회원삭제완료');
-	  });
-	});
+   $('#userAdminDelete').click(function(event){
+    alert('회원삭제완료');
+   });
+ });
 
 function list(pageNum) {
-	var searchType = document.searchform.searchType.value;
-	if(searchType == null || searchType.length == 0) {
-		document.searchform.searchContent.value = "";
-		document.searchform.pageNum.value = 1;
-		location.href="admin.zips?pageNum="+pageNum;			
-	} else {
-		document.searchform.pageNum.value = pageNum;
-		document.searchform.submit();
-		return true;
-	}
-	return false;
+ var searchType = document.searchform.searchType.value;
+ if(searchType == null || searchType.length == 0) {
+  document.searchform.searchContent.value = "";
+  document.searchform.pageNum.value = 1;
+  location.href="admin.zips?pageNum="+pageNum;   
+ } else {
+  document.searchform.pageNum.value = pageNum;
+  document.searchform.submit();
+  return true;
+ }
+ return false;
 }
 
+ 
 
+ 
 
-
-
-
+ 
 
 </script>
 
@@ -120,33 +120,32 @@ function list(pageNum) {
   <input type="hidden" name="pageNum" value="${pageNum}">
   <form action="list.zips" method="post" name="searchform" id="searchform" onsubmit="return list(1)">
   <input type="hidden" name="pageNum" value="${pageNum}">
-			<div align="center">
-			<select name="searchType"  id="searchType" class="custom-select d-block" style="width:100px; height:40px;">
-				<option value="">카테고리</option>
-				<option value="id">ID</option>
-				<option value="name">이름</option>
-			</select>&nbsp;
-			</div>
-			<script type="text/javascript">
-				if('${param.searchType}' != '') {
-					document.getElementById("searchType").value = '${param.searchType}';
-				}
-			</script>
-			<input type="text" class="search__input" name="searchContent" value="${param.searchContent}" placeholder="Search">
-		</form> 
+   <div align="center">
+   <select name="searchType"  id="searchType" class="custom-select d-block" style="width:100px; height:40px;">
+    <option value="">카테고리</option>
+    <option value="id">ID</option>
+    <option value="name">이름</option>
+   </select>&nbsp;
+   </div>
+   <script type="text/javascript">
+    if('${param.searchType}' != '') {
+     document.getElementById("searchType").value = '${param.searchType}';
+    }
+   </script>
+   <div align="center">
+   <input type="text" class="search__input" name="searchContent" value="${param.searchContent}" placeholder="Search"></div>
+  </form>
 
 
   <br><br><br>
-	<c:forEach items="${userList}" var="user" varStatus="stat">
-<p align="right">
-  <input class="w3-check" type="checkbox">
-  <label> 회원선택하기</label></p>
+ <c:forEach items="${userList}" var="user" varStatus="stat">
   
 <ul class="w3-ul w3-card-4">
     <li class="w3-bar">
-        <button class="w3-button w3-xlarge w3-circle w3-black" onclick="myFunction('Demo${stat.index}')">+</button>
+    <p align="right">
+        <button class="w3-button w3-xlarge w3-circle w3-black" onclick="myFunction('Demo${stat.index}')">+</button></p>
   <form:form modelAttribute="user" method="post" action="adminUpdate.zips" enctype="multipart/form-data">
- 	 <img src="../img/${user.picture}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+   <img src="../img/${user.picture}" class="w3-bar-item w3-circle w3-hide-small" style="width:100px; height:100px;">
       <div class="w3-bar-item">
         <span class="w3-large">[ ${user.name}/</span>
         <span class="w3-large">${user.id} ]님의 정보</span>
@@ -155,16 +154,16 @@ function list(pageNum) {
         <table>
       <tr>
    <td rowspan="10" align="center" valign="bottom">
-				<div align="center">
-	<c:if test="${empty user.picture}"><td align="center"><img src="../img/join.png" width="280" height="300" id="img_ex"></c:if>
+    <div align="center">
+ <c:if test="${empty user.picture}"><td align="center"><img src="../img/join.png" width="280" height="300" id="img_ex"></c:if>
     <c:if test="${!empty user.picture}"><td align="center"><img src="../img/${user.picture}" width="280" height="300" id="img_ex"></c:if>
    <br>
         <input type="file" id="file" name="pic" onchange="imageURL(this)" value="${user.picture}"/>
-      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현재파일<input type="text" id="picture" name="picture" value="${user.picture}">
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현재파일<input type="text" id="picture" name="picture" value="${user.picture}">
       </div>
-			</td>
-			<td>
-						
+   </td>
+   <td>
+      
 <div align="right">
   <table class="w3-table">
     <tr>
@@ -187,7 +186,7 @@ function list(pageNum) {
       <td colspan="2"><input class="w3-input" type="text" value="${user.tel}" id="tel" name="tel"></td>
     </tr>
     <tr>
-    	<th>코인(coin)</th>
+     <th>코인(coin)</th>
         <th></th>
         <th>포인트(point)</th>     
         <th></th>
@@ -195,8 +194,8 @@ function list(pageNum) {
     <tr>
       <td colspan="2"><input class="w3-input" type="text" value="${user.coin}" id="coin" name="coin"></td>
       <td colspan="2"><input class="w3-input" type="text" value="${user.point}" id="point" name="point"></td>
-	</tr>
-	<tr>
+ </tr>
+ <tr>
       <th>키(cm)</th>
       <th>몸무게(kg)</th>
       <th>체지방(kg)</th>
@@ -222,17 +221,17 @@ function list(pageNum) {
       <th>성별(gender)</th>
     </tr>
     <tr>
-    	<td><input class="w3-input" type="text" value="${user.email}" id="email" name="email"></td>
-    	<td><input class="w3-input" type="text" value="${user.regdate}" id="regdate" name="regdate"></td>
-    	<td><input class="w3-input" type="text" value="${user.logdate}" id="logdate" name="logdate"></td>
-    	<td><c:if test="${user.gender=='남'}">
-	    <input type="radio" name="gender" value='남' checked="checked">남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    <input type="radio" name="gender" value='여'>여자<br />
- 	</c:if>
+     <td><input class="w3-input" type="text" value="${user.email}" id="email" name="email"></td>
+     <td><input class="w3-input" type="text" value="${user.regdate}" id="regdate" name="regdate"></td>
+     <td><input class="w3-input" type="text" value="${user.logdate}" id="logdate" name="logdate"></td>
+     <td><c:if test="${user.gender=='남'}">
+     <input type="radio" name="gender" value='남' checked="checked">남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <input type="radio" name="gender" value='여'>여자<br />
+  </c:if>
     <c:if test="${user.gender=='여'}">
-	    <input type="radio" name="gender" value='남'>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    <input type="radio" name="gender" value='여' checked="checked">여자<br />
-	</c:if></td>
+     <input type="radio" name="gender" value='남'>남자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <input type="radio" name="gender" value='여' checked="checked">여자<br />
+ </c:if></td>
      </tr>
      </table>
     <table class="w3-table">
@@ -240,7 +239,7 @@ function list(pageNum) {
       <th colspan="4">주소(address)</th>
     </tr>
     <tr>
-    	<td colspan="4"><input class="w3-input" type="text" value="${user.address}" id="address" name="address"></td>
+     <td colspan="4"><input class="w3-input" type="text" value="${user.address}" id="address" name="address"></td>
      </tr>
      </table>
     <table class="w3-table">
@@ -250,9 +249,9 @@ function list(pageNum) {
       [<i class="fa fa-search"></i> 변경]</div></th>
     </tr>
     <tr>
-    	<td><input class="w3-input" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" ></td>
-    	<td colspan="2"><input class="w3-input" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" /></td>
-    	<td><input class="w3-input" placeholder="상세주소" name="addr3" id="addr3" type="text" /></td>
+     <td><input class="w3-input" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" ></td>
+     <td colspan="2"><input class="w3-input" placeholder="도로명 주소" name="addr2" id="addr2" type="text" readonly="readonly" /></td>
+     <td><input class="w3-input" placeholder="상세주소" name="addr3" id="addr3" type="text" /></td>
      </tr>
      </table>
 <br><div align="center">
@@ -273,24 +272,20 @@ function list(pageNum) {
 
 </c:forEach>
 <br>
-<div align="center">
-<button type="button" class="btn btn-default" onclick="location.href='mail.zips'">회원메일보내기</button>
-<button type="button" class="btn btn-default" onclick="location.href='join.zips'">선택한회원탈퇴</button><br><br>
 
-</div>
 <br>
 
 <ul class="pagination justify-content-center">
 
-			<c:forEach var="a" begin="${startpage}" end="${endpage}">
-				<c:if test="${a == pageNum}">
-				<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}</a></li>
-				</c:if>
-				<c:if test="${a != pageNum}">
-				<li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}&nbsp;</a></li>
-				</c:if>
-				</c:forEach>
-			</ul>
+   <c:forEach var="a" begin="${startpage}" end="${endpage}">
+    <c:if test="${a == pageNum}">
+    <li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}</a></li>
+    </c:if>
+    <c:if test="${a != pageNum}">
+    <li class="page-item"><a class="page-link" href="javascript:list(${a})">${a}&nbsp;</a></li>
+    </c:if>
+    </c:forEach>
+   </ul>
 
 <c:if test="${listcount == 0}">
 등록된 게시물이 없습니다
