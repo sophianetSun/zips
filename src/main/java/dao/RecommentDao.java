@@ -24,6 +24,8 @@ public interface RecommentDao {
 
 	Recomment getapply(int num);
 
+	String getApplyId(Integer num);
+
 	
 	
 }

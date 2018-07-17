@@ -15,14 +15,14 @@
 		trans_text.value =  $('#textarea').val().replace(/\n/g,"<br>"); 
 		
 		function board_submit() {
-					var file = filename2.value.split(".");
+					var file = document.all.filename.value.split(".");
 					if (file[1] == null) {
 						console.log("첫번째"+file[1])
 						alert('동영상 파일을 꼭 올려주셔야 업로드가 가능합니다\n동영상 확장자 파일은 "mp4"만 가능합니다')
 						return false;
 					} else if (file[1] == "mp4") {
 						console.log("두번째"+file[1])
-						alert('fewkjfiewjfoiewfjeoi')
+						alert('동영상 업로드 완료')
 						f.submit();
 					} else if (file[1] != "mp4") {
 						console.log("세번째"+file[1])
@@ -72,17 +72,15 @@
                 <small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
 				<c:if test="${param.board_type == 1 || param.board_type == 2 || param.board_type == 3}">
 		<div class="mb-1 text-muted"><br>
-			<input type=file name='filename' style='display: none;'><img
-				src='../img/video.png' style="width: 200px; height: 150px;"
-				border='1' hspace="5"
-				onclick='document.all.filename.click(); document.all.filename2.value=document.all.filename.value'
-				class="w3-circle"> <input type='text' name='filename2'
-				id='filename2' readonly="readonly" style='display: none;'>
+		<input type=file name='filename' onchange='document.all.filename2.value=document.all.filename.value' style="display: none;">
+			<input type='text' name='filename2' readonly="readonly" style="display: none;">
+			<img src='../img/video.png' style="width: 200px; height: 150px;" border='1' hspace="5"
+				onclick='document.all.filename.click()' class="w3-circle">
 		<br>
 		<h3 class="mb-100">
 							<strong class="d-inline-block mb-10 text-success">글 설명</strong>
 						</h3>
-		<form:textarea rows="15" cols="80" path="content" id="textarea" />
+		<form:textarea rows="5" cols="20" path="content" id="text" />
 		<font color="red"><form:errors path="content" /></font>
 				
 	</c:if>

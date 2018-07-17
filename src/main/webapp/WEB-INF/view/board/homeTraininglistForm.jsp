@@ -30,8 +30,10 @@ $(window).ready(function(){
 			function(data) {
 				if (data.result == 1) {
 					alert(data.subId + ' 구독되었습니다!');
+					location.reload();
 				} else if (data.result == 2) {
 					alert(data.subId + " 구독취소 되었습니다!");
+					location.reload();
 				}
 			});
 		})
@@ -49,8 +51,10 @@ $(window).ready(function(){
 			console.log("여기까지 감??");
 				if (data.result == 1) {
 					alert(' 추천되었습니다!');
+					location.reload();
 				} else if (data.result == 2) {
 					alert(" 추천이 취소 되었습니다!");
+					location.reload();
 				}
 			});
 		})
@@ -84,7 +88,7 @@ $(window).ready(function(){
             <h3>운동 설명 & 운동 후기 </h3>
             <br>
             <p>${board.content }</p>
-            <hr>
+             <br> <br> <br>
             <div align="center">
               <button type="button" id="bst_btn" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand}</button>
                      <br>
@@ -96,14 +100,15 @@ $(window).ready(function(){
             <br>
             </div>	
           </div>
-     	                <strong>댓글 쓰기</strong><br>
+          <hr>
+     	                <strong>댓글</strong><br><br>
 <form action="recomment.zips" method="post">
 <input type="hidden" name="board_type" value="${param.board_type }">
 <input type="hidden" name="co_userid" value="${sessionScope.loginUser.id}">
 <input type="hidden" name="num" value="${board.num }">
 <input type="hidden" name="pageNum" value="${pageNum }">
 <textarea id="text" name="co_content" rows="2" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea> 
-<input value="Send" type="submit" />
+<input value="등록" type="submit" />
 </form>
 <br>
 <hr>

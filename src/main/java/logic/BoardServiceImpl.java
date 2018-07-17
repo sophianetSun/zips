@@ -181,7 +181,6 @@ public class BoardServiceImpl implements BoardService {
 		best.setNum(num);
 		best.setRec_board_type(board_type);
 		best.setRec_user(board_userid);
-		
 		return bestDao.bestinsert(best);
 		} else {
 			boardDao.deleterecommand(num);
@@ -192,5 +191,24 @@ public class BoardServiceImpl implements BoardService {
 
 	private Best getBestlist(String board_userid, Integer num) {
 		return bestDao.bestlist(board_userid,num);
+	}
+
+	public String getApplyId(Integer num) {
+		return recommentDao.getApplyId(num);
+	}
+	public int totalbestinsert(String board_userid, Integer num, Integer board_type) {
+		Best list = getBestlist(board_userid,num);
+		if(list == null || list.getNum() != num) {
+		boardDao.totalrecommand(num);
+		Best best = new Best();
+		best.setNum(num);
+		best.setRec_board_type(board_type);
+		best.setRec_user(board_userid);
+		return bestDao.bestinsert(best);
+		} else {
+			boardDao.totaldeleterecommand(num);
+			bestDao.bestdelete(list);
+			return 2;
+		}
 	}
 }

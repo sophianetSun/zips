@@ -27,8 +27,7 @@
   <script>
   $(document).ready(function() {
   	$("#search_button").click(function() {
-  		$("#search").submit();
-  	})
+
   </script>
   <style type="text/css">
   	body {

@@ -7,7 +7,7 @@
 <head>
 <script type="text/javascript">
 function board_submit() {
-			var file = filename2.value.split(".");
+			var file = document.all.filename.value.split(".");
 			if (file[1] == null) {
 				alert('동영상 파일을 꼭 올려주셔야 업로드가 가능합니다\n동영상 확장자 파일은 "mp4"만 가능합니다')
 				return false;
@@ -40,7 +40,6 @@ function board_submit() {
 						style="width: 840px; height: 250px;">
 						<div class="card-body d-flex flex-column align-items-start">
 							<small class="d-inline-block mb-10 text-danger">필수입력사항 *</small>
-
 							<h6 class="mb-100">
 								<strong>작성자</strong>
 								<form:input path="board_userid" class="form-control"
@@ -98,26 +97,25 @@ function board_submit() {
 						<h3 class="mb-100">
 							<strong class="d-inline-block mb-10 text-success">Before & After 후기</strong>
 						</h3>
-						<form:textarea rows="10" cols="80" path="content" id="textarea" />
-					</div>
-			</div>
+						<textarea id="text" name="content" rows="2" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea>
 			</c:if>
-	</div>
 	<c:if test="${param.board_type == 1 || param.board_type == 2 || param.board_type == 3}">
 		<div class="mb-1 text-muted"><br>
-			<input type=file name='filename' style='display: none;'><img
-				src='../img/video.png' style="width: 200px; height: 150px;"
-				border='1' hspace="5"
-				onclick='document.all.filename.click(); document.all.filename2.value=document.all.filename.value'
-				class="w3-circle"> <input type='text' name='filename2'
-				id='filename2' readonly="readonly" style='display: none;'>
+			<input type=file name='filename' onchange='document.all.filename2.value=document.all.filename.value' style="display: none;">
+			<input type='text' name='filename2' readonly="readonly" style="display: none;">
+			<img src='../img/video.png' style="width: 200px; height: 150px;" border='1' hspace="5"
+				onclick='document.all.filename.click()' class="w3-circle"> 
+				<br><br>
+				<p>이미지를 클릭해 사진이나 동영상을 등록해주세요</p>
 		<br>
 		<h3 class="mb-100">
-							<strong class="d-inline-block mb-10 text-success">글 설명</strong>
-						</h3>
-		<form:textarea rows="15" cols="80" path="content" id="textarea" />
-		<font color="red"><form:errors path="content" /></font>
+		<strong class="d-inline-block mb-10 text-success">글 설명</strong>
+		</h3>
+	<textarea id="text" name="content" rows="15" cols="70" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea>
 	</c:if>
+			</div>
+			</div>
+	</div>
 	<center>
 	<c:choose>
 	<c:when test="${param.board_type == 1}">

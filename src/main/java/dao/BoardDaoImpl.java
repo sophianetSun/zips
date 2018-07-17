@@ -143,5 +143,10 @@ public class BoardDaoImpl implements BoardDao {
 	public void deleterecommand(Integer num) {
 		sqlSession.getMapper(BoardMapper.class).deleterecommand(num);
 	}
+
+	@Override
+	public void totaldeleterecommand(Integer num) {
+		sqlSession.getMapper(BoardMapper.class).totaldeleterecommand(num);
+	}
 	
 }

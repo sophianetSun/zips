@@ -45,6 +45,8 @@ public interface BoardDao {
 
 	void deleterecommand(Integer num);
 
+	void totaldeleterecommand(Integer num);
+
 
 
 

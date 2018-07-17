@@ -71,6 +71,12 @@ public class RecommentDaolmpl implements RecommentDao {
 	}
 
 
+	@Override
+	public String getApplyId(Integer num) {
+		return sqlSession.getMapper(RecommentMapper.class).getApplyId(num);
+	}
+
+
 	
 	
 }

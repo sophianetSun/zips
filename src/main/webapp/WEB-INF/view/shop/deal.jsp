@@ -9,18 +9,21 @@
 <style type="text/css">
 	td:first-child {
 	width: 20%;
+	font-weight: bold; 
 }
 	td:nth-child(1) {
 	width: 20%;
+	font-weight: bold;
+	
 }
 	td:last-child {
-	width: 80%;
+	width: 80%; 
 }
 </style>
-<script type="text/javascript">
+<script type="text/javascript">  
 	$(document).ready(function(){
-		
-		var seller_table = "<table class='table table-bordered'>";
+		 
+		var seller_table = "<table class='table table-bordered'>"; 
 			seller_table += "<tr><td>아이디</td><td>" + "${sellerUser.id}" + "</td></tr>";
 			seller_table += "<tr><td>이름</td><td>" + "${sellerUser.name}" + "</td></tr>";
 			seller_table += "<tr><td>닉네임</td><td>" + "${sellerUser.nickname}" + "</td></tr>";
