@@ -23,8 +23,7 @@
   	$("#search_button").click(function() {
   		$("#search").submit();
   	})
-	  
-  });
+
   </script>
 </head>
 <body>
@@ -72,7 +71,7 @@
  <span class="navbar-toggler-icon"></span>
  </button>
  <div class="collapse navbar-collapse justify-content-around container" id="collapsibleNavbar">
- <ul class="navbar-nav container justify-content-around">
+ <ul class="navbar-nav container justify-content-around nav-pills">
   <li class="nav-item">
    <a class="nav-link" href="${pageContext.request.contextPath }/board/homeTraininglist.zips?board_type=1">홈트게시판</a>
   </li>
