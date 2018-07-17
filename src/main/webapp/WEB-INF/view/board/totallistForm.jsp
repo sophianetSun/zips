@@ -14,9 +14,36 @@
 			var num = ${board.num};
 			$.post("apply.zips", { co_no : co_no , num : num }, function(data, status) {
 				alert('채택 완료')
+				location.reload();
 			})
 		})
+		
+		$('#totalbst_btn').click(function() {
+			console.log("추천 버튼 클릭!");
+			var board_userid = '${sessionScope.loginUser.id}';
+			var num = '${board.num}';
+			var board_type = '${board.board_type}';
+			$.get('${pageContext.request.contextPath }/board/totalajaxbest.zips', {
+				board_userid : board_userid,
+				num : num,
+				board_type : board_type
+			},
+			function(data) {
+			console.log("여기까지 감??");
+				if (data.result == 1) {
+					alert(' 추천되었습니다!');
+					location.reload();
+				} else if (data.result == 2) {
+					alert(" 추천이 취소 되었습니다!");
+					location.reload();
+				}
+			});
+		})
+		
 	});
+	
+	
+	
 	
 	
 	$(function(){
@@ -94,12 +121,7 @@
             <br>
             <div align="center">
             <c:if test="${param.board_type == 3 || param.board_type == 4 }">
-            <form action="totalbest.zips?board_type=${param.board_type}">
-                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
-                    <input type="hidden" name="num" value="${board.num}">
-                    <input type="hidden" name="board_type" value="${board.board_type}">
-              <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.totalrecommand}</button>
-                     </form>
+              <button type="submit" id="totalbst_btn" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.totalrecommand}</button>
             </c:if>
             </div>
                      <br>
@@ -136,7 +158,7 @@
 <input type="hidden" name="num" value="${board.num }">
 <input type="hidden" name="pageNum" value="${pageNum }">
 <textarea id="text" name="co_content" rows="2" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea> 
-<input value="Send" type="submit" />
+<input value="등록" type="submit" />
 </form>
  
 <c:forEach var="re" items="${recommentlist}">

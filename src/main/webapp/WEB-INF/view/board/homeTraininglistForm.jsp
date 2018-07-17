@@ -30,8 +30,10 @@ $(window).ready(function(){
 			function(data) {
 				if (data.result == 1) {
 					alert(data.subId + ' 구독되었습니다!');
+					location.reload();
 				} else if (data.result == 2) {
 					alert(data.subId + " 구독취소 되었습니다!");
+					location.reload();
 				}
 			});
 		})
@@ -49,8 +51,10 @@ $(window).ready(function(){
 			console.log("여기까지 감??");
 				if (data.result == 1) {
 					alert(' 추천되었습니다!');
+					location.reload();
 				} else if (data.result == 2) {
 					alert(" 추천이 취소 되었습니다!");
+					location.reload();
 				}
 			});
 		})
@@ -103,7 +107,7 @@ $(window).ready(function(){
 <input type="hidden" name="num" value="${board.num }">
 <input type="hidden" name="pageNum" value="${pageNum }">
 <textarea id="text" name="co_content" rows="2" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea> 
-<input value="Send" type="submit" />
+<input value="등록" type="submit" />
 </form>
 <br>
 <hr>

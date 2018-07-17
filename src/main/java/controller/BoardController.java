@@ -52,47 +52,20 @@ public class BoardController {
 		if (result == 1) return "{\"result\" : 1, \"board_userid\" : \"" + board_userid + "\"}";
 		else if (result == 2) return "{\"result\" : 2, \"board_userid\" : \"" + board_userid + "\"}";
 		else return "{\"result\" : 0}";
-	
 	}
 	
+	@GetMapping(value="board/totalajaxbest", produces="application/json; charset=utf8")
+	@ResponseBody
+	public String totalajaxbest(HttpSession session,String board_userid, Integer num, Integer board_type) {
+		System.out.println("첫번째");
+		User loginUser = (User)session.getAttribute("loginUser");
+		userService.getPointCoin(loginUser.getId(), 50);
+		int result = service.totalbestinsert(board_userid, num,board_type); 
+		if (result == 1) return "{\"result\" : 1, \"board_userid\" : \"" + board_userid + "\"}";
+		else if (result == 2) return "{\"result\" : 2, \"board_userid\" : \"" + board_userid + "\"}";
+		else return "{\"result\" : 0}";
 	
-	/*@RequestMapping("board/totalbest")
-	public ModelAndView chtotalbest(HttpSession session,Best best,Board board, String board_userid) {
-		ModelAndView mav = new ModelAndView();
-	    User sessionId = (User) session.getAttribute("loginUser");
-	    sessionId.getId();
-		Integer num = board.getNum();
-	   best.setNum(board.getNum());
-	   best.setRec_user(board_userid);
-	   best.setRec_board_type(board.getBoard_type());
-	   List<Best> dbbest = service.getbest(board.getNum());
-	   System.out.println("dbbest.iterator().hasNext()"+dbbest.iterator().hasNext());
-	   if(dbbest.iterator().hasNext()) {
-			 for(int i=0; i<dbbest.size(); i++) {
-				 dbbest.iterator().next().getRec_user();
-				 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
-					 System.out.println("!dbbest.iterator().next().getRec_user().equals(sessionId.getId())"+!dbbest.iterator().next().getRec_user().equals(sessionId.getId()));
-					 int result = service.best(best,num);
-					 if(result > 0) {
-						 mav.setViewName("redirect:totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-					 } 
-				 } else {
-					 throw new BoardException("해당 게시물은 이미 추천을 누르셨습니다", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-				 }
-			 }
-		   } else {
-			   System.out.println(":::::::::::::;자꾸여기로오나??");
-			   int result = service.totalbest(best,num);
-			   if(result > 0) {
-				throw new BoardException("추천 완료 !", "totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
-				 } 
-		   }
-				int bestcnt = service.bestcnt(best);
-				mav.addObject("bestcnt",bestcnt);
-		return mav;
 	}
-	*/
-	
 	
 	@ResponseBody
 	@RequestMapping(value="board/apply")
@@ -100,8 +73,6 @@ public class BoardController {
 		
 		service.noapply(num);
 		service.apply(co_no,num);
-		User loginUser = (User)session.getAttribute("loginUser");
-		userService.getPointCoin(loginUser.getId(), 50);
 		return "채택";
 	}
 	

@@ -266,7 +266,7 @@ $(function(){
 					조회수 :${board.board_count} 
 					<br>
                     <div class="btn-group">
-                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천 <font color="red">♥
+                      <button type="submit" class="best btn btn-sm btn-outline-primary" style="width: 72px;height: 27px;" disabled="disabled"><small>추천<font color="red">♥
                       <span class="badge badge-light">${board.recommand}</span></font></small></button>
 					<button type="button" class="btn btn-sm btn-outline-danger" style="width: 72px;height: 27px;" disabled="disabled"><small>▶ 구독 <font color="red"></font></small></button>
                     </div>
