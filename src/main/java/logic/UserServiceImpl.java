@@ -1,6 +1,7 @@
 package logic;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,6 +107,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public void getPointCoin(String id, int pointCoin) {
+		userDao.getPointCoin(id, pointCoin);
+	}
+	
+	@Override
 	public User findEmail(String email) {
 		return userDao.findEmail(email);
 	}
@@ -119,4 +125,15 @@ public class UserServiceImpl implements UserService{
 	public List<User> list(String searchType, String searchContent, Integer pageNum, int limit) {
 		return userDao.list(searchType, searchContent, pageNum, limit);
 	}
+
+	@Override
+	public void logDateUpdate(String id) {
+		userDao.logDateUpdate(id);
+	}
+
+	@Override
+	public Date getlogDate(String id) {
+		return userDao.getlogDate(id); 
+	}
+
 }

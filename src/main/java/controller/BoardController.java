@@ -30,6 +30,7 @@ import logic.BoardService;
 import logic.Recomment;
 import logic.UploadFile;
 import logic.User;
+import logic.UserService;
 
 @Controller
 public class BoardController {
@@ -37,6 +38,8 @@ public class BoardController {
 	@Autowired 
 	private BoardService service;
 	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping("board/best")
 	public ModelAndView chbest(HttpSession session,Best best,Board board, String board_userid) {
@@ -53,6 +56,7 @@ public class BoardController {
 			 dbbest.iterator().next().getRec_user();
 			 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
 				 int result = service.best(best,num);
+				 userService.getPointCoin(sessionId.getId(), 50);
 				 if(result > 0) {
 					 mav.setViewName("redirect:homeTraininglistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
 				 } 
@@ -86,6 +90,7 @@ public class BoardController {
 			 dbbest.iterator().next().getRec_user();
 			 if(!dbbest.iterator().next().getRec_user().equals(sessionId.getId())) {
 				 int result = service.best(best,num);
+				 userService.getPointCoin(sessionId.getId(), 50);
 				 if(result > 0) {
 					 mav.setViewName("redirect:totallistForm.zips?board_type="+board.getBoard_type()+"&num="+board.getNum());
 				 } 
@@ -112,7 +117,8 @@ public class BoardController {
 		
 		service.noapply(num);
 		service.apply(co_no,num);
-		
+		User loginUser = (User)session.getAttribute("loginUser");
+		userService.getPointCoin(loginUser.getId(), 50);
 		return "채택";
 	}
 	
@@ -277,6 +283,9 @@ public class BoardController {
            }
        }
 		int result = service.boardinsert(board,request);
+		User loginUser = (User)session.getAttribute("loginUser");
+		userService.getPointCoin(loginUser.getId(), 3);
+		
 		int boardtype = board.getBoard_type();
 		if(boardtype == 1) {
 			if(result > 0) {
@@ -287,6 +296,7 @@ public class BoardController {
 				mav.setViewName("redirect:totallist.zips?num="+board.getNum()+"&board_type="+board.getBoard_type());
 			} 
 		}
+		
 		
 		return mav;
 	}

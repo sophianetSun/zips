@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,12 +108,28 @@ public class Usercontroller {
 				mav.addObject("dbUser", dbUser);
 				mav.setViewName("main");
 				session.setAttribute("loginUser", dbUser);
+				
+				Date date = new Date();
+				SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
+				
+				Date prelogdate = userService.getlogDate(dbUser.getId());
+				String logdate = test.format(prelogdate);
+				String nowlogdate = test.format(date);
+				
+				// 이전 최종 접속 시간 != 현재 최종 접속 시간
+				if(!logdate.equals(nowlogdate)) {
+					userService.logDateUpdate(dbUser.getId()); 
+					userService.getPointCoin(dbUser.getId(), 1);  
+				}
+				userService.logDateUpdate(dbUser.getId());  
+				 
 			} else {
 				bindingResult.reject("error.login.password");
 				mav.getModel().putAll(bindingResult.getModel());
 				return mav;
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				bindingResult.reject("error.login.id");
 				mav.getModel().putAll(bindingResult.getModel());
 		}
