@@ -71,8 +71,8 @@
  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
  <span class="navbar-toggler-icon"></span>
  </button>
- <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
- <ul class="navbar-nav">
+ <div class="collapse navbar-collapse justify-content-around container" id="collapsibleNavbar">
+ <ul class="navbar-nav container justify-content-around">
   <li class="nav-item">
    <a class="nav-link" href="${pageContext.request.contextPath }/board/homeTraininglist.zips?board_type=1">홈트게시판</a>
   </li>
