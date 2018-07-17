@@ -12,6 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/zipsboard.css">
@@ -25,15 +26,21 @@
   	});
   });
   </script>
+  <style type="text/css">
+  	body {
+    	font-family: 'Hanna', sans-serif;
+	}
+  </style>
 </head>
 <body>
+<br><br>
 <!-- Header -->
 <div class="container">
 <div class="row mb-0">
   <div class="col-sm-9">
   <a href="${pageContext.request.contextPath }">
   	<img src="${pageContext.request.contextPath }/img/team.png" class="rounded main_logo" alt="teamlogo">
-  </a> </div>
+  </a> </div><br>
 <div class="col-sm-3 align-self-center">
 <c:if test="${!empty loginUser }">${loginUser.nickname }(${loginUser.id }) 님 환영합니다!!</c:if><br>
 <c:if test="${empty sessionScope.loginUser}">
