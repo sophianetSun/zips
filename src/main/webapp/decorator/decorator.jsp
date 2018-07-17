@@ -91,7 +91,7 @@
 </div>  
 </nav>
 <!-- Main  -->
-<div class="container bg-light pt-1 pb-2">
+<div class="container pt-1 pb-2">
 	<decorator:body/>
 </div>
 <!-- Footer -->
