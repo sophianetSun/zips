@@ -12,8 +12,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Encode+Sans+Condensed|Rokkitt" rel="stylesheet">
+  <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css">
   <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Abel|Black+Han+Sans|Encode+Sans+Condensed|Gothic+A1|Nanum+Myeongjo|Rokkitt" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Abel|Black+Han+Sans|Encode+Sans+Condensed|Faster+One|Gothic+A1|Nanum+Myeongjo|Rokkitt" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/zipsboard.css">
   
@@ -22,18 +27,22 @@
   <script>
   $(document).ready(function() {
   	$("#search_button").click(function() {
-  		$("#search").submit();
-  	});
-  });
+  	}
   </script>
   <style type="text/css">
   	body {
+  		font-family: 'Noto Sans KR', sans-serif;
+  	}
+    p, h2, h5, h1, h4 {
     	font-family: 'Hanna', sans-serif;
-	}
+    }
+   .nav-link {
+   		font-size: 120%;
+   }
   </style>
 </head>
 <body>
-<br><br>
+<br>
 <!-- Header -->
 <div class="container">
 <div class="row mb-0">
@@ -42,7 +51,7 @@
   	<img src="${pageContext.request.contextPath }/img/team.png" class="rounded main_logo" alt="teamlogo">
   </a> </div><br>
 <div class="col-sm-3 align-self-center">
-<c:if test="${!empty loginUser }">${loginUser.nickname }(${loginUser.id }) 님 환영합니다!!</c:if><br>
+<c:if test="${!empty loginUser }"><strong>${loginUser.nickname }(${loginUser.id })</strong> 님 환영합니다!!</c:if><br>
 <c:if test="${empty sessionScope.loginUser}">
   <a href="${pageContext.request.contextPath}/user/join.zips">회원가입</a></c:if>
 <c:if test="${empty sessionScope.loginUser}">
@@ -63,41 +72,47 @@
   	<span class="input-group-text">
   	<a href="#" id="search_button"><i class="fa fa-search"></i></a></span>
   	</div>
-</div>
+</div><br>
   </form>
 </div>
-<div class="col-sm-12">
-  <h4><p class="text-info text-center"><strong>집</strong>에서 헬<strong>스</strong>하자!</p></h4>
+<br>
 </div>
 </div>
-</div>
-<!-- Navi -->
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
- <a class="navbar-brand" href="#"></a>
- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
- <span class="navbar-toggler-icon"></span>
- </button>
- <div class="collapse navbar-collapse justify-content-around container" id="collapsibleNavbar">
- <ul class="navbar-nav container justify-content-around nav-pills">
-  <li class="nav-item">
-   <a class="nav-link" href="${pageContext.request.contextPath }/board/homeTraininglist.zips?board_type=1">홈트게시판</a>
-  </li>
-  <li class="nav-item">
-   <a class="nav-link" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=2">질문과 답변</a>
-  </li>
-  <li class="nav-item">
-   <a class="nav-link" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=3">자유게시판</a>
-  </li>    
-  <li class="nav-item">
-   <a class="nav-link" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=4">Before&amp;After</a>
-  </li>    
-  <li class="nav-item">
-   <a class="nav-link" href="${pageContext.request.contextPath }/shop/list.zips">중고장터</a>
-  </li>    
+<div align="center">
+<ul class="nav nav-tabs nav-justified" style="width:2100px" >
+    <li class="nav-item">
+      <a class="nav-link disabled"></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled"></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="${pageContext.request.contextPath }/board/homeTraininglist.zips?board_type=1">홈트게시판</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=2">질문과답변</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=3">자유게시판</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="${pageContext.request.contextPath }/board/totallist.zips?board_type=4">Before&amp;After</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="${pageContext.request.contextPath }/shop/list.zips">중고장터</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled"></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled"></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled"></a>
+    </li>
  </ul>
-</div>  
-</nav>
-<!-- Main  -->
+ </div>
+<br><!-- Main  -->
 <div class="container pt-1 pb-2">
 	<decorator:body/>
 </div>

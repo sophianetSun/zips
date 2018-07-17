@@ -146,8 +146,8 @@ function list(pageNum) {
   <form:form modelAttribute="user" method="post" action="adminUpdate.zips" enctype="multipart/form-data">
    <img src="../img/${user.picture}" class="w3-bar-item w3-circle w3-hide-small" style="width:100px; height:100px;">
       <div class="w3-bar-item">
-        <span class="w3-large">[ ${user.name}/</span>
-        <span class="w3-large">${user.id} ]님의 정보</span>
+        <span class="w3-large"><strong>[ ${user.name}/</strong></span>
+        <span class="w3-large"><strong>${user.id} ]</strong>님의 정보</span>
         <br>
         <div id="Demo${stat.index}" class="w3-container w3-hide">
         <table>
@@ -157,8 +157,8 @@ function list(pageNum) {
  <c:if test="${empty user.picture}"><td align="center"><img src="../img/join.png" width="280" height="300" id="img_ex"></c:if>
     <c:if test="${!empty user.picture}"><td align="center"><img src="../img/${user.picture}" width="280" height="300" id="img_ex"></c:if>
    <br>
-        <input type="file" id="file" name="pic" onchange="imageURL(this)" value="${user.picture}"/>
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현재파일<input type="text" id="picture" name="picture" value="${user.picture}">
+        <input type="file" id="file" name="pic" onchange="imageURL(this)" value="${user.picture}"/><br>
+       현재파일<input type="text" id="picture" name="picture" value="${user.picture}">
       </div>
    </td>
    <td>
