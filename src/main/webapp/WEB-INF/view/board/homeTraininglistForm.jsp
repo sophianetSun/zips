@@ -8,6 +8,20 @@
 	<title>게시물 상세 보기</title>
 <!-- 구독 기능 script -->
 <script>
+<script>
+$(window).ready(function(){
+	$(".boton").wrapInner('<div class=botontext></div>');
+	    
+	    $(".botontext").clone().appendTo( $(".boton") );
+	    
+	    $(".boton").append('<span class="twist"></span><span class="twist"></span><span class="twist"></span><span class="twist"></span>');
+	    
+	    $(".twist").css("width", "25%").css("width", "+=3px");
+	});
+
+
+
+
 	$(document).ready(function() {
 		$('#sub_btn').click(function() {
 			console.log("구독 버튼 클릭!");
@@ -77,14 +91,23 @@
 <input type="hidden" name="co_userid" value="${sessionScope.loginUser.id}">
 <input type="hidden" name="num" value="${board.num }">
 <input type="hidden" name="pageNum" value="${pageNum }">
-<textarea rows="3" cols="82" class="w3-round-large" name="co_content"></textarea>&nbsp;<input type="submit" align="top" class="w3-button w3-border w3-hover-blue" style="text-align:center;" value="등록">
+<textarea id="text" name="co_content" rows="2" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea> 
+<input value="Send" type="submit" />
 </form>
- 
-<c:forEach var="re" items="${recommentlist}">
+<br>
+<hr>
+ <c:forEach var="re" items="${recommentlist}">
+<c:choose>
+<c:when test="${re.co_userid == board.board_userid }">
+${re.co_userid } <span class="badge badge-pill badge-primary">작성자</span>
+</c:when>
+<c:otherwise>
+ ${re.co_userid }
+</c:otherwise>
+</c:choose>
 <fmt:formatDate value="${c.regdate}" type="date" var="regdatetime" />
 <fmt:formatDate value="${time}" type="date" var="nowtime" />
 <div>
-${re.co_userid }
 <br>
 ${re.co_content}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <br>
