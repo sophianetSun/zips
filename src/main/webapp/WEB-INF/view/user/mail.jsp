@@ -47,7 +47,7 @@
   <textarea class="form-control" rows="10" name="contents" placeholder="내용을 입력해 주세요"></textarea><br>
   <script type="text/javascript">CKEDITOR.replace('contents');</script>
   <div align="center">
-  <input type="submit" class="w3-bar-item w3-button w3-teal" style="width:33.3%" value="메일전송하기"></div>
+  <input type="submit" style="width:33.3%" value="메일전송하기"></div>
 	<br>
 </form>
 </div>

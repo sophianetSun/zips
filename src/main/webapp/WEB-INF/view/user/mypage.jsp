@@ -112,7 +112,7 @@
               <input type="text" class="form-control" name="id" id="id" readonly value="${dbuser.id}">
             </div>
     <div class="mb-3" style="width:600px;">
-              <label for="pw" style="width:600px;">비밀번호 <input type="button" name="pwchange" id="pwchange" onclick="location.href='pwchange.zips'" value="비밀번호수정"></label>
+     <label for="pw" style="width:600px;">비밀번호 <input type="button" name="pwchange" id="pwchange" onclick="location.href='pwchange.zips'" value="비밀번호수정"></label>
               <font color="red"><form:errors path="pw" /></font>
               <input type="password" class="form-control" name="pw" placeholder="회원정보를 변경하시려면 비밀번호를 입력해 주세요">
             </div>
@@ -186,7 +186,7 @@
 <input type="button" class="btn btn-default" value="&nbsp;관리자 &nbsp;" onclick="location.href='admin.zips'"></c:if>
     <button type="submit" class="btn btn-default">수정하기</button>
  <input type="button" class="btn btn-default" value="탈퇴하기" onclick="location.href='delete.zips'">
- <input type="button" class="btn btn-default" value="내게시물" onclick="location.href='sublist.zips?subtype=user'">
+ <input type="button" class="btn btn-default" value="내게시물" onclick="location.href='sublist.zips?subType=user'">
     </div>
     <br><br>
   </form:form>
