@@ -24,8 +24,7 @@
   	$("#search_button").click(function() {
   		$("#search").submit();
   	})
-	  
-  });
+
   </script>
   <style type="text/css">
   	body {
@@ -54,8 +53,8 @@
   
 <c:if test="${!empty sessionScope.loginUser }">
 	<a href="${pageContext.request.contextPath}/user/mypage.zips">마이페이지</a>
-	<a href="${pageContext.request.contextPath }/message.zips">쪽지</a>
-	<a href="${pageContext.request.contextPath}/calendar.zips">달력</a>	 
+	<a href="${pageContext.request.contextPath }/message.zips"><i class="fa fa-envelope" style="font-size:20px"></i></a>
+	<a href="${pageContext.request.contextPath}/calendar.zips"><i class="fa fa-calendar" style="font-size:20px"></i></a>	 
 </c:if>
   <form action="${pageContext.request.contextPath }/search.zips" method="POST" id="search">
 <div class="input-group">  	
@@ -78,8 +77,8 @@
  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
  <span class="navbar-toggler-icon"></span>
  </button>
- <div class="collapse navbar-collapse justify-content-around" id="collapsibleNavbar">
- <ul class="navbar-nav">
+ <div class="collapse navbar-collapse justify-content-around container" id="collapsibleNavbar">
+ <ul class="navbar-nav container justify-content-around nav-pills">
   <li class="nav-item">
    <a class="nav-link" href="${pageContext.request.contextPath }/board/homeTraininglist.zips?board_type=1">홈트게시판</a>
   </li>

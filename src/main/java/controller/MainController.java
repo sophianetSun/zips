@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -10,6 +11,10 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -29,6 +34,7 @@ import logic.MainService;
 import logic.Message;
 import logic.Shop;
 import logic.ShopService;
+import logic.Subscription;
 import logic.User;
 
 @Controller
@@ -69,7 +75,7 @@ public class MainController {
 			String[] typeList = {"shop_subject", "shop_seller_id", "shop_content"};
 			List<Shop> shopSearchList = new ArrayList<>();
 			for(String type : typeList) {				
-				shopSearchList.addAll(shopService.shopList(type, query, 1, 10));
+				shopSearchList.addAll(shopService.shopList(type, query, 1, 100));
 			}
 			shopSearchList.stream().distinct()
 				.sorted(Comparator.comparing(Shop::getShop_regdate)
@@ -148,7 +154,49 @@ public class MainController {
 		}
 	}
 	
+	@RequestMapping("user/sublist")
+	public ModelAndView mySubList(@RequestParam(value="subType", defaultValue="user") 
+		String subType, HttpSession session) {
+		ModelAndView mav = new ModelAndView("main/sublist");
+		User user = (User)session.getAttribute("loginUser");
+		List<Subscription> subList = null;			
+		if (subType.equals("user")) {
+			subList = mainService.getSubscriptionList(user.getId());
+		} else {
+			subList = mainService.getFollowerList(user.getId());
+		}
+		mav.addObject("subList", subList);
+		return mav;
+	}
+	
+	@GetMapping("user/deletesub")
+	public ModelAndView myDeleteSub(String subId, String subType, HttpSession session) {
+		ModelAndView mav = new ModelAndView("main/sublist");
+		User user = (User)session.getAttribute("loginUser");
+		mainService.cancelSubsciription(user.getId(), subId);
+		List<Subscription> subList = mainService.getSubscriptionList(user.getId());
+		mav.addObject("subList", subList);
+		return mav;
+	}
 	// RestfulAPI
+	@RequestMapping("parsegraph")
+	@ResponseBody String parseGraph(String regdate, HttpSession session) {
+		System.out.println("parsegraph 실행");
+		String url = "myinfo/graph2.zips?regdate=&in_type=1";
+		Document doc = null;
+		List<String> list = new ArrayList<String>();
+		try {
+			doc = Jsoup.connect(url).get();
+			Elements elems = doc.select("div");
+			for(Element elem : elems) {
+				list.add(elem.html());
+			} 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list.toString();
+	}
+	
 	@GetMapping(value="user/subscribe", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String mySubscribeapi(String userId, String subId, HttpSession session) {

@@ -36,12 +36,32 @@
 					"rotationRatio" : 0.35},
 				"font" : "'Times New Roman', Times, serif", 
 				"shape" : "circle"	
-			})
+			});
+			
+			$("#myInput").on("keyup", function() {
+			    var value = $(this).val().toLowerCase();
+			    $("#myTable tr").filter(function() {
+			      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			    });
+			    $("#myTable2 tr").filter(function() {
+				      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				    });
+			  });
+			
+			$(':button').click(function (){
+				location.href = "search.zips?query=" + $('#myInput').val();
+			});
 		});
 </script>
 <!-- 검색결과 보드 -->
 <div class="container mt-3">
-<table class="table table-dark table-hover">
+<div class="input-group mb-3">
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <div class="input-group-append">
+    <button class="btn btn-success" type="submit">다시 검색</button> 
+  </div>
+</div>
+<table id="myTable" class="table table-dark table-hover">
 	<thead>
 		<tr>
 			<th>카테고리</th>
@@ -76,7 +96,7 @@
 <div class="card bg-primary text-white">
    	<div class="card-body"><h4>장터 검색 결과</h4></div>
 </div>
-<table class="table table-dark table-hover mt-3">
+<table id="myTable2" class="table table-dark table-hover mt-3">
 	<thead>
 		<tr>
 			<th>카테고리</th>
