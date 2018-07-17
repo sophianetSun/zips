@@ -216,7 +216,7 @@ $(function(){
 				</video>
                 <div class="card-body">
                   <p class="card-text">&nbsp;&nbsp;<a href="homeTraininglistForm.zips?num=${best.num}&pageNum=${pageNum}&board_type=${best.board_type}">
-                   ${best.subject }</a></p>
+                   ${best.subject }</a>&nbsp;&nbsp;<span class="badge badge-pill badge-danger">HOT</span></p>
                    <hr>
                   <div class="d-flex justify-content-between align-items-center">
                   

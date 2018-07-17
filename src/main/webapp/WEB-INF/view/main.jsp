@@ -277,6 +277,5 @@ var randomColor = function(opacity) {
 		</div>
 	</div>
 </div>
-
 </body>
 </html>

@@ -121,9 +121,6 @@
 </head>
 <body> 
 <div class="blog-post">
-		<input type="text" name="quantity" id="quantity">
-
-		<input type="text" name="quantity2" id="quantity2">
 		
 		<h2 class="blog-post-title">구매정보 확인</h2>
 		<p class="blog-post-meta">

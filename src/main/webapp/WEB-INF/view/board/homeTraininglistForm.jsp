@@ -8,6 +8,16 @@
 	<title>게시물 상세 보기</title>
 <!-- 구독 기능 script -->
 <script>
+$(window).ready(function(){
+	$(".boton").wrapInner('<div class=botontext></div>');
+	    
+	    $(".botontext").clone().appendTo( $(".boton") );
+	    
+	    $(".boton").append('<span class="twist"></span><span class="twist"></span><span class="twist"></span><span class="twist"></span>');
+	    
+	    $(".twist").css("width", "25%").css("width", "+=3px");
+	});
+
 	$(document).ready(function() {
 		$('#sub_btn').click(function() {
 			console.log("구독 버튼 클릭!");
@@ -25,7 +35,27 @@
 				}
 			});
 		})
+		$('#bst_btn').click(function() {
+			console.log("추천 버튼 클릭!");
+			var board_userid = '${sessionScope.loginUser.id}';
+			var num = '${board.num}';
+			var board_type = '${board.board_type}';
+			$.get('${pageContext.request.contextPath }/board/ajaxbest.zips', {
+				board_userid : board_userid,
+				num : num,
+				board_type : board_type
+			},
+			function(data) {
+			console.log("여기까지 감??");
+				if (data.result == 1) {
+					alert(' 추천되었습니다!');
+				} else if (data.result == 2) {
+					alert(" 추천이 취소 되었습니다!");
+				}
+			});
+		})
 	});
+	
 </script>
 </head>
 <body>
@@ -56,12 +86,7 @@
             <p>${board.content }</p>
             <hr>
             <div align="center">
-            <form action="best.zips?board_type=${param.board_type}">
-                    <input type="hidden" name="board_userid" value="${sessionScope.loginUser.id}">
-                    <input type="hidden" name="num" value="${board.num}">
-                    <input type="hidden" name="board_type" value="${board.board_type}">
-              <button type="submit" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand}</button>
-                     </form>
+              <button type="button" id="bst_btn" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.recommand}</button>
                      <br>
                      
             <c:if test="${sessionScope.loginUser.id != board.board_userid}">
@@ -77,14 +102,23 @@
 <input type="hidden" name="co_userid" value="${sessionScope.loginUser.id}">
 <input type="hidden" name="num" value="${board.num }">
 <input type="hidden" name="pageNum" value="${pageNum }">
-<textarea rows="3" cols="82" class="w3-round-large" name="co_content"></textarea>&nbsp;<input type="submit" align="top" class="w3-button w3-border w3-hover-blue" style="text-align:center;" value="등록">
+<textarea id="text" name="co_content" rows="2" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea> 
+<input value="Send" type="submit" />
 </form>
- 
-<c:forEach var="re" items="${recommentlist}">
+<br>
+<hr>
+ <c:forEach var="re" items="${recommentlist}">
+<c:choose>
+<c:when test="${re.co_userid == board.board_userid }">
+${re.co_userid } <span class="badge badge-pill badge-primary">작성자</span>
+</c:when>
+<c:otherwise>
+ ${re.co_userid }
+</c:otherwise>
+</c:choose>
 <fmt:formatDate value="${c.regdate}" type="date" var="regdatetime" />
 <fmt:formatDate value="${time}" type="date" var="nowtime" />
 <div>
-${re.co_userid }
 <br>
 ${re.co_content}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <br>

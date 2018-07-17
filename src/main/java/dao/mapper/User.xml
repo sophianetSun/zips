@@ -46,6 +46,10 @@
 		update zipsuser set coin=coin-${coin} where id = #{shop_seller_id}
 	</update>
 	
+	<update id="getPointCoin" parameterType="map">
+		update zipsuser set point=point+${pointCoin}, coin=coin+${pointCoin} where id = '${id}'
+	</update>
+	
 	<update id="pwchange" parameterType="map">
 		update zipsuser set pw=#{dbpass} where id = #{userId}
 	</update>

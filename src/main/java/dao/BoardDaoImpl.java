@@ -138,5 +138,10 @@ public class BoardDaoImpl implements BoardDao {
 		
 		return sqlSession.selectList(NS+"getFileList", map);
 	}
+
+	@Override
+	public void deleterecommand(Integer num) {
+		sqlSession.getMapper(BoardMapper.class).deleterecommand(num);
+	}
 	
 }

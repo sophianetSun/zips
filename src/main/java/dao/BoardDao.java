@@ -43,6 +43,8 @@ public interface BoardDao {
 
 	List<UploadFile> getFileList(int num);
 
+	void deleterecommand(Integer num);
+
 
 
 

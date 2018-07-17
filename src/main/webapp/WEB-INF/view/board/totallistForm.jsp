@@ -27,10 +27,11 @@
 	})
 	function addRow(){
 		
-var html =   "<textarea rows='20' cols='90' name='co_content'>"
-			+ "</textarea><input type='hidden' name='num' value='${board.num}'>"
-			+"<input type='hidden' name='co_userid' value='${sessionScope.loginUser.id}'>"
-			+ "<input type='submit' value='등록'></div></div>";
+		var html = "<br><br>"  
+						+ "<textarea id='text' name='co_content' rows='2' style='overflow: hidden; word-wrap: break-word; resize: none; height: 160px; '>"
+			 			+ "</textarea><input type='hidden' name='num' value='${board.num}'>"
+			 			+"<input type='hidden' name='co_userid' value='${sessionScope.loginUser.id}'>"
+			 			+ "<input type='submit' value='등록'></div></div>";
 	$(list_detail).append(html);
 		
 	}
@@ -134,14 +135,22 @@ var html =   "<textarea rows='20' cols='90' name='co_content'>"
 <input type="hidden" name="co_userid" value="${sessionScope.loginUser.id}">
 <input type="hidden" name="num" value="${board.num }">
 <input type="hidden" name="pageNum" value="${pageNum }">
-<textarea rows="3" cols="82" class="w3-round-large" name="co_content"></textarea>&nbsp;<input type="submit" align="top" class="w3-button w3-border w3-hover-blue" style="text-align:center;" value="등록">
+<textarea id="text" name="co_content" rows="2" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea> 
+<input value="Send" type="submit" />
 </form>
  
 <c:forEach var="re" items="${recommentlist}">
 <fmt:formatDate value="${c.regdate}" type="date" var="regdatetime" />
 <fmt:formatDate value="${time}" type="date" var="nowtime" />
 <div>
-${re.co_userid }
+<c:choose>
+<c:when test="${re.co_userid == board.board_userid }">
+${re.co_userid } <span class="badge badge-pill badge-primary">작성자</span>
+</c:when>
+<c:otherwise>
+ ${re.co_userid }
+</c:otherwise>
+</c:choose>
 <br>
 ${re.co_content}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <br>

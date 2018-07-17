@@ -5,7 +5,7 @@
  	<select id="list" resultType="Subscription" parameterType="map">
  		select * from subscription
  		<choose>
- 		<when test="type == user">
+ 		<when test="type.equals('user')">
  			where user_id = #{id} 
  		</when>
  		<otherwise>

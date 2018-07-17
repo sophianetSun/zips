@@ -11,6 +11,12 @@ public interface BestDao {
 
 	int bestcnt(Best best);
 
-	List<Best> getbest(int num);
+	/*List<Best> getbest(int num);*/
+
+	int bestinsert(Best best);
+
+	Best bestlist(String board_userid, Integer num);
+
+	void bestdelete(Best list);
 
 }

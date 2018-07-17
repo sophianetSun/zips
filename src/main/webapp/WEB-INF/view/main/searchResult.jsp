@@ -22,6 +22,7 @@
 </style>
 </head>
 <body>
+<c:if test="${empty pageNum }"><c:set var="pageNum" value="1" /></c:if>
 <div id="wordcloud1" class="wordcloud">
 	<c:forEach items="${map}" var="m">
 		<span data-weight="${m.value }">${m.key }</span>
@@ -53,7 +54,7 @@
 	<tbody>
 		<c:forEach items="${boardSearchResult }" var="bodRes">
 			<tr onclick="location.href='board/totallistForm.zips?num=${bodRes.num
-				}&pageNum=1&board_type=${bodRes.board_type}'" style="cursor:pointer">
+				}&pageNum=${pageNum }&board_type=${bodRes.board_type}'" style="cursor:pointer">
 				<td>
 					<c:choose>
 					<c:when test="${bodRes.board_type == 1 }">홈트레이닝</c:when>
@@ -86,7 +87,7 @@
 	</thead>
 	<tbody>
 		<c:forEach items="${shopSearchResult }" var="shopRes">
-			<tr onclick="location.href='shop/detail.zips?shop_no=${shopRes.shop_no}&pageNum=1'" 
+			<tr onclick="location.href='shop/detail.zips?shop_no=${shopRes.shop_no}&pageNum=${pageNum }'" 
 				style="cursor:pointer">
 				<td>중고장터</td>
 				<td class="searchResult">${shopRes.shop_subject }</td>
