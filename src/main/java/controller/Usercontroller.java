@@ -119,6 +119,9 @@ public class Usercontroller {
 					System.out.println("222");
 					userService.logDateUpdate(dbUser.getId()); 
 					userService.getPointCoin(dbUser.getId(), 1);  
+				if (!logdate.equals(nowlogdate)) {
+					userService.logDateUpdate(dbUser.getId());
+					userService.getPointCoin(dbUser.getId(), 1);
 				}
 				userService.logDateUpdate(dbUser.getId());  
 				 
