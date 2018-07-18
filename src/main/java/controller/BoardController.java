@@ -118,6 +118,7 @@ public class BoardController {
 			int limit = 9;
 			int listcount = service.boardcount(board_type,searchType,searchContent);
 			List<Board> boardlist = service.totalboardList(board_type,searchType,searchContent,pageNum,limit);
+			System.out.println("searchType"+searchType+"searchContent"+searchContent);
 			List<Board> totalBestlist = service.totalBestlist(board);
 			int recount = service.recount(num);
 			int maxpage = (int)((double)listcount/limit + 0.95);

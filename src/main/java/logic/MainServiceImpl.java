@@ -97,10 +97,10 @@ public class MainServiceImpl implements MainService {
 		return boardDao.list(4, null, null, 1, 3);
 	}
 	public List<Board> getQnAList() {
-		return boardDao.list(2, null, null, 1, 5);
+		return boardDao.totallist(2, null, null, 1, 5);
 	}
 	public List<Board> getFreeBoard() {
-		return boardDao.list(3, null, null, 1, 3);
+		return boardDao.list(3, null, null, 1, 5);
 	}
 
 	@Override

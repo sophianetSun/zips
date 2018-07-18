@@ -19,6 +19,17 @@
 	td:last-child {
 	width: 80%; 
 }
+	#buy {
+	color: #007bff;
+    background-color: transparent;
+    background-image: none;
+    border-color: #007bff;
+     padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
 </style>
 <script type="text/javascript">  
 	$(document).ready(function(){
