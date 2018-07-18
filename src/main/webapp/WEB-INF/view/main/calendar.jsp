@@ -35,7 +35,7 @@
 				
 				{
 					id : '${infoCal.num}',
-					title : '(${infoCal.calorie}), ${infoCal.nutri_memo}',
+					title : '(${infoCal.calorie}), ${infoCal.nutri_memo}, ${infoCal.work_memo}',
 					start : '${infoCal.regdate}',
 					url : "${pageContext.request.contextPath}/myinfo/graph.zips?regdate=${infoCal.regdate}&in_type=${infoCal.in_type}"
 				},

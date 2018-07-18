@@ -82,7 +82,7 @@
             <h2>${board.subject}(${recount })</h2>
             <hr>
             <div align="right">
-            	<small>닉네임 :${board.board_userid}</small>
+            	<small>작성자 :${board.board_userid}</small>
             	<br>
             	<small>조회수:${board.board_count}</small>
             	<br>
@@ -100,25 +100,41 @@
     		<c:if test="${param.board_type == 3 }">
            <h3>아무말 대잔치</h3>
     		</c:if>
-    		<c:if test="${param.board_type == 4 }">
-           <h3>Before & After 후기 </h3>
-    		</c:if>
             <br>
             <c:if test="${!empty board.fileurl}">
             <img src="../img/${board.fileurl}" style="width: 500px;height: 500px;">
             </c:if>
-            <p>${board.content }</p>
-            <c:forEach var="file" items="${uploadFileList}">
             
-            <img src="../bafile/${file.filename}" width="400px" height="350px">
+            <c:if test="${param.board_type == 4 }">
+           <h2 class="testgreen"><span>Before</span></h2>
+    		</c:if>
+    		<br><br>
+            <c:forEach var="file" items="${uploadFileList}" begin="0" end="1">
+            
+            <img class="w3-round" src="../bafile/${file.filename}" width="400px" height="300px">
             
             </c:forEach>
+            
+    		<br><br>
+            <c:if test="${param.board_type == 4 }">
+           <h2 class="testgreen"><span>After</span></h2>
+    		</c:if>
+    		<br><br>
+            <c:forEach var="file" items="${uploadFileList}" begin="2" end="4">
+            
+            <img class="w3-round" src="../bafile/${file.filename}" width="400px" height="300px">
+            
+            </c:forEach>
+            <br><br><br><br>
+    		<c:if test="${param.board_type == 4 }">
+           <h3>Before & After 후기 </h3>
+    		</c:if>
+    		 
+    		<br>
+            <h4>${board.content }</h4>
+            <br><br>
             <hr>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            <br><br>
             <div align="center">
             <c:if test="${param.board_type == 3 || param.board_type == 4 }">
               <button type="submit" id="totalbst_btn" class="btn btn-sm btn-outline-primary" style="width: 103px;height: 50px">추천 <font color="red">♥</font>&nbsp;${board.totalrecommand}</button>
@@ -150,7 +166,7 @@
           
 
 <c:if test="${param.board_type == 3 || param.board_type == 4 }">
-     	                <strong>댓글 쓰기</strong><br>
+     	                <strong>댓글</strong><br><br>
      	                
 <form action="recomment.zips" method="post">
 <input type="hidden" name="board_type" value="${param.board_type }">
@@ -161,32 +177,31 @@
 <input value="등록" type="submit" />
 </form>
  
-<c:forEach var="re" items="${recommentlist}">
-<fmt:formatDate value="${c.regdate}" type="date" var="regdatetime" />
+<div class="my-3 p-3 bg-white rounded box-shadow">
+ <c:forEach var="re" items="${recommentlist}">
+ <fmt:formatDate value="${c.regdate}" type="date" var="regdatetime" />
 <fmt:formatDate value="${time}" type="date" var="nowtime" />
-<div>
+<div style="display: inline-block;">
+          <img src="../img/reicon.PNG" alt="" class="mr-2 rounded">
 <c:choose>
 <c:when test="${re.co_userid == board.board_userid }">
-${re.co_userid } <span class="badge badge-pill badge-primary">작성자</span>
+<h5><strong>${re.co_userid }</strong></h5><small><span class="badge badge-pill badge-primary">작성자</span></small>
 </c:when>
 <c:otherwise>
- ${re.co_userid }
+ <h5><strong>${re.co_userid}</strong></h5>
 </c:otherwise>
 </c:choose>
-<br>
-${re.co_content}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<br>
+</div>
 <div align="right">
 <c:if test="${nowtime == regdatetime }">
-						<td style="text-align: center;"><fmt:formatDate value="${re.co_regdate}" pattern="HH:mm:ss"/></td>
-					</c:if>
-					<c:if test="${nowtime != regdatetime }">
-						<td style="text-align: center;"><fmt:formatDate value="${re.co_regdate}" pattern="yyyy-MM-dd-E" />	</td>
-					</c:if>
-</div>
-</div>
+<fmt:formatDate value="${re.co_regdate}" pattern="HH:mm:ss"/>
+</c:if>
+<c:if test="${nowtime != regdatetime }">
+<fmt:formatDate value="${re.co_regdate}" pattern="yyyy-MM-dd-E" /></c:if></div>
+  <h5>${re.co_content}</h5>
 <hr>
 </c:forEach>
+</div>
 </c:if>
 
 

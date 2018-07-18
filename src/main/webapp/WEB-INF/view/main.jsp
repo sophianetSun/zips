@@ -115,7 +115,7 @@ $(document).ready(function() {
 	<div class="col-sm-4">
 	<div class="card mb-4 box-shadow">
 		<video width="docWidth" height="174" class="video-js" controls>
- 	 	<source src="../img/${homeT.fileurl}" type="video/mp4"></video>
+ 	 	<source src="${pageContext.request.contextPath }/img/${homeT.fileurl}" type="video/mp4"></video>
 		<div class="card-body">
         	<p class="card-text">&nbsp;&nbsp;<a href="board/homeTraininglistForm.zips?num=${homeT.num}&pageNum=${pageNum}&board_type=${homeT.board_type}">
                    ${homeT.subject }</a></p>

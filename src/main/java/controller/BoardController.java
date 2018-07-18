@@ -233,7 +233,7 @@ public class BoardController {
 
                aftermf.get(i).transferTo(new File(savePath)); // 파일 저장
 
-               service.fileUpload(board.getNum(), originalfileName, saveFileName, fileSize);
+               service.afterfileUpload(board.getNum(), originalfileName, saveFileName, fileSize);
            }
        }
 		int result = service.boardinsert(board,request);
@@ -274,18 +274,17 @@ public class BoardController {
 }
 	 
 	@RequestMapping("board/totallistForm")
-	public ModelAndView totallistForm(@Valid Recomment recomment,Integer board_type,int num,HttpSession session,HttpServletRequest request) {
+	public ModelAndView totallistForm(@Valid Recomment recomment,Integer board_type,int num,HttpSession session,HttpServletRequest request) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
 		Board board = service.getBoard(num);
 		int recount = service.recount(num);
 		recomment = service.getapply(num);
-		List<UploadFile> uploadFileList = service.getFileList(num);
 		List<Recomment> recommentlist = service.recommentList(board_type,num);
+		List<UploadFile> uploadFileList = service.getFileList(num);
 		String url = request.getServletPath();
 		if(url.contains("/board/totallistForm.zips")) {
 			service.updatereadcnt(num);
 		}
-		System.out.println("num::::::::::::::::"+num);
 		mav.addObject("uploadFileList",uploadFileList);
 		mav.addObject("recomment",recomment);
 		mav.addObject("num",num);

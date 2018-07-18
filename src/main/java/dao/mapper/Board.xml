@@ -76,5 +76,8 @@ select * from uploadfile
 where board_no=#{board_no}
 </if>
 	</select>
+	 <insert id="afterUpload" parameterType="map">
+		insert into uploadfile (board_no,aftername,filename,fileSize) values(#{board_no},#{aftername},#{saveFileName},#{fileSize})
+	</insert>
  </mapper>
  

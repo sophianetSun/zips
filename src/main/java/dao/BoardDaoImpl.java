@@ -135,7 +135,6 @@ public class BoardDaoImpl implements BoardDao {
 	public List<UploadFile> getFileList(int num) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("board_no", num);
-		
 		return sqlSession.selectList(NS+"getFileList", map);
 	}
 
@@ -147,6 +146,16 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public void totaldeleterecommand(Integer num) {
 		sqlSession.getMapper(BoardMapper.class).totaldeleterecommand(num);
+	}
+
+	@Override
+	public void afterfileUpload(int num, String originalfileName, String saveFileName, long fileSize) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("board_no", num);
+		map.put("aftername", originalfileName);
+		map.put("saveFileName", saveFileName);
+		map.put("fileSize", fileSize);
+		sqlSession.selectList(NS+"afterUpload",map);
 	}
 	
 }

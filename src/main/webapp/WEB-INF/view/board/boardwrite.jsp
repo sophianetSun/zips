@@ -19,6 +19,7 @@ function board_submit() {
 				return false;
 			}
 		}
+
 </script>
 </head>
 
@@ -111,7 +112,8 @@ function board_submit() {
 		<h3 class="mb-100">
 		<strong class="d-inline-block mb-10 text-success">글 설명</strong>
 		</h3>
-	<textarea id="text" name="content" rows="15" cols="70" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; "></textarea>
+	<textarea id="text" name="content" rows="15" cols="70" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; " wrap="hard"></textarea>
+	
 	</c:if>
 			</div>
 			</div>
