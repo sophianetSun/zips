@@ -13,7 +13,7 @@
 <div class="card-header">${sessionScope.loginUser.nickname } 님의 
 	<fmt:parseDate value="${param.regdate }" pattern="yyyy-MM-dd" var="selectedDate"/>
 	<fmt:formatDate value="${selectedDate }" pattern="yyyy년 MM월 dd일"/>
-	영양 섭취 정보입니다.</div>
+	운동 정보입니다.</div>
 	<div id="canvas-holder" class="mx-auto" style="width:75%">
 		<canvas id="canvas"></canvas>
 	</div>
