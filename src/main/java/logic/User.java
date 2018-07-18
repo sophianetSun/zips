@@ -7,9 +7,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class User implements Serializable{
-	@Size(min=5, max=10, message="아이디는 5자 이상입니다.")
+	@Size(min=5, max=16, message="아이디는 5자 이상 16자미만입니다.")
 	private String id;
-	@Size(min=3, max=12, message="비밀번호를 입력해 주세요")
+	@Size(min=3, max=16, message="비밀번호는 3자 이상 16자미만입니다")
 	private String pw;
 	private String pwch;
 	@NotEmpty(message="이름을 입력해 주세요")
