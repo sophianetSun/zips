@@ -182,15 +182,10 @@ public class UserDaoImple implements UserDao{
 		Map<String, Object> map = new HashMap<String, Object>();
 		int startrow = (pageNum - 1) * limit;
 		map.put("searchType", searchType);
-		System.out.println(searchType);
 		map.put("searchContent", searchContent);
-		System.out.println(searchType);
 		map.put("startrow", startrow);
-		System.out.println(startrow);
 		map.put("limit", limit);
-		System.out.println(limit);
 		map.put("pageNum", pageNum);
-		System.out.println(pageNum);
 		
 		return sqlSession.selectList(NS+"list", map);
 	}

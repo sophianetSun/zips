@@ -27,7 +27,6 @@
   <script>
   $(document).ready(function() {
   	$("#search_button").click(function() {
-  	}
   </script>
   <style type="text/css">
   	body {
@@ -78,8 +77,7 @@
 <br>
 </div>
 </div>
-<div align="center">
-<ul class="nav nav-tabs nav-justified" style="width:2100px" >
+<ul class="nav nav-tabs nav-justified border border-left-0 border-right-0" style="width:2100px" >
     <li class="nav-item">
       <a class="nav-link disabled"></a>
     </li>
@@ -111,7 +109,6 @@
       <a class="nav-link disabled"></a>
     </li>
  </ul>
- </div>
 <br><!-- Main  -->
 <div class="container pt-1 pb-2">
 	<decorator:body/>
