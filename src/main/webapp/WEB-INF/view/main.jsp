@@ -75,14 +75,14 @@ $(document).ready(function() {
 </head>
 <body>
 <!-- 홈트 -->
-<ul><li><p class="testred"><I><span>Best Hot 동영상&nbsp;3&nbsp;&nbsp;</span></I></p></li></ul>
+<ul><li><p class="testred test"><I><span>Best Hot 동영상&nbsp;3&nbsp;&nbsp;</span></I></p></li></ul>
 <div id="bestTraining" class="row">
 	<!-- Best Top 3 -->
 	<c:forEach items="${bestTraining}" var="best">
-	<div class="col-sm-4">
+	<div class="col-sm-4 test">
 	<div class="card mb-4 box-shadow">
 		<video width="docWidth" height="174" class="video-js" controls>
- 	 	<source src="../img/${best.fileurl}" type="video/mp4"></video>
+ 	 	<source src="${pageContext.request.contextPath }/img/${best.fileurl}" type="video/mp4"></video>
 		<div class="card-body">
         	<p class="card-text">&nbsp;&nbsp;<a href="board/homeTraininglistForm.zips?num=${best.num}&pageNum=${pageNum}&board_type=${best.board_type}">
                    ${best.subject }</a></p>
@@ -106,7 +106,7 @@ $(document).ready(function() {
 	</div>
 	</c:forEach>
 </div>
-<div class="card bg-info text-white">
+<div class="card bg-info text-white mt-3">
    	<div class="card-body"><h4>최신 홈트 영상</h4></div>
 </div>
 <div id="homeTraining" class="row" style="margin-top:16px;">
