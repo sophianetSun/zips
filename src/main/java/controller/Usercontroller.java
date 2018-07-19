@@ -124,7 +124,7 @@ public class Usercontroller {
 					userService.getPointCoin(dbUser.getId(), 1);
 				}
 				userService.logDateUpdate(dbUser.getId());  
-				 
+				}
 			} else {
 				bindingResult.reject("error.login.password");
 				mav.getModel().putAll(bindingResult.getModel());
