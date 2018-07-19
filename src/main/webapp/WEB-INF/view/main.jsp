@@ -247,9 +247,9 @@ $(document).ready(function() {
 			<c:forEach items="${qna}" var="q">
 				<a href="board/totallistForm.zips?num=${q.num}&pageNum=1&board_type=${q.board_type}" 
 					class="list-group-item list-group-item-action">${q.subject }
-					<c:if test="${q.board_apply == 0}">
+					<c:if test="${q.board_apply eq 0}">
 					<span class="badge badge-danger float-right">고민중</span></c:if>
-					<c:if test="${q.board_apply == 1}">
+					<c:if test="${q.board_apply eq 1}">
 					<span class="badge badge-primary float-right">고민해결</span></c:if>
 					</a>
 			</c:forEach>
